@@ -6,7 +6,6 @@ import edu.gvsu.cis.spacejourney.screens.LoadingScreen
 import edu.gvsu.cis.spacejourney.screens.BaseScreen
 import edu.gvsu.cis.spacejourney.screens.LevelScreen
 import edu.gvsu.cis.spacejourney.screens.MainMenuScreen
-import javafx.application.Application
 import ktx.app.KtxGame
 
 /*
