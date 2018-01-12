@@ -1,11 +1,53 @@
 apply plugin: "java"
+apply plugin: 'kotlin'
 
 sourceCompatibility = 1.6
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 sourceSets.main.java.srcDirs = [ "src/" ]
 
-
 eclipse.project {
     name = appName + "-core"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    // Kotlin Version
+    def kotlin_version = '1.2.10'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    // Ktx Kotlin Utilities for LibGDX
+    // https://github.com/libktx/ktx
+    def ktxVersion = '1.9.7-b1'
+    compile "io.github.libktx:ktx-actors:$ktxVersion"
+    compile "io.github.libktx:ktx-app:$ktxVersion"
+    compile "io.github.libktx:ktx-ashley:$ktxVersion"
+    compile "io.github.libktx:ktx-assets:$ktxVersion"
+    compile "io.github.libktx:ktx-box2d:$ktxVersion"
+    compile "io.github.libktx:ktx-collections:$ktxVersion"
+    compile "io.github.libktx:ktx-i18n:$ktxVersion"
+    compile "io.github.libktx:ktx-inject:$ktxVersion"
+    compile "io.github.libktx:ktx-log:$ktxVersion"
+    compile "io.github.libktx:ktx-math:$ktxVersion"
+    compile "io.github.libktx:ktx-scene2d:$ktxVersion"
+    compile "io.github.libktx:ktx-style:$ktxVersion"
+    compile "io.github.libktx:ktx-vis:$ktxVersion"
+    compile "io.github.libktx:ktx-vis-style:$ktxVersion"
+
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
