@@ -31,6 +31,7 @@ class LoadingScreen(game : SpaceJourney) : BaseScreen(game, "LoadingScreen") {
         super.render(delta)
     }
 
+    // Be mindful about nullable-types, as resize is called before show
     override fun resize(width: Int, height: Int) {
         super.resize(width, height)
     }

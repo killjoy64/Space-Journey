@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import edu.gvsu.cis.spacejourney.SpaceJourney
+import ktx.app.use
 
 class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
@@ -24,6 +25,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         viewport = ExtendViewport(480f, 360f, camera)
     }
 
+    // Be mindful about nullable-types, as resize is called before show
     override fun resize(width: Int, height: Int) {
         super.resize(width, height)
 
@@ -34,11 +36,9 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
     override fun render(delta: Float) {
         super.render(delta)
 
-        Gdx.gl.glClearColor(1f, 0f, 0f, 1f)
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-        batch!!.begin()
-        batch!!.draw(img!!, 0f, 0f)
-        batch!!.end()
+        batch?.use {
+            it.draw(img!!, 0f, 0f)
+        }
     }
 
     override fun dispose() {

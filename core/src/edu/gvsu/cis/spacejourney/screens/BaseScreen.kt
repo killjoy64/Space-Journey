@@ -1,5 +1,7 @@
 package edu.gvsu.cis.spacejourney.screens
 
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.GL20
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import ktx.app.KtxScreen
 import ktx.log.debug
@@ -11,37 +13,40 @@ import ktx.log.debug
 open class BaseScreen(val game: SpaceJourney, val screenName : String) : KtxScreen {
 
     override fun dispose() {
-        debug { "Screen Disposed: " + screenName }
         super.dispose()
+        debug { "Screen Disposed: $screenName " }
     }
 
     override fun hide() {
-        debug { "Screen Hidden: " + screenName }
         super.hide()
+        debug { "Screen Hidden: $screenName " }
     }
 
     override fun pause() {
-        debug { "Screen Paused: " + screenName }
         super.pause()
+        debug { "Screen Paused: $screenName "}
     }
 
     override fun render(delta: Float) {
         super.render(delta)
+
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
     }
 
     override fun resize(width: Int, height: Int) {
-        debug { "Screen Resized: " + screenName }
         super.resize(width, height)
+        debug { "Screen Resized: $screenName to $width, $height" }
     }
 
     override fun resume() {
-        debug { "Screen Resumed: " + screenName }
         super.resume()
+        debug { "Screen Resumed: $screenName" }
     }
 
     override fun show() {
-        debug { "Screen Shown: " + screenName }
         super.show()
+        debug { "Screen Shown: $screenName "}
     }
 
 }
