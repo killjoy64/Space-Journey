@@ -9,6 +9,9 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import ktx.app.use
 
+/**
+ * Where the magic happens
+ */
 class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     private var batch: SpriteBatch? = null
@@ -29,6 +32,12 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
     override fun resize(width: Int, height: Int) {
         super.resize(width, height)
 
+        if (camera != null) {
+            camera!!.viewportWidth = width.toFloat()
+            camera!!.viewportHeight = height.toFloat()
+            camera!!.update()
+        }
+
         viewport?.update(width, height, true)
         batch?.projectionMatrix = camera?.combined
     }
@@ -42,8 +51,8 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
     }
 
     override fun dispose() {
-        batch!!.dispose()
-        img!!.dispose()
+        batch?.dispose()
+        img?.dispose()
     }
 
 }
