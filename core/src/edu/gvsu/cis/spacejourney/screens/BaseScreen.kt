@@ -2,6 +2,7 @@ package edu.gvsu.cis.spacejourney.screens
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import ktx.app.KtxScreen
 import ktx.log.debug
@@ -11,6 +12,8 @@ import ktx.log.debug
  #TODO only override methods that need to be overriden
 */
 open class BaseScreen(val game: SpaceJourney, val screenName : String) : KtxScreen {
+
+    protected var batch: SpriteBatch? = null
 
     override fun dispose() {
         super.dispose()
@@ -46,6 +49,7 @@ open class BaseScreen(val game: SpaceJourney, val screenName : String) : KtxScre
 
     override fun show() {
         super.show()
+        batch = SpriteBatch()
         debug { "Screen Shown: $screenName "}
     }
 
