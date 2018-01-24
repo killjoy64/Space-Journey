@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport
 import edu.gvsu.cis.spacejourney.ParallaxBackground
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.Spaceship
+import edu.gvsu.cis.spacejourney.entities.SpaceshipEntity
 import ktx.actors.onKey
 import ktx.app.use
 
@@ -29,6 +30,9 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     private var background : ParallaxBackground? = null
 
+    // Kyle's variables
+    private var spaceship: SpaceshipEntity? = null
+
     override fun show() {
         super.show()
 
@@ -36,8 +40,10 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         img = Texture("badlogic.jpg")
 
         player = Spaceship(img!!)
+        spaceship = SpaceshipEntity(stage)
 
         stage?.addActor(player)
+        stage?.addActor(spaceship)
 
         camera = OrthographicCamera(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
         viewport = ExtendViewport(480f, 360f, camera)
@@ -90,6 +96,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
     override fun dispose() {
         batch?.dispose()
         img?.dispose()
+        spaceship?.dispose()
         stage?.dispose()
     }
 

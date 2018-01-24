@@ -37,7 +37,6 @@ class Spaceship(val texture: Texture) : Actor() {
 
     override fun draw(batch: Batch?, parentAlpha: Float) {
         super.draw(batch, parentAlpha)
-
         batch?.draw(texture, x, y, 50f, 50f)
     }
 
