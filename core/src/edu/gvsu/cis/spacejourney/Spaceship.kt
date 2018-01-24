@@ -35,8 +35,6 @@ class Spaceship(val texture: Texture) : Actor() {
         applyFriction(2f)
     }
 
-    //private var texture : Texture? = null
-
     override fun draw(batch: Batch?, parentAlpha: Float) {
         super.draw(batch, parentAlpha)
 
