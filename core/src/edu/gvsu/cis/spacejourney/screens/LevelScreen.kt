@@ -2,20 +2,18 @@ package edu.gvsu.cis.spacejourney.screens
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
-import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.badlogic.gdx.utils.Array
 import edu.gvsu.cis.spacejourney.ParallaxBackground
 import edu.gvsu.cis.spacejourney.SpaceJourney
-import edu.gvsu.cis.spacejourney.Spaceship
 import edu.gvsu.cis.spacejourney.entities.Direction
 import edu.gvsu.cis.spacejourney.entities.SpaceshipEntity
 import edu.gvsu.cis.spacejourney.entities.projectiles.Laser
-import ktx.actors.onKey
-import ktx.app.use
+import com.badlogic.gdx.physics.bullet.Bullet
+import com.badlogic.gdx.utils.Pool
+
 
 /**
  * Where the magic happens
@@ -32,6 +30,10 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
     private var spaceship: SpaceshipEntity? = null
     private var laser: Laser? = null
 
+    private var activeLasers: Array<Laser>? = null
+    private var laserPool: Pool<Laser>? = null
+
+
     override fun show() {
         super.show()
 
@@ -47,9 +49,18 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         laser?.setSize(20.0f, 20.0f)
 
         stage?.addActor(spaceship)
-        stage?.addActor(laser)
+//        stage?.addActor(laser)
 
-        laser?.spawn(20.0f, 20.0f)
+//        laser?.spawn(20.0f, 20.0f)
+
+        activeLasers = Array()
+
+        // Don't know how Kotlin lambdas work....
+        laserPool = object : Pool<Laser>() {
+            override fun newObject(): Laser {
+                return Laser(stage)
+            }
+        }
 
         background = ParallaxBackground()
 
@@ -86,9 +97,19 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
             spaceship?.move(Direction.RIGHT, moveSpeed)
         }
 
-        if (laser?.isAlive == false) {
-            laser?.remove()
-            laser?.dispose( )
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            val newLaser: Laser = laserPool?.obtain()!!
+            newLaser.spawn(spaceship?.x!! + (spaceship?.width!! / 2), spaceship?.y!! + spaceship?.height!!)
+            activeLasers?.add(newLaser)
+            stage?.addActor(newLaser)
+        }
+
+        for ((index) in activeLasers?.withIndex()!!) {
+            val activeLaser: Laser = activeLasers!!.get(index)
+            if (!activeLaser.isAlive) {
+                activeLasers?.removeIndex(index)
+                laserPool?.free(activeLaser)
+            }
         }
 
         background?.scroll(0.1f * Gdx.graphics.deltaTime)
@@ -101,7 +122,8 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
     override fun dispose() {
         batch?.dispose()
         spaceship?.dispose()
-        laser?.dispose()
+//        laser?.dispose()
+        laserPool?.clear()
         stage?.dispose()
     }
 
