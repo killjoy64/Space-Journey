@@ -13,6 +13,7 @@ import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.Spaceship
 import edu.gvsu.cis.spacejourney.entities.Direction
 import edu.gvsu.cis.spacejourney.entities.SpaceshipEntity
+import edu.gvsu.cis.spacejourney.entities.projectiles.Laser
 import ktx.actors.onKey
 import ktx.app.use
 
@@ -21,32 +22,34 @@ import ktx.app.use
  */
 class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
-    private var img: Texture? = null
     private var camera: OrthographicCamera? = null
     private var viewport: ExtendViewport? = null
-
-    private var player : Spaceship? = null
 
     private var stage : Stage? = null
 
     private var background : ParallaxBackground? = null
 
     private var spaceship: SpaceshipEntity? = null
+    private var laser: Laser? = null
 
     override fun show() {
         super.show()
 
-        stage = Stage()
-        img = Texture("badlogic.jpg")
-
-//        player = Spaceship(img!!)
-        spaceship = SpaceshipEntity(stage)
-
-//        stage?.addActor(player)
-        stage?.addActor(spaceship)
-
         camera = OrthographicCamera(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
         viewport = ExtendViewport(480f, 360f, camera)
+
+        stage = Stage(viewport)
+
+        spaceship = SpaceshipEntity(stage)
+        laser = Laser(stage)
+
+        spaceship?.setSize(50.0f, 50.0f)
+        laser?.setSize(20.0f, 20.0f)
+
+        stage?.addActor(spaceship)
+        stage?.addActor(laser)
+
+        laser?.spawn(20.0f, 20.0f)
 
         background = ParallaxBackground()
 
@@ -56,14 +59,11 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
     override fun resize(width: Int, height: Int) {
         super.resize(width, height)
 
-
         viewport?.update(width, height, true)
         //camera?.setToOrtho(false, width.toFloat(), height.toFloat())
         camera?.viewportWidth = width.toFloat()
         camera?.viewportHeight = height.toFloat()
         camera?.update()
-
-
     }
 
     override fun render(delta: Float) {
@@ -86,6 +86,11 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
             spaceship?.move(Direction.RIGHT, moveSpeed)
         }
 
+        if (laser?.isAlive == false) {
+            laser?.remove()
+            laser?.dispose( )
+        }
+
         background?.scroll(0.1f * Gdx.graphics.deltaTime)
         background?.draw(batch!!)
 
@@ -96,6 +101,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
     override fun dispose() {
         batch?.dispose()
         spaceship?.dispose()
+        laser?.dispose()
         stage?.dispose()
     }
 

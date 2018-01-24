@@ -1,5 +1,6 @@
 package edu.gvsu.cis.spacejourney.entities;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,6 +15,8 @@ public abstract class Entity extends Actor {
     private Texture spriteSheet;
     private TextureRegion currentSprite;
 
+    private float width;
+    private float height;
     private Vector2 velocity;
 
     public Entity(Stage stage, TextureRegion region) {
@@ -21,20 +24,40 @@ public abstract class Entity extends Actor {
         this.currentSprite = region;
         this.spriteSheet = null;
         this.velocity = new Vector2(0.0f, 0.0f);
+        this.width = 10.0f;
+        this.height = 10.0f;
     }
 
     public Entity(Stage stage, Texture spriteSheet) {
         this.stage = stage;
         this.spriteSheet = spriteSheet;
         this.velocity = new Vector2(0.0f, 0.0f);
+        this.width = 10.0f;
+        this.height = 10.0f;
     }
 
     public abstract TextureRegion getFrame(float delta);
 
     @Override
+    public void setSize(float width, float height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    @Override
+    public float getWidth() {
+        return this.width;
+    }
+
+    @Override
+    public float getHeight() {
+        return this.height;
+    }
+
+    @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.draw(this.currentSprite, this.getX(), this.getY());
+        batch.draw(this.currentSprite, this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
 
     @Override
@@ -54,9 +77,8 @@ public abstract class Entity extends Actor {
         }
     }
 
-    public void setVelocity(float x, float y) {
-        this.velocity.x = x;
-        this.velocity.y = y;
+    public TextureRegion getTextureRegion() {
+        return currentSprite;
     }
 
     public Array<TextureRegion> getAnimations(int start, int end, int y, int width, int height) {
@@ -74,6 +96,20 @@ public abstract class Entity extends Actor {
         }
 
         return frames;
+    }
+
+    public boolean outOfBounds() {
+        int screenW = (int) this.stage.getViewport().getWorldHeight();
+        int screenH = (int) this.stage.getViewport().getWorldHeight();
+        int x = (int) getX();
+        int y = (int) getY();
+
+        return x > screenW || x < 0 || y > screenH || y < 0;
+    }
+
+    public void setVelocity(float x, float y) {
+        this.velocity.x = x;
+        this.velocity.y = y;
     }
 
     public void dispose() {
