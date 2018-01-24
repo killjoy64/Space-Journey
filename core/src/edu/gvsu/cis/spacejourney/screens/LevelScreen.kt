@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport
 import edu.gvsu.cis.spacejourney.ParallaxBackground
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.Spaceship
+import edu.gvsu.cis.spacejourney.entities.Direction
 import edu.gvsu.cis.spacejourney.entities.SpaceshipEntity
 import ktx.actors.onKey
 import ktx.app.use
@@ -30,7 +31,6 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     private var background : ParallaxBackground? = null
 
-    // Kyle's variables
     private var spaceship: SpaceshipEntity? = null
 
     override fun show() {
@@ -39,10 +39,10 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         stage = Stage()
         img = Texture("badlogic.jpg")
 
-        player = Spaceship(img!!)
+//        player = Spaceship(img!!)
         spaceship = SpaceshipEntity(stage)
 
-        stage?.addActor(player)
+//        stage?.addActor(player)
         stage?.addActor(spaceship)
 
         camera = OrthographicCamera(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
@@ -71,19 +71,19 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         batch?.projectionMatrix = camera?.combined
 
-        val move_speed = 20.0f;
+        val moveSpeed = 10.0f
 
         if (Gdx.input.isKeyPressed(Input.Keys.W)){
-            player?.moveUp(move_speed)
+            spaceship?.move(Direction.UP, moveSpeed)
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S)){
-            player?.moveDown(move_speed)
+            spaceship?.move(Direction.DOWN, moveSpeed)
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)){
-            player?.moveLeft(move_speed)
+            spaceship?.move(Direction.LEFT, moveSpeed)
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)){
-            player?.moveRight(move_speed)
+            spaceship?.move(Direction.RIGHT, moveSpeed)
         }
 
         background?.scroll(0.1f * Gdx.graphics.deltaTime)
@@ -95,7 +95,6 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     override fun dispose() {
         batch?.dispose()
-        img?.dispose()
         spaceship?.dispose()
         stage?.dispose()
     }

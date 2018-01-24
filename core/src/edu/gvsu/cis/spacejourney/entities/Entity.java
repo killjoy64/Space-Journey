@@ -2,7 +2,6 @@ package edu.gvsu.cis.spacejourney.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -42,8 +41,11 @@ public abstract class Entity extends Actor {
     public void act(float delta) {
         super.act(delta);
 
-        this.setX(this.velocity.x * delta);
-        this.setY(this.velocity.y * delta);
+        float oldX = this.getX();
+        float oldY = this.getY();
+
+        this.setX(oldX + (this.velocity.x * delta));
+        this.setY(oldY + (this.velocity.y * delta));
 
         TextureRegion newRegion = getFrame(delta);
 

@@ -17,6 +17,28 @@ public class SpaceshipEntity extends Entity {
 
     @Override
     public TextureRegion getFrame(float delta) {
+        // This returns null because there are no available frames!
+        // The underlying Entity class handles this properly.
         return null;
     }
+
+    public void move(Direction direction, float value) {
+        float oldX = this.getX();
+        float oldY = this.getY();
+
+        switch(direction) {
+            case UP:
+                this.setY(oldY + value);
+                break;
+            case DOWN:
+                this.setY(oldY - value);
+                break;
+            case LEFT:
+                this.setX(oldX - value);
+                break;
+            case RIGHT:
+                this.setX(oldX + value);
+        }
+    }
+
 }
