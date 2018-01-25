@@ -6,12 +6,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.badlogic.gdx.utils.Array
-import edu.gvsu.cis.spacejourney.ParallaxBackground
+import edu.gvsu.cis.spacejourney.util.ParallaxBackground
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.entities.Direction
 import edu.gvsu.cis.spacejourney.entities.SpaceshipEntity
 import edu.gvsu.cis.spacejourney.entities.projectiles.Laser
-import com.badlogic.gdx.physics.bullet.Bullet
 import com.badlogic.gdx.utils.Pool
 
 
@@ -33,7 +32,6 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
     private var activeLasers: Array<Laser>? = null
     private var laserPool: Pool<Laser>? = null
 
-
     override fun show() {
         super.show()
 
@@ -49,9 +47,6 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         laser?.setSize(20.0f, 20.0f)
 
         stage?.addActor(spaceship)
-//        stage?.addActor(laser)
-
-//        laser?.spawn(20.0f, 20.0f)
 
         activeLasers = Array()
 
@@ -71,7 +66,6 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         super.resize(width, height)
 
         viewport?.update(width, height, true)
-        //camera?.setToOrtho(false, width.toFloat(), height.toFloat())
         camera?.viewportWidth = width.toFloat()
         camera?.viewportHeight = height.toFloat()
         camera?.update()
@@ -107,6 +101,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         for ((index) in activeLasers?.withIndex()!!) {
             val activeLaser: Laser = activeLasers!!.get(index)
             if (!activeLaser.isAlive) {
+                activeLaser.remove()
                 activeLasers?.removeIndex(index)
                 laserPool?.free(activeLaser)
             }
@@ -122,7 +117,6 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
     override fun dispose() {
         batch?.dispose()
         spaceship?.dispose()
-//        laser?.dispose()
         laserPool?.clear()
         stage?.dispose()
     }
