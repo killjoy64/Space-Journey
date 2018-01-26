@@ -12,6 +12,7 @@ import edu.gvsu.cis.spacejourney.entities.Direction
 import edu.gvsu.cis.spacejourney.entities.SpaceshipEntity
 import edu.gvsu.cis.spacejourney.entities.projectiles.Laser
 import com.badlogic.gdx.utils.Pool
+import com.badlogic.gdx.utils.viewport.ScreenViewport
 
 
 /**
@@ -19,8 +20,8 @@ import com.badlogic.gdx.utils.Pool
  */
 class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
-    private var camera: OrthographicCamera? = null
-    private var viewport: ExtendViewport? = null
+    //private var camera: OrthographicCamera? = null
+    private var viewport: ScreenViewport? = null
 
     private var stage : Stage? = null
 
@@ -35,8 +36,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
     override fun show() {
         super.show()
 
-        camera = OrthographicCamera(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
-        viewport = ExtendViewport(480f, 360f, camera)
+        viewport = ScreenViewport()
 
         stage = Stage(viewport)
 
@@ -48,6 +48,9 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         stage?.addActor(spaceship)
 
+        background = ParallaxBackground()
+        stage?.addActor(background)
+
         activeLasers = Array()
 
         // Don't know how Kotlin lambdas work....
@@ -57,7 +60,6 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
             }
         }
 
-        background = ParallaxBackground()
 
     }
 
@@ -66,15 +68,13 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         super.resize(width, height)
 
         viewport?.update(width, height, true)
-        camera?.viewportWidth = width.toFloat()
-        camera?.viewportHeight = height.toFloat()
-        camera?.update()
+
     }
 
     override fun render(delta: Float) {
         super.render(delta)
 
-        batch?.projectionMatrix = camera?.combined
+        viewport?.apply()
 
         val moveSpeed = 10.0f
 
@@ -107,8 +107,9 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
             }
         }
 
-        background?.scroll(0.1f * Gdx.graphics.deltaTime)
-        background?.draw(batch!!)
+
+
+        batch?.projectionMatrix = viewport?.camera?.combined
 
         stage?.act()
         stage?.draw()
