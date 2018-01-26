@@ -1,6 +1,7 @@
 package edu.gvsu.cis.spacejourney.screens
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Graphics
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -37,6 +38,8 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         super.show()
 
         viewport = ScreenViewport()
+        viewport?.update(Gdx.graphics.width, Gdx.graphics.height)
+        viewport?.unitsPerPixel = Gdx.graphics.density
 
         stage = Stage(viewport)
 

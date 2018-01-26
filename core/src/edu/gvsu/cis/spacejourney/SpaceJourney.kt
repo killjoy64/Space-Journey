@@ -2,6 +2,7 @@ package edu.gvsu.cis.spacejourney
 
 import com.badlogic.gdx.Application.LOG_DEBUG
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.assets.AssetManager
 import edu.gvsu.cis.spacejourney.screens.LoadingScreen
 import edu.gvsu.cis.spacejourney.screens.BaseScreen
 import edu.gvsu.cis.spacejourney.screens.LevelScreen
@@ -13,7 +14,13 @@ The core of the game, where we spawn the first screen.
  */
 class SpaceJourney : KtxGame<BaseScreen>() {
 
+    // Global asset manager shared between all screens via reference to this class
+    // Most of the assets should be pre-loaded in the `LoadingScreen` class
+    val assets = AssetManager()
+
     override fun create() {
+
+        Gdx.graphics.setTitle("Space-Journey")
 
         // Reference: https://github.com/libktx/ktx/tree/master/log
         Gdx.app.logLevel = LOG_DEBUG
