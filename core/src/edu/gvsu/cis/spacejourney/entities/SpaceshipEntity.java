@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import edu.gvsu.cis.spacejourney.util.ZIndex;
 
 public class SpaceshipEntity extends Entity {
 
@@ -13,6 +14,7 @@ public class SpaceshipEntity extends Entity {
 
         this.setX(5.0f);
         this.setY(5.0f);
+        this.setZIndex(ZIndex.PLAYER);
     }
 
     @Override

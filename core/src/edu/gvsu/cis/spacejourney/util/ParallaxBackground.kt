@@ -16,7 +16,7 @@ class ParallaxBackground : Actor(), Disposable {
 
         batch?.draw(region, 0f, 0f, Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
 
-        this.zIndex = 0
+        this.zIndex = ZIndex.BACKGROUND
     }
 
     override fun act(delta: Float) {

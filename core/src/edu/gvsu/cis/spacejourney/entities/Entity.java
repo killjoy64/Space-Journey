@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import edu.gvsu.cis.spacejourney.util.ZIndex;
 
 public abstract class Entity extends Actor {
 
@@ -26,6 +27,7 @@ public abstract class Entity extends Actor {
         this.velocity = new Vector2(0.0f, 0.0f);
         this.width = 10.0f;
         this.height = 10.0f;
+        this.setZIndex(ZIndex.ENTITY);
     }
 
     public Entity(Stage stage, Texture spriteSheet) {
