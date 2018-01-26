@@ -25,7 +25,6 @@ public class SpaceshipEntity extends Entity {
     public void move(Direction direction, float value) {
         float oldX = this.getX();
         float oldY = this.getY();
-
         switch(direction) {
             case UP:
                 this.setY(oldY + value);
@@ -39,6 +38,12 @@ public class SpaceshipEntity extends Entity {
             case RIGHT:
                 this.setX(oldX + value);
         }
+
+        if (this.outOfBounds()) {
+            this.setX(oldX);
+            this.setY(oldY);
+        }
+
     }
 
 }

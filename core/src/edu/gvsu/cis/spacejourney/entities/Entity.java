@@ -99,7 +99,7 @@ public abstract class Entity extends Actor {
     }
 
     public boolean outOfBounds() {
-        int screenW = (int) this.stage.getViewport().getWorldHeight();
+        int screenW = (int) this.stage.getViewport().getWorldWidth();
         int screenH = (int) this.stage.getViewport().getWorldHeight();
         int x = (int) getX();
         int y = (int) getY();
