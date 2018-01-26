@@ -1,9 +1,10 @@
 package edu.gvsu.cis.spacejourney.input;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import edu.gvsu.cis.spacejourney.entities.Direction;
 import edu.gvsu.cis.spacejourney.entities.SpaceshipEntity;
+import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager;
 
 /**
  * Created by Kyle Flynn on 1/24/2018.
@@ -11,20 +12,58 @@ import edu.gvsu.cis.spacejourney.entities.SpaceshipEntity;
 public class PlayerInputListener implements InputProcessor {
 
     private SpaceshipEntity player;
+    private ActiveProjectileManager projManager;
 
-    private PlayerInputListener(SpaceshipEntity player) {
+    public PlayerInputListener(SpaceshipEntity player) {
         this.player = player;
+        this.projManager = ActiveProjectileManager.getInstance();
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.SPACE) {
+
+        float moveSpeed = 300.0f;
+
+        if (keycode == Input.Keys.W) {
+            this.player.setVelocityY(moveSpeed);
         }
+        if (keycode == Input.Keys.A) {
+            this.player.setVelocityX(-moveSpeed);
+        }
+        if (keycode == Input.Keys.S) {
+            this.player.setVelocityY(-moveSpeed);
+        }
+        if (keycode == Input.Keys.D) {
+            this.player.setVelocityX(moveSpeed);
+        }
+
+        if (keycode == Input.Keys.SPACE) {
+            float x = this.player.getX() + (this.player.getWidth() / 2);
+            float y = this.player.getY() + (this.player.getHeight());
+            this.projManager.spawnLaser(x, y);
+        }
+
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
+
+        float moveSpeed = 0.0f;
+
+        if (keycode == Input.Keys.W) {
+            this.player.setVelocityY(moveSpeed);
+        }
+        if (keycode == Input.Keys.A) {
+            this.player.setVelocityX(-moveSpeed);
+        }
+        if (keycode == Input.Keys.S) {
+            this.player.setVelocityY(-moveSpeed);
+        }
+        if (keycode == Input.Keys.D) {
+            this.player.setVelocityX(moveSpeed);
+        }
+
         return false;
     }
 

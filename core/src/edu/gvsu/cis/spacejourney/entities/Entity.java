@@ -104,11 +104,21 @@ public abstract class Entity extends Actor {
         int x = (int) getX();
         int y = (int) getY();
 
+        System.out.println(screenW + " | " + screenH);
+
         return x > screenW || x < 0 || y > screenH || y < 0;
     }
 
     public void setVelocity(float x, float y) {
         this.velocity.x = x;
+        this.velocity.y = y;
+    }
+
+    public void setVelocityX(float x) {
+        this.velocity.x = x;
+    }
+
+    public void setVelocityY(float y) {
         this.velocity.y = y;
     }
 
