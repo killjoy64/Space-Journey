@@ -9,7 +9,7 @@ public class Laser extends Projectile {
 
     public Laser(Stage stage) {
         super(stage, new TextureRegion(new Texture(Gdx.files.internal("laser.png"))));
-        setVelocity(0.0f, 100.0f);
+        setVelocity(0.0f, 200.0f);
 
     }
 

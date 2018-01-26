@@ -1,28 +1,21 @@
 package edu.gvsu.cis.spacejourney.screens
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Input
-import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.utils.viewport.ExtendViewport
-import com.badlogic.gdx.utils.Array
 import edu.gvsu.cis.spacejourney.util.ParallaxBackground
 import edu.gvsu.cis.spacejourney.SpaceJourney
-import edu.gvsu.cis.spacejourney.entities.Direction
 import edu.gvsu.cis.spacejourney.entities.SpaceshipEntity
-import edu.gvsu.cis.spacejourney.entities.projectiles.Laser
-import com.badlogic.gdx.utils.Pool
+import com.badlogic.gdx.utils.viewport.ScreenViewport
 import edu.gvsu.cis.spacejourney.input.PlayerInputListener
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
-
 
 /**
  * Where the magic happens
  */
 class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
-    private var camera: OrthographicCamera? = null
-    private var viewport: ExtendViewport? = null
+    //private var camera: OrthographicCamera? = null
+    private var viewport: ScreenViewport? = null
 
     private var stage : Stage? = null
 
@@ -34,8 +27,9 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
     override fun show() {
         super.show()
 
-        camera = OrthographicCamera(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
-        viewport = ExtendViewport(480f, 360f, camera)
+        viewport = ScreenViewport()
+        viewport?.update(Gdx.graphics.width, Gdx.graphics.height)
+        viewport?.unitsPerPixel = Gdx.graphics.density
 
         stage = Stage(viewport)
 
@@ -46,6 +40,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         stage?.addActor(spaceship)
 
         background = ParallaxBackground()
+        stage?.addActor(background)
 
         projManager = ActiveProjectileManager.getInstance()
         projManager?.setStage(stage)
@@ -60,20 +55,17 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         super.resize(width, height)
 
         viewport?.update(width, height, true)
-        camera?.viewportWidth = width.toFloat()
-        camera?.viewportHeight = height.toFloat()
-        camera?.update()
+
     }
 
     override fun render(delta: Float) {
         super.render(delta)
 
-        batch?.projectionMatrix = camera?.combined
+        viewport?.apply()
 
         projManager?.poll()
 
-        background?.scroll(0.1f * Gdx.graphics.deltaTime)
-        background?.draw(batch!!)
+        batch?.projectionMatrix = viewport?.camera?.combined
 
         stage?.act()
         stage?.draw()
