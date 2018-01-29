@@ -12,10 +12,11 @@ import edu.gvsu.cis.spacejourney.util.ZIndex;
 public class SpaceshipEntity extends Entity {
 
     public SpaceshipEntity(Stage stage, AssetManager assets) {
-        super(stage, new TextureRegion(assets.get("spaceship.png", Texture.class)));
+        super(stage, new TextureRegion(assets.get("player_spaceship_white.png", Texture.class)));
 
         this.setX(5.0f);
         this.setY(5.0f);
+        this.getTextureRegion().getTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         this.setZIndex(ZIndex.PLAYER);
     }
 
@@ -29,6 +30,7 @@ public class SpaceshipEntity extends Entity {
     public void move(Direction direction, float value) {
         float oldX = this.getX();
         float oldY = this.getY();
+
         switch(direction) {
             case UP:
                 this.setY(oldY + value);

@@ -9,13 +9,36 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Disposable
 import ktx.app.use
+import ktx.collections.GdxArray
+import java.util.*
+
+class ParallaxLayer (
+    val texture : Texture? = null,
+    val scroll_factor : Float,
+    val zindex : Int)
+{
+    var region : TextureRegion? = null
+
+    init {
+        this.region = TextureRegion(texture)
+        this.region?.setRegion(0, 0, this.texture!!.width, this.texture!!.height)
+
+        this.texture?.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat)
+    }
+
+    fun dispose() {
+        this.texture?.dispose()
+    }
+}
 
 class ParallaxBackground(val assets : AssetManager) : Actor(), Disposable {
 
     override fun draw(batch: Batch?, parentAlpha: Float) {
         super.draw(batch, parentAlpha)
 
-        batch?.draw(region, 0f, 0f, Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
+        for (layer in this.layers) {
+            batch?.draw(layer.region, 0f, 0f, this.stage.viewport.worldWidth, this.stage.viewport.worldHeight)
+        }
 
         this.zIndex = ZIndex.BACKGROUND
     }
@@ -23,21 +46,27 @@ class ParallaxBackground(val assets : AssetManager) : Actor(), Disposable {
     override fun act(delta: Float) {
         super.act(delta)
 
-        region?.scroll(0f, -0.25f * delta)
+        for (layer in this.layers) {
+            layer.region?.scroll(0f, -layer.scroll_factor * Gdx.graphics.rawDeltaTime)
+        }
+
     }
 
-    var texture : Texture? = null
-    var region : TextureRegion? = null
+    var layers : Vector<ParallaxLayer> = Vector()
+
+    var texture1 : Texture? = null
+    var region1 : TextureRegion? = null
 
     init {
-        this.texture = assets.get("parallax_background.png", Texture::class.java)
-        this.texture?.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat)
-        this.region = TextureRegion(this.texture)
-        this.region?.setRegion(0, 0, this.texture?.width!!, this.texture?.height!!)
+        layers.add(ParallaxLayer(assets.get("parallax_background_layer2.png", Texture::class.java), 0.0015f, ZIndex.PARALLAX_BACKGROUND_LAYER3))
+        //layers.add(ParallaxLayer(assets.get("parallax_background_layer1.png", Texture::class.java), 0.05f, ZIndex.PARALLAX_BACKGROUND_LAYER2))
+        layers.add(ParallaxLayer(assets.get("parallax_background_layer1.png", Texture::class.java), 0.15f, ZIndex.PARALLAX_BACKGROUND_LAYER1))
     }
 
     override fun dispose(){
-        texture?.dispose()
+        for (layer in this.layers) {
+            layer.dispose()
+        }
     }
 
 }

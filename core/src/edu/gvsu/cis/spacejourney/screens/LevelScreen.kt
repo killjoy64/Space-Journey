@@ -2,12 +2,14 @@ package edu.gvsu.cis.spacejourney.screens
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.utils.viewport.FillViewport
 import edu.gvsu.cis.spacejourney.util.ParallaxBackground
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.entities.SpaceshipEntity
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import edu.gvsu.cis.spacejourney.input.PlayerInputListener
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
+import edu.gvsu.cis.spacejourney.util.ZIndex
 
 /**
  * Where the magic happens
@@ -15,7 +17,7 @@ import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
 class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     //private var camera: OrthographicCamera? = null
-    private var viewport: ScreenViewport? = null
+    private var viewport: FillViewport? = null
 
     private var stage : Stage? = null
 
@@ -27,19 +29,20 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
     override fun show() {
         super.show()
 
-        viewport = ScreenViewport()
-        viewport?.update(Gdx.graphics.width, Gdx.graphics.height)
-        viewport?.unitsPerPixel = Gdx.graphics.density
+        viewport = FillViewport(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
+        //viewport?.update()
+        //viewport?.unitsPerPixel = 1.0f
 
         stage = Stage(viewport)
 
         spaceship = SpaceshipEntity(stage, this.game.assets)
 
-        spaceship?.setSize(50.0f, 50.0f)
+        spaceship?.setSize(32.0f * 2.0f, 32.0f * 2.0f)
 
         stage?.addActor(spaceship)
 
         background = ParallaxBackground(this.game.assets)
+        background?.zIndex = ZIndex.BACKGROUND
         stage?.addActor(background)
 
         projManager = ActiveProjectileManager.getInstance()
