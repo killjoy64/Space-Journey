@@ -33,17 +33,18 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         stage = Stage(viewport)
 
-        spaceship = SpaceshipEntity(stage)
+        spaceship = SpaceshipEntity(stage, this.game.assets)
 
         spaceship?.setSize(50.0f, 50.0f)
 
         stage?.addActor(spaceship)
 
-        background = ParallaxBackground()
+        background = ParallaxBackground(this.game.assets)
         stage?.addActor(background)
 
         projManager = ActiveProjectileManager.getInstance()
         projManager?.setStage(stage)
+        projManager?.setAssetManager(this.game.assets)
         projManager?.init()
 
         Gdx.input.inputProcessor = PlayerInputListener(spaceship)

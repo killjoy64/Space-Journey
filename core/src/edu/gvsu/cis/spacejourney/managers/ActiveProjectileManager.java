@@ -1,5 +1,6 @@
 package edu.gvsu.cis.spacejourney.managers;
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
@@ -11,6 +12,7 @@ public class ActiveProjectileManager implements Disposable {
     private static ActiveProjectileManager instance;
 
     private Stage stage;
+    private AssetManager assets;
 
     private Array<Laser> activeProjectiles;
     private Pool<Laser> projectilePool;
@@ -25,7 +27,7 @@ public class ActiveProjectileManager implements Disposable {
         this.projectilePool = new Pool<Laser>() {
             @Override
             protected Laser newObject() {
-                return new Laser(stage);
+                return new Laser(stage, assets);
             }
         };
     }
@@ -50,6 +52,10 @@ public class ActiveProjectileManager implements Disposable {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    public void setAssetManager(AssetManager assets) {
+        this.assets = assets;
     }
 
     @Override
