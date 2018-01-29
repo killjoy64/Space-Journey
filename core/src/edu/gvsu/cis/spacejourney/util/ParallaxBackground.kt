@@ -1,6 +1,7 @@
 package edu.gvsu.cis.spacejourney.util
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -9,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Disposable
 import ktx.app.use
 
-class ParallaxBackground : Actor(), Disposable {
+class ParallaxBackground(val assets : AssetManager) : Actor(), Disposable {
 
     override fun draw(batch: Batch?, parentAlpha: Float) {
         super.draw(batch, parentAlpha)
@@ -29,10 +30,10 @@ class ParallaxBackground : Actor(), Disposable {
     var region : TextureRegion? = null
 
     init {
-        this.texture = Texture(Gdx.files.internal("Parallax100_0.png"))
+        this.texture = assets.get("parallax_background.png", Texture::class.java)
         this.texture?.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat)
-
-        this.region = TextureRegion(this.texture, this.texture?.width!!, this.texture?.height!!)
+        this.region = TextureRegion(this.texture)
+        this.region?.setRegion(0, 0, this.texture?.width!!, this.texture?.height!!)
     }
 
     override fun dispose(){
