@@ -2,6 +2,7 @@ package edu.gvsu.cis.spacejourney.input;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.entities.Direction;
 import edu.gvsu.cis.spacejourney.entities.SpaceshipEntity;
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager;
@@ -14,15 +15,19 @@ public class PlayerInputListener implements InputProcessor {
     private SpaceshipEntity player;
     private ActiveProjectileManager projManager;
 
+
+    private boolean[] keys;
+
     public PlayerInputListener(SpaceshipEntity player) {
         this.player = player;
         this.projManager = ActiveProjectileManager.getInstance();
+        this.keys = new boolean[255];
     }
 
     @Override
     public boolean keyDown(int keycode) {
 
-        float moveSpeed = 300.0f;
+        float moveSpeed = 300.0f / Constants.PX_PER_M;
 
         if (keycode == Input.Keys.W) {
             this.player.setVelocityY(moveSpeed);
@@ -42,6 +47,8 @@ public class PlayerInputListener implements InputProcessor {
             float y = this.player.getY() + (this.player.getHeight());
             this.projManager.spawnLaser(x, y);
         }
+
+        this.keys[keycode] = true;
 
         return false;
     }
@@ -63,6 +70,8 @@ public class PlayerInputListener implements InputProcessor {
         if (keycode == Input.Keys.D) {
             this.player.setVelocityX(moveSpeed);
         }
+
+        this.keys[keycode] = false;
 
         return false;
     }
@@ -96,4 +105,9 @@ public class PlayerInputListener implements InputProcessor {
     public boolean scrolled(int amount) {
         return false;
     }
+
+    public void poll() {
+
+    }
+
 }

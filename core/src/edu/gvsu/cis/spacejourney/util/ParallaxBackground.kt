@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Disposable
+import edu.gvsu.cis.spacejourney.Constants
 import ktx.app.use
 
 class ParallaxBackground : Actor(), Disposable {
@@ -14,7 +15,8 @@ class ParallaxBackground : Actor(), Disposable {
     override fun draw(batch: Batch?, parentAlpha: Float) {
         super.draw(batch, parentAlpha)
 
-        batch?.draw(region, 0f, 0f, Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
+        batch?.draw(region, 0f, 0f, Constants.VIRTUAL_WIDTH / Constants.PX_PER_M,
+                Constants.VIRTUAL_HEIGHT / Constants.PX_PER_M)
 
         this.zIndex = ZIndex.BACKGROUND
     }

@@ -6,15 +6,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.util.ZIndex;
 
 public class SpaceshipEntity extends Entity {
 
     public SpaceshipEntity(Stage stage) {
         super(stage, new TextureRegion(new Texture(Gdx.files.internal("spaceship.png"))));
-
-        this.setX(5.0f);
-        this.setY(5.0f);
         this.setZIndex(ZIndex.PLAYER);
     }
 

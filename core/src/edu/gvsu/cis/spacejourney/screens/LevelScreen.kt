@@ -1,41 +1,55 @@
 package edu.gvsu.cis.spacejourney.screens
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.utils.viewport.FitViewport
 import edu.gvsu.cis.spacejourney.util.ParallaxBackground
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.entities.SpaceshipEntity
 import com.badlogic.gdx.utils.viewport.ScreenViewport
+import edu.gvsu.cis.spacejourney.Constants
 import edu.gvsu.cis.spacejourney.input.PlayerInputListener
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
+import ktx.log.debug
 
 /**
  * Where the magic happens
  */
 class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
-    //private var camera: OrthographicCamera? = null
-    private var viewport: ScreenViewport? = null
+    private var camera: OrthographicCamera? = null
+    private var viewport: FitViewport? = null
 
     private var stage : Stage? = null
+    private var world: World? = null
 
     private var background : ParallaxBackground? = null
     private var spaceship: SpaceshipEntity? = null
 
     private var projManager: ActiveProjectileManager? = null
+    private var inputListener: PlayerInputListener? = null
 
     override fun show() {
         super.show()
 
-        viewport = ScreenViewport()
-        viewport?.update(Gdx.graphics.width, Gdx.graphics.height)
-        viewport?.unitsPerPixel = Gdx.graphics.density
+        camera = OrthographicCamera()
+        viewport = FitViewport(Constants.VIRTUAL_WIDTH / Constants.PX_PER_M,
+                Constants.VIRTUAL_HEIGHT / Constants.PX_PER_M, camera)
+//        viewport?.worldWidth = Constants.VIRTUAL_WIDTH / Constants.PX_PER_M
+//        viewport?.worldHeight = Constants.VIRTUAL_HEIGHT / Constants.PX_PER_M
+//        viewport?.unitsPerPixel = Gdx.graphics.density
 
         stage = Stage(viewport)
+        world = World(Vector2(0.0f, 0.0f), true)
 
         spaceship = SpaceshipEntity(stage)
 
-        spaceship?.setSize(50.0f, 50.0f)
+        spaceship?.setSize(50.0f / Constants.PX_PER_M, 50.0f / Constants.PX_PER_M)
+        spaceship?.x = 5.0f / Constants.PX_PER_M
+        spaceship?.y = 5.0f / Constants.PX_PER_M
 
         stage?.addActor(spaceship)
 
@@ -46,7 +60,11 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         projManager?.setStage(stage)
         projManager?.init()
 
-        Gdx.input.inputProcessor = PlayerInputListener(spaceship)
+        inputListener = PlayerInputListener(spaceship)
+        Gdx.input.inputProcessor = inputListener
+
+        debug { "Player: ${spaceship?.x} | ${spaceship?.y}" }
+        debug { "Screen: ${viewport?.worldWidth} | ${viewport?.worldHeight}" }
 
     }
 
@@ -64,11 +82,14 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         viewport?.apply()
 
         projManager?.poll()
+        inputListener?.poll()
 
-        batch?.projectionMatrix = viewport?.camera?.combined
+        batch?.projectionMatrix = camera?.combined
 
         stage?.act()
         stage?.draw()
+
+        world?.step(1.0f/60.0f, 6, 2)
     }
 
     override fun dispose() {

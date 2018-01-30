@@ -4,13 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import edu.gvsu.cis.spacejourney.Constants;
 
 public class Laser extends Projectile {
 
     public Laser(Stage stage) {
         super(stage, new TextureRegion(new Texture(Gdx.files.internal("laser.png"))));
-        setVelocity(0.0f, 200.0f);
-
+        setVelocity(0.0f, 200.0f / Constants.PX_PER_M);
+        setSize(10.0f / Constants.PX_PER_M, 10.0f / Constants.PX_PER_M);
     }
 
     @Override

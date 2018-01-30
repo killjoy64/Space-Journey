@@ -106,8 +106,6 @@ public abstract class Entity extends Actor {
         int x = (int) getX();
         int y = (int) getY();
 
-        System.out.println(screenW + " | " + screenH);
-
         return x > screenW || x < 0 || y > screenH || y < 0;
     }
 
