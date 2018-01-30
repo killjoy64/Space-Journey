@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.utils.viewport.FillViewport
 import com.badlogic.gdx.utils.viewport.FitViewport
 import edu.gvsu.cis.spacejourney.Constants
 import edu.gvsu.cis.spacejourney.SpaceJourney
@@ -51,7 +50,6 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         spaceship?.setSize(50.0f / Constants.PX_PER_M, 50.0f / Constants.PX_PER_M)
         spaceship?.x = 5.0f / Constants.PX_PER_M
         spaceship?.y = 5.0f / Constants.PX_PER_M
-        spaceship?.setSize(32.0f * 2.0f, 32.0f * 2.0f)
 
         stage?.addActor(spaceship)
 
