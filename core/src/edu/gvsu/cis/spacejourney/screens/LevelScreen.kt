@@ -5,15 +5,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.utils.viewport.FillViewport
 import com.badlogic.gdx.utils.viewport.FitViewport
-import edu.gvsu.cis.spacejourney.util.ParallaxBackground
+import edu.gvsu.cis.spacejourney.Constants
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.entities.SpaceshipEntity
-import com.badlogic.gdx.utils.viewport.ScreenViewport
-import edu.gvsu.cis.spacejourney.Constants
 import edu.gvsu.cis.spacejourney.input.PlayerInputListener
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
-import ktx.log.debug
+import edu.gvsu.cis.spacejourney.util.ParallaxBackground
+import edu.gvsu.cis.spacejourney.util.ZIndex
 
 /**
  * Where the magic happens
@@ -22,6 +22,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     private var camera: OrthographicCamera? = null
     private var viewport: FitViewport? = null
+    //private var camera: OrthographicCamera? = null
 
     private var stage : Stage? = null
     private var world: World? = null
@@ -45,26 +46,26 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         stage = Stage(viewport)
         world = World(Vector2(0.0f, 0.0f), true)
 
-        spaceship = SpaceshipEntity(stage)
+        spaceship = SpaceshipEntity(stage, this.game.assets)
 
         spaceship?.setSize(50.0f / Constants.PX_PER_M, 50.0f / Constants.PX_PER_M)
         spaceship?.x = 5.0f / Constants.PX_PER_M
         spaceship?.y = 5.0f / Constants.PX_PER_M
+        spaceship?.setSize(32.0f * 2.0f, 32.0f * 2.0f)
 
         stage?.addActor(spaceship)
 
-        background = ParallaxBackground()
+        background = ParallaxBackground(this.game.assets)
+        background?.zIndex = ZIndex.BACKGROUND
         stage?.addActor(background)
 
         projManager = ActiveProjectileManager.getInstance()
         projManager?.setStage(stage)
+        projManager?.setAssetManager(this.game.assets)
         projManager?.init()
 
         inputListener = PlayerInputListener(spaceship)
         Gdx.input.inputProcessor = inputListener
-
-        debug { "Player: ${spaceship?.x} | ${spaceship?.y}" }
-        debug { "Screen: ${viewport?.worldWidth} | ${viewport?.worldHeight}" }
 
     }
 

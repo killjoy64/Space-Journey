@@ -4,6 +4,7 @@ import edu.gvsu.cis.spacejourney.SpaceJourney
 import com.sun.awt.SecurityWarning.setPosition
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
@@ -22,6 +23,15 @@ class LoadingScreen(game : SpaceJourney) : BaseScreen(game, "LoadingScreen") {
 
     private var stage : Stage? = null
     private var progress : ProgressBar? = null
+
+    private fun actuallyLoadAssets(){
+
+        this.game.assets.load("laser.png", Texture::class.java)
+        this.game.assets.load("player_spaceship_white.png", Texture::class.java)
+        this.game.assets.load("parallax_background_layer1.png", Texture::class.java)
+        this.game.assets.load("parallax_background_layer2.png", Texture::class.java)
+
+    }
 
     override fun show() {
         super.show()
@@ -53,6 +63,8 @@ class LoadingScreen(game : SpaceJourney) : BaseScreen(game, "LoadingScreen") {
 
         // Add the progress bar to the scene
         stage?.addActor(progress)
+
+        actuallyLoadAssets()
     }
 
     override fun dispose() {
@@ -75,10 +87,10 @@ class LoadingScreen(game : SpaceJourney) : BaseScreen(game, "LoadingScreen") {
         stage?.draw()
 
         // Normally this should be updated when assets are loaded,
-        progress?.value = 100f
+        progress?.value = this.game.assets.progress * 100.0f
 
         // Once the progress bar hits max value it will start the MainMenu screen
-        if (progress?.visualPercent == 1.0f){
+        if (this.game.assets.update() && progress?.visualPercent == 1.0f){
             this.game.setScreen<MainMenuScreen>()
         }
     }
