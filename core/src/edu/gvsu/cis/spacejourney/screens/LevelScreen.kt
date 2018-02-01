@@ -21,10 +21,13 @@ import edu.gvsu.cis.spacejourney.util.ZIndex
 class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     private var camera: OrthographicCamera? = null
-    private var viewport: FitViewport? = null
-    //private var camera: OrthographicCamera? = null
-
+    private var viewport: FillViewport? = null
     private var stage : Stage? = null
+
+    private var overlayCam: OrthographicCamera? = null
+    private var overlayViewport: FillViewport? = null
+    private var overlayStage: Stage? = null
+
     private var world: World? = null
 
     private var background : ParallaxBackground? = null
@@ -37,13 +40,14 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         super.show()
 
         camera = OrthographicCamera()
-        viewport = FitViewport(Constants.VIRTUAL_WIDTH / Constants.PX_PER_M,
+        viewport = FillViewport(Constants.VIRTUAL_WIDTH / Constants.PX_PER_M,
                 Constants.VIRTUAL_HEIGHT / Constants.PX_PER_M, camera)
-//        viewport?.worldWidth = Constants.VIRTUAL_WIDTH / Constants.PX_PER_M
-//        viewport?.worldHeight = Constants.VIRTUAL_HEIGHT / Constants.PX_PER_M
-//        viewport?.unitsPerPixel = Gdx.graphics.density
-
         stage = Stage(viewport)
+
+        overlayCam = OrthographicCamera()
+        overlayViewport = FillViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT, overlayCam)
+        overlayStage = Stage(overlayViewport)
+
         world = World(Vector2(0.0f, 0.0f), true)
 
         spaceship = SpaceshipEntity(stage, this.game.assets)
@@ -51,7 +55,6 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         spaceship?.setSize(50.0f / Constants.PX_PER_M, 50.0f / Constants.PX_PER_M)
         spaceship?.x = 5.0f / Constants.PX_PER_M
         spaceship?.y = 5.0f / Constants.PX_PER_M
-        spaceship?.setSize(32.0f * 2.0f, 32.0f * 2.0f)
 
         stage?.addActor(spaceship)
 
@@ -90,6 +93,8 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         stage?.act()
         stage?.draw()
 
+        overlayStage?.draw()
+
         world?.step(1.0f/60.0f, 6, 2)
     }
 
@@ -97,6 +102,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         batch?.dispose()
         spaceship?.dispose()
         stage?.dispose()
+        overlayStage?.dispose()
     }
 
 }

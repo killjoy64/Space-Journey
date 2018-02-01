@@ -37,14 +37,9 @@ class ParallaxBackground(val assets : AssetManager) : Actor(), Disposable {
     override fun draw(batch: Batch?, parentAlpha: Float) {
         super.draw(batch, parentAlpha)
 
-<<<<<<< HEAD
-        batch?.draw(region, 0f, 0f, Constants.VIRTUAL_WIDTH / Constants.PX_PER_M,
-                Constants.VIRTUAL_HEIGHT / Constants.PX_PER_M)
-=======
         for (layer in this.layers) {
             batch?.draw(layer.region, 0f, 0f, this.stage.viewport.worldWidth, this.stage.viewport.worldHeight)
         }
->>>>>>> 83b2c45d4c1aceb679a7fa383bdc144719268a5a
 
         this.zIndex = ZIndex.BACKGROUND
     }

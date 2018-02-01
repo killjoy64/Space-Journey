@@ -8,7 +8,7 @@ import edu.gvsu.cis.spacejourney.Constants;
 
 public class Laser extends Projectile {
 
-    public Laser(Stage stage) {
+    public Laser(Stage stage, AssetManager assets) {
         super(stage, new TextureRegion(assets.get("laser.png", Texture.class)));
         setVelocity(0.0f, 200.0f / Constants.PX_PER_M);
         setSize(10.0f / Constants.PX_PER_M, 10.0f / Constants.PX_PER_M);
