@@ -4,13 +4,9 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Disposable
-import edu.gvsu.cis.spacejourney.Constants
-import ktx.app.use
-import ktx.collections.GdxArray
 import java.util.*
 
 class ParallaxLayer (
@@ -36,7 +32,6 @@ class ParallaxBackground(val assets : AssetManager) : Actor(), Disposable {
 
     override fun draw(batch: Batch?, parentAlpha: Float) {
         super.draw(batch, parentAlpha)
-
         for (layer in this.layers) {
             batch?.draw(layer.region, 0f, 0f, this.stage.viewport.worldWidth, this.stage.viewport.worldHeight)
         }
