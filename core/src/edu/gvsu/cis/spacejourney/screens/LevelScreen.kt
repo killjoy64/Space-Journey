@@ -78,10 +78,10 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         val table : Table? = Table()
         table?.setFillParent(true)
-        table?.add(Label("Hello World!", Label.LabelStyle(
-                BitmapFont(Gdx.files.internal("fonts/default.fnt")),
-                Color.YELLOW
-        )))
+//        table?.add(Label("Hello World!", Label.LabelStyle(
+//                BitmapFont(Gdx.files.internal("fonts/default.fnt")),
+//                Color.YELLOW
+//        )))
 
         overlayStage?.addActor(table)
     }
