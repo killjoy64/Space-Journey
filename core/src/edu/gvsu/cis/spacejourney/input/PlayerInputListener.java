@@ -27,7 +27,7 @@ public class PlayerInputListener implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
 
-        float moveSpeed = 300.0f / Constants.PX_PER_M;
+        float moveSpeed = 5.0f * Constants.PX_PER_M;
 
         if (keycode == Input.Keys.W) {
             this.player.setVelocityY(moveSpeed);
