@@ -39,5 +39,4 @@ class SpaceJourney : KtxGame<BaseScreen>() {
         this.setScreen<LoadingScreen>()
     }
 
-
 }

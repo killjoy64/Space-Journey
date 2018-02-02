@@ -2,10 +2,12 @@ package edu.gvsu.cis.spacejourney.screens
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
 
@@ -19,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport
 import edu.gvsu.cis.spacejourney.Constants
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.entities.SpaceshipEntity
+import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship
 import edu.gvsu.cis.spacejourney.input.PlayerInputListener
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
 import edu.gvsu.cis.spacejourney.util.ParallaxBackground
@@ -28,6 +31,8 @@ import edu.gvsu.cis.spacejourney.util.ZIndex
  * Where the magic happens
  */
 class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
+
+    private var debugRenderer: Box2DDebugRenderer? = null
 
     private var camera: OrthographicCamera? = null
     private var viewport: FitViewport? = null
@@ -41,6 +46,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     private var background : ParallaxBackground? = null
     private var spaceship: SpaceshipEntity? = null
+    private var player: PlayerSpaceship? = null
 
     private var projManager: ActiveProjectileManager? = null
     private var inputListener: PlayerInputListener? = null
@@ -49,7 +55,8 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         super.show()
 
         camera = OrthographicCamera()
-        viewport = FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT)
+        viewport = FitViewport(Constants.VIRTUAL_WIDTH / Constants.PX_PER_M,
+                Constants.VIRTUAL_HEIGHT / Constants.PX_PER_M, camera)
         stage = Stage(viewport)
 
         overlayCam = OrthographicCamera()
@@ -58,13 +65,24 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         world = World(Vector2(0.0f, 0.0f), true)
 
-        spaceship = SpaceshipEntity(stage, this.game.assets)
+        debugRenderer = Box2DDebugRenderer()
+
+        spaceship = SpaceshipEntity(stage, world, this.game.assets)
 
         spaceship?.setSize(50.0f, 50.0f)
         spaceship?.x = 5.0f / Constants.PX_PER_M
         spaceship?.y = 5.0f / Constants.PX_PER_M
+//        spaceship?.createBody()
 
-        stage?.addActor(spaceship)
+        player = PlayerSpaceship()
+        player?.setPosition(1.0f, 100.0f)
+        player?.width = 100.0f
+        player?.height = 100.0f
+        player?.x = 10.0f
+        player?.createBody(world)
+
+//        stage?.addActor(spaceship)
+        stage?.addActor(player)
 
         background = ParallaxBackground(this.game.assets)
         background?.zIndex = ZIndex.BACKGROUND
@@ -73,6 +91,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         projManager = ActiveProjectileManager.getInstance()
         projManager?.setStage(stage)
         projManager?.setAssetManager(this.game.assets)
+        projManager?.setWorld(world)
         projManager?.init()
 
         inputListener = PlayerInputListener(spaceship)
@@ -93,12 +112,16 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         super.resize(width, height)
 
         viewport?.update(width, height, true)
+        overlayViewport?.update(width, height)
 
-        overlayViewport?.update(width, height);
+        camera?.update()
     }
 
     override fun render(delta: Float) {
         super.render(delta)
+
+        Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         viewport?.apply()
 
@@ -106,6 +129,9 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         inputListener?.poll()
 
         camera?.update()
+
+        debugRenderer?.render(world, camera?.combined)
+
         batch?.projectionMatrix = camera?.combined
 
         stage?.act()

@@ -10,6 +10,7 @@ public class ZIndex {
     public static int BACKGROUND = 2;
     public static int ENTITY = 5;
     public static int PLAYER = 50;
+    public static int PROJECTILES = 51;
     public static int ENEMY = 5;
     public static int GUI = 100;
 

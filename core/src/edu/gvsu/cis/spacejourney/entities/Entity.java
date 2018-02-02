@@ -5,14 +5,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import edu.gvsu.cis.spacejourney.util.ZIndex;
 
-public abstract class Entity extends Actor {
+public abstract class Entity extends Actor implements Collidable {
 
-    private Stage stage;
+    Stage stage;
+    World world;
+
     private Texture spriteSheet;
     private TextureRegion currentSprite;
 
@@ -20,8 +23,9 @@ public abstract class Entity extends Actor {
     private float height;
     private Vector2 velocity;
 
-    public Entity(Stage stage, TextureRegion region) {
+    public Entity(Stage stage, World world, TextureRegion region) {
         this.stage = stage;
+        this.world = world;
         this.currentSprite = region;
         this.spriteSheet = null;
         this.velocity = new Vector2(0.0f, 0.0f);
@@ -30,8 +34,9 @@ public abstract class Entity extends Actor {
         this.setZIndex(ZIndex.ENTITY);
     }
 
-    public Entity(Stage stage, Texture spriteSheet) {
+    public Entity(Stage stage, World world, Texture spriteSheet) {
         this.stage = stage;
+        this.world = world;
         this.spriteSheet = spriteSheet;
         this.velocity = new Vector2(0.0f, 0.0f);
         this.width = 10.0f;
@@ -65,7 +70,6 @@ public abstract class Entity extends Actor {
     @Override
     public void act(float delta) {
         super.act(delta);
-
         float oldX = this.getX();
         float oldY = this.getY();
 
@@ -107,6 +111,20 @@ public abstract class Entity extends Actor {
         int y = (int) getY();
 
         return x > screenW || x < 0 || y > screenH || y < 0;
+    }
+
+    public boolean outOfBoundsX() {
+        int screenW = (int) this.stage.getViewport().getWorldWidth();
+        int x = (int) getX();
+
+        return x > screenW || x < 0;
+    }
+
+    public boolean outOfBoundsY() {
+        int screenH = (int) this.stage.getViewport().getWorldHeight();
+        int y = (int) getY();
+
+        return y > screenH || y < 0;
     }
 
     public void setVelocity(float x, float y) {

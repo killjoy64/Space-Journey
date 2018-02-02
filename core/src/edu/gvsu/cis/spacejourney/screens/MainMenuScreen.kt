@@ -45,8 +45,8 @@ class MainMenuScreen(game : SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
         font = BitmapFont(Gdx.files.internal("fonts/default.fnt"))
         font?.data?.scale(0.175f)
 
-        option1 = Label(String.format(Strings.MENU_OPTION_1, ""), Label.LabelStyle(font, Color.WHITE))
-        option2 = Label(String.format(Strings.MENU_OPTION_2, ""), Label.LabelStyle(font, Color.WHITE))
+        option1 = Label(String.format(Strings.MENU_OPTION_1, "  "), Label.LabelStyle(font, Color.WHITE))
+        option2 = Label(String.format(Strings.MENU_OPTION_2, "  "), Label.LabelStyle(font, Color.WHITE))
 
         screenData?.setFillParent(true)
         screenData?.add(Label(Strings.GAME_TITLE, Label.LabelStyle(font, Color.WHITE)))?.expandX
@@ -59,6 +59,8 @@ class MainMenuScreen(game : SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
 
         inputListener = MainMenuInputListener(2)
         Gdx.input.inputProcessor = inputListener
+
+        this.game.setScreen<LevelScreen>()
     }
 
     override fun dispose() {
@@ -77,9 +79,9 @@ class MainMenuScreen(game : SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
 
         if (inputListener!!.currentChoice == 1) {
             option1?.setText(String.format(Strings.MENU_OPTION_1, "->"))
-            option2?.setText(String.format(Strings.MENU_OPTION_2, ""))
+            option2?.setText(String.format(Strings.MENU_OPTION_2, "  "))
         } else if (inputListener!!.currentChoice == 2) {
-            option1?.setText(String.format(Strings.MENU_OPTION_1, ""))
+            option1?.setText(String.format(Strings.MENU_OPTION_1, "  "))
             option2?.setText(String.format(Strings.MENU_OPTION_2, "->"))
         }
 

@@ -1,6 +1,7 @@
 package edu.gvsu.cis.spacejourney.entities.projectiles;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import edu.gvsu.cis.spacejourney.entities.Entity;
@@ -9,8 +10,8 @@ public abstract class Projectile extends Entity implements Poolable {
 
     private boolean isAlive;
 
-    public Projectile(Stage stage, TextureRegion region) {
-        super(stage, region);
+    public Projectile(Stage stage, World world, TextureRegion region) {
+        super(stage, world, region);
         this.isAlive = false;
     }
 

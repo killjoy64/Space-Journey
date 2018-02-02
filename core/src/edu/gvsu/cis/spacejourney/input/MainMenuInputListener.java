@@ -30,7 +30,7 @@ public class MainMenuInputListener implements InputProcessor {
             if (currentChoice > 1) {
                 currentChoice--;
             } else {
-                currentChoice = 1;
+                currentChoice = maxChoices;
             }
         }
 
