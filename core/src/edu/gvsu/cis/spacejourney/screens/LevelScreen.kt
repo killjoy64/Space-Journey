@@ -5,7 +5,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.badlogic.gdx.utils.viewport.FillViewport
 import com.badlogic.gdx.utils.viewport.FitViewport
+import com.badlogic.gdx.utils.viewport.ScreenViewport
 import edu.gvsu.cis.spacejourney.Constants
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.entities.SpaceshipEntity
@@ -20,7 +23,7 @@ import edu.gvsu.cis.spacejourney.util.ZIndex
 class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     private var camera: OrthographicCamera? = null
-    private var viewport: FillViewport? = null
+    private var viewport: FitViewport? = null
     private var stage : Stage? = null
 
     private var overlayCam: OrthographicCamera? = null
@@ -39,8 +42,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         super.show()
 
         camera = OrthographicCamera()
-        viewport = FillViewport(Constants.VIRTUAL_WIDTH / Constants.PX_PER_M,
-                Constants.VIRTUAL_HEIGHT / Constants.PX_PER_M, camera)
+        viewport = FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT)
         stage = Stage(viewport)
 
         overlayCam = OrthographicCamera()
@@ -51,7 +53,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         spaceship = SpaceshipEntity(stage, this.game.assets)
 
-        spaceship?.setSize(50.0f / Constants.PX_PER_M, 50.0f / Constants.PX_PER_M)
+        spaceship?.setSize(50.0f, 50.0f)
         spaceship?.x = 5.0f / Constants.PX_PER_M
         spaceship?.y = 5.0f / Constants.PX_PER_M
 
@@ -77,6 +79,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         viewport?.update(width, height, true)
 
+        overlayViewport?.update(width, height);
     }
 
     override fun render(delta: Float) {
@@ -87,6 +90,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         projManager?.poll()
         inputListener?.poll()
 
+        camera?.update()
         batch?.projectionMatrix = camera?.combined
 
         stage?.act()
