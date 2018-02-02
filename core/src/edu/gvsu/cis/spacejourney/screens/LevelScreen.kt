@@ -1,11 +1,18 @@
 package edu.gvsu.cis.spacejourney.screens
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
+
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.badlogic.gdx.scenes.scene2d.ui.Image
+import com.badlogic.gdx.scenes.scene2d.ui.Label
+import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.viewport.FillViewport
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.ScreenViewport
@@ -71,6 +78,14 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         inputListener = PlayerInputListener(spaceship)
         Gdx.input.inputProcessor = inputListener
 
+        val table : Table? = Table()
+        table?.setFillParent(true)
+        table?.add(Label("Hello World!", Label.LabelStyle(
+                BitmapFont(Gdx.files.internal("fonts/default.fnt")),
+                Color.YELLOW
+        )))
+
+        overlayStage?.addActor(table)
     }
 
     // Be mindful about nullable-types, as resize is called before show
@@ -96,6 +111,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         stage?.act()
         stage?.draw()
 
+        overlayStage?.act()
         overlayStage?.draw()
 
         world?.step(1.0f/60.0f, 6, 2)

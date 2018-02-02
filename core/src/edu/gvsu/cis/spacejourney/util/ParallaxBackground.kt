@@ -33,7 +33,7 @@ class ParallaxLayer (
 class ParallaxBackground(val assets : AssetManager) : Actor(), Disposable {
 
     var layers : Vector<ParallaxLayer> = Vector()
-    
+
     init {
         layers.add(ParallaxLayer(assets.get("parallax_background_layer2.png", Texture::class.java), 0.0015f, ZIndex.PARALLAX_BACKGROUND_LAYER3))
         layers.add(ParallaxLayer(assets.get("parallax_background_layer1.png", Texture::class.java), 0.05f, ZIndex.PARALLAX_BACKGROUND_LAYER2))
