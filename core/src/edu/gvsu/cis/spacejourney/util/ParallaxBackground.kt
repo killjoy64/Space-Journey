@@ -23,6 +23,7 @@ class ParallaxLayer (
         this.region = TextureRegion(texture)
         this.region?.setRegion(0, 0, Gdx.graphics.width, Gdx.graphics.height)
         this.texture?.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat)
+        this.texture?.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest)
     }
 
     fun dispose() {
@@ -35,11 +36,13 @@ class ParallaxBackground(val assets : AssetManager) : Actor(), Disposable {
     var layers : Vector<ParallaxLayer> = Vector()
 
     init {
+        layers.add(ParallaxLayer(assets.get("parallax_background_layer3.png", Texture::class.java), 0.0020f, ZIndex.PARALLAX_BACKGROUND_LAYER2))
         layers.add(ParallaxLayer(assets.get("parallax_background_layer2.png", Texture::class.java), 0.0015f, ZIndex.PARALLAX_BACKGROUND_LAYER3))
         layers.add(ParallaxLayer(assets.get("parallax_background_layer1.png", Texture::class.java), 0.05f, ZIndex.PARALLAX_BACKGROUND_LAYER2))
         layers.last().offset = Vector2(5.0f, 50.0f)
 
         layers.add(ParallaxLayer(assets.get("parallax_background_layer1.png", Texture::class.java), 0.15f, ZIndex.PARALLAX_BACKGROUND_LAYER1))
+
     }
 
     override fun draw(batch: Batch?, parentAlpha: Float) {

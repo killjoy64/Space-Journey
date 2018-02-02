@@ -24,13 +24,14 @@ class LoadingScreen(game : SpaceJourney) : BaseScreen(game, "LoadingScreen") {
     private var stage : Stage? = null
     private var progress : ProgressBar? = null
 
+    // Add any assets that need be loaded here and reference them via game.assets in other screens
     private fun actuallyLoadAssets(){
 
         this.game.assets.load("laser.png", Texture::class.java)
         this.game.assets.load("player_spaceship_white.png", Texture::class.java)
         this.game.assets.load("parallax_background_layer1.png", Texture::class.java)
         this.game.assets.load("parallax_background_layer2.png", Texture::class.java)
-
+        this.game.assets.load("parallax_background_layer3.png", Texture::class.java)
     }
 
     override fun show() {
