@@ -45,7 +45,6 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
     private var world: World? = null
 
     private var background : ParallaxBackground? = null
-    private var spaceship: SpaceshipEntity? = null
     private var player: PlayerSpaceship? = null
 
     private var projManager: ActiveProjectileManager? = null
@@ -67,32 +66,26 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         debugRenderer = Box2DDebugRenderer()
 
-        spaceship = SpaceshipEntity(stage, world, this.game.assets)
-
-        spaceship?.setSize(50.0f, 50.0f)
-        spaceship?.x = 5.0f / Constants.PX_PER_M
-        spaceship?.y = 5.0f / Constants.PX_PER_M
-//        spaceship?.createBody()
-
-        player = PlayerSpaceship()
+        // For whatever reason, we use PX_PER_M for position,
+        // but we use regular for width/height.
+        player = PlayerSpaceship(stage)
         player?.setPosition(1.5f, 0.0f)
         player?.width = 50.0f
         player?.height = 50.0f
         player?.createBody(world)
-//        stage?.addActor(spaceship)
+
         stage?.addActor(player)
 
-        background = ParallaxBackground(this.game.assets)
+        background = ParallaxBackground()
         background?.zIndex = ZIndex.BACKGROUND
         stage?.addActor(background)
 
         projManager = ActiveProjectileManager.getInstance()
         projManager?.setStage(stage)
-        projManager?.setAssetManager(this.game.assets)
         projManager?.setWorld(world)
         projManager?.init()
 
-        inputListener = PlayerInputListener(spaceship)
+        inputListener = PlayerInputListener(player)
         Gdx.input.inputProcessor = inputListener
 
         val table : Table? = Table()
@@ -143,7 +136,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     override fun dispose() {
         batch?.dispose()
-        spaceship?.dispose()
+        player?.dispose()
         stage?.dispose()
         overlayStage?.dispose()
     }

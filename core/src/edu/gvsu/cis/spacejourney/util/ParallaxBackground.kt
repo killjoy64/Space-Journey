@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Disposable
-import ktx.math.plus
+import edu.gvsu.cis.spacejourney.SpaceJourney
 import java.util.*
 
 class ParallaxLayer (
@@ -31,17 +31,17 @@ class ParallaxLayer (
     }
 }
 
-class ParallaxBackground(val assets : AssetManager) : Actor(), Disposable {
+class ParallaxBackground() : Actor(), Disposable {
 
     var layers : Vector<ParallaxLayer> = Vector()
 
     init {
-        layers.add(ParallaxLayer(assets.get("parallax_background_layer3.png", Texture::class.java), 0.0020f, ZIndex.PARALLAX_BACKGROUND_LAYER2))
-        layers.add(ParallaxLayer(assets.get("parallax_background_layer2.png", Texture::class.java), 0.0015f, ZIndex.PARALLAX_BACKGROUND_LAYER3))
-        layers.add(ParallaxLayer(assets.get("parallax_background_layer1.png", Texture::class.java), 0.05f, ZIndex.PARALLAX_BACKGROUND_LAYER2))
+        layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer3.png", Texture::class.java), 0.0020f, ZIndex.PARALLAX_BACKGROUND_LAYER2))
+        layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer2.png", Texture::class.java), 0.0015f, ZIndex.PARALLAX_BACKGROUND_LAYER3))
+        layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer1.png", Texture::class.java), 0.05f, ZIndex.PARALLAX_BACKGROUND_LAYER2))
         layers.last().offset = Vector2(5.0f, 50.0f)
 
-        layers.add(ParallaxLayer(assets.get("parallax_background_layer1.png", Texture::class.java), 0.15f, ZIndex.PARALLAX_BACKGROUND_LAYER1))
+        layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer1.png", Texture::class.java), 0.15f, ZIndex.PARALLAX_BACKGROUND_LAYER1))
 
     }
 

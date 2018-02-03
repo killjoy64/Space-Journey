@@ -2,9 +2,11 @@ package edu.gvsu.cis.spacejourney.input;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
 import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.entities.Direction;
 import edu.gvsu.cis.spacejourney.entities.SpaceshipEntity;
+import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship;
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager;
 
 /**
@@ -12,13 +14,13 @@ import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager;
  */
 public class PlayerInputListener implements InputProcessor {
 
-    private SpaceshipEntity player;
+    private PlayerSpaceship player;
     private ActiveProjectileManager projManager;
 
 
     private boolean[] keys;
 
-    public PlayerInputListener(SpaceshipEntity player) {
+    public PlayerInputListener(PlayerSpaceship player) {
         this.player = player;
         this.projManager = ActiveProjectileManager.getInstance();
         this.keys = new boolean[255];
@@ -26,26 +28,10 @@ public class PlayerInputListener implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-
-        float moveSpeed = 5.0f * Constants.PX_PER_M;
-
-        if (keycode == Input.Keys.W) {
-            this.player.setVelocityY(moveSpeed);
-        }
-        if (keycode == Input.Keys.A) {
-            this.player.setVelocityX(-moveSpeed);
-        }
-        if (keycode == Input.Keys.S) {
-            this.player.setVelocityY(-moveSpeed);
-        }
-        if (keycode == Input.Keys.D) {
-            this.player.setVelocityX(moveSpeed);
-        }
-
         if (keycode == Input.Keys.SPACE) {
-            float x = this.player.getX() + (this.player.getWidth() / 2);
-            float y = this.player.getY() + (this.player.getHeight());
-            this.projManager.spawnLaser(x, y);
+            float x = (this.player.getX() + (this.player.getWidth() / 2)) / Constants.PX_PER_M;
+            float y = (this.player.getY() + (this.player.getHeight())) / Constants.PX_PER_M;
+            this.projManager.spawnLaser(x, y); // TODO - Make sure is till working.
         }
 
         this.keys[keycode] = true;
@@ -55,24 +41,7 @@ public class PlayerInputListener implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-
-        float moveSpeed = 0.0f;
-
-        if (keycode == Input.Keys.W) {
-            this.player.setVelocityY(moveSpeed);
-        }
-        if (keycode == Input.Keys.A) {
-            this.player.setVelocityX(-moveSpeed);
-        }
-        if (keycode == Input.Keys.S) {
-            this.player.setVelocityY(-moveSpeed);
-        }
-        if (keycode == Input.Keys.D) {
-            this.player.setVelocityX(moveSpeed);
-        }
-
         this.keys[keycode] = false;
-
         return false;
     }
 
@@ -107,7 +76,15 @@ public class PlayerInputListener implements InputProcessor {
     }
 
     public void poll() {
-
+        if (keys[Input.Keys.D]) {
+            player.getBody().applyLinearImpulse(new Vector2(0.1f, 0.0f), player.getBody().getWorldCenter(), true);
+        } else if (keys[Input.Keys.A]) {
+            player.getBody().applyLinearImpulse(new Vector2(-0.1f, 0.0f), player.getBody().getWorldCenter(), true);
+        } else if (keys[Input.Keys.W]) {
+            player.getBody().applyLinearImpulse(new Vector2(0.0f, 0.1f), player.getBody().getWorldCenter(), true);
+        } else if (keys[Input.Keys.S]) {
+            player.getBody().applyLinearImpulse(new Vector2(0.0f, -0.1f), player.getBody().getWorldCenter(), true);
+        }
     }
 
 }

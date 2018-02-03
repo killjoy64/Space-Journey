@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import edu.gvsu.cis.spacejourney.Constants;
@@ -11,9 +12,11 @@ import edu.gvsu.cis.spacejourney.Constants;
 public abstract class Entity extends Actor implements Collidable, Disposable {
 
     private Body body;
+    private Stage stage;
     private TextureRegion texture;
 
-    public Entity(TextureRegion textureRegion) {
+    public Entity(Stage stage, TextureRegion textureRegion) {
+        this.stage = stage;
         this.texture = textureRegion;
         this.setPosition(0.0f, 0.0f);
     }
@@ -50,6 +53,15 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
         }
 
         return frames;
+    }
+
+    public boolean outOfBounds() {
+        int screenW = (int) (this.stage.getViewport().getWorldWidth() * Constants.PX_PER_M);
+        int screenH = (int) (this.stage.getViewport().getWorldHeight() * Constants.PX_PER_M);
+        int x = (int) getX();
+        int y = (int) getY();
+
+        return x > screenW || x < 0 || y > screenH || y < 0;
     }
 
     public void setBody(Body body) {

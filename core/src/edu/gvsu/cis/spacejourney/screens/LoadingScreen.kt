@@ -27,11 +27,11 @@ class LoadingScreen(game : SpaceJourney) : BaseScreen(game, "LoadingScreen") {
     // Add any assets that need be loaded here and reference them via game.assets in other screens
     private fun actuallyLoadAssets(){
 
-        this.game.assets.load("laser.png", Texture::class.java)
-        this.game.assets.load("player_spaceship_white.png", Texture::class.java)
-        this.game.assets.load("parallax_background_layer1.png", Texture::class.java)
-        this.game.assets.load("parallax_background_layer2.png", Texture::class.java)
-        this.game.assets.load("parallax_background_layer3.png", Texture::class.java)
+        SpaceJourney.assetManager.load("laser.png", Texture::class.java)
+        SpaceJourney.assetManager.load("player_spaceship_white.png", Texture::class.java)
+        SpaceJourney.assetManager.load("parallax_background_layer1.png", Texture::class.java)
+        SpaceJourney.assetManager.load("parallax_background_layer2.png", Texture::class.java)
+        SpaceJourney.assetManager.load("parallax_background_layer3.png", Texture::class.java)
     }
 
     override fun show() {
@@ -88,10 +88,10 @@ class LoadingScreen(game : SpaceJourney) : BaseScreen(game, "LoadingScreen") {
         stage?.draw()
 
         // Normally this should be updated when assets are loaded,
-        progress?.value = this.game.assets.progress * 100.0f
+        progress?.value = SpaceJourney.assetManager.progress * 100.0f
 
         // Once the progress bar hits max value it will start the MainMenu screen
-        if (this.game.assets.update() && progress?.visualPercent == 1.0f){
+        if (SpaceJourney.assetManager.update() && progress?.visualPercent == 1.0f){
             this.game.setScreen<MainMenuScreen>()
         }
     }

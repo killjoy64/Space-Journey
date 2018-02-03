@@ -1,16 +1,29 @@
-package edu.gvsu.cis.spacejourney.entity;
+package edu.gvsu.cis.spacejourney.entity.projectile;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.SpaceJourney;
+import edu.gvsu.cis.spacejourney.util.ZIndex;
 
-public class PlayerSpaceship extends Entity {
+/**
+ * Created by Kyle Flynn on 2/3/2018.
+ */
+public class Laser extends Projectile {
 
-    public PlayerSpaceship(Stage stage) {
-        super(stage, new TextureRegion(SpaceJourney.Companion.getAssetManager().get("player_spaceship_white.png", Texture.class)));
+    public Laser(Stage stage) {
+        super(stage, new TextureRegion(SpaceJourney.Companion.getAssetManager().get("laser.png", Texture.class)));
+        setZIndex(ZIndex.PROJECTILES);
+    }
+
+    @Override
+    public void spawn(World world, float x, float y) {
+        super.spawn(world, x, y);
+
+        getBody().applyLinearImpulse(new Vector2(0.0f, 1.f), getBody().getWorldCenter(), true);
     }
 
     @Override
@@ -27,7 +40,6 @@ public class PlayerSpaceship extends Entity {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = square;
-        fixtureDef.restitution = 0.0f;
 
         body.createFixture(fixtureDef);
 
@@ -40,4 +52,5 @@ public class PlayerSpaceship extends Entity {
     public void dispose() {
 
     }
+
 }
