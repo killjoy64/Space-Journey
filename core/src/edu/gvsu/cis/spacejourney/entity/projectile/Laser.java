@@ -23,7 +23,7 @@ public class Laser extends Projectile {
     public void spawn(World world, float x, float y) {
         super.spawn(world, x, y);
 
-        getBody().applyLinearImpulse(new Vector2(0.0f, 1.f), getBody().getWorldCenter(), true);
+        getBody().applyLinearImpulse(new Vector2(0.0f, 1.5f), getBody().getWorldCenter(), true);
     }
 
     @Override
@@ -40,6 +40,7 @@ public class Laser extends Projectile {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = square;
+        fixtureDef.isSensor = true;
 
         body.createFixture(fixtureDef);
 

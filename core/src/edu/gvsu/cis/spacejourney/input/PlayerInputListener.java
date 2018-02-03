@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.entities.Direction;
 import edu.gvsu.cis.spacejourney.entities.SpaceshipEntity;
+import edu.gvsu.cis.spacejourney.entity.EntityDirection;
 import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship;
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager;
 
@@ -77,13 +78,16 @@ public class PlayerInputListener implements InputProcessor {
 
     public void poll() {
         if (keys[Input.Keys.D]) {
-            player.getBody().applyLinearImpulse(new Vector2(0.1f, 0.0f), player.getBody().getWorldCenter(), true);
-        } else if (keys[Input.Keys.A]) {
-            player.getBody().applyLinearImpulse(new Vector2(-0.1f, 0.0f), player.getBody().getWorldCenter(), true);
-        } else if (keys[Input.Keys.W]) {
-            player.getBody().applyLinearImpulse(new Vector2(0.0f, 0.1f), player.getBody().getWorldCenter(), true);
-        } else if (keys[Input.Keys.S]) {
-            player.getBody().applyLinearImpulse(new Vector2(0.0f, -0.1f), player.getBody().getWorldCenter(), true);
+            player.move(EntityDirection.RIGHT);
+        }
+        if (keys[Input.Keys.A]) {
+            player.move(EntityDirection.LEFT);
+        }
+        if (keys[Input.Keys.W]) {
+            player.move(EntityDirection.UP);
+        }
+        if (keys[Input.Keys.S]) {
+            player.move(EntityDirection.DOWN);
         }
     }
 

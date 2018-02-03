@@ -60,8 +60,10 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
         int screenH = (int) (this.stage.getViewport().getWorldHeight() * Constants.PX_PER_M);
         int x = (int) getX();
         int y = (int) getY();
+        int w = (int) getWidth();
+        int h = (int) getHeight();
 
-        return x > screenW || x < 0 || y > screenH || y < 0;
+        return (x + w) > screenW || x < 0 || (y + h) > screenH || y < 0;
     }
 
     public void setBody(Body body) {

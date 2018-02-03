@@ -53,6 +53,7 @@ public class SpaceshipEntity extends Entity {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = circle;
+        fixtureDef.isSensor = true;
         fixtureDef.restitution = 0.0f;
 
         body.createFixture(fixtureDef);
