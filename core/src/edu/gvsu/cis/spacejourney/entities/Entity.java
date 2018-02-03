@@ -110,6 +110,8 @@ public abstract class Entity extends Actor implements Collidable {
         int x = (int) getX();
         int y = (int) getY();
 
+        System.out.println(screenW);
+
         return x > screenW || x < 0 || y > screenH || y < 0;
     }
 
