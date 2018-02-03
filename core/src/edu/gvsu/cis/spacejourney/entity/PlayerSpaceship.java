@@ -10,7 +10,7 @@ import edu.gvsu.cis.spacejourney.SpaceJourney;
 public class PlayerSpaceship extends Entity {
 
     public PlayerSpaceship(Stage stage) {
-        super(stage, new TextureRegion(SpaceJourney.Companion.getAssetManager().get("player_spaceship_white.png", Texture.class)));
+        super(stage, new TextureRegion(SpaceJourney.Companion.getAssetManager().get("spaceship2.png", Texture.class)));
     }
 
     @Override

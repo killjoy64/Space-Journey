@@ -12,7 +12,7 @@ import edu.gvsu.cis.spacejourney.util.ZIndex;
 public class SpaceshipEntity extends Entity {
 
     public SpaceshipEntity(Stage stage, World world, AssetManager assets) {
-        super(stage, world, new TextureRegion(assets.get("player_spaceship_white.png", Texture.class)));
+        super(stage, world, new TextureRegion(assets.get("spaceship2.png", Texture.class)));
         this.getTextureRegion().getTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         this.setZIndex(ZIndex.PLAYER);
     }
