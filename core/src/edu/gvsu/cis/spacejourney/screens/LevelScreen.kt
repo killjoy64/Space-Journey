@@ -24,6 +24,7 @@ import edu.gvsu.cis.spacejourney.entities.SpaceshipEntity
 import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship
 import edu.gvsu.cis.spacejourney.input.PlayerInputListener
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
+import edu.gvsu.cis.spacejourney.screens.hud.DefaultHUD
 import edu.gvsu.cis.spacejourney.util.ParallaxBackground
 import edu.gvsu.cis.spacejourney.util.ZIndex
 
@@ -46,6 +47,8 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     private var background : ParallaxBackground? = null
     private var player: PlayerSpaceship? = null
+
+    private var hudTable: DefaultHUD? = null
 
     private var projManager: ActiveProjectileManager? = null
     private var inputListener: PlayerInputListener? = null
@@ -88,14 +91,13 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         inputListener = PlayerInputListener(player)
         Gdx.input.inputProcessor = inputListener
 
-        val table : Table? = Table()
-        table?.setFillParent(true)
+        hudTable = DefaultHUD()
 //        table?.add(Label("Hello World!", Label.LabelStyle(
 //                BitmapFont(Gdx.files.internal("fonts/default.fnt")),
 //                Color.YELLOW
 //        )))
 
-        overlayStage?.addActor(table)
+        overlayStage?.addActor(hudTable)
     }
 
     // Be mindful about nullable-types, as resize is called before show

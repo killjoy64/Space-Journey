@@ -32,6 +32,13 @@ public class PlayerInputListener implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.SPACE) {
+            float x = (this.player.getX() + (this.player.getWidth() / 2)) / Constants.PX_PER_M;
+            float y = (this.player.getY() + (this.player.getHeight())) / Constants.PX_PER_M;
+            this.projManager.spawnLaser(x, y);
+            this.time = 0.0f;
+        }
+
         this.keys[keycode] = true;
         return false;
     }

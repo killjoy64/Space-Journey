@@ -9,7 +9,7 @@ import edu.gvsu.cis.spacejourney.SpaceJourney;
 
 public class PlayerSpaceship extends Entity {
 
-    private final float moveSpeed = 1.5f;
+    private final float moveSpeed = 2.0f;
 
     private EntityDirection direction;
 
