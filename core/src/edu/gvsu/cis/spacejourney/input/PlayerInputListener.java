@@ -15,28 +15,24 @@ import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager;
  */
 public class PlayerInputListener implements InputProcessor {
 
+    private final float spawnFrequency = 0.1f;
+
     private PlayerSpaceship player;
     private ActiveProjectileManager projManager;
-
+    private float time;
 
     private boolean[] keys;
 
     public PlayerInputListener(PlayerSpaceship player) {
         this.player = player;
         this.projManager = ActiveProjectileManager.getInstance();
+        this.time = 0.0f;
         this.keys = new boolean[255];
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.SPACE) {
-            float x = (this.player.getX() + (this.player.getWidth() / 2)) / Constants.PX_PER_M;
-            float y = (this.player.getY() + (this.player.getHeight())) / Constants.PX_PER_M;
-            this.projManager.spawnLaser(x, y); // TODO - Make sure is till working.
-        }
-
         this.keys[keycode] = true;
-
         return false;
     }
 
@@ -76,7 +72,7 @@ public class PlayerInputListener implements InputProcessor {
         return false;
     }
 
-    public void poll() {
+    public void poll(float delta) {
         if (keys[Input.Keys.D]) {
             player.move(EntityDirection.RIGHT);
         }
@@ -88,6 +84,15 @@ public class PlayerInputListener implements InputProcessor {
         }
         if (keys[Input.Keys.S]) {
             player.move(EntityDirection.DOWN);
+        }
+        if (keys[Input.Keys.SPACE]) {
+            time+= delta;
+            if (time >= spawnFrequency) {
+                float x = (this.player.getX() + (this.player.getWidth() / 2)) / Constants.PX_PER_M;
+                float y = (this.player.getY() + (this.player.getHeight())) / Constants.PX_PER_M;
+                this.projManager.spawnLaser(x, y);
+                this.time = 0.0f;
+            }
         }
     }
 

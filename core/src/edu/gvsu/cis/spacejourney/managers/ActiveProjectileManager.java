@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
+import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.entity.projectile.Laser;
 
 public class ActiveProjectileManager implements Disposable {
@@ -34,9 +35,9 @@ public class ActiveProjectileManager implements Disposable {
 
     public void spawnLaser(float x, float y) {
         Laser newLaser = this.projectilePool.obtain();
-        newLaser.setWidth(25.0f);
-        newLaser.setHeight(25.0f);
-        newLaser.spawn(world, x, y);
+        newLaser.setWidth(12.5f);
+        newLaser.setHeight(12.5f);
+        newLaser.spawn(world, x-((12.5f/2) / Constants.PX_PER_M), y);
         activeProjectiles.add(newLaser);
         stage.addActor(newLaser);
     }

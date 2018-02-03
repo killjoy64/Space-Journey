@@ -66,7 +66,6 @@ public class PlayerSpaceship extends Entity {
             getBody().setLinearVelocity(0.0f, 0.0f);
         }
 
->>>>>>> 98261d09135002ea2aacde777a171f07832b0125
     }
 
     @Override

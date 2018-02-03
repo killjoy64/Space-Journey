@@ -117,7 +117,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         viewport?.apply()
 
         projManager?.poll()
-        inputListener?.poll()
+        inputListener?.poll(delta)
 
         camera?.update()
 
