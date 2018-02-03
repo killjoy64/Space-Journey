@@ -75,12 +75,10 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 //        spaceship?.createBody()
 
         player = PlayerSpaceship()
-        player?.setPosition(1.0f, 100.0f)
-        player?.width = 100.0f
-        player?.height = 100.0f
-        player?.x = 10.0f
+        player?.setPosition(1.5f, 0.0f)
+        player?.width = 50.0f
+        player?.height = 50.0f
         player?.createBody(world)
-
 //        stage?.addActor(spaceship)
         stage?.addActor(player)
 

@@ -1,23 +1,38 @@
 package edu.gvsu.cis.spacejourney.entity;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import edu.gvsu.cis.spacejourney.Constants;
 
 public abstract class Entity extends Actor implements Collidable, Disposable {
 
     private Body body;
-
-    private Vector2 position;
     private TextureRegion texture;
 
     public Entity(TextureRegion textureRegion) {
-        this.position = new Vector2(0.0f,0.0f);
         this.texture = textureRegion;
+        this.setPosition(0.0f, 0.0f);
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+
+        if (body != null) {
+            setPosition((body.getPosition().x * Constants.PX_PER_M) - (getWidth() / 2),
+                    (body.getPosition().y * Constants.PX_PER_M) - (getHeight() / 2));
+        }
+
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        batch.draw(this.texture, getX() / Constants.PX_PER_M, getY() / Constants.PX_PER_M, getWidth() / Constants.PX_PER_M, getHeight() / Constants.PX_PER_M);
     }
 
     // This method should be overriden when there are multiple frames per entity.
@@ -37,11 +52,12 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
         return frames;
     }
 
-    public void setPosition(Vector2 position) {
-        this.position.set(position);
+    public void setBody(Body body) {
+        this.body = body;
     }
 
-    public Vector2 getPosition() {
-        return position;
+    public Body getBody() {
+        return body;
     }
+
 }

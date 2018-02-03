@@ -16,7 +16,8 @@ public class PlayerSpaceship extends Entity {
     public void createBody(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(1.0f, 1.0f);
+        bodyDef.position.set(getX() + ((getWidth() / 2) / Constants.PX_PER_M),
+                getY() + ((getHeight() / 2) / Constants.PX_PER_M));
 
         Body body = world.createBody(bodyDef);
 
@@ -28,6 +29,8 @@ public class PlayerSpaceship extends Entity {
         fixtureDef.restitution = 0.0f;
 
         body.createFixture(fixtureDef);
+
+        setBody(body);
 
         circle.dispose();
     }
