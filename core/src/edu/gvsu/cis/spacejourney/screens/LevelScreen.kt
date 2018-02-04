@@ -1,11 +1,8 @@
 package edu.gvsu.cis.spacejourney.screens
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.physics.box2d.World
@@ -21,7 +18,7 @@ import edu.gvsu.cis.spacejourney.input.GameContactListener
 import edu.gvsu.cis.spacejourney.input.PlayerInputListener
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
 import edu.gvsu.cis.spacejourney.screens.hud.DefaultHUD
-import edu.gvsu.cis.spacejourney.util.ParallaxBackground
+import edu.gvsu.cis.spacejourney.screens.backgrounds.ParallaxBackground
 import edu.gvsu.cis.spacejourney.util.ZIndex
 
 /**

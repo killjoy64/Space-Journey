@@ -4,6 +4,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.SpaceJourney;
 
@@ -13,9 +16,35 @@ public class PlayerSpaceship extends Entity {
 
     private EntityDirection direction;
 
+    private AlphaAction disappearAction;
+    private AlphaAction reappearAction;
+    private SequenceAction damageAction;
+    private RepeatAction damageActions;
+
     public PlayerSpaceship(Stage stage) {
         super(stage, new TextureRegion(SpaceJourney.Companion.getAssetManager().get("spaceship2.png", Texture.class)));
         direction = EntityDirection.IDLE;
+
+        disappearAction = new AlphaAction();
+        disappearAction.setAlpha(0.0f);
+        disappearAction.setDuration(0.05f);
+
+        reappearAction = new AlphaAction();
+        reappearAction.setAlpha(1.0f);
+        reappearAction.setDuration(0.05f);
+
+        damageAction = new SequenceAction();
+        damageAction.addAction(disappearAction);
+        damageAction.addAction(reappearAction);
+
+        damageActions = new RepeatAction();
+        damageActions.setCount(4);
+        damageActions.setAction(damageAction);
+    }
+
+    public void takeDamage() {
+        damageActions.restart();
+        addAction(damageActions);
     }
 
     public void move(EntityDirection direction) {

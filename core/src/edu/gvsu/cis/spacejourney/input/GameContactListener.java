@@ -26,9 +26,11 @@ public class GameContactListener implements ContactListener {
 
         if (entityB instanceof EvilSpaceship && entityA instanceof PlayerSpaceship) {
             PlayerSpaceship player = (PlayerSpaceship) entityA;
+            player.takeDamage();
             gameData.setLives(currentLives-1);
         } else if (entityA instanceof EvilSpaceship && entityB instanceof PlayerSpaceship) {
             PlayerSpaceship player = (PlayerSpaceship) entityB;
+            player.takeDamage();
             gameData.setLives(currentLives-1);
         }
     }
