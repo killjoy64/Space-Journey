@@ -2,10 +2,7 @@ package edu.gvsu.cis.spacejourney.input;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.math.Vector2;
 import edu.gvsu.cis.spacejourney.Constants;
-import edu.gvsu.cis.spacejourney.entities.Direction;
-import edu.gvsu.cis.spacejourney.entities.SpaceshipEntity;
 import edu.gvsu.cis.spacejourney.entity.EntityDirection;
 import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship;
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager;

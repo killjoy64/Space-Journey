@@ -74,4 +74,8 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
         return body;
     }
 
+    public TextureRegion getTexture() {
+        return texture;
+    }
+
 }

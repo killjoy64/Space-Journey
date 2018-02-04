@@ -85,6 +85,7 @@ public class PlayerSpaceship extends Entity {
         fixtureDef.isSensor = true;
         fixtureDef.restitution = 0.0f;
 
+        body.setUserData(this);
         body.createFixture(fixtureDef);
 
         setBody(body);

@@ -1,29 +1,17 @@
-package edu.gvsu.cis.spacejourney.entity.projectile;
+package edu.gvsu.cis.spacejourney.entity.enemy;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.SpaceJourney;
-import edu.gvsu.cis.spacejourney.util.ZIndex;
 
-/**
- * Created by Kyle Flynn on 2/3/2018.
- */
-public class Laser extends Projectile {
+public class EvilSpaceship extends Enemy {
 
-    public Laser(Stage stage) {
-        super(stage, new TextureRegion(SpaceJourney.Companion.getAssetManager().get("laser.png", Texture.class)));
-        setZIndex(ZIndex.PROJECTILES);
-    }
-
-    @Override
-    public void spawn(World world, float x, float y) {
-        super.spawn(world, x, y);
-
-        getBody().applyLinearImpulse(new Vector2(0.0f, 3.0f), getBody().getWorldCenter(), true);
+    public EvilSpaceship(Stage stage) {
+        super(stage, new TextureRegion(SpaceJourney.Companion.getAssetManager().get("spaceship3.png", Texture.class)));
+        getTexture().flip(false, true);
     }
 
     @Override
@@ -54,5 +42,4 @@ public class Laser extends Projectile {
     public void dispose() {
 
     }
-
 }

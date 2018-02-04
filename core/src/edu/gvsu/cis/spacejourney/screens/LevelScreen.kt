@@ -11,17 +11,13 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
 
-import com.badlogic.gdx.utils.viewport.ExtendViewport
-import com.badlogic.gdx.scenes.scene2d.ui.Image
-import com.badlogic.gdx.scenes.scene2d.ui.Label
-import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.viewport.FillViewport
 import com.badlogic.gdx.utils.viewport.FitViewport
-import com.badlogic.gdx.utils.viewport.ScreenViewport
 import edu.gvsu.cis.spacejourney.Constants
 import edu.gvsu.cis.spacejourney.SpaceJourney
-import edu.gvsu.cis.spacejourney.entities.SpaceshipEntity
 import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship
+import edu.gvsu.cis.spacejourney.entity.enemy.EvilSpaceship
+import edu.gvsu.cis.spacejourney.input.GameContactListener
 import edu.gvsu.cis.spacejourney.input.PlayerInputListener
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
 import edu.gvsu.cis.spacejourney.screens.hud.DefaultHUD
@@ -44,6 +40,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
     private var overlayStage: Stage? = null
 
     private var world: World? = null
+    private var contactListener: GameContactListener? = null
 
     private var background : ParallaxBackground? = null
     private var player: PlayerSpaceship? = null
@@ -66,6 +63,9 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         overlayStage = Stage(overlayViewport)
 
         world = World(Vector2(0.0f, 0.0f), true)
+        contactListener = GameContactListener()
+
+        world?.setContactListener(contactListener)
 
         debugRenderer = Box2DDebugRenderer()
 
@@ -92,12 +92,17 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         Gdx.input.inputProcessor = inputListener
 
         hudTable = DefaultHUD()
-//        table?.add(Label("Hello World!", Label.LabelStyle(
-//                BitmapFont(Gdx.files.internal("fonts/default.fnt")),
-//                Color.YELLOW
-//        )))
 
         overlayStage?.addActor(hudTable)
+
+        // Add quick enemy
+        val enemy: EvilSpaceship? = EvilSpaceship(stage)
+        enemy?.setPosition(1.5f, 1.5f)
+        enemy?.width = 50.0f
+        enemy?.height = 50.0f
+        enemy?.createBody(world)
+
+        stage?.addActor(enemy)
     }
 
     // Be mindful about nullable-types, as resize is called before show
@@ -118,6 +123,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         viewport?.apply()
 
+        hudTable?.poll()
         projManager?.poll()
         inputListener?.poll(delta)
 
