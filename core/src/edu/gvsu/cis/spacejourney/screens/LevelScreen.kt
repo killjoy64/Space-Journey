@@ -1,6 +1,7 @@
 package edu.gvsu.cis.spacejourney.screens
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
@@ -100,6 +101,11 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         enemy?.createBody(world)
 
         stage?.addActor(enemy)
+
+        val music: Music? = SpaceJourney.assetManager.get("Space Background Music.mp3")
+        music?.volume = 0.5f
+        music?.isLooping = true
+        music?.play()
     }
 
     // Be mindful about nullable-types, as resize is called before show

@@ -5,6 +5,7 @@ import com.sun.awt.SecurityWarning.setPosition
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
+import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
@@ -33,6 +34,7 @@ class LoadingScreen(game : SpaceJourney) : BaseScreen(game, "LoadingScreen") {
         SpaceJourney.assetManager.load("parallax_background_layer1.png", Texture::class.java)
         SpaceJourney.assetManager.load("parallax_background_layer2.png", Texture::class.java)
         SpaceJourney.assetManager.load("parallax_background_layer3.png", Texture::class.java)
+        SpaceJourney.assetManager.load("Space Background Music.mp3", Music::class.java)
     }
 
     override fun show() {
