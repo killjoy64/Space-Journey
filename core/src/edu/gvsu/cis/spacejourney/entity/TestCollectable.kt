@@ -16,48 +16,21 @@ import ktx.collections.GdxArray
 import ktx.log.debug
 
 
-class TestCollectable : Actor() {
+class TestCollectable(stage : Stage?) : AnimatedEntity(stage) {
 
-    override fun act(delta: Float) {
-        super.act(delta)
-        elapsedTime += Gdx.graphics.deltaTime
-
-
-        this.setSize(48f, 48f)
-        this.setPosition(50f, 50f)
-    }
-
-    override fun draw(batch: Batch?, parentAlpha: Float) {
-        super.draw(batch, parentAlpha)
-
-        val keyframe = animation!!.getKeyFrame(elapsedTime, true)
-
-        batch?.draw(keyframe, x / Constants.PX_PER_M, y / Constants.PX_PER_M, width / Constants.PX_PER_M, height / Constants.PX_PER_M)
-    }
-
-    private var textureAtlas: TextureAtlas? = null
-    private var animation: Animation<TextureRegion>? = null
-    private var elapsedTime = 0f
-    private var texture_ref : Texture? = null
+    override fun createBody(world: World?) {}
 
     init {
 
-        this.zIndex = ZIndex.COLLECTABLE
+        this.setSize(50f, 50f)
+        this.setPosition(50f, 50f)
 
-        texture_ref = SpaceJourney.assetManager.get<Texture>("rotating_pickup.png")
+        this.addAnimation("idle", SpaceJourney.assetManager.get<Texture>("rotating_pickup.png"), 0, 23, 48, 48)
 
-        val regions = TextureRegion.split(texture_ref, 48, 48);
+        //this.animate("idle")
+        //this.setIdleAnimation("idle")
 
-        val animationFrames = GdxArray<TextureRegion>(24)
 
-        for (i in 0 until 23) {
-            animationFrames.add(regions[0][i])
-        }
-
-        animation = Animation(1f / 16f, animationFrames)
     }
 
-    fun dispose() {
-        textureAtlas!!.dispose()
-    }
 }

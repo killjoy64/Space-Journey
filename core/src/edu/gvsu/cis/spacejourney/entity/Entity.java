@@ -18,6 +18,12 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
     private TextureRegion textureRegion;
     private World world;
 
+    public Entity(Stage stage) {
+        this.stage = stage;
+        this.textureRegion = null;
+        this.setPosition(0.0f, 0.0f);
+    }
+
     public Entity(Stage stage, TextureRegion textureRegion) {
         this.stage = stage;
         this.textureRegion = textureRegion;
@@ -40,7 +46,10 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
         super.draw(batch, parentAlpha);
         Color color = getColor();
         batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-        batch.draw(this.textureRegion, getX() / Constants.PX_PER_M, getY() / Constants.PX_PER_M, getWidth() / Constants.PX_PER_M, getHeight() / Constants.PX_PER_M);
+
+        if (this.textureRegion != null) {
+            batch.draw(this.textureRegion, getX() / Constants.PX_PER_M, getY() / Constants.PX_PER_M, getWidth() / Constants.PX_PER_M, getHeight() / Constants.PX_PER_M);
+        }
     }
 
     // This method should be overriden when there are multiple frames per entity.
@@ -89,6 +98,10 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
 
     public TextureRegion getTextureRegion() {
         return textureRegion;
+    }
+
+    public void setTextureRegion(TextureRegion textureRegion) {
+        this.textureRegion = textureRegion;
     }
 
 }

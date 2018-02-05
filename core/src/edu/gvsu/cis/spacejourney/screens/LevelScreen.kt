@@ -84,7 +84,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         stage?.addActor(player)
 
-        rotatingPickup = TestCollectable()
+        rotatingPickup = TestCollectable(stage)
         stage?.addActor(rotatingPickup)
 
         background = ParallaxBackground()
