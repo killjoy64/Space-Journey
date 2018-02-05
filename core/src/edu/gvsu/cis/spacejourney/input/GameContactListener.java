@@ -2,7 +2,9 @@ package edu.gvsu.cis.spacejourney.input;
 
 import com.badlogic.gdx.physics.box2d.*;
 import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship;
+import edu.gvsu.cis.spacejourney.entity.enemy.Enemy;
 import edu.gvsu.cis.spacejourney.entity.enemy.EvilSpaceship;
+import edu.gvsu.cis.spacejourney.entity.projectile.Laser;
 import edu.gvsu.cis.spacejourney.managers.GameDataManager;
 
 /**
@@ -33,6 +35,15 @@ public class GameContactListener implements ContactListener {
             player.takeDamage();
             gameData.setLives(currentLives-1);
         }
+
+        if (entityA instanceof Laser && entityB instanceof Enemy) {
+            Enemy e = (Enemy) entityB;
+            e.takeDamage();
+        } else if (entityB instanceof Laser && entityA instanceof Enemy) {
+            Enemy e = (Enemy) entityA;
+            e.takeDamage();
+        }
+
     }
 
     @Override

@@ -106,11 +106,11 @@ public class PlayerSpaceship extends Entity {
 
         Body body = world.createBody(bodyDef);
 
-        PolygonShape square = new PolygonShape();
-        square.setAsBox((getWidth() / 2) / Constants.PX_PER_M, (getHeight() / 2) / Constants.PX_PER_M);
+        CircleShape circle = new CircleShape();
+        circle.setRadius(((getWidth() / 2) - 2.5f) / Constants.PX_PER_M);
 
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = square;
+        fixtureDef.shape = circle;
         fixtureDef.isSensor = true;
         fixtureDef.restitution = 0.0f;
 
@@ -118,8 +118,9 @@ public class PlayerSpaceship extends Entity {
         body.createFixture(fixtureDef);
 
         setBody(body);
+        setWorld(world);
 
-        square.dispose();
+        circle.dispose();
     }
 
     @Override

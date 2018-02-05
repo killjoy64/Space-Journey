@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
@@ -15,6 +16,7 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
     private Body body;
     private Stage stage;
     private TextureRegion texture;
+    private World world;
 
     public Entity(Stage stage, TextureRegion textureRegion) {
         this.stage = stage;
@@ -75,6 +77,14 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
 
     public Body getBody() {
         return body;
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
     }
 
     public TextureRegion getTexture() {

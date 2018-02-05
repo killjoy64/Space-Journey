@@ -12,7 +12,7 @@ import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager;
  */
 public class PlayerInputListener implements InputProcessor {
 
-    private final float spawnFrequency = 0.1f;
+    private final float spawnFrequency = 0.225f;
 
     private PlayerSpaceship player;
     private ActiveProjectileManager projManager;

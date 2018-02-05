@@ -12,6 +12,7 @@ public class EvilSpaceship extends Enemy {
     public EvilSpaceship(Stage stage) {
         super(stage, new TextureRegion(SpaceJourney.Companion.getAssetManager().get("spaceship3.png", Texture.class)));
         getTexture().flip(false, true);
+        setMaxHitPoints(5);
     }
 
     @Override
@@ -23,19 +24,20 @@ public class EvilSpaceship extends Enemy {
 
         Body body = world.createBody(bodyDef);
 
-        PolygonShape square = new PolygonShape();
-        square.setAsBox((getWidth() / 2) / Constants.PX_PER_M, (getHeight() / 2) / Constants.PX_PER_M);
+        CircleShape circle = new CircleShape();
+        circle.setRadius(((getWidth() / 2) - 2.5f) / Constants.PX_PER_M);
 
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = square;
+        fixtureDef.shape = circle;
         fixtureDef.isSensor = true;
 
         body.setUserData(this);
         body.createFixture(fixtureDef);
 
         setBody(body);
+        setWorld(world);
 
-        square.dispose();
+        circle.dispose();
     }
 
     @Override

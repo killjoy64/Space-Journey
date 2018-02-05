@@ -4,15 +4,19 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.physics.box2d.World
+import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Stage
 
 import com.badlogic.gdx.utils.viewport.FillViewport
 import com.badlogic.gdx.utils.viewport.FitViewport
 import edu.gvsu.cis.spacejourney.Constants
 import edu.gvsu.cis.spacejourney.SpaceJourney
+import edu.gvsu.cis.spacejourney.entity.Graveyard
 import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship
 import edu.gvsu.cis.spacejourney.entity.enemy.EvilSpaceship
 import edu.gvsu.cis.spacejourney.input.GameContactListener
@@ -121,8 +125,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
     override fun render(delta: Float) {
         super.render(delta)
 
-        Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+        batch?.begin()
 
         viewport?.apply()
 
@@ -132,7 +135,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         camera?.update()
 
-        debugRenderer?.render(world, camera?.combined)
+//        debugRenderer?.render(world, camera?.combined)
 
         batch?.projectionMatrix = camera?.combined
 
@@ -142,7 +145,24 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         overlayStage?.act()
         overlayStage?.draw()
 
+        batch?.end()
+
         world?.step(1.0f/60.0f, 6, 2)
+
+        getRidOfBodies()
+    }
+
+    private fun getRidOfBodies() {
+        for (body: Body in Graveyard.bodies) {
+            world?.destroyBody(body)
+        }
+        Graveyard.bodies.clear()
+
+        for (actor: Actor in Graveyard.actors) {
+            actor.remove()
+        }
+
+        Graveyard.actors.clear()
     }
 
     override fun dispose() {
