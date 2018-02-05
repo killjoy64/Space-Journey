@@ -15,12 +15,12 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
 
     private Body body;
     private Stage stage;
-    private TextureRegion texture;
+    private TextureRegion textureRegion;
     private World world;
 
     public Entity(Stage stage, TextureRegion textureRegion) {
         this.stage = stage;
-        this.texture = textureRegion;
+        this.textureRegion = textureRegion;
         this.setPosition(0.0f, 0.0f);
     }
 
@@ -40,21 +40,21 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
         super.draw(batch, parentAlpha);
         Color color = getColor();
         batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-        batch.draw(this.texture, getX() / Constants.PX_PER_M, getY() / Constants.PX_PER_M, getWidth() / Constants.PX_PER_M, getHeight() / Constants.PX_PER_M);
+        batch.draw(this.textureRegion, getX() / Constants.PX_PER_M, getY() / Constants.PX_PER_M, getWidth() / Constants.PX_PER_M, getHeight() / Constants.PX_PER_M);
     }
 
     // This method should be overriden when there are multiple frames per entity.
     public TextureRegion getTextureFrame(float delta) {
-        return this.texture;
+        return this.textureRegion;
     }
 
-    // This method should be called when the texture given is an animation.
+    // This method should be called when the textureRegion given is an animation.
     public Array<TextureRegion> getAnimations(int start, int end, int y, int width, int height) {
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
         // If we're using a sprite sheet, load the animation sequence.
         for (int i = start; i < end; i++) {
-            frames.add(new TextureRegion(this.texture, i * width, y, width, height));
+            frames.add(new TextureRegion(this.textureRegion, i * width, y, width, height));
         }
 
         return frames;
@@ -87,8 +87,8 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
         this.world = world;
     }
 
-    public TextureRegion getTexture() {
-        return texture;
+    public TextureRegion getTextureRegion() {
+        return textureRegion;
     }
 
 }

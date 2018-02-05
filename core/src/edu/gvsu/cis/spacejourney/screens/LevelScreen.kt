@@ -18,6 +18,7 @@ import edu.gvsu.cis.spacejourney.Constants
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.entity.Graveyard
 import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship
+import edu.gvsu.cis.spacejourney.entity.TestCollectable
 import edu.gvsu.cis.spacejourney.entity.enemy.EvilSpaceship
 import edu.gvsu.cis.spacejourney.input.GameContactListener
 import edu.gvsu.cis.spacejourney.input.PlayerInputListener
@@ -52,6 +53,8 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
     private var projManager: ActiveProjectileManager? = null
     private var inputListener: PlayerInputListener? = null
 
+    private var rotatingPickup : TestCollectable? = null;
+
     override fun show() {
         super.show()
 
@@ -80,6 +83,9 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         player?.createBody(world)
 
         stage?.addActor(player)
+
+        rotatingPickup = TestCollectable()
+        stage?.addActor(rotatingPickup)
 
         background = ParallaxBackground()
         background?.zIndex = ZIndex.BACKGROUND

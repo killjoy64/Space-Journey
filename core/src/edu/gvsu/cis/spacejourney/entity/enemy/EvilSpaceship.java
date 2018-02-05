@@ -11,7 +11,7 @@ public class EvilSpaceship extends Enemy {
 
     public EvilSpaceship(Stage stage) {
         super(stage, new TextureRegion(SpaceJourney.Companion.getAssetManager().get("spaceship3.png", Texture.class)));
-        getTexture().flip(false, true);
+        getTextureRegion().flip(false, true);
         setMaxHitPoints(5);
     }
 
