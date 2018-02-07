@@ -1,4 +1,4 @@
-package edu.gvsu.cis.spacejourney
+package edu.gvsu.cis.spacejourney.screens.util
 
 import com.badlogic.gdx.scenes.scene2d.Stage
 import ktx.collections.GdxArray
