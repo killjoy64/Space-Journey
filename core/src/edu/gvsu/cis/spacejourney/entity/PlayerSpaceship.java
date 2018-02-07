@@ -1,5 +1,6 @@
 package edu.gvsu.cis.spacejourney.entity;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
@@ -21,6 +22,8 @@ public class PlayerSpaceship extends Entity {
     private SequenceAction damageAction;
     private RepeatAction damageActions;
 
+    private Sound damageSound;
+
     public PlayerSpaceship(Stage stage) {
         super(stage, new TextureRegion(SpaceJourney.Companion.getAssetManager().get("spaceship2.png", Texture.class)));
         direction = EntityDirection.IDLE;
@@ -40,11 +43,14 @@ public class PlayerSpaceship extends Entity {
         damageActions = new RepeatAction();
         damageActions.setCount(4);
         damageActions.setAction(damageAction);
+
+        damageSound = SpaceJourney.Companion.getAssetManager().get("take_damage.wav");
     }
 
     public void takeDamage() {
         damageActions.restart();
         addAction(damageActions);
+        damageSound.play(0.05f);
     }
 
     public void move(EntityDirection direction) {
@@ -125,6 +131,6 @@ public class PlayerSpaceship extends Entity {
 
     @Override
     public void dispose() {
-
+        damageSound.dispose();
     }
 }
