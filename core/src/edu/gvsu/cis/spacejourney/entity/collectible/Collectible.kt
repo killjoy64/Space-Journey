@@ -1,4 +1,4 @@
-package edu.gvsu.cis.spacejourney.entity.collectible;
+package edu.gvsu.cis.spacejourney.entity.collectible
 
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.physics.box2d.BodyDef
@@ -28,7 +28,7 @@ abstract class Collectible(stage: Stage?) : AnimatedEntity(stage) {
         val body = world?.createBody(bodyDef)
 
         val circle = CircleShape()
-        circle.radius = (width/2) / Constants.PX_PER_M
+        circle.radius = (width / 2) / Constants.PX_PER_M
 
         val fixtureDef = FixtureDef()
         fixtureDef.shape = circle

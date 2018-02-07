@@ -48,7 +48,9 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
         batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
 
         if (this.textureRegion != null) {
-            batch.draw(this.textureRegion, getX() / Constants.PX_PER_M, getY() / Constants.PX_PER_M, getWidth() / Constants.PX_PER_M, getHeight() / Constants.PX_PER_M);
+            batch.draw(this.textureRegion,
+                    getX() / Constants.PX_PER_M, getY() / Constants.PX_PER_M,
+                    getWidth() / Constants.PX_PER_M, getHeight() / Constants.PX_PER_M);
         }
     }
 

@@ -9,14 +9,14 @@ import edu.gvsu.cis.spacejourney.managers.GameDataManager;
 /**
  * Created by Kyle Flynn on 2/3/2018.
  */
-public class DefaultHUD extends Table {
+public class DefaultOverlay extends Table {
 
     private Image[] lives;
     private GameDataManager gameData;
 
     private int livesDisplayed;
 
-    public DefaultHUD() {
+    public DefaultOverlay() {
         setFillParent(true);
 
         this.lives = new Image[GameDataManager.MAX_LIVES];
@@ -24,7 +24,8 @@ public class DefaultHUD extends Table {
         this.livesDisplayed = 0;
 
         for (int i = 0; i < this.lives.length; i++) {
-            lives[i] = new Image(SpaceJourney.Companion.getAssetManager().get("spaceship2.png", Texture.class));
+            lives[i] = new Image(
+                    SpaceJourney.Companion.getAssetManager().get("spaceship2.png", Texture.class));
             lives[i].setScale(0.75f);
             top().left().padTop(-15.0f).add(lives[i]);
             livesDisplayed++;

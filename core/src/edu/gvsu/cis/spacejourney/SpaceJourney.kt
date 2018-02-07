@@ -17,7 +17,9 @@ class SpaceJourney : KtxGame<BaseScreen>() {
 
     // Global asset manager shared between all screens via reference to this class
     // Most of the assets should be pre-loaded in the `LoadingScreen` class
-    private object Holder { val ASSETS = AssetManager() }
+    private object Holder {
+        val ASSETS = AssetManager()
+    }
 
     companion object {
         val assetManager: AssetManager by lazy { Holder.ASSETS }

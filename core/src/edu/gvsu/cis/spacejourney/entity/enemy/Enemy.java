@@ -27,14 +27,14 @@ public abstract class Enemy extends Entity {
     public void act(float delta) {
         super.act(delta);
 
-        if (movementPattern != null && this.getBody() != null){
+        if (movementPattern != null && this.getBody() != null) {
             Vector2 direction = movementPattern.getMovement(this.getBody().getPosition());
 
             this.getBody().setLinearVelocity(direction.x * delta, direction.y * delta);
         }
     }
 
-    public void setMovementPattern(MovementPattern pattern){
+    public void setMovementPattern(MovementPattern pattern) {
         movementPattern = pattern;
     }
 

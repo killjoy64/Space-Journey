@@ -13,5 +13,6 @@ public class ZIndex {
     public static final int PROJECTILES = 51;
     public static final int ENEMY = 5;
     public static final int GUI = 100;
-    public static final int COLLECTABLE = 49;
+    public static final int COLLECTIBLE = 49;
+
 }

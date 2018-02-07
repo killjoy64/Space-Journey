@@ -11,7 +11,7 @@ import ktx.log.debug
  Convenient base class for all Screens where common functionality can be implemented
  #TODO only override methods that need to be overriden
 */
-open class BaseScreen(val game: SpaceJourney, val screenName : String) : KtxScreen {
+open class BaseScreen(val game: SpaceJourney, val screenName: String) : KtxScreen {
 
     protected var batch: SpriteBatch? = null
 
@@ -27,7 +27,7 @@ open class BaseScreen(val game: SpaceJourney, val screenName : String) : KtxScre
 
     override fun pause() {
         super.pause()
-        debug { "Screen Paused: $screenName "}
+        debug { "Screen Paused: $screenName " }
     }
 
     override fun render(delta: Float) {
@@ -50,7 +50,7 @@ open class BaseScreen(val game: SpaceJourney, val screenName : String) : KtxScre
     override fun show() {
         super.show()
         batch = SpriteBatch()
-        debug { "Screen Shown: $screenName "}
+        debug { "Screen Shown: $screenName " }
     }
 
 }

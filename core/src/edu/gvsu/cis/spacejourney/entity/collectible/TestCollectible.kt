@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture
 import edu.gvsu.cis.spacejourney.SpaceJourney
 
 
-class TestCollectible(stage : Stage?) : Collectible(stage) {
+class TestCollectible(stage: Stage?) : Collectible(stage) {
 
     init {
 

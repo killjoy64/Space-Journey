@@ -21,13 +21,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin
 Presents a progress bar while the assets are being loaded for the game, then switches to the MainMenu screen.
 #TODO only override methods that need to be overriden
  */
-class LoadingScreen(game : SpaceJourney) : BaseScreen(game, "LoadingScreen") {
+class LoadingScreen(game: SpaceJourney) : BaseScreen(game, "LoadingScreen") {
 
-    private var stage : Stage? = null
-    private var progress : ProgressBar? = null
+    private var stage: Stage? = null
+    private var progress: ProgressBar? = null
 
     // Add any assets that need be loaded here and reference them via game.assets in other screens
-    private fun actuallyLoadAssets(){
+    private fun actuallyLoadAssets() {
 
         SpaceJourney.assetManager.load("laser.png", Texture::class.java)
         SpaceJourney.assetManager.load("spaceship2.png", Texture::class.java)
@@ -59,7 +59,7 @@ class LoadingScreen(game : SpaceJourney) : BaseScreen(game, "LoadingScreen") {
 
         // Create a style for the progress bar
         val barStyle = ProgressBarStyle(skin.newDrawable("white", Color.DARK_GRAY), textureBar)
-        barStyle.knobBefore = barStyle.knob;
+        barStyle.knobBefore = barStyle.knob
 
         // Create the progress bar
         progress = ProgressBar(0f, 100f, 0.5f, false, barStyle)
@@ -75,18 +75,6 @@ class LoadingScreen(game : SpaceJourney) : BaseScreen(game, "LoadingScreen") {
         actuallyLoadAssets()
     }
 
-    override fun dispose() {
-        super.dispose()
-    }
-
-    override fun hide() {
-        super.hide()
-    }
-
-    override fun pause() {
-        super.pause()
-    }
-
     override fun render(delta: Float) {
         super.render(delta)
 
@@ -98,18 +86,9 @@ class LoadingScreen(game : SpaceJourney) : BaseScreen(game, "LoadingScreen") {
         progress?.value = SpaceJourney.assetManager.progress * 100.0f
 
         // Once the progress bar hits max value it will start the MainMenu screen
-        if (SpaceJourney.assetManager.update() && progress?.visualPercent == 1.0f){
+        if (SpaceJourney.assetManager.update() && progress?.visualPercent == 1.0f) {
             this.game.setScreen<MainMenuScreen>()
         }
-    }
-
-    // Be mindful about nullable-types, as resize is called before show
-    override fun resize(width: Int, height: Int) {
-        super.resize(width, height)
-    }
-
-    override fun resume() {
-        super.resume()
     }
 
 }

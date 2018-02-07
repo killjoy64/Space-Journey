@@ -81,7 +81,7 @@ public class PlayerInputListener implements InputProcessor {
 
         boolean moved = false;
 
-        if (Gdx.input.isKeyPressed(Input.Keys.D)){
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             player.move(EntityDirection.RIGHT);
             moved = true;
         }
@@ -98,7 +98,7 @@ public class PlayerInputListener implements InputProcessor {
             moved = true;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            time+= delta;
+            time += delta;
             if (time >= spawnFrequency) {
                 float x = (this.player.getX() + (this.player.getWidth() / 2)) / Constants.PX_PER_M;
                 float y = (this.player.getY() + (this.player.getHeight())) / Constants.PX_PER_M;
@@ -107,7 +107,7 @@ public class PlayerInputListener implements InputProcessor {
             }
         }
 
-        if (!moved){
+        if (!moved) {
             player.stopMoving();
         }
     }

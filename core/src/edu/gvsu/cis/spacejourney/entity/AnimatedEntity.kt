@@ -6,25 +6,21 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.badlogic.gdx.physics.box2d.World
-import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Stage
-import edu.gvsu.cis.spacejourney.Constants
-import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.util.ZIndex
 import ktx.collections.GdxArray
 
-abstract class AnimatedEntity(stage : Stage?) : Entity(stage, null) {
+abstract class AnimatedEntity(stage: Stage?) : Entity(stage, null) {
 
     private var textureAtlas: TextureAtlas? = null
     private var animation: Animation<TextureRegion>? = null
     private var elapsedTime = 0f
 
-    fun addAnimation(id : String, texture : Texture, start : Int, end : Int, cellWidth : Int, cellHeight : Int){
+    fun addAnimation(id: String, texture: Texture, start: Int, end: Int, cellWidth: Int, cellHeight: Int) {
 
-        this.zIndex = ZIndex.COLLECTABLE
+        this.zIndex = ZIndex.COLLECTIBLE
 
-        val regions = TextureRegion.split(texture, cellWidth, cellHeight);
+        val regions = TextureRegion.split(texture, cellWidth, cellHeight)
 
         val animationFrames = GdxArray<TextureRegion>(end - start)
 

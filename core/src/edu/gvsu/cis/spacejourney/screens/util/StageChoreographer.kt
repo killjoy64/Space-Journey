@@ -14,9 +14,9 @@ import java.util.concurrent.ScheduledExecutorService
 
 class EnemySpawnEvent : ChoreographEvent() {
 
-    val position : Vector2? = null
+    val position: Vector2? = null
 
-    override fun onEvent(stage: Stage, world : World) {
+    override fun onEvent(stage: Stage, world: World) {
 
         debug { "Enemy added" }
 
@@ -38,57 +38,56 @@ class EnemySpawnEvent : ChoreographEvent() {
 abstract class ChoreographEvent {
 
     // Implement Me!
-    abstract fun onEvent(stage : Stage, world : World)
-
+    abstract fun onEvent(stage: Stage, world: World)
 }
 
 data class ScheduledEvent(
-    val scheduled_time : Float,
-    val event : ChoreographEvent
+        val scheduled_time: Float,
+        val event: ChoreographEvent
 )
 
-class StageChoreographer(val stage : Stage, val world : World) {
+class StageChoreographer(val stage: Stage, val world: World) {
 
     private var paused = false
 
     // Sorted array, the first element should always be the next.
     private var events = GdxArray<ScheduledEvent>()
-    private var time : Float = 0f
+    private var time: Float = 0f
 
-    fun pause(){
+    fun pause() {
         this.paused = true
     }
 
-    fun resume(){
+    fun resume() {
         this.paused = false
     }
 
     // Load pre-defined events from a file
-    fun loadEventsFromFile(){
+    fun loadEventsFromFile() {
 
     }
 
-    private fun popNextEvent() : ScheduledEvent? {
-        return this.events.removeIndex(0);
+    private fun popNextEvent(): ScheduledEvent? {
+        return this.events.removeIndex(0)
     }
 
-    private fun getNextEvent() : ScheduledEvent? {
-        if (this.events.isNotEmpty()){
+    private fun getNextEvent(): ScheduledEvent? {
+        if (this.events.isNotEmpty()) {
             return this.events[0]
         }
         return null
     }
 
-    fun schedule(scheduled_time : Float, event : ChoreographEvent){
+    fun schedule(scheduled_time: Float, event: ChoreographEvent) {
         this.events.add(ScheduledEvent(scheduled_time, event))
         this.events.sortedBy { it.scheduled_time }
     }
 
-    fun update(delta : Float){
+    fun update(delta: Float) {
         time += delta
 
-        if (getNextEvent() != null){
-            if (getNextEvent()!!.scheduled_time < time){
+        if (getNextEvent() != null) {
+            if (getNextEvent()!!.scheduled_time < time) {
                 popNextEvent()?.event?.onEvent(stage, world)
             }
         }

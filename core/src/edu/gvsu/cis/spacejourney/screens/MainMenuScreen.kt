@@ -18,7 +18,7 @@ import edu.gvsu.cis.spacejourney.input.MainMenuInputListener
 /*
 The main menu for the game where we can change settings, start a game, load, save, quit, etc.
 */
-class MainMenuScreen(game : SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
+class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
 
     private var camera: OrthographicCamera? = null
     private var viewport: FitViewport? = null

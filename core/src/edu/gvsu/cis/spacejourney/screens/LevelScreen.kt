@@ -21,7 +21,7 @@ import edu.gvsu.cis.spacejourney.entity.enemy.EvilSpaceship
 import edu.gvsu.cis.spacejourney.input.GameContactListener
 import edu.gvsu.cis.spacejourney.input.PlayerInputListener
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
-import edu.gvsu.cis.spacejourney.screens.hud.DefaultHUD
+import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay
 import edu.gvsu.cis.spacejourney.screens.backgrounds.ParallaxBackground
 import edu.gvsu.cis.spacejourney.screens.util.EnemySpawnEvent
 import edu.gvsu.cis.spacejourney.screens.util.StageChoreographer
@@ -30,13 +30,13 @@ import edu.gvsu.cis.spacejourney.util.ZIndex
 /**
  * Where the magic happens
  */
-class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
+class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     private var debugRenderer: Box2DDebugRenderer? = null
 
     private var camera: OrthographicCamera? = null
     private var viewport: FitViewport? = null
-    private var stage : Stage? = null
+    private var stage: Stage? = null
 
     private var overlayCam: OrthographicCamera? = null
     private var overlayViewport: FillViewport? = null
@@ -45,17 +45,17 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
     private var world: World? = null
     private var contactListener: GameContactListener? = null
 
-    private var background : ParallaxBackground? = null
+    private var background: ParallaxBackground? = null
     private var player: PlayerSpaceship? = null
 
-    private var hudTable: DefaultHUD? = null
+    private var overlayTable: DefaultOverlay? = null
 
     private var projManager: ActiveProjectileManager? = null
     private var inputListener: PlayerInputListener? = null
 
-    private var rotatingPickup : TestCollectible? = null
+    private var rotatingPickup: TestCollectible? = null
 
-    private var choreographer : StageChoreographer? = null
+    private var choreographer: StageChoreographer? = null
 
     override fun show() {
         super.show()
@@ -79,9 +79,8 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         choreographer = StageChoreographer(stage!!, world!!)
 
         for (i in 0..200) {
-            choreographer?.schedule(1f + i.toFloat() , EnemySpawnEvent())
+            choreographer?.schedule(1f + i.toFloat(), EnemySpawnEvent())
         }
-
 
         // For whatever reason, we use PX_PER_M for position,
         // but we use regular for width/height.
@@ -109,9 +108,9 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         inputListener = PlayerInputListener(player)
         Gdx.input.inputProcessor = inputListener
 
-        hudTable = DefaultHUD()
+        overlayTable = DefaultOverlay()
 
-        overlayStage?.addActor(hudTable)
+        overlayStage?.addActor(overlayTable)
 
         // Add quick enemy
         val enemy: EvilSpaceship? = EvilSpaceship(stage)
@@ -145,11 +144,11 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         viewport?.apply()
 
-        hudTable?.poll()
+        choreographer?.update(delta)
+
+        overlayTable?.poll()
         projManager?.poll()
         inputListener?.poll(delta)
-
-        choreographer?.update(delta)
 
         camera?.update()
 
@@ -165,7 +164,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         batch?.end()
 
-        world?.step(1.0f/60.0f, 6, 2)
+        world?.step(1.0f / 60.0f, 6, 2)
 
         getRidOfBodies()
     }

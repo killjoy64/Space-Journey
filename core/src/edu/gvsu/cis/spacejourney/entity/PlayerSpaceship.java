@@ -3,7 +3,11 @@ package edu.gvsu.cis.spacejourney.entity;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
@@ -25,7 +29,8 @@ public class PlayerSpaceship extends Entity {
     private Sound damageSound;
 
     public PlayerSpaceship(Stage stage) {
-        super(stage, new TextureRegion(SpaceJourney.Companion.getAssetManager().get("spaceship2.png", Texture.class)));
+        super(stage, new TextureRegion(
+                SpaceJourney.Companion.getAssetManager().get("spaceship2.png", Texture.class)));
         direction = EntityDirection.IDLE;
 
         disappearAction = new AlphaAction();
@@ -61,9 +66,10 @@ public class PlayerSpaceship extends Entity {
         }
     }
 
-    public void stopMoving(){
+    public void stopMoving() {
         getBody().setLinearVelocity(0.0f, 0.0f);
     }
+
 
     public boolean canMove(EntityDirection direction) {
         int screenW = (int) (getStage().getViewport().getWorldWidth() * Constants.PX_PER_M);
@@ -93,6 +99,8 @@ public class PlayerSpaceship extends Entity {
                     return true;
                 }
                 break;
+            default:
+                return false;
         }
         return false;
     }
@@ -114,8 +122,6 @@ public class PlayerSpaceship extends Entity {
         bodyDef.position.set(getX() + ((getWidth() / 2) / Constants.PX_PER_M),
                 getY() + ((getHeight() / 2) / Constants.PX_PER_M));
 
-        Body body = world.createBody(bodyDef);
-
         CircleShape circle = new CircleShape();
         circle.setRadius(((getWidth() / 2) - 2.5f) / Constants.PX_PER_M);
 
@@ -124,6 +130,7 @@ public class PlayerSpaceship extends Entity {
         fixtureDef.isSensor = true;
         fixtureDef.restitution = 0.0f;
 
+        Body body = world.createBody(bodyDef);
         body.setUserData(this);
         body.createFixture(fixtureDef);
 

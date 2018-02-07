@@ -11,13 +11,12 @@ import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.util.ZIndex
 import java.util.*
 
-class ParallaxLayer (
-    val texture : Texture? = null,
-    val scroll_factor : Float,
-    val zindex : Int)
-{
-    var offset : Vector2? = null
-    var region : TextureRegion? = null
+class ParallaxLayer(
+        val texture: Texture? = null,
+        val scroll_factor: Float,
+        val zindex: Int) {
+    var offset: Vector2? = null
+    var region: TextureRegion? = null
 
     init {
         this.region = TextureRegion(texture)
@@ -31,9 +30,9 @@ class ParallaxLayer (
     }
 }
 
-class ParallaxBackground() : Actor(), Disposable {
+class ParallaxBackground : Actor(), Disposable {
 
-    var layers : Vector<ParallaxLayer> = Vector()
+    var layers: Vector<ParallaxLayer> = Vector()
 
     init {
         layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer3.png", Texture::class.java), 0.0020f, ZIndex.PARALLAX_BACKGROUND_LAYER2))
@@ -48,7 +47,7 @@ class ParallaxBackground() : Actor(), Disposable {
     override fun draw(batch: Batch?, parentAlpha: Float) {
         super.draw(batch, parentAlpha)
         for (layer in this.layers) {
-            if ( layer.offset != null ){
+            if (layer.offset != null) {
                 batch?.draw(layer.region, layer.offset!!.x, layer.offset!!.y, this.stage.viewport.worldWidth, this.stage.viewport.worldHeight)
             } else {
                 batch?.draw(layer.region, 0f, 0f, this.stage.viewport.worldWidth, this.stage.viewport.worldHeight)
@@ -67,7 +66,7 @@ class ParallaxBackground() : Actor(), Disposable {
 
     }
 
-    override fun dispose(){
+    override fun dispose() {
         for (layer in this.layers) {
             layer.dispose()
         }
