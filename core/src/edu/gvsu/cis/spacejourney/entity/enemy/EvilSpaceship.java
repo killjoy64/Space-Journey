@@ -12,15 +12,17 @@ public class EvilSpaceship extends Enemy {
     public EvilSpaceship(Stage stage) {
         super(stage, new TextureRegion(SpaceJourney.Companion.getAssetManager().get("spaceship3.png", Texture.class)));
         getTextureRegion().flip(false, true);
-        setMaxHitPoints(5);
+        setMaxHitPoints(3);
     }
 
     @Override
     public void createBody(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(getX() + ((getWidth() / 2) / Constants.PX_PER_M),
-                getY() + ((getHeight() / 2) / Constants.PX_PER_M));
+        bodyDef.position.set(
+            getX() + ((getWidth()  / 2) / Constants.PX_PER_M),
+            getY() + ((getHeight() / 2) / Constants.PX_PER_M)
+        );
 
         Body body = world.createBody(bodyDef);
 

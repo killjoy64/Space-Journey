@@ -1,5 +1,6 @@
 package edu.gvsu.cis.spacejourney.input;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import edu.gvsu.cis.spacejourney.Constants;
@@ -77,19 +78,26 @@ public class PlayerInputListener implements InputProcessor {
     }
 
     public void poll(float delta) {
-        if (keys[Input.Keys.D]) {
+
+        boolean moved = false;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.D)){
             player.move(EntityDirection.RIGHT);
+            moved = true;
         }
-        if (keys[Input.Keys.A]) {
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             player.move(EntityDirection.LEFT);
+            moved = true;
         }
-        if (keys[Input.Keys.W]) {
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             player.move(EntityDirection.UP);
+            moved = true;
         }
-        if (keys[Input.Keys.S]) {
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             player.move(EntityDirection.DOWN);
+            moved = true;
         }
-        if (keys[Input.Keys.SPACE]) {
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             time+= delta;
             if (time >= spawnFrequency) {
                 float x = (this.player.getX() + (this.player.getWidth() / 2)) / Constants.PX_PER_M;
@@ -98,6 +106,9 @@ public class PlayerInputListener implements InputProcessor {
                 this.time = 0.0f;
             }
         }
-    }
 
+        if (!moved){
+            player.stopMoving();
+        }
+    }
 }

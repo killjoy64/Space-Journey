@@ -10,6 +10,7 @@ public class DesktopLauncher {
 		config.useHDPI = true;
 		config.width = 896;
 		config.height = 504;
+		config.vSyncEnabled = true;
 		new LwjglApplication(new SpaceJourney(), config);
 	}
 }

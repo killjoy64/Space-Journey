@@ -13,7 +13,7 @@ import edu.gvsu.cis.spacejourney.SpaceJourney;
 
 public class PlayerSpaceship extends Entity {
 
-    private final float moveSpeed = 2.0f;
+    private final float moveSpeed = 3.0f;
 
     private EntityDirection direction;
 
@@ -59,6 +59,10 @@ public class PlayerSpaceship extends Entity {
         if (canMove(direction)) {
             getBody().setLinearVelocity(moveSpeed * direction.getX(), moveSpeed * direction.getY());
         }
+    }
+
+    public void stopMoving(){
+        getBody().setLinearVelocity(0.0f, 0.0f);
     }
 
     public boolean canMove(EntityDirection direction) {

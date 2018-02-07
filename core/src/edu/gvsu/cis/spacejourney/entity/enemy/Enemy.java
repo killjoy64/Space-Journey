@@ -3,20 +3,39 @@ package edu.gvsu.cis.spacejourney.entity.enemy;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.entity.Entity;
 import edu.gvsu.cis.spacejourney.entity.Graveyard;
+import edu.gvsu.cis.spacejourney.entity.movement.MovementPattern;
 
 public abstract class Enemy extends Entity {
 
     private int maxHitPoints;
     private int hitPoints;
     private ShapeRenderer shapeRenderer;
+    private MovementPattern movementPattern;
 
     public Enemy(Stage stage, TextureRegion textureRegion) {
         super(stage, textureRegion);
         this.shapeRenderer = new ShapeRenderer();
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+
+        if (movementPattern != null && this.getBody() != null){
+            Vector2 direction = movementPattern.getMovement(this.getBody().getPosition());
+
+            this.getBody().setLinearVelocity(direction.x * delta, direction.y * delta);
+        }
+    }
+
+    public void setMovementPattern(MovementPattern pattern){
+        movementPattern = pattern;
     }
 
     public void takeDamage() {

@@ -23,6 +23,8 @@ import edu.gvsu.cis.spacejourney.input.PlayerInputListener
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
 import edu.gvsu.cis.spacejourney.screens.hud.DefaultHUD
 import edu.gvsu.cis.spacejourney.screens.backgrounds.ParallaxBackground
+import edu.gvsu.cis.spacejourney.screens.util.EnemySpawnEvent
+import edu.gvsu.cis.spacejourney.screens.util.StageChoreographer
 import edu.gvsu.cis.spacejourney.util.ZIndex
 
 /**
@@ -53,6 +55,8 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     private var rotatingPickup : TestCollectible? = null
 
+    private var choreographer : StageChoreographer? = null
+
     override fun show() {
         super.show()
 
@@ -71,6 +75,13 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         world?.setContactListener(contactListener)
 
         debugRenderer = Box2DDebugRenderer()
+
+        choreographer = StageChoreographer(stage!!, world!!)
+
+        for (i in 0..200) {
+            choreographer?.schedule(1f + i.toFloat() , EnemySpawnEvent())
+        }
+
 
         // For whatever reason, we use PX_PER_M for position,
         // but we use regular for width/height.
@@ -137,6 +148,8 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
         hudTable?.poll()
         projManager?.poll()
         inputListener?.poll(delta)
+
+        choreographer?.update(delta)
 
         camera?.update()
 
