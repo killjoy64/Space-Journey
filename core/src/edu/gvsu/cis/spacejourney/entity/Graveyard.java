@@ -6,11 +6,18 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import java.util.ArrayList;
 
 /**
- * Created by Kyle Flynn on 2/5/2018.
+ * Where the bodies are piled up and queued for removal.
  */
 public class Graveyard {
 
+  /**
+   * The generic bodies that need to be removed.
+   */
   public static ArrayList<Body> bodies = new ArrayList<Body>();
+
+  /**
+   * The specific actors of the bodies that need to be removed.
+   */
   public static ArrayList<Actor> actors = new ArrayList<Actor>();
 
 }

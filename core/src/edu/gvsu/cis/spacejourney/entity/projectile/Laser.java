@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.SpaceJourney;
+import edu.gvsu.cis.spacejourney.entity.Graveyard;
 import edu.gvsu.cis.spacejourney.util.ZIndex;
 
 /**
@@ -33,6 +34,7 @@ public class Laser extends Projectile {
 
   @Override
   public void createBody(World world) {
+
     BodyDef bodyDef = new BodyDef();
     bodyDef.type = BodyDef.BodyType.DynamicBody;
     bodyDef.position.set(getX() + ((getWidth() / 2) / Constants.PX_PER_M),
@@ -56,7 +58,8 @@ public class Laser extends Projectile {
 
   @Override
   public void dispose() {
-
+    Graveyard.bodies.add(getBody());
+    Graveyard.actors.add(this);
   }
 
 }

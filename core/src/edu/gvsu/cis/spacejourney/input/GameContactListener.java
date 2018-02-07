@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import edu.gvsu.cis.spacejourney.entity.Graveyard;
 import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship;
 import edu.gvsu.cis.spacejourney.entity.collectible.Collectible;
 import edu.gvsu.cis.spacejourney.entity.enemy.Enemy;
@@ -51,10 +52,16 @@ public class GameContactListener implements ContactListener {
 
     if (entityA instanceof Laser && entityB instanceof Enemy) {
       Enemy e = (Enemy) entityB;
+      Laser l = (Laser) entityA;
       e.takeDamage();
+      l.reset();
+      Graveyard.bodies.add(a.getBody());
     } else if (entityB instanceof Laser && entityA instanceof Enemy) {
       Enemy e = (Enemy) entityA;
+      Laser l = (Laser) entityB;
       e.takeDamage();
+      l.reset();
+      Graveyard.bodies.add(b.getBody());
     }
 
   }
