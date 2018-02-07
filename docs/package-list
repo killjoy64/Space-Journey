@@ -1,0 +1,9 @@
+edu.gvsu.cis.spacejourney
+edu.gvsu.cis.spacejourney.desktop
+edu.gvsu.cis.spacejourney.entity
+edu.gvsu.cis.spacejourney.entity.enemy
+edu.gvsu.cis.spacejourney.entity.projectile
+edu.gvsu.cis.spacejourney.input
+edu.gvsu.cis.spacejourney.managers
+edu.gvsu.cis.spacejourney.screens.hud
+edu.gvsu.cis.spacejourney.util

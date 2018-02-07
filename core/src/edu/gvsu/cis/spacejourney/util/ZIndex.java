@@ -1,9 +1,12 @@
 package edu.gvsu.cis.spacejourney.util;
 
-// Various Z-Index numbers to be used instead of hard-coded constants
+/**
+ * Static class that holds vital information to be
+ * used across the project. This is specifically used
+ * for Z-indexing across entities and backgrounds.
+ */
 public class ZIndex {
 
-  // Should be the lowest value
   public static final int PARALLAX_BACKGROUND_LAYER3 = 0;
   public static final int PARALLAX_BACKGROUND_LAYER2 = 0;
   public static final int PARALLAX_BACKGROUND_LAYER1 = 1;

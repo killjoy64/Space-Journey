@@ -42,7 +42,6 @@ class ParallaxBackground() : Actor(), Disposable {
     layers.last().offset = Vector2(5.0f, 50.0f)
 
     layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer1.png", Texture::class.java), 0.15f, ZIndex.PARALLAX_BACKGROUND_LAYER1))
-
   }
 
   override fun draw(batch: Batch?, parentAlpha: Float) {
