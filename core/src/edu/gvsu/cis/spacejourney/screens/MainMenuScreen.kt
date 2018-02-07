@@ -20,81 +20,81 @@ The main menu for the game where we can change settings, start a game, load, sav
 */
 class MainMenuScreen(game : SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
 
-    private var camera: OrthographicCamera? = null
-    private var viewport: FitViewport? = null
-    private var stage: Stage? = null
+  private var camera: OrthographicCamera? = null
+  private var viewport: FitViewport? = null
+  private var stage: Stage? = null
 
-    private var screenData: Table? = null
-    private var option1: Label? = null
-    private var option2: Label? = null
+  private var screenData: Table? = null
+  private var option1: Label? = null
+  private var option2: Label? = null
 
-    private var font: BitmapFont? = null
+  private var font: BitmapFont? = null
 
-    private var inputListener: MainMenuInputListener? = null
+  private var inputListener: MainMenuInputListener? = null
 
-    override fun show() {
-        super.show()
+  override fun show() {
+    super.show()
 
-        camera = OrthographicCamera()
-        viewport = FitViewport(Constants.VIRTUAL_WIDTH,
-                Constants.VIRTUAL_HEIGHT, camera)
-        stage = Stage(viewport)
+    camera = OrthographicCamera()
+    viewport = FitViewport(Constants.VIRTUAL_WIDTH,
+        Constants.VIRTUAL_HEIGHT, camera)
+    stage = Stage(viewport)
 
-        screenData = Table()
+    screenData = Table()
 
-        font = BitmapFont(Gdx.files.internal("fonts/default.fnt"))
-        font?.data?.scale(0.175f)
+    font = BitmapFont(Gdx.files.internal("fonts/default.fnt"))
+    font?.data?.scale(0.175f)
 
-        option1 = Label(String.format(Strings.MENU_OPTION_1, "  "), Label.LabelStyle(font, Color.WHITE))
-        option2 = Label(String.format(Strings.MENU_OPTION_2, "  "), Label.LabelStyle(font, Color.WHITE))
+    option1 = Label(String.format(Strings.MENU_OPTION_1, "  "), Label.LabelStyle(font, Color.WHITE))
+    option2 = Label(String.format(Strings.MENU_OPTION_2, "  "), Label.LabelStyle(font, Color.WHITE))
 
-        screenData?.setFillParent(true)
-        screenData?.add(Label(Strings.GAME_TITLE, Label.LabelStyle(font, Color.WHITE)))?.expandX
-        screenData?.row()
-        screenData?.add(option1)?.expandX
-        screenData?.row()
-        screenData?.add(option2)?.expandX
+    screenData?.setFillParent(true)
+    screenData?.add(Label(Strings.GAME_TITLE, Label.LabelStyle(font, Color.WHITE)))?.expandX
+    screenData?.row()
+    screenData?.add(option1)?.expandX
+    screenData?.row()
+    screenData?.add(option2)?.expandX
 
-        stage?.addActor(screenData)
+    stage?.addActor(screenData)
 
-        inputListener = MainMenuInputListener(2)
-        Gdx.input.inputProcessor = inputListener
+    inputListener = MainMenuInputListener(2)
+    Gdx.input.inputProcessor = inputListener
 
-        this.game.setScreen<LevelScreen>()
+    this.game.setScreen<LevelScreen>()
+  }
+
+  override fun dispose() {
+    super.dispose()
+    stage?.dispose()
+  }
+
+  override fun render(delta: Float) {
+    super.render(delta)
+
+    viewport?.apply()
+    batch?.projectionMatrix = camera?.combined
+
+    stage?.act()
+    stage?.draw()
+
+    if (inputListener!!.currentChoice == 1) {
+      option1?.setText(String.format(Strings.MENU_OPTION_1, "->"))
+      option2?.setText(String.format(Strings.MENU_OPTION_2, "  "))
+    } else if (inputListener!!.currentChoice == 2) {
+      option1?.setText(String.format(Strings.MENU_OPTION_1, "  "))
+      option2?.setText(String.format(Strings.MENU_OPTION_2, "->"))
     }
 
-    override fun dispose() {
-        super.dispose()
-        stage?.dispose()
+    if (inputListener!!.gameCanStart()) {
+      this.game.setScreen<LevelScreen>()
     }
 
-    override fun render(delta: Float) {
-        super.render(delta)
+  }
 
-        viewport?.apply()
-        batch?.projectionMatrix = camera?.combined
+  // Be mindful about nullable-types, as resize is called before show
+  override fun resize(width: Int, height: Int) {
+    super.resize(width, height)
 
-        stage?.act()
-        stage?.draw()
-
-        if (inputListener!!.currentChoice == 1) {
-            option1?.setText(String.format(Strings.MENU_OPTION_1, "->"))
-            option2?.setText(String.format(Strings.MENU_OPTION_2, "  "))
-        } else if (inputListener!!.currentChoice == 2) {
-            option1?.setText(String.format(Strings.MENU_OPTION_1, "  "))
-            option2?.setText(String.format(Strings.MENU_OPTION_2, "->"))
-        }
-
-        if (inputListener!!.gameCanStart()) {
-            this.game.setScreen<LevelScreen>()
-        }
-
-    }
-
-    // Be mindful about nullable-types, as resize is called before show
-    override fun resize(width: Int, height: Int) {
-        super.resize(width, height)
-
-        viewport?.update(width, height, true)
-    }
+    viewport?.update(width, height, true)
+  }
 }

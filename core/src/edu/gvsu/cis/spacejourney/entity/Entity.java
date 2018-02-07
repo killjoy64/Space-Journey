@@ -13,95 +13,97 @@ import edu.gvsu.cis.spacejourney.Constants;
 
 public abstract class Entity extends Actor implements Collidable, Disposable {
 
-    private Body body;
-    private Stage stage;
-    private TextureRegion textureRegion;
-    private World world;
+  private Body body;
+  private Stage stage;
+  private TextureRegion textureRegion;
+  private World world;
 
-    public Entity(Stage stage) {
-        this.stage = stage;
-        this.textureRegion = null;
-        this.setPosition(0.0f, 0.0f);
+  public Entity(Stage stage) {
+    this.stage = stage;
+    this.textureRegion = null;
+    this.setPosition(0.0f, 0.0f);
+  }
+
+  public Entity(Stage stage, TextureRegion textureRegion) {
+    this.stage = stage;
+    this.textureRegion = textureRegion;
+    this.setPosition(0.0f, 0.0f);
+  }
+
+  @Override
+  public void act(float delta) {
+    super.act(delta);
+
+    if (body != null) {
+      setPosition((body.getPosition().x * Constants.PX_PER_M) - (getWidth() / 2),
+          (body.getPosition().y * Constants.PX_PER_M) - (getHeight() / 2));
     }
 
-    public Entity(Stage stage, TextureRegion textureRegion) {
-        this.stage = stage;
-        this.textureRegion = textureRegion;
-        this.setPosition(0.0f, 0.0f);
+  }
+
+  @Override
+  public void draw(Batch batch, float parentAlpha) {
+    super.draw(batch, parentAlpha);
+    Color color = getColor();
+    batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
+
+    if (this.textureRegion != null) {
+      batch.draw(this.textureRegion,
+          getX() / Constants.PX_PER_M, getY() / Constants.PX_PER_M,
+          getWidth() / Constants.PX_PER_M, getHeight() / Constants.PX_PER_M);
+    }
+  }
+
+  // This method should be overriden when there are multiple frames per entity.
+  public TextureRegion getTextureFrame(float delta) {
+    return this.textureRegion;
+  }
+
+  // This method should be called when the textureRegion given is an animation.
+  public Array<TextureRegion> getAnimations(int start, int end, int y, int width, int height) {
+    Array<TextureRegion> frames = new Array<TextureRegion>();
+
+    // If we're using a sprite sheet, load the animation sequence.
+    for (int i = start; i < end; i++) {
+      frames.add(new TextureRegion(this.textureRegion, i * width, y, width, height));
     }
 
-    @Override
-    public void act(float delta) {
-        super.act(delta);
+    return frames;
+  }
 
-        if (body != null) {
-            setPosition((body.getPosition().x * Constants.PX_PER_M) - (getWidth() / 2),
-                    (body.getPosition().y * Constants.PX_PER_M) - (getHeight() / 2));
-        }
+  public boolean outOfBounds() {
+    int screenW = (int) (this.stage.getViewport().getWorldWidth() * Constants.PX_PER_M);
+    int screenH = (int) (this.stage.getViewport().getWorldHeight() * Constants.PX_PER_M);
+    int x = (int) getX();
+    int y = (int) getY();
+    int w = (int) getWidth();
+    int h = (int) getHeight();
 
-    }
+    return (x + w) > screenW || x < 0 || (y + h) > screenH || y < 0;
+  }
 
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-        Color color = getColor();
-        batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
+  public void setBody(Body body) {
+    this.body = body;
+  }
 
-        if (this.textureRegion != null) {
-            batch.draw(this.textureRegion, getX() / Constants.PX_PER_M, getY() / Constants.PX_PER_M, getWidth() / Constants.PX_PER_M, getHeight() / Constants.PX_PER_M);
-        }
-    }
+  public Body getBody() {
+    return body;
+  }
 
-    // This method should be overriden when there are multiple frames per entity.
-    public TextureRegion getTextureFrame(float delta) {
-        return this.textureRegion;
-    }
+  public World getWorld() {
+    return world;
+  }
 
-    // This method should be called when the textureRegion given is an animation.
-    public Array<TextureRegion> getAnimations(int start, int end, int y, int width, int height) {
-        Array<TextureRegion> frames = new Array<TextureRegion>();
+  public void setWorld(World world) {
+    this.world = world;
+  }
 
-        // If we're using a sprite sheet, load the animation sequence.
-        for (int i = start; i < end; i++) {
-            frames.add(new TextureRegion(this.textureRegion, i * width, y, width, height));
-        }
+  public TextureRegion getTextureRegion() {
+    return textureRegion;
+  }
 
-        return frames;
-    }
-
-    public boolean outOfBounds() {
-        int screenW = (int) (this.stage.getViewport().getWorldWidth() * Constants.PX_PER_M);
-        int screenH = (int) (this.stage.getViewport().getWorldHeight() * Constants.PX_PER_M);
-        int x = (int) getX();
-        int y = (int) getY();
-        int w = (int) getWidth();
-        int h = (int) getHeight();
-
-        return (x + w) > screenW || x < 0 || (y + h) > screenH || y < 0;
-    }
-
-    public void setBody(Body body) {
-        this.body = body;
-    }
-
-    public Body getBody() {
-        return body;
-    }
-
-    public World getWorld() {
-        return world;
-    }
-
-    public void setWorld(World world) {
-        this.world = world;
-    }
-
-    public TextureRegion getTextureRegion() {
-        return textureRegion;
-    }
-
-    public void setTextureRegion(TextureRegion textureRegion) {
-        this.textureRegion = textureRegion;
-    }
+  public void setTextureRegion(TextureRegion textureRegion) {
+    this.textureRegion = textureRegion;
+  }
 
 }

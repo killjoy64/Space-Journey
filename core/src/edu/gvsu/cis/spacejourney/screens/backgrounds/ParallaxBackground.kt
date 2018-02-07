@@ -16,61 +16,61 @@ class ParallaxLayer (
     val scroll_factor : Float,
     val zindex : Int)
 {
-    var offset : Vector2? = null
-    var region : TextureRegion? = null
+  var offset : Vector2? = null
+  var region : TextureRegion? = null
 
-    init {
-        this.region = TextureRegion(texture)
-        this.region?.setRegion(0, 0, Gdx.graphics.width, Gdx.graphics.height)
-        this.texture?.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat)
-        this.texture?.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest)
-    }
+  init {
+    this.region = TextureRegion(texture)
+    this.region?.setRegion(0, 0, Gdx.graphics.width, Gdx.graphics.height)
+    this.texture?.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat)
+    this.texture?.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest)
+  }
 
-    fun dispose() {
-        this.texture?.dispose()
-    }
+  fun dispose() {
+    this.texture?.dispose()
+  }
 }
 
 class ParallaxBackground() : Actor(), Disposable {
 
-    var layers : Vector<ParallaxLayer> = Vector()
+  var layers : Vector<ParallaxLayer> = Vector()
 
-    init {
-        layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer3.png", Texture::class.java), 0.0020f, ZIndex.PARALLAX_BACKGROUND_LAYER2))
-        layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer2.png", Texture::class.java), 0.0015f, ZIndex.PARALLAX_BACKGROUND_LAYER3))
-        layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer1.png", Texture::class.java), 0.05f, ZIndex.PARALLAX_BACKGROUND_LAYER2))
-        layers.last().offset = Vector2(5.0f, 50.0f)
+  init {
+    layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer3.png", Texture::class.java), 0.0020f, ZIndex.PARALLAX_BACKGROUND_LAYER2))
+    layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer2.png", Texture::class.java), 0.0015f, ZIndex.PARALLAX_BACKGROUND_LAYER3))
+    layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer1.png", Texture::class.java), 0.05f, ZIndex.PARALLAX_BACKGROUND_LAYER2))
+    layers.last().offset = Vector2(5.0f, 50.0f)
 
-        layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer1.png", Texture::class.java), 0.15f, ZIndex.PARALLAX_BACKGROUND_LAYER1))
+    layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer1.png", Texture::class.java), 0.15f, ZIndex.PARALLAX_BACKGROUND_LAYER1))
 
+  }
+
+  override fun draw(batch: Batch?, parentAlpha: Float) {
+    super.draw(batch, parentAlpha)
+    for (layer in this.layers) {
+      if ( layer.offset != null ){
+        batch?.draw(layer.region, layer.offset!!.x, layer.offset!!.y, this.stage.viewport.worldWidth, this.stage.viewport.worldHeight)
+      } else {
+        batch?.draw(layer.region, 0f, 0f, this.stage.viewport.worldWidth, this.stage.viewport.worldHeight)
+      }
     }
 
-    override fun draw(batch: Batch?, parentAlpha: Float) {
-        super.draw(batch, parentAlpha)
-        for (layer in this.layers) {
-            if ( layer.offset != null ){
-                batch?.draw(layer.region, layer.offset!!.x, layer.offset!!.y, this.stage.viewport.worldWidth, this.stage.viewport.worldHeight)
-            } else {
-                batch?.draw(layer.region, 0f, 0f, this.stage.viewport.worldWidth, this.stage.viewport.worldHeight)
-            }
-        }
+    this.zIndex = ZIndex.BACKGROUND
+  }
 
-        this.zIndex = ZIndex.BACKGROUND
+  override fun act(delta: Float) {
+    super.act(delta)
+
+    for (layer in this.layers) {
+      layer.region?.scroll(0f, -layer.scroll_factor * Gdx.graphics.rawDeltaTime)
     }
 
-    override fun act(delta: Float) {
-        super.act(delta)
+  }
 
-        for (layer in this.layers) {
-            layer.region?.scroll(0f, -layer.scroll_factor * Gdx.graphics.rawDeltaTime)
-        }
-
+  override fun dispose(){
+    for (layer in this.layers) {
+      layer.dispose()
     }
-
-    override fun dispose(){
-        for (layer in this.layers) {
-            layer.dispose()
-        }
-    }
+  }
 
 }
