@@ -1,4 +1,4 @@
-package edu.gvsu.cis.spacejourney.entity.collectible;
+package edu.gvsu.cis.spacejourney.entity.collectible
 
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.physics.box2d.BodyDef
@@ -13,44 +13,44 @@ import edu.gvsu.cis.spacejourney.entity.Graveyard
 
 abstract class Collectible(stage: Stage?) : AnimatedEntity(stage) {
 
-  private var sound: Sound? = null
+    private var sound: Sound? = null
 
-  init {
-    sound = SpaceJourney.assetManager.get("default_pickup.wav", Sound::class.java)
-  }
+    init {
+        sound = SpaceJourney.assetManager.get("default_pickup.wav", Sound::class.java)
+    }
 
-  override fun createBody(world: World?) {
-    val bodyDef = BodyDef()
-    bodyDef.type = BodyDef.BodyType.DynamicBody
-    bodyDef.position.set(x + width / 2 / Constants.PX_PER_M,
-        y + height / 2 / Constants.PX_PER_M)
+    override fun createBody(world: World?) {
+        val bodyDef = BodyDef()
+        bodyDef.type = BodyDef.BodyType.DynamicBody
+        bodyDef.position.set(x + width / 2 / Constants.PX_PER_M,
+                y + height / 2 / Constants.PX_PER_M)
 
-    val body = world?.createBody(bodyDef)
+        val body = world?.createBody(bodyDef)
 
-    val circle = CircleShape()
-    circle.radius = (width/2) / Constants.PX_PER_M
+        val circle = CircleShape()
+        circle.radius = (width / 2) / Constants.PX_PER_M
 
-    val fixtureDef = FixtureDef()
-    fixtureDef.shape = circle
-    fixtureDef.isSensor = true
+        val fixtureDef = FixtureDef()
+        fixtureDef.shape = circle
+        fixtureDef.isSensor = true
 
-    body?.userData = this
-    body?.createFixture(fixtureDef)
+        body?.userData = this
+        body?.createFixture(fixtureDef)
 
-    setBody(body)
-    setWorld(world)
+        setBody(body)
+        setWorld(world)
 
-    circle.dispose()
-  }
+        circle.dispose()
+    }
 
-  open fun collect() {
-    sound?.play(0.05f)
-    Graveyard.bodies.add(body)
-    Graveyard.actors.add(this)
-  }
+    open fun collect() {
+        sound?.play(0.05f)
+        Graveyard.bodies.add(body)
+        Graveyard.actors.add(this)
+    }
 
-  override fun dispose() {
-    super.dispose()
-    sound?.dispose()
-  }
+    override fun dispose() {
+        super.dispose()
+        sound?.dispose()
+    }
 }

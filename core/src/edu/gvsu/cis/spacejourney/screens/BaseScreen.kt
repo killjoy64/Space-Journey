@@ -11,46 +11,46 @@ import ktx.log.debug
  Convenient base class for all Screens where common functionality can be implemented
  #TODO only override methods that need to be overriden
 */
-open class BaseScreen(val game: SpaceJourney, val screenName : String) : KtxScreen {
+open class BaseScreen(val game: SpaceJourney, val screenName: String) : KtxScreen {
 
-  protected var batch: SpriteBatch? = null
+    protected var batch: SpriteBatch? = null
 
-  override fun dispose() {
-    super.dispose()
-    debug { "Screen Disposed: $screenName " }
-  }
+    override fun dispose() {
+        super.dispose()
+        debug { "Screen Disposed: $screenName " }
+    }
 
-  override fun hide() {
-    super.hide()
-    debug { "Screen Hidden: $screenName " }
-  }
+    override fun hide() {
+        super.hide()
+        debug { "Screen Hidden: $screenName " }
+    }
 
-  override fun pause() {
-    super.pause()
-    debug { "Screen Paused: $screenName "}
-  }
+    override fun pause() {
+        super.pause()
+        debug { "Screen Paused: $screenName " }
+    }
 
-  override fun render(delta: Float) {
-    super.render(delta)
+    override fun render(delta: Float) {
+        super.render(delta)
 
-    Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-  }
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+    }
 
-  override fun resize(width: Int, height: Int) {
-    super.resize(width, height)
-    debug { "Screen Resized: $screenName to $width, $height" }
-  }
+    override fun resize(width: Int, height: Int) {
+        super.resize(width, height)
+        debug { "Screen Resized: $screenName to $width, $height" }
+    }
 
-  override fun resume() {
-    super.resume()
-    debug { "Screen Resumed: $screenName" }
-  }
+    override fun resume() {
+        super.resume()
+        debug { "Screen Resumed: $screenName" }
+    }
 
-  override fun show() {
-    super.show()
-    batch = SpriteBatch()
-    debug { "Screen Shown: $screenName "}
-  }
+    override fun show() {
+        super.show()
+        batch = SpriteBatch()
+        debug { "Screen Shown: $screenName " }
+    }
 
 }

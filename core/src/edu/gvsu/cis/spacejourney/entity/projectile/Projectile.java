@@ -11,41 +11,41 @@ import edu.gvsu.cis.spacejourney.entity.Entity;
  */
 public abstract class Projectile extends Entity implements Poolable {
 
-  private boolean isAlive;
+    private boolean isAlive;
 
-  public Projectile(Stage stage, TextureRegion textureRegion) {
-    super(stage, textureRegion);
-    this.isAlive = false;
-  }
-
-  public void spawn(World world, float x, float y) {
-    setPosition(x, y);
-    createBody(world);
-    this.isAlive = true;
-  }
-
-  public boolean isAlive() {
-    return isAlive;
-  }
-
-  public void setAlive(boolean alive) {
-    this.isAlive = alive;
-  }
-
-  @Override
-  public void act(float delta) {
-    super.act(delta);
-
-    if (this.outOfBounds()) {
-      this.isAlive = false;
+    public Projectile(Stage stage, TextureRegion textureRegion) {
+        super(stage, textureRegion);
+        this.isAlive = false;
     }
 
-  }
+    public void spawn(World world, float x, float y) {
+        setPosition(x, y);
+        createBody(world);
+        this.isAlive = true;
+    }
 
-  @Override
-  public void reset() {
-    this.setPosition(0.0f, 0.0f);
-    this.isAlive = false;
-  }
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.isAlive = alive;
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+
+        if (this.outOfBounds()) {
+            this.isAlive = false;
+        }
+
+    }
+
+    @Override
+    public void reset() {
+        this.setPosition(0.0f, 0.0f);
+        this.isAlive = false;
+    }
 
 }

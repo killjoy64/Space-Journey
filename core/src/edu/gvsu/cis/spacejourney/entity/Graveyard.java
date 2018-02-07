@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class Graveyard {
 
-  public static ArrayList<Body> bodies = new ArrayList<Body>();
-  public static ArrayList<Actor> actors = new ArrayList<Actor>();
+    public static ArrayList<Body> bodies = new ArrayList<Body>();
+    public static ArrayList<Actor> actors = new ArrayList<Actor>();
 
 }

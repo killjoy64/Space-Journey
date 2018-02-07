@@ -15,32 +15,34 @@ The core of the game, where we spawn the first screen.
  */
 class SpaceJourney : KtxGame<BaseScreen>() {
 
-  // Global asset manager shared between all screens via reference to this class
-  // Most of the assets should be pre-loaded in the `LoadingScreen` class
-  private object Holder { val ASSETS = AssetManager() }
+    // Global asset manager shared between all screens via reference to this class
+    // Most of the assets should be pre-loaded in the `LoadingScreen` class
+    private object Holder {
+        val ASSETS = AssetManager()
+    }
 
-  companion object {
-    val assetManager: AssetManager by lazy { Holder.ASSETS }
-  }
+    companion object {
+        val assetManager: AssetManager by lazy { Holder.ASSETS }
+    }
 
-  override fun create() {
+    override fun create() {
 
-    Gdx.graphics.setTitle(Strings.GAME_TITLE)
+        Gdx.graphics.setTitle(Strings.GAME_TITLE)
 
-    // Reference: https://github.com/libktx/ktx/tree/master/log
-    Gdx.app.logLevel = LOG_DEBUG
+        // Reference: https://github.com/libktx/ktx/tree/master/log
+        Gdx.app.logLevel = LOG_DEBUG
 
-    // Initialize our Box2D physics.
-    Box2D.init()
+        // Initialize our Box2D physics.
+        Box2D.init()
 
-    // Register all of the screens upfront so we can easily switch between
-    // them by classname and make sure we don't end up in an invalid state
-    this.addScreen(LoadingScreen(this))
-    this.addScreen(MainMenuScreen(this))
-    this.addScreen(LevelScreen(this))
+        // Register all of the screens upfront so we can easily switch between
+        // them by classname and make sure we don't end up in an invalid state
+        this.addScreen(LoadingScreen(this))
+        this.addScreen(MainMenuScreen(this))
+        this.addScreen(LevelScreen(this))
 
-    // Switch to the first screen
-    this.setScreen<LoadingScreen>()
-  }
+        // Switch to the first screen
+        this.setScreen<LoadingScreen>()
+    }
 
 }
