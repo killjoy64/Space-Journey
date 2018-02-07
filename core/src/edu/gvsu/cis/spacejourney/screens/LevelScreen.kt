@@ -2,9 +2,7 @@ package edu.gvsu.cis.spacejourney.screens
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Music
-import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
@@ -18,7 +16,7 @@ import edu.gvsu.cis.spacejourney.Constants
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.entity.Graveyard
 import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship
-import edu.gvsu.cis.spacejourney.entity.TestCollectable
+import edu.gvsu.cis.spacejourney.entity.collectible.TestCollectible
 import edu.gvsu.cis.spacejourney.entity.enemy.EvilSpaceship
 import edu.gvsu.cis.spacejourney.input.GameContactListener
 import edu.gvsu.cis.spacejourney.input.PlayerInputListener
@@ -53,7 +51,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
     private var projManager: ActiveProjectileManager? = null
     private var inputListener: PlayerInputListener? = null
 
-    private var rotatingPickup : TestCollectable? = null;
+    private var rotatingPickup : TestCollectible? = null
 
     override fun show() {
         super.show()
@@ -84,7 +82,8 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         stage?.addActor(player)
 
-        rotatingPickup = TestCollectable(stage)
+        rotatingPickup = TestCollectible(stage)
+        rotatingPickup?.createBody(world)
         stage?.addActor(rotatingPickup)
 
         background = ParallaxBackground()
@@ -141,7 +140,7 @@ class LevelScreen(game : SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         camera?.update()
 
-//        debugRenderer?.render(world, camera?.combined)
+        debugRenderer?.render(world, camera?.combined)
 
         batch?.projectionMatrix = camera?.combined
 
