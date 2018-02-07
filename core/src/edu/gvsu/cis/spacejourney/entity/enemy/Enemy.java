@@ -13,83 +13,83 @@ import edu.gvsu.cis.spacejourney.entity.movement.MovementPattern;
 
 public abstract class Enemy extends Entity {
 
-    private int maxHitPoints;
-    private int hitPoints;
-    private ShapeRenderer shapeRenderer;
-    private MovementPattern movementPattern;
+  private int maxHitPoints;
+  private int hitPoints;
+  private ShapeRenderer shapeRenderer;
+  private MovementPattern movementPattern;
 
-    public Enemy(Stage stage, TextureRegion textureRegion) {
-        super(stage, textureRegion);
-        this.shapeRenderer = new ShapeRenderer();
+  public Enemy(Stage stage, TextureRegion textureRegion) {
+    super(stage, textureRegion);
+    this.shapeRenderer = new ShapeRenderer();
+  }
+
+  @Override
+  public void act(float delta) {
+    super.act(delta);
+
+    if (movementPattern != null && this.getBody() != null) {
+      Vector2 direction = movementPattern.getMovement(this.getBody().getPosition());
+
+      this.getBody().setLinearVelocity(direction.x * delta, direction.y * delta);
     }
+  }
 
-    @Override
-    public void act(float delta) {
-        super.act(delta);
+  public void setMovementPattern(MovementPattern pattern) {
+    movementPattern = pattern;
+  }
 
-        if (movementPattern != null && this.getBody() != null) {
-            Vector2 direction = movementPattern.getMovement(this.getBody().getPosition());
-
-            this.getBody().setLinearVelocity(direction.x * delta, direction.y * delta);
-        }
+  public void takeDamage() {
+    if (hitPoints > 1) {
+      hitPoints--;
+    } else {
+      hitPoints = 0;
+      Graveyard.bodies.add(getBody());
+      Graveyard.actors.add(this);
     }
+  }
 
-    public void setMovementPattern(MovementPattern pattern) {
-        movementPattern = pattern;
+  @Override
+  public void draw(Batch batch, float parentAlpha) {
+    super.draw(batch, parentAlpha);
+    if (maxHitPoints > 2 && hitPoints > 0) {
+      batch.end();
+
+      float x = getX() / Constants.PX_PER_M;
+      float y = (getY() + getHeight()) / Constants.PX_PER_M;
+      float w = getWidth() / Constants.PX_PER_M;
+      float hpW = (w / maxHitPoints) * hitPoints;
+      float h = 2.5f / Constants.PX_PER_M;
+
+      shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+      shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+      shapeRenderer.setColor(1.0f, 0.0f, 0.0f, 1.0f);
+      shapeRenderer.rect(x, y, w, h);
+      shapeRenderer.setColor(0.0f, 1.0f, 0.0f, 1.0f);
+      shapeRenderer.rect(x, y, hpW, h);
+      shapeRenderer.end();
+
+      batch.begin();
     }
+  }
 
-    public void takeDamage() {
-        if (hitPoints > 1) {
-            hitPoints--;
-        } else {
-            hitPoints = 0;
-            Graveyard.bodies.add(getBody());
-            Graveyard.actors.add(this);
-        }
+  public int getMaxHitPoints() {
+    return maxHitPoints;
+  }
+
+  public void setMaxHitPoints(int maxHitPoints) {
+    this.maxHitPoints = maxHitPoints;
+    this.hitPoints = maxHitPoints;
+  }
+
+  public int getHitPoints() {
+    return hitPoints;
+  }
+
+  public void setHitPoints(int hitPoints) {
+    if (hitPoints > maxHitPoints) {
+      this.hitPoints = maxHitPoints;
+    } else {
+      this.hitPoints = hitPoints;
     }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-        if (maxHitPoints > 2 && hitPoints > 0) {
-            batch.end();
-
-            float x = getX() / Constants.PX_PER_M;
-            float y = (getY() + getHeight()) / Constants.PX_PER_M;
-            float w = getWidth() / Constants.PX_PER_M;
-            float hpW = (w / maxHitPoints) * hitPoints;
-            float h = 2.5f / Constants.PX_PER_M;
-
-            shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.setColor(1.0f, 0.0f, 0.0f, 1.0f);
-            shapeRenderer.rect(x, y, w, h);
-            shapeRenderer.setColor(0.0f, 1.0f, 0.0f, 1.0f);
-            shapeRenderer.rect(x, y, hpW, h);
-            shapeRenderer.end();
-
-            batch.begin();
-        }
-    }
-
-    public int getMaxHitPoints() {
-        return maxHitPoints;
-    }
-
-    public void setMaxHitPoints(int maxHitPoints) {
-        this.maxHitPoints = maxHitPoints;
-        this.hitPoints = maxHitPoints;
-    }
-
-    public int getHitPoints() {
-        return hitPoints;
-    }
-
-    public void setHitPoints(int hitPoints) {
-        if (hitPoints > maxHitPoints) {
-            this.hitPoints = maxHitPoints;
-        } else {
-            this.hitPoints = hitPoints;
-        }
-    }
+  }
 }

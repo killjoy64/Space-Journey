@@ -13,41 +13,42 @@ import edu.gvsu.cis.spacejourney.SpaceJourney;
 
 public class EvilSpaceship extends Enemy {
 
-    public EvilSpaceship(Stage stage) {
-        super(stage, new TextureRegion(SpaceJourney.Companion.getAssetManager().get("spaceship3.png", Texture.class)));
-        getTextureRegion().flip(false, true);
-        setMaxHitPoints(3);
-    }
+  public EvilSpaceship(Stage stage) {
+    super(stage, new TextureRegion(
+        SpaceJourney.Companion.getAssetManager().get("spaceship3.png", Texture.class)));
+    getTextureRegion().flip(false, true);
+    setMaxHitPoints(3);
+  }
 
-    @Override
-    public void createBody(World world) {
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(
-                getX() + ((getWidth() / 2) / Constants.PX_PER_M),
-                getY() + ((getHeight() / 2) / Constants.PX_PER_M)
-        );
+  @Override
+  public void createBody(World world) {
+    BodyDef bodyDef = new BodyDef();
+    bodyDef.type = BodyDef.BodyType.DynamicBody;
+    bodyDef.position.set(
+        getX() + ((getWidth() / 2) / Constants.PX_PER_M),
+        getY() + ((getHeight() / 2) / Constants.PX_PER_M)
+    );
 
 
-        CircleShape circle = new CircleShape();
-        circle.setRadius(((getWidth() / 2) - 2.5f) / Constants.PX_PER_M);
+    CircleShape circle = new CircleShape();
+    circle.setRadius(((getWidth() / 2) - 2.5f) / Constants.PX_PER_M);
 
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = circle;
-        fixtureDef.isSensor = true;
+    FixtureDef fixtureDef = new FixtureDef();
+    fixtureDef.shape = circle;
+    fixtureDef.isSensor = true;
 
-        Body body = world.createBody(bodyDef);
-        body.setUserData(this);
-        body.createFixture(fixtureDef);
+    Body body = world.createBody(bodyDef);
+    body.setUserData(this);
+    body.createFixture(fixtureDef);
 
-        setBody(body);
-        setWorld(world);
+    setBody(body);
+    setWorld(world);
 
-        circle.dispose();
-    }
+    circle.dispose();
+  }
 
-    @Override
-    public void dispose() {
+  @Override
+  public void dispose() {
 
-    }
+  }
 }
