@@ -8,6 +8,10 @@ import com.badlogic.gdx.utils.Pool;
 import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.entity.projectile.Laser;
 
+/**
+ * Singleton class that stores and manages information of
+ * active projectiles in a pool.
+ */
 public class ActiveProjectileManager implements Disposable {
 
   private static ActiveProjectileManager instance;
@@ -18,6 +22,10 @@ public class ActiveProjectileManager implements Disposable {
   private Array<Laser> activeProjectiles;
   private Pool<Laser> projectilePool;
 
+  /**
+   * Gets the current projectile manager singleton being used.
+   * @return {@link edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager} singleton.
+   */
   public static ActiveProjectileManager getInstance() {
     if (instance == null) {
       instance = new ActiveProjectileManager();
@@ -25,6 +33,10 @@ public class ActiveProjectileManager implements Disposable {
     return instance;
   }
 
+  /**
+   * MUST be called once after the {@link com.badlogic.gdx.scenes.scene2d.Stage}
+   * is setup.
+   */
   public void init() {
     this.activeProjectiles = new Array<Laser>();
     this.projectilePool = new Pool<Laser>() {
@@ -35,6 +47,12 @@ public class ActiveProjectileManager implements Disposable {
     };
   }
 
+  /**
+   * Spawns a laser at the desired x and y location. This includes
+   * a texture and Box2d body object.
+   * @param x the x-coordinate of where to spawn the laser.
+   * @param y the y-coordinate of where to spawn the laser.
+   */
   public void spawnLaser(float x, float y) {
     Laser newLaser = this.projectilePool.obtain();
     newLaser.setWidth(12.5f);
@@ -44,6 +62,11 @@ public class ActiveProjectileManager implements Disposable {
     stage.addActor(newLaser);
   }
 
+  /**
+   * Polls for updates to any pooled projectile. This controls
+   * projectiles that need to be removed from the stage, or
+   * added to the {@link edu.gvsu.cis.spacejourney.entity.Graveyard}.
+   */
   public void poll() {
     for (int i = 0; i < activeProjectiles.size; i++) {
       Laser p = activeProjectiles.get(i);
@@ -55,10 +78,20 @@ public class ActiveProjectileManager implements Disposable {
     }
   }
 
+  /**
+   * The stage MUST be set in order for the projectile manager
+   * to work properly.
+   * @param stage current stage being used on screen.
+   */
   public void setStage(Stage stage) {
     this.stage = stage;
   }
 
+  /**
+   * The world MUST be set in order for the projectile manager to
+   * work properly.
+   * @param world current world being used on screen.
+   */
   public void setWorld(World world) {
     this.world = world;
   }
@@ -67,4 +100,5 @@ public class ActiveProjectileManager implements Disposable {
   public void dispose() {
     this.projectilePool.clear();
   }
+
 }

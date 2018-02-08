@@ -9,6 +9,10 @@ public class MainMenuInputListener implements InputProcessor {
   private int currentChoice;
   private boolean startGame;
 
+  /**
+   * Input listener for the main menu.
+   * @param maxChoices number of choices to represent on the menu.
+   */
   public MainMenuInputListener(int maxChoices) {
     this.maxChoices = maxChoices;
     this.currentChoice = 1;

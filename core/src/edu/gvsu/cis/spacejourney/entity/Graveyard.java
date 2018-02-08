@@ -6,7 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import java.util.ArrayList;
 
 /**
- * Where the bodies are piled up and queued for removal.
+ * Where the bodies are piled up and queued for removal
+ * from this cruel, cruel world.
  */
 public class Graveyard {
 

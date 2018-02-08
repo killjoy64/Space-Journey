@@ -7,7 +7,7 @@ import edu.gvsu.cis.spacejourney.SpaceJourney;
 import edu.gvsu.cis.spacejourney.managers.GameDataManager;
 
 /**
- * Created by Kyle Flynn on 2/3/2018.
+ * Default head-up display (HUD) for the game play screen.
  */
 public class DefaultOverlay extends Table {
 
@@ -16,6 +16,11 @@ public class DefaultOverlay extends Table {
 
   private int livesDisplayed;
 
+  /**
+   * Default constructor that initially maxes
+   * out space on the screen, which is then updated by
+   * the actual {@link edu.gvsu.cis.spacejourney.managers.GameDataManager} class.
+   */
   public DefaultOverlay() {
     setFillParent(true);
 
@@ -32,6 +37,10 @@ public class DefaultOverlay extends Table {
     }
   }
 
+  /**
+   * Polls for updates that need to be done to the HUD by
+   * the {@link edu.gvsu.cis.spacejourney.managers.GameDataManager} class.
+   */
   public void poll() {
     if (livesDisplayed > gameData.getLives() && livesDisplayed > 0) {
       removeActor(lives[gameData.getLives()]);

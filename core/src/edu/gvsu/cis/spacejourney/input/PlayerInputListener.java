@@ -21,6 +21,10 @@ public class PlayerInputListener implements InputProcessor {
 
   private boolean[] keys;
 
+  /**
+   * Input listener for the player.
+   * @param player current player being used in the game.
+   */
   public PlayerInputListener(PlayerSpaceship player) {
     this.player = player;
     this.projManager = ActiveProjectileManager.getInstance();
@@ -72,6 +76,10 @@ public class PlayerInputListener implements InputProcessor {
     return false;
   }
 
+  /**
+   * Polls for updates the keys.
+   * @param delta delta time used throughout the game.
+   */
   public void poll(float delta) {
 
     boolean moved = false;
