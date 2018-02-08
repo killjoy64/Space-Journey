@@ -102,7 +102,7 @@ public class PlayerInputListener implements InputProcessor {
     }
     if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
       time += delta;
-      if (time >= spawnFrequency || time == 0.0f) {
+      if (time >= spawnFrequency) {
         float x = (this.player.getX() + (this.player.getWidth() / 2)) / Constants.PX_PER_M;
         float y = (this.player.getY() + (this.player.getHeight())) / Constants.PX_PER_M;
         this.projManager.spawnLaser(x, y);

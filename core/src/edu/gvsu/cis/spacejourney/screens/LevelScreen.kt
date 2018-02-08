@@ -122,7 +122,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         stage?.addActor(enemy)
 
         val music: Music? = SpaceJourney.assetManager.get("Space Background Music.mp3")
-        music?.volume = 0.5f
+        music?.volume = 0.3f
         music?.isLooping = true
         music?.play()
     }
