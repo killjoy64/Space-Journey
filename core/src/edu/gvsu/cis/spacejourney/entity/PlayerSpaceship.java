@@ -28,6 +28,10 @@ public class PlayerSpaceship extends Entity {
 
   private Sound damageSound;
 
+  /**
+   * Creates a player using the given stage.
+   * @param stage the current stage that updates actors.
+   */
   public PlayerSpaceship(Stage stage) {
     super(stage, new TextureRegion(
         SpaceJourney.Companion.getAssetManager().get("spaceship2.png", Texture.class)));
@@ -52,12 +56,20 @@ public class PlayerSpaceship extends Entity {
     damageSound = SpaceJourney.Companion.getAssetManager().get("take_damage.wav");
   }
 
+  /**
+   * Damage the player when a collision happens. This is meant to harm the player.
+   */
   public void takeDamage() {
     damageActions.restart();
     addAction(damageActions);
     damageSound.play(0.05f);
   }
 
+  /**
+   * Method that moves the player using a given
+   * {@link edu.gvsu.cis.spacejourney.entity.EntityDirection}.
+   * @param direction the desired {@link edu.gvsu.cis.spacejourney.entity.EntityDirection}.
+   */
   public void move(EntityDirection direction) {
     this.direction = direction;
 
@@ -70,7 +82,13 @@ public class PlayerSpaceship extends Entity {
     getBody().setLinearVelocity(0.0f, 0.0f);
   }
 
-
+  /**
+   * Method that decides whether or not the player can move to that
+   * given direction. This is to prevent the player from going offscreen.
+   * @param direction the future {@link edu.gvsu.cis.spacejourney.entity.EntityDirection}.
+   * @return <b>true</b> if the player can move that direction, and <b>false</b> if the
+   * player cannot.
+   */
   public boolean canMove(EntityDirection direction) {
     int screenW = (int) (getStage().getViewport().getWorldWidth() * Constants.PX_PER_M);
     int screenH = (int) (getStage().getViewport().getWorldHeight() * Constants.PX_PER_M);

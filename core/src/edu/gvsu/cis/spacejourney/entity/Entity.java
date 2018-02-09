@@ -11,6 +11,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import edu.gvsu.cis.spacejourney.Constants;
 
+/**
+ * Abstract class that designs a template for creating any type of entity.
+ * These entities are meant to be have created bodies in a Box2D world.
+ */
 public abstract class Entity extends Actor implements Collidable, Disposable {
 
   private Body body;
@@ -18,12 +22,23 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
   private TextureRegion textureRegion;
   private World world;
 
+  /**
+   * Creates a textureless entity, and sets
+   * the state to be used for future reference.
+   * @param stage current stage that updates actors.
+   */
   public Entity(Stage stage) {
     this.stage = stage;
     this.textureRegion = null;
     this.setPosition(0.0f, 0.0f);
   }
 
+  /**
+   * Creates an entity using a desired texture to attach to a
+   * Box2D body.
+   * @param stage current stage that updates actors.
+   * @param textureRegion texture to bind to the Box2D.
+   */
   public Entity(Stage stage, TextureRegion textureRegion) {
     this.stage = stage;
     this.textureRegion = textureRegion;
@@ -54,23 +69,11 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
     }
   }
 
-  // This method should be overriden when there are multiple frames per entity.
-  public TextureRegion getTextureFrame(float delta) {
-    return this.textureRegion;
-  }
-
-  // This method should be called when the textureRegion given is an animation.
-  public Array<TextureRegion> getAnimations(int start, int end, int y, int width, int height) {
-    Array<TextureRegion> frames = new Array<TextureRegion>();
-
-    // If we're using a sprite sheet, load the animation sequence.
-    for (int i = start; i < end; i++) {
-      frames.add(new TextureRegion(this.textureRegion, i * width, y, width, height));
-    }
-
-    return frames;
-  }
-
+  /**
+   * Method that checks if the current actor is out of the screen's bounds.
+   * @return <b>true</b> if the actor is out of bounds, or <b>false</b> if
+   *         the actor is clearly visible on the screen.
+   */
   public boolean outOfBounds() {
     int screenW = (int) (this.stage.getViewport().getWorldWidth() * Constants.PX_PER_M);
     int screenH = (int) (this.stage.getViewport().getWorldHeight() * Constants.PX_PER_M);

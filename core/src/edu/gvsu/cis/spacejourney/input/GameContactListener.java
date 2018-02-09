@@ -14,7 +14,7 @@ import edu.gvsu.cis.spacejourney.entity.projectile.Laser;
 import edu.gvsu.cis.spacejourney.managers.GameDataManager;
 
 /**
- * Created by Kyle Flynn on 2/3/2018.
+ * Class that handles all collisions in a given world.
  */
 public class GameContactListener implements ContactListener {
 

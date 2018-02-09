@@ -9,7 +9,7 @@ import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship;
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager;
 
 /**
- * Created by Kyle Flynn on 1/24/2018.
+ * Class that handles all the given input for the player.
  */
 public class PlayerInputListener implements InputProcessor {
 

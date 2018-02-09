@@ -3,6 +3,9 @@ package edu.gvsu.cis.spacejourney.input;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
+/**
+ * Class that handles all given input for the main menu screen.
+ */
 public class MainMenuInputListener implements InputProcessor {
 
   private int maxChoices;
