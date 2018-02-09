@@ -87,7 +87,7 @@ public class PlayerSpaceship extends Entity {
    * given direction. This is to prevent the player from going offscreen.
    * @param direction the future {@link edu.gvsu.cis.spacejourney.entity.EntityDirection}.
    * @return <b>true</b> if the player can move that direction, and <b>false</b> if the
-   * player cannot.
+   *        player cannot.
    */
   public boolean canMove(EntityDirection direction) {
     int screenW = (int) (getStage().getViewport().getWorldWidth() * Constants.PX_PER_M);
