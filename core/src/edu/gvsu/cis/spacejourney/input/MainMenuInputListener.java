@@ -25,7 +25,7 @@ public class MainMenuInputListener implements InputProcessor {
   @Override
   public boolean keyDown(int keycode) {
 
-    if (keycode == Input.Keys.UP) {
+    if (keycode == Input.Keys.DOWN) {
       if (currentChoice < maxChoices) {
         currentChoice++;
       } else {
@@ -33,7 +33,7 @@ public class MainMenuInputListener implements InputProcessor {
       }
     }
 
-    if (keycode == Input.Keys.DOWN) {
+    if (keycode == Input.Keys.UP) {
       if (currentChoice > 1) {
         currentChoice--;
       } else {

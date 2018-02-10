@@ -36,8 +36,8 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
         super.show()
 
         camera = OrthographicCamera()
-        viewport = FitViewport(Constants.VIRTUAL_WIDTH,
-                Constants.VIRTUAL_HEIGHT, camera)
+        viewport = FitViewport(Constants.VIRTUAL_WIDTH*2,
+                Constants.VIRTUAL_HEIGHT*2, camera)
         stage = Stage(viewport)
 
         screenData = Table()
@@ -60,7 +60,7 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
         inputListener = MainMenuInputListener(2)
         Gdx.input.inputProcessor = inputListener
 
-        this.game.setScreen<LevelScreen>()
+        this.game.setScreen<LevelSelectScreen>()
     }
 
     override fun dispose() {

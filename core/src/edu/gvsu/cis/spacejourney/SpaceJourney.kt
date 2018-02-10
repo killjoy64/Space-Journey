@@ -4,10 +4,7 @@ import com.badlogic.gdx.Application.LOG_DEBUG
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.physics.box2d.Box2D
-import edu.gvsu.cis.spacejourney.screens.LoadingScreen
-import edu.gvsu.cis.spacejourney.screens.BaseScreen
-import edu.gvsu.cis.spacejourney.screens.LevelScreen
-import edu.gvsu.cis.spacejourney.screens.MainMenuScreen
+import edu.gvsu.cis.spacejourney.screens.*
 import ktx.app.KtxGame
 
 /*
@@ -39,6 +36,7 @@ class SpaceJourney : KtxGame<BaseScreen>() {
         // them by classname and make sure we don't end up in an invalid state
         this.addScreen(LoadingScreen(this))
         this.addScreen(MainMenuScreen(this))
+        this.addScreen(LevelSelectScreen(this))
         this.addScreen(LevelScreen(this))
 
         // Switch to the first screen

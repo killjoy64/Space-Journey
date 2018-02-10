@@ -22,4 +22,12 @@ public class Strings {
    */
   public static String MENU_OPTION_2 = "%sExit  ";
 
+  public static String LEVEL_SELECT_TITLE = "Select A Level";
+
+  public static String LEVEL_ONE = "%sEarth  ";
+
+  public static String LEVEL_TWO = "%sSpace  ";
+
+  public static String LEVEL_THREE = "%sSpace pt. 2 (boss)  ";
+
 }
