@@ -12,6 +12,7 @@ import edu.gvsu.cis.spacejourney.Constants
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.Strings
 import edu.gvsu.cis.spacejourney.input.MainMenuInputListener
+import edu.gvsu.cis.spacejourney.managers.GameDataManager
 import ktx.log.debug
 
 class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScreen") {
@@ -89,6 +90,7 @@ class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScree
     }
 
     if (inputListener!!.gameCanStart()) {
+      GameDataManager.getInstance().levelNumber = inputListener!!.currentChoice
       this.game.setScreen<LevelScreen>()
     }
   }

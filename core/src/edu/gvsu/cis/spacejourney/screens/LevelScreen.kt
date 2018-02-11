@@ -20,7 +20,10 @@ import edu.gvsu.cis.spacejourney.entity.collectible.TestCollectible
 import edu.gvsu.cis.spacejourney.entity.enemy.EvilSpaceship
 import edu.gvsu.cis.spacejourney.input.GameContactListener
 import edu.gvsu.cis.spacejourney.input.PlayerInputListener
+import edu.gvsu.cis.spacejourney.level.Level
+import edu.gvsu.cis.spacejourney.level.Levels
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
+import edu.gvsu.cis.spacejourney.managers.GameDataManager
 import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay
 import edu.gvsu.cis.spacejourney.screens.backgrounds.ParallaxBackground
 import edu.gvsu.cis.spacejourney.screens.util.EnemySpawnEvent
@@ -45,17 +48,12 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
     private var world: World? = null
     private var contactListener: GameContactListener? = null
 
-    private var background: ParallaxBackground? = null
-    private var player: PlayerSpaceship? = null
-
     private var overlayTable: DefaultOverlay? = null
 
     private var projManager: ActiveProjectileManager? = null
-    private var inputListener: PlayerInputListener? = null
 
-    private var rotatingPickup: TestCollectible? = null
-
-    private var choreographer: StageChoreographer? = null
+    private var gameData: GameDataManager? = null
+    private var level: Level? = null
 
     override fun show() {
         super.show()
@@ -76,55 +74,23 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         debugRenderer = Box2DDebugRenderer()
 
-        choreographer = StageChoreographer(stage!!, world!!)
-
-        for (i in 0..200) {
-            choreographer?.schedule(1f + i.toFloat(), EnemySpawnEvent())
-        }
-
-        // For whatever reason, we use PX_PER_M for position,
-        // but we use regular for width/height.
-        player = PlayerSpaceship(stage)
-        player?.setPosition(1.5f, 0.0f)
-        player?.width = 50.0f
-        player?.height = 50.0f
-        player?.createBody(world)
-
-        stage?.addActor(player)
-
-        rotatingPickup = TestCollectible(stage)
-        rotatingPickup?.createBody(world)
-        stage?.addActor(rotatingPickup)
-
-        background = ParallaxBackground()
-        background?.zIndex = ZIndex.BACKGROUND
-        stage?.addActor(background)
-
         projManager = ActiveProjectileManager.getInstance()
         projManager?.setStage(stage)
         projManager?.setWorld(world)
         projManager?.init()
 
-        inputListener = PlayerInputListener(player)
-        Gdx.input.inputProcessor = inputListener
-
         overlayTable = DefaultOverlay()
 
         overlayStage?.addActor(overlayTable)
-
-        // Add quick enemy
-        val enemy: EvilSpaceship? = EvilSpaceship(stage)
-        enemy?.setPosition(1.5f, 1.5f)
-        enemy?.width = 50.0f
-        enemy?.height = 50.0f
-        enemy?.createBody(world)
-
-        stage?.addActor(enemy)
 
         val music: Music? = SpaceJourney.assetManager.get("Space Background Music.mp3")
         music?.volume = 0.3f
         music?.isLooping = true
         music?.play()
+
+        gameData = GameDataManager.getInstance()
+        level = Levels.getFromId(gameData?.levelNumber!!).level
+        level?.init(stage, world)
     }
 
     // Be mindful about nullable-types, as resize is called before show
@@ -144,11 +110,8 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         viewport?.apply()
 
-        choreographer?.update(delta)
-
         overlayTable?.poll()
         projManager?.poll()
-        inputListener?.poll(delta)
 
         camera?.update()
 
@@ -161,6 +124,8 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         overlayStage?.act()
         overlayStage?.draw()
+
+        level?.update(delta)
 
         batch?.end()
 
@@ -184,7 +149,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     override fun dispose() {
         batch?.dispose()
-        player?.dispose()
+        level?.dispose()
         stage?.dispose()
         overlayStage?.dispose()
     }

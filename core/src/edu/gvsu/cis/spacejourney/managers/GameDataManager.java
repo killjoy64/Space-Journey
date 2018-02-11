@@ -14,13 +14,15 @@ public class GameDataManager {
   private static GameDataManager instance;
 
   private int lives;
+  private int levelNumber;
 
   /**
    * Default constructor that initializes all game defaults
    * ONCE every instance of the game.
    */
-  public GameDataManager() {
+  private GameDataManager() {
     this.lives = 3;
+    this.levelNumber = 1;
   }
 
   /**
@@ -43,10 +45,27 @@ public class GameDataManager {
   }
 
   /**
+   * Get the current level number that the game
+   * is on.
+   * @return int as the number associated to the current level.
+   */
+  public int getLevelNumber() {
+    return levelNumber;
+  }
+
+  /**
    * Set the number of lives the player currently has.
    * @param lives to give to the player.
    */
   public void setLives(int lives) {
     this.lives = lives;
+  }
+
+  /**
+   * Set the level that the game is currently on.
+   * @param levelNumber to set the game to.
+   */
+  public void setLevelNumber(int levelNumber) {
+    this.levelNumber = levelNumber;
   }
 }
