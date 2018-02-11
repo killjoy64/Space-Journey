@@ -1,8 +1,11 @@
 package edu.gvsu.cis.spacejourney.input;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.entity.EntityDirection;
 import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship;
@@ -19,8 +22,6 @@ public class PlayerInputListener implements InputProcessor {
   private ActiveProjectileManager projManager;
   private float time;
 
-  private boolean[] keys;
-
   /**
    * Input listener for the player.
    * @param player current player being used in the game.
@@ -29,18 +30,15 @@ public class PlayerInputListener implements InputProcessor {
     this.player = player;
     this.projManager = ActiveProjectileManager.getInstance();
     this.time = 0.0f;
-    this.keys = new boolean[255];
   }
 
   @Override
   public boolean keyDown(int keycode) {
-    this.keys[keycode] = true;
     return false;
   }
 
   @Override
   public boolean keyUp(int keycode) {
-    this.keys[keycode] = false;
     return false;
   }
 
@@ -51,18 +49,26 @@ public class PlayerInputListener implements InputProcessor {
 
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    this.keys[Input.Keys.SPACE] = true;
     return false;
   }
 
   @Override
   public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-    this.keys[Input.Keys.SPACE] = false;
     return false;
   }
 
   @Override
   public boolean touchDragged(int screenX, int screenY, int pointer) {
+
+    if (Gdx.app.getType() == Application.ApplicationType.Android || Gdx.app.getType() == Application.ApplicationType.iOS ) {
+
+      if (screenX < Gdx.graphics.getWidth() / 2.0f) {
+        player.move(EntityDirection.LEFT);
+      } else {
+        player.move(EntityDirection.RIGHT);
+      }
+    }
+
     return false;
   }
 
@@ -77,30 +83,44 @@ public class PlayerInputListener implements InputProcessor {
   }
 
   /**
-   * Polls for updates the keys.
+   * Polls to update the game based upon input events.
    * @param delta delta time used throughout the game.
    */
   public void poll(float delta) {
+    
+    if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
+      boolean moved = false;
 
-    boolean moved = false;
+      if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+        player.move(EntityDirection.RIGHT);
+        moved = true;
+      }
+      if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        player.move(EntityDirection.LEFT);
+        moved = true;
+      }
+      if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+        player.move(EntityDirection.UP);
+        moved = true;
+      }
+      if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+        player.move(EntityDirection.DOWN);
+        moved = true;
+      }
+      if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+        time += delta;
+        if (time >= spawnFrequency) {
+          float x = (this.player.getX() + (this.player.getWidth() / 2)) / Constants.PX_PER_M;
+          float y = (this.player.getY() + (this.player.getHeight())) / Constants.PX_PER_M;
+          this.projManager.spawnLaser(x, y);
+          this.time = 0.0f;
+        }
+      }
 
-    if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-      player.move(EntityDirection.RIGHT);
-      moved = true;
-    }
-    if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-      player.move(EntityDirection.LEFT);
-      moved = true;
-    }
-    if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-      player.move(EntityDirection.UP);
-      moved = true;
-    }
-    if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-      player.move(EntityDirection.DOWN);
-      moved = true;
-    }
-    if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+      if (!moved) {
+        player.stopMoving();
+      }
+    } else {
       time += delta;
       if (time >= spawnFrequency) {
         float x = (this.player.getX() + (this.player.getWidth() / 2)) / Constants.PX_PER_M;
@@ -108,10 +128,6 @@ public class PlayerInputListener implements InputProcessor {
         this.projManager.spawnLaser(x, y);
         this.time = 0.0f;
       }
-    }
-
-    if (!moved) {
-      player.stopMoving();
     }
   }
 }
