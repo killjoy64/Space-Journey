@@ -46,7 +46,7 @@ data class ScheduledEvent(
         val event: ChoreographEvent
 )
 
-class StageChoreographer(val stage: Stage, val world: World) {
+class LevelChoreographer(val stage: Stage, val world: World) {
 
     private var paused = false
 
