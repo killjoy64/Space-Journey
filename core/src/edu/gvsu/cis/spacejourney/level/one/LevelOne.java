@@ -9,8 +9,8 @@ import edu.gvsu.cis.spacejourney.entity.collectible.TestCollectible;
 import edu.gvsu.cis.spacejourney.input.PlayerInputListener;
 import edu.gvsu.cis.spacejourney.level.Level;
 import edu.gvsu.cis.spacejourney.screens.backgrounds.ParallaxBackground;
-import edu.gvsu.cis.spacejourney.screens.util.EnemySpawnEvent;
-import edu.gvsu.cis.spacejourney.screens.util.StageChoreographer;
+import edu.gvsu.cis.spacejourney.level.choreography.EnemySpawnEvent;
+import edu.gvsu.cis.spacejourney.level.choreography.StageChoreographer;
 import edu.gvsu.cis.spacejourney.util.ZIndex;
 
 public class LevelOne extends Level {
@@ -24,8 +24,7 @@ public class LevelOne extends Level {
 
     @Override
     public void init(Stage stage, World world) {
-        this.stage = stage;
-        this.world = world;
+        super.init(stage, world);
 
         background = new ParallaxBackground();
         background.setZIndex(ZIndex.BACKGROUND);

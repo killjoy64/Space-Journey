@@ -1,6 +1,5 @@
 package edu.gvsu.cis.spacejourney.screens
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
@@ -15,20 +14,12 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import edu.gvsu.cis.spacejourney.Constants
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.entity.Graveyard
-import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship
-import edu.gvsu.cis.spacejourney.entity.collectible.TestCollectible
-import edu.gvsu.cis.spacejourney.entity.enemy.EvilSpaceship
 import edu.gvsu.cis.spacejourney.input.GameContactListener
-import edu.gvsu.cis.spacejourney.input.PlayerInputListener
 import edu.gvsu.cis.spacejourney.level.Level
 import edu.gvsu.cis.spacejourney.level.Levels
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
 import edu.gvsu.cis.spacejourney.managers.GameDataManager
 import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay
-import edu.gvsu.cis.spacejourney.screens.backgrounds.ParallaxBackground
-import edu.gvsu.cis.spacejourney.screens.util.EnemySpawnEvent
-import edu.gvsu.cis.spacejourney.screens.util.StageChoreographer
-import edu.gvsu.cis.spacejourney.util.ZIndex
 
 /**
  * Where the magic happens

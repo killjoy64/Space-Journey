@@ -9,7 +9,11 @@ public abstract class Level implements Disposable {
     protected Stage stage;
     protected World world;
 
-    public abstract void init(Stage stage, World world);
+    public void init(Stage stage, World world) {
+        this.stage = stage;
+        this.world = world;
+    }
+
     public abstract void update(float delta);
 }
 
