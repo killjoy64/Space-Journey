@@ -1,16 +1,13 @@
-package edu.gvsu.cis.spacejourney.screens.util
+package edu.gvsu.cis.spacejourney.level.choreography
 
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
-import edu.gvsu.cis.spacejourney.Constants
 import edu.gvsu.cis.spacejourney.entity.enemy.EvilSpaceship
 import edu.gvsu.cis.spacejourney.entity.movement.LinearMovement
 import ktx.collections.GdxArray
-import ktx.collections.isEmpty
 import ktx.collections.isNotEmpty
 import ktx.log.debug
-import java.util.concurrent.ScheduledExecutorService
 
 class EnemySpawnEvent : ChoreographEvent() {
 

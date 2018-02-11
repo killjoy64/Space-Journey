@@ -8,8 +8,9 @@ import edu.gvsu.cis.spacejourney.entity.collectible.Collectible;
 import edu.gvsu.cis.spacejourney.entity.collectible.TestCollectible;
 import edu.gvsu.cis.spacejourney.input.PlayerInputListener;
 import edu.gvsu.cis.spacejourney.level.Level;
+import edu.gvsu.cis.spacejourney.level.choreography.EnemySpawnEvent;
+import edu.gvsu.cis.spacejourney.level.choreography.LevelChoreographer;
 import edu.gvsu.cis.spacejourney.screens.backgrounds.ParallaxBackground;
-import edu.gvsu.cis.spacejourney.screens.util.LevelChoreographer;
 import edu.gvsu.cis.spacejourney.util.ZIndex;
 
 public class LevelOne extends Level {
