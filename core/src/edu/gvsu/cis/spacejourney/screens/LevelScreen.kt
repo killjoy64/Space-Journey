@@ -20,7 +20,6 @@ import edu.gvsu.cis.spacejourney.level.Levels
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
 import edu.gvsu.cis.spacejourney.managers.GameDataManager
 import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay
-import edu.gvsu.cis.spacejourney.util.DebugInfo
 import edu.gvsu.cis.spacejourney.util.toMeters
 
 /**
@@ -77,7 +76,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         level?.music?.isLooping = true
         level?.music?.play()
 
-        overlayStage?.addActor(DebugInfo())
+//        overlayStage?.addActor(DebugInfo())
 
         if (level?.hud != null) {
             overlayStage?.addActor(level?.hud)
