@@ -15,6 +15,7 @@ public class GameDataManager {
 
   private int lives;
   private int levelNumber;
+  private int score;
 
   /**
    * Default constructor that initializes all game defaults
@@ -23,6 +24,7 @@ public class GameDataManager {
   private GameDataManager() {
     this.lives = 3;
     this.levelNumber = 1;
+    this.score = 0;
   }
 
   /**
@@ -54,6 +56,14 @@ public class GameDataManager {
   }
 
   /**
+   * Get the current score of the player.
+   * @return int as the number associated with the player's score.
+   */
+  public int getScore() {
+    return score;
+  }
+
+  /**
    * Set the number of lives the player currently has.
    * @param lives to give to the player.
    */
@@ -67,5 +77,13 @@ public class GameDataManager {
    */
   public void setLevelNumber(int levelNumber) {
     this.levelNumber = levelNumber;
+  }
+
+  /**
+   * Set the current score of the player.
+   * @param score to set the score to.
+   */
+  public void setScore(int score) {
+    this.score = score;
   }
 }

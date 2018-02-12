@@ -1,6 +1,5 @@
 package edu.gvsu.cis.spacejourney.screens
 
-import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
@@ -39,8 +38,6 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
     private var world: World? = null
     private var contactListener: GameContactListener? = null
 
-    private var overlayTable: DefaultOverlay? = null
-
     private var projManager: ActiveProjectileManager? = null
 
     private var gameData: GameDataManager? = null
@@ -55,7 +52,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         stage = Stage(viewport)
 
         overlayCam = OrthographicCamera()
-        overlayViewport = FillViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT, overlayCam)
+        overlayViewport = FillViewport(Constants.VIRTUAL_WIDTH*3, Constants.VIRTUAL_HEIGHT*3, overlayCam)
         overlayStage = Stage(overlayViewport)
 
         world = World(Vector2(0.0f, 0.0f), true)
@@ -70,18 +67,16 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         projManager?.setWorld(world)
         projManager?.init()
 
-        overlayTable = DefaultOverlay()
-
-        overlayStage?.addActor(overlayTable)
-
-        val music: Music? = SpaceJourney.assetManager.get("Space Background Music.mp3")
-        music?.volume = 0.3f
-        music?.isLooping = true
-        music?.play()
-
         gameData = GameDataManager.getInstance()
         level = Levels.getFromId(gameData?.levelNumber!!).level
         level?.init(stage, world)
+        level?.music?.volume = 0.3f
+        level?.music?.isLooping = true
+        level?.music?.play()
+
+        if (level?.hud != null) {
+            overlayStage?.addActor(level?.hud)
+        }
     }
 
     // Be mindful about nullable-types, as resize is called before show
@@ -101,7 +96,6 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         viewport?.apply()
 
-        overlayTable?.poll()
         projManager?.poll()
 
         camera?.update()
@@ -134,7 +128,6 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         for (actor: Actor in Graveyard.actors) {
             actor.remove()
         }
-
         Graveyard.actors.clear()
     }
 

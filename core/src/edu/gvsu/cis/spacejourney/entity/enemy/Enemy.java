@@ -10,17 +10,20 @@ import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.entity.Entity;
 import edu.gvsu.cis.spacejourney.entity.Graveyard;
 import edu.gvsu.cis.spacejourney.entity.movement.MovementPattern;
+import edu.gvsu.cis.spacejourney.managers.GameDataManager;
 
 public abstract class Enemy extends Entity {
 
   private int maxHitPoints;
   private int hitPoints;
+  private int score;
   private ShapeRenderer shapeRenderer;
   private MovementPattern movementPattern;
 
   public Enemy(Stage stage, TextureRegion textureRegion) {
     super(stage, textureRegion);
     this.shapeRenderer = new ShapeRenderer();
+    this.score = 10;
   }
 
   @Override
@@ -45,6 +48,8 @@ public abstract class Enemy extends Entity {
       hitPoints = 0;
       Graveyard.bodies.add(getBody());
       Graveyard.actors.add(this);
+      int prevScore = GameDataManager.getInstance().getScore();
+      GameDataManager.getInstance().setScore(prevScore + 10);
     }
   }
 
@@ -85,11 +90,19 @@ public abstract class Enemy extends Entity {
     return hitPoints;
   }
 
+  public int getScore() {
+    return score;
+  }
+
   public void setHitPoints(int hitPoints) {
     if (hitPoints > maxHitPoints) {
       this.hitPoints = maxHitPoints;
     } else {
       this.hitPoints = hitPoints;
     }
+  }
+
+  public void setScore(int score) {
+    this.score = score;
   }
 }

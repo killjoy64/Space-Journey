@@ -28,6 +28,8 @@ public class Strings {
 
   public static String LEVEL_TWO = "%sSpace  ";
 
-  public static String LEVEL_THREE = "%sSpace pt. 2 (boss)  ";
+  public static String LEVEL_THREE = "%sSpace Boss  ";
+
+  public static String HUD_SCORE = "SCORE %06d";
 
 }

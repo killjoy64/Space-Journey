@@ -1,8 +1,10 @@
 package edu.gvsu.cis.spacejourney.level.one;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import edu.gvsu.cis.spacejourney.SpaceJourney;
 import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship;
 import edu.gvsu.cis.spacejourney.entity.collectible.Collectible;
 import edu.gvsu.cis.spacejourney.entity.collectible.TestCollectible;
@@ -11,6 +13,7 @@ import edu.gvsu.cis.spacejourney.level.Level;
 import edu.gvsu.cis.spacejourney.level.choreography.EnemySpawnEvent;
 import edu.gvsu.cis.spacejourney.level.choreography.LevelChoreographer;
 import edu.gvsu.cis.spacejourney.screens.backgrounds.ParallaxBackground;
+import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay;
 import edu.gvsu.cis.spacejourney.util.ZIndex;
 
 public class LevelOne extends Level {
@@ -21,6 +24,14 @@ public class LevelOne extends Level {
     private Collectible testCollectible;
 
     private LevelChoreographer choreographer;
+    private DefaultOverlay defaultHud;
+
+    public LevelOne() {
+        this.defaultHud = new DefaultOverlay();
+
+        setMusic(SpaceJourney.Companion.getAssetManager().get("Space Background Music.mp3", Music.class));
+        setHud(defaultHud);
+    }
 
     @Override
     public void init(Stage stage, World world) {
@@ -55,10 +66,12 @@ public class LevelOne extends Level {
     public void update(float delta) {
         inputListener.poll(delta);
         choreographer.update(delta);
+        defaultHud.poll();
     }
 
     @Override
     public void dispose() {
-
+        player.dispose();
+        testCollectible.dispose();
     }
 }
