@@ -7,7 +7,7 @@ import edu.gvsu.cis.spacejourney.SpaceJourney;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.useHDPI = true;
+		config.useHDPI = false;
 		config.width = 896;
 		config.height = 504;
 		config.vSyncEnabled = true;

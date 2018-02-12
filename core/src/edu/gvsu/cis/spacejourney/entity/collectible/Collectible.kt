@@ -10,6 +10,7 @@ import edu.gvsu.cis.spacejourney.Constants
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.entity.AnimatedEntity
 import edu.gvsu.cis.spacejourney.entity.Graveyard
+import edu.gvsu.cis.spacejourney.util.toMeters
 
 abstract class Collectible(stage: Stage?) : AnimatedEntity(stage) {
 
@@ -22,13 +23,15 @@ abstract class Collectible(stage: Stage?) : AnimatedEntity(stage) {
     override fun createBody(world: World?) {
         val bodyDef = BodyDef()
         bodyDef.type = BodyDef.BodyType.DynamicBody
-        bodyDef.position.set(x + width / 2 / Constants.PX_PER_M,
-                y + height / 2 / Constants.PX_PER_M)
+        bodyDef.position.set(
+            (x + width / 2).toMeters(),
+            (y + height / 2).toMeters()
+        )
 
         val body = world?.createBody(bodyDef)
 
         val circle = CircleShape()
-        circle.radius = (width / 2) / Constants.PX_PER_M
+        circle.radius = (width / 2).toMeters()
 
         val fixtureDef = FixtureDef()
         fixtureDef.shape = circle
