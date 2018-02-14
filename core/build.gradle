@@ -5,6 +5,7 @@ sourceCompatibility = 1.6
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 sourceSets.main.java.srcDirs = [ "src/" ]
+sourceSets.test.java.srcDirs = [ "test/" ]
 
 eclipse.project {
     name = appName + "-core"
@@ -38,6 +39,7 @@ dependencies {
     compile "io.github.libktx:ktx-vis:$ktxVersion"
     compile "io.github.libktx:ktx-vis-style:$ktxVersion"
 
+    compile 'junit:junit:4.12'
 }
 
 compileKotlin {

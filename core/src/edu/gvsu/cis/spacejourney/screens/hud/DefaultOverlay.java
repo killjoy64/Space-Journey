@@ -33,6 +33,7 @@ public class DefaultOverlay extends Table {
    */
   public DefaultOverlay() {
     setFillParent(true);
+    setDebug(true);
 
     this.lives = new Image[GameDataManager.MAX_LIVES];
     this.gameData = GameDataManager.getInstance();
@@ -43,14 +44,16 @@ public class DefaultOverlay extends Table {
 
     this.scoreLabel = new Label(String.format(Strings.HUD_SCORE, gameData.getScore()), new Label.LabelStyle(font, Color.WHITE));
 
+    System.out.println(this.lives.length + " spaces available");
+
     for (int i = 0; i < this.lives.length; i++) {
       lives[i] = new Image(
           SpaceJourney.Companion.getAssetManager().get("spaceship2.png", Texture.class));
-      top().left().add(lives[i]).width(150.0f).height(150.0f).padRight(25.0f);
-
+      top().left().add(lives[i]).width(75.0f).height(75.0f).padRight(25.0f);
+      System.out.println("life added");
       livesDisplayed++;
     }
-    add(scoreLabel).padLeft(700.0f).padTop(-50.0f);
+    add(scoreLabel).padLeft(375.0f).padTop(-25.0f);
   }
 
   /**
@@ -61,9 +64,11 @@ public class DefaultOverlay extends Table {
     if (livesDisplayed > gameData.getLives() && livesDisplayed > 0) {
       removeActor(lives[gameData.getLives()]);
       livesDisplayed--;
+      System.out.println("life taken away");
     } else if (livesDisplayed < gameData.getLives()) {
       top().left().add(lives[gameData.getLives()]);
       livesDisplayed++;
+      System.out.println("life added");
     }
 
     scoreLabel.setText(String.format(Strings.HUD_SCORE, gameData.getScore()));

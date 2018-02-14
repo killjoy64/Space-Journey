@@ -27,6 +27,12 @@ public class GameDataManager {
     this.score = 0;
   }
 
+  public void reset() {
+    this.lives = 3;
+    this.levelNumber = 1;
+    this.score = 0;
+  }
+
   /**
    * Gets the current game data singleton being used.
    * @return {@link edu.gvsu.cis.spacejourney.managers.GameDataManager} singleton.

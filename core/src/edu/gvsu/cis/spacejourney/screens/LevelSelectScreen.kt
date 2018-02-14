@@ -60,8 +60,6 @@ class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScree
 
     inputListener = MainMenuInputListener(3)
     Gdx.input.inputProcessor = inputListener
-
-    this.game.setScreen<LevelScreen>()
   }
 
   override fun render(delta: Float) {

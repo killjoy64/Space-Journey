@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.SpaceJourney;
+import edu.gvsu.cis.spacejourney.managers.GameDataManager;
 
 public class PlayerSpaceship extends Entity {
 
@@ -29,6 +30,8 @@ public class PlayerSpaceship extends Entity {
   private RepeatAction damageActions;
 
   private Sound damageSound;
+
+  private boolean dead;
 
   /**
    * Creates a player using the given stage.
@@ -56,6 +59,8 @@ public class PlayerSpaceship extends Entity {
     damageActions.setAction(damageAction);
 
     damageSound = SpaceJourney.Companion.getAssetManager().get("take_damage.wav");
+
+    dead = false;
   }
 
   /**
@@ -65,6 +70,10 @@ public class PlayerSpaceship extends Entity {
     damageActions.restart();
     addAction(damageActions);
     damageSound.play(0.05f);
+    if (GameDataManager.getInstance().getLives() <= 0) {
+      dead = true;
+      Graveyard.bodies.add(getBody());
+    }
   }
 
   /**
@@ -158,6 +167,10 @@ public class PlayerSpaceship extends Entity {
     setWorld(world);
 
     circle.dispose();
+  }
+
+  public boolean isDead() {
+    return this.dead;
   }
 
   @Override

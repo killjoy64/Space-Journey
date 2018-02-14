@@ -18,60 +18,61 @@ import edu.gvsu.cis.spacejourney.util.ZIndex;
 
 public class LevelOne extends Level {
 
-    private ParallaxBackground background;
-    private PlayerSpaceship player;
-    private PlayerInputListener inputListener;
-    private Collectible testCollectible;
+  private ParallaxBackground background;
+  private PlayerSpaceship player;
+  private PlayerInputListener inputListener;
+  private Collectible testCollectible;
 
-    private LevelChoreographer choreographer;
-    private DefaultOverlay defaultHud;
+  private LevelChoreographer choreographer;
+  private DefaultOverlay defaultHud;
 
-    public LevelOne() {
-        this.defaultHud = new DefaultOverlay();
+  public LevelOne() {
+    setMusic(SpaceJourney.Companion.getAssetManager().get("Space Background Music.mp3", Music.class));
+  }
 
-        setMusic(SpaceJourney.Companion.getAssetManager().get("Space Background Music.mp3", Music.class));
-        setHud(defaultHud);
+  @Override
+  public void init(Stage stage, World world) {
+    super.init(stage, world);
+
+    background = new ParallaxBackground();
+    background.setZIndex(ZIndex.BACKGROUND);
+    stage.addActor(background);
+
+    player = new PlayerSpaceship(stage);
+    player.setPosition(1.5f, 0.0f);
+    player.setWidth(50.0f);
+    player.setHeight(50.0f);
+    player.createBody(world);
+    stage.addActor(player);
+    setPlayer(player);
+
+    defaultHud = new DefaultOverlay();
+    setHud(defaultHud);
+
+    inputListener = new PlayerInputListener(player);
+    Gdx.input.setInputProcessor(inputListener);
+
+    testCollectible = new TestCollectible(stage);
+    testCollectible.createBody(world);
+    stage.addActor(testCollectible);
+
+    choreographer = new LevelChoreographer(stage, world);
+
+    for (int i = 0; i < 200; i++) {
+      choreographer.schedule(1.0f + i, new EnemySpawnEvent());
     }
+  }
 
-    @Override
-    public void init(Stage stage, World world) {
-        super.init(stage, world);
+  @Override
+  public void update(float delta) {
+    inputListener.poll(delta);
+    choreographer.update(delta);
+    defaultHud.poll();
+  }
 
-        background = new ParallaxBackground();
-        background.setZIndex(ZIndex.BACKGROUND);
-        stage.addActor(background);
-
-        player = new PlayerSpaceship(stage);
-        player.setPosition(1.5f, 0.0f);
-        player.setWidth(50.0f);
-        player.setHeight(50.0f);
-        player.createBody(world);
-        stage.addActor(player);
-
-        inputListener = new PlayerInputListener(player);
-        Gdx.input.setInputProcessor(inputListener);
-
-        testCollectible = new TestCollectible(stage);
-        testCollectible.createBody(world);
-        stage.addActor(testCollectible);
-
-        choreographer = new LevelChoreographer(stage, world);
-
-        for (int i = 0; i < 200; i++) {
-            choreographer.schedule(1.0f + i, new EnemySpawnEvent());
-        }
-    }
-
-    @Override
-    public void update(float delta) {
-        inputListener.poll(delta);
-        choreographer.update(delta);
-        defaultHud.poll();
-    }
-
-    @Override
-    public void dispose() {
-        player.dispose();
-        testCollectible.dispose();
-    }
+  @Override
+  public void dispose() {
+    player.dispose();
+    testCollectible.dispose();
+  }
 }
