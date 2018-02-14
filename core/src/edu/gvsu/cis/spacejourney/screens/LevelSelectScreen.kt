@@ -40,7 +40,7 @@ class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScree
 
     screenData = Table()
 
-    font = BitmapFont(Gdx.files.internal("fonts/default.fnt"))
+    font = SpaceJourney.assetManager.get("fonts/default.fnt")
     font?.data?.scale(0.01f)
 
     option1 = Label(String.format(Strings.LEVEL_ONE, "  "), Label.LabelStyle(font, Color.WHITE))
