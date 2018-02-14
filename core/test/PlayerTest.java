@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
 @RunWith(GameTest.class)
-public class EntityTest {
+public class PlayerTest {
 
   @Mock
   private static Camera camera;
@@ -41,6 +41,8 @@ public class EntityTest {
 
   @Mock
   private static World world;
+
+  private static PlayerSpaceship player;
 
   /**
    * Setup method that is required to run before any of our
@@ -57,15 +59,18 @@ public class EntityTest {
     when(stage.getViewport()).thenReturn(viewport);
 
     SpaceJourney.Companion.getAssetManager().load("spaceship2.png", Texture.class);
-    SpaceJourney.Companion.getAssetManager().load("spaceship3.png", Texture.class);
     SpaceJourney.Companion.getAssetManager().load("take_damage.wav", Sound.class);
     SpaceJourney.Companion.getAssetManager().finishLoading();
   }
 
+  @Before
+  public void setupPlayer() {
+    player = new PlayerSpaceship(stage);
+    player.createBody(world);
+  }
+
   @Test
   public void testPlayerPhysicsBody() {
-    PlayerSpaceship player = new PlayerSpaceship(stage);
-    player.createBody(world);
     Body body = player.getBody();
 
     // Player's body should not be null once created.
@@ -76,16 +81,10 @@ public class EntityTest {
 
     // Player's body should not change even if it is redefined.
     assertEquals(body, player.getBody());
-
-    world.destroyBody(player.getBody());
-    player.dispose();
   }
 
   @Test
   public void testPlayerLogic() {
-    PlayerSpaceship player = new PlayerSpaceship(stage);
-    player.createBody(world);
-
     // By default, the player is not dead, and spawns at 0,0.
     assertFalse(player.isDead());
     assertTrue(player.canMove(EntityDirection.UP));
@@ -99,15 +98,35 @@ public class EntityTest {
 
     assertTrue(player.isDead());
     assertTrue(Graveyard.bodies.size() == 1);
-
-    player.dispose();
   }
 
+  @Test
   public void testPlayerMovement() {
-    PlayerSpaceship player = new PlayerSpaceship(stage);
-    player.createBody(world);
-
     float delta = 0.1f;
+    player.act(delta);
+    player.move(EntityDirection.UP);
+    player.act(delta);
+    assertTrue(player.getBody().getLinearVelocity().y > 0);
+    player.act(delta);
+    player.move(EntityDirection.LEFT);
+    player.act(delta);
+    assertTrue(
+        player.getBody().getLinearVelocity().x == 0
+            && player.getBody().getLinearVelocity().y == 0);
+    player.move(EntityDirection.RIGHT);
+    player.act(delta);
+    assertTrue(player.getBody().getLinearVelocity().x > 0);
+    player.act(delta);
+    player.stopMoving();
+    assertTrue(
+        player.getBody().getLinearVelocity().x == 0
+            && player.getBody().getLinearVelocity().y == 0);
+  }
+
+  @After
+  public void resetPlayer() {
+    world.destroyBody(player.getBody());
+    player.dispose();
   }
 
   /**
