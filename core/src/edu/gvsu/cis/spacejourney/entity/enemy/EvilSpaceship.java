@@ -20,6 +20,12 @@ public class EvilSpaceship extends Enemy {
     setMaxHitPoints(3);
   }
 
+  public EvilSpaceship(Stage stage, TextureRegion texture) {
+    super(stage, texture);
+    getTextureRegion().flip(false, true);
+    setMaxHitPoints(3);
+  }
+
   @Override
   public void createBody(World world) {
     BodyDef bodyDef = new BodyDef();
