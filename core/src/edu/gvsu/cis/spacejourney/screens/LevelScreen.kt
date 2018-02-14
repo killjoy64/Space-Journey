@@ -20,6 +20,7 @@ import edu.gvsu.cis.spacejourney.level.Levels
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
 import edu.gvsu.cis.spacejourney.managers.GameDataManager
 import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay
+import edu.gvsu.cis.spacejourney.util.DebugInfo
 import edu.gvsu.cis.spacejourney.util.toMeters
 
 /**
@@ -34,7 +35,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
   private var stage: Stage? = null
 
   private var overlayCam: OrthographicCamera? = null
-  private var overlayViewport: FillViewport? = null
+  private var overlayViewport: ScreenViewport? = null
   private var overlayStage: Stage? = null
 
   private var world: World? = null
@@ -49,12 +50,11 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
     super.show()
 
     camera = OrthographicCamera()
-    viewport = FitViewport(Constants.VIRTUAL_WIDTH.toMeters(),
-        Constants.VIRTUAL_HEIGHT.toMeters(), camera)
+    viewport = FitViewport(Constants.VIRTUAL_WIDTH.toMeters(), Constants.VIRTUAL_HEIGHT.toMeters(), camera)
     stage = Stage(viewport)
 
     overlayCam = OrthographicCamera()
-    overlayViewport = FillViewport(Constants.VIRTUAL_WIDTH * 2, Constants.VIRTUAL_HEIGHT * 2, overlayCam)
+    overlayViewport = ScreenViewport()
     overlayStage = Stage(overlayViewport)
 
     world = World(Vector2(0.0f, 0.0f), true)
@@ -77,7 +77,9 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
     level?.music?.isLooping = true
     level?.music?.play()
 
-//        overlayStage?.addActor(DebugInfo())
+    val info = DebugInfo()
+    info.setPosition(1f, 1f)
+    overlayStage?.addActor(info)
 
     if (level?.hud != null) {
       overlayStage?.addActor(level?.hud)

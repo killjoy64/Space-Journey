@@ -42,7 +42,7 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
 
         screenData = Table()
 
-        font = BitmapFont(Gdx.files.internal("fonts/default.fnt"))
+        font = SpaceJourney.assetManager.get("fonts/default.fnt")
         font?.data?.scale(0.175f)
 
         option1 = Label(String.format(Strings.MENU_OPTION_1, "  "), Label.LabelStyle(font, Color.WHITE))

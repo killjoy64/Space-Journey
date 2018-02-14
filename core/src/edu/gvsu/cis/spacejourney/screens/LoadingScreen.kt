@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
@@ -39,6 +40,7 @@ class LoadingScreen(game: SpaceJourney) : BaseScreen(game, "LoadingScreen") {
         SpaceJourney.assetManager.load("Space Background Music.mp3", Music::class.java)
         SpaceJourney.assetManager.load("take_damage.wav", Sound::class.java)
         SpaceJourney.assetManager.load("default_pickup.wav", Sound::class.java)
+        SpaceJourney.assetManager.load("fonts/default.fnt", BitmapFont::class.java)
     }
 
     override fun show() {
