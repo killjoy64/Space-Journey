@@ -21,7 +21,11 @@ public class GameTest extends BlockJUnit4ClassRunner implements ApplicationListe
     HeadlessApplicationConfiguration conf = new HeadlessApplicationConfiguration();
 
     new HeadlessApplication(this, conf);
+
+    // These lines are VERY important. They simulate a GL20 (2D) environment
+    // without actually using GL20. Our tests cannot be completed without these.
     Gdx.gl = mock(GL20.class);
+    Gdx.gl20 = mock(GL20.class);
   }
 
   @Override

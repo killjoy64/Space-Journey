@@ -101,6 +101,11 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
     this.world = world;
   }
 
+  @Override
+  public Stage getStage() {
+    return this.stage;
+  }
+
   public TextureRegion getTextureRegion() {
     return textureRegion;
   }
