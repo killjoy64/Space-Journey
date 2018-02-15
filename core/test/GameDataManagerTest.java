@@ -53,10 +53,18 @@ public class GameDataManagerTest {
   }
 
   @Test
+  public void testLevelData() {
+    assertTrue(gameData.getLevelNumber() == 1);
+    gameData.setLevelNumber(3);
+    assertTrue(gameData.getLevelNumber() == 3);
+  }
+
+  @Test
   public void testReset() {
     gameData.reset();
     assertEquals(0, gameData.getScore());
     assertEquals(3, gameData.getLives());
+    assertEquals(1, gameData.getLevelNumber());
   }
 
   @Test
