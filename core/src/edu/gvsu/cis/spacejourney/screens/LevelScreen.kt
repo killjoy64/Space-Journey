@@ -30,12 +30,10 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
   private var debugRenderer: Box2DDebugRenderer? = null
 
-  private var camera: OrthographicCamera? = null
-  private var viewport: FitViewport? = null
+  //private var viewport: FitViewport? = null
   private var stage: Stage? = null
 
-  private var overlayCam: OrthographicCamera? = null
-  private var overlayViewport: ScreenViewport? = null
+  //private var overlayViewport: ScreenViewport? = null
   private var overlayStage: Stage? = null
 
   private var world: World? = null
@@ -49,12 +47,10 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
   override fun show() {
     super.show()
 
-    camera = OrthographicCamera()
-    viewport = FitViewport(Constants.VIRTUAL_WIDTH.toMeters(), Constants.VIRTUAL_HEIGHT.toMeters(), camera)
+    val viewport = FitViewport(Constants.VIRTUAL_WIDTH.toMeters(), Constants.VIRTUAL_HEIGHT.toMeters(), OrthographicCamera())
     stage = Stage(viewport)
 
-    overlayCam = OrthographicCamera()
-    overlayViewport = ScreenViewport()
+    val overlayViewport = FillViewport(Constants.VIRTUAL_WIDTH * 2, Constants.VIRTUAL_HEIGHT * 2)
     overlayStage = Stage(overlayViewport)
 
     world = World(Vector2(0.0f, 0.0f), true)
@@ -90,41 +86,35 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
   override fun resize(width: Int, height: Int) {
     super.resize(width, height)
 
-    viewport?.update(width, height, true)
-    overlayViewport?.update(width, height)
-
-    camera?.update()
+    stage?.viewport?.update(width, height, true)
+    overlayStage?.viewport?.update(width, height)
   }
 
   override fun render(delta: Float) {
     super.render(delta)
 
-    batch?.begin()
-
-    viewport?.apply()
-
-    projManager?.poll()
-
-    camera?.update()
-
-    batch?.projectionMatrix = camera?.combined
-
-    debugRenderer?.render(world, camera?.combined)
-    stage?.act()
-    stage?.draw()
-    overlayStage?.act()
-    overlayStage?.draw()
-    level?.update(delta)
-
-    batch?.end()
-
-    world?.step(1.0f / 60.0f, 6, 2)
-
-    getRidOfBodies()
-
+    // Switch level if needed
     if (level != null && level?.player!!.isDead) {
       game.setScreen<LevelSelectScreen>()
     }
+
+    // Update all the things
+    projManager?.poll()
+    level?.update(delta)
+    overlayStage?.act()
+    stage?.act()
+    world?.step(1.0f / 60.0f, 6, 2)
+    getRidOfBodies()
+
+    // Draw the game
+    stage?.viewport?.apply()
+    debugRenderer?.render(world, stage?.viewport?.camera?.combined)
+    stage?.draw()
+
+    // Draw the UI
+    overlayStage?.viewport?.apply()
+    overlayStage?.draw()
+
   }
 
   private fun getRidOfBodies() {
@@ -141,7 +131,6 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
   override fun dispose() {
     getRidOfBodies()
-    batch?.dispose()
     level?.dispose()
     stage?.dispose()
     overlayStage?.dispose()
