@@ -17,7 +17,6 @@ import ktx.log.debug
 
 class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScreen") {
 
-  private var camera: OrthographicCamera? = null
   private var viewport: FitViewport? = null
   private var stage: Stage? = null
 
@@ -33,9 +32,7 @@ class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScree
   override fun show() {
     super.show()
 
-    camera = OrthographicCamera()
-    viewport = FitViewport(Constants.VIRTUAL_WIDTH*2,
-            Constants.VIRTUAL_HEIGHT*2, camera)
+    viewport = FitViewport(Constants.VIRTUAL_WIDTH * 2, Constants.VIRTUAL_HEIGHT * 2, OrthographicCamera())
     stage = Stage(viewport)
 
     screenData = Table()
@@ -65,9 +62,7 @@ class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScree
   override fun render(delta: Float) {
     super.render(delta)
 
-    viewport?.apply()
-    batch?.projectionMatrix = camera?.combined
-
+    stage?.viewport?.apply()
     stage?.act()
     stage?.draw()
 

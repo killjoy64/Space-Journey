@@ -20,8 +20,6 @@ The main menu for the game where we can change settings, start a game, load, sav
 */
 class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
 
-    private var camera: OrthographicCamera? = null
-    private var viewport: FitViewport? = null
     private var stage: Stage? = null
 
     private var screenData: Table? = null
@@ -35,9 +33,12 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
     override fun show() {
         super.show()
 
-        camera = OrthographicCamera()
-        viewport = FitViewport(Constants.VIRTUAL_WIDTH*2,
-                Constants.VIRTUAL_HEIGHT*2, camera)
+        val camera = OrthographicCamera()
+        val viewport = FitViewport(
+                Constants.VIRTUAL_WIDTH * 2,
+                Constants.VIRTUAL_HEIGHT * 2,
+                camera)
+
         stage = Stage(viewport)
 
         screenData = Table()
@@ -71,8 +72,7 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
     override fun render(delta: Float) {
         super.render(delta)
 
-        viewport?.apply()
-        batch?.projectionMatrix = camera?.combined
+        stage?.viewport?.apply()
 
         stage?.act()
         stage?.draw()
@@ -95,6 +95,6 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
     override fun resize(width: Int, height: Int) {
         super.resize(width, height)
 
-        viewport?.update(width, height, true)
+        stage?.viewport?.update(width, height, true)
     }
 }

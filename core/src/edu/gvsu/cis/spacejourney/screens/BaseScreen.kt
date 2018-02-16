@@ -22,8 +22,6 @@ import ktx.log.debug
 */
 open class BaseScreen(val game: SpaceJourney, val screenName: String) : ControllerListener, KtxScreen {
 
-    protected var batch: SpriteBatch? = null
-
     override fun dispose() {
         super.dispose()
         debug { "Screen Disposed: $screenName " }
@@ -58,8 +56,6 @@ open class BaseScreen(val game: SpaceJourney, val screenName: String) : Controll
 
     override fun show() {
         super.show()
-        batch = SpriteBatch()
-
         Controllers.addListener(this)
 
         debug { "Screen Shown: $screenName " }
