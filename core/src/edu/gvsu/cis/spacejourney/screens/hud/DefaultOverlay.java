@@ -49,8 +49,7 @@ public class DefaultOverlay extends Table {
     for (int i = 0; i < this.lives.length; i++) {
       lives[i] = new Image(
           SpaceJourney.Companion.getAssetManager().get("spaceship2.png", Texture.class));
-      top().left().add(lives[i]).width(75.0f).height(75.0f).padRight(25.0f);
-      System.out.println("life added");
+      top().left().padTop(15.0f).add(lives[i]).width(75.0f).height(75.0f).padRight(25.0f);
       livesDisplayed++;
     }
     add(scoreLabel).padLeft(375.0f).padTop(-25.0f);

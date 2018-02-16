@@ -42,12 +42,10 @@ class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScree
 
     font = SpaceJourney.assetManager.get("fonts/default.fnt")
     font?.data?.scale(0.01f)
-
     option1 = Label(String.format(Strings.LEVEL_ONE, "  "), Label.LabelStyle(font, Color.WHITE))
     option2 = Label(String.format(Strings.LEVEL_TWO, "  "), Label.LabelStyle(font, Color.WHITE))
     option3 = Label(String.format(Strings.LEVEL_THREE, "  "), Label.LabelStyle(font, Color.WHITE))
 
-    screenData?.setFillParent(true)
     screenData?.add(Label(Strings.LEVEL_SELECT_TITLE, Label.LabelStyle(font, Color.WHITE)))?.padBottom(50.0f)?.expandX
     screenData?.row()
     screenData?.add(option1)?.expandX
@@ -103,6 +101,7 @@ class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScree
   override fun dispose() {
     super.dispose()
     stage?.dispose()
+    font?.dispose()
   }
 
 }

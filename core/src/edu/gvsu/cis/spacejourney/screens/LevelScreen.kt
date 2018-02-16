@@ -50,7 +50,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
     val viewport = FitViewport(Constants.VIRTUAL_WIDTH.toMeters(), Constants.VIRTUAL_HEIGHT.toMeters(), OrthographicCamera())
     stage = Stage(viewport)
 
-    val overlayViewport = FillViewport(Constants.VIRTUAL_WIDTH * 2, Constants.VIRTUAL_HEIGHT * 2)
+    val overlayViewport = FitViewport(Constants.VIRTUAL_WIDTH * 2, Constants.VIRTUAL_HEIGHT * 2)
     overlayStage = Stage(overlayViewport)
 
     world = World(Vector2(0.0f, 0.0f), true)
@@ -132,8 +132,8 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
   override fun dispose() {
     getRidOfBodies()
     level?.dispose()
-    stage?.dispose()
     overlayStage?.dispose()
+    stage?.dispose()
   }
 
   override fun hide() {
