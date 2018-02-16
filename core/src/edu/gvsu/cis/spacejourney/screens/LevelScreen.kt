@@ -1,5 +1,6 @@
 package edu.gvsu.cis.spacejourney.screens
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
@@ -30,10 +31,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
   private var debugRenderer: Box2DDebugRenderer? = null
 
-  //private var viewport: FitViewport? = null
   private var stage: Stage? = null
-
-  //private var overlayViewport: ScreenViewport? = null
   private var overlayStage: Stage? = null
 
   private var world: World? = null
@@ -50,7 +48,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
     val viewport = FitViewport(Constants.VIRTUAL_WIDTH.toMeters(), Constants.VIRTUAL_HEIGHT.toMeters(), OrthographicCamera())
     stage = Stage(viewport)
 
-    val overlayViewport = FitViewport(Constants.VIRTUAL_WIDTH * 2, Constants.VIRTUAL_HEIGHT * 2)
+    val overlayViewport = FillViewport(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
     overlayStage = Stage(overlayViewport)
 
     world = World(Vector2(0.0f, 0.0f), true)
@@ -87,7 +85,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
     super.resize(width, height)
 
     stage?.viewport?.update(width, height, true)
-    overlayStage?.viewport?.update(width, height)
+    overlayStage?.viewport?.update(width, height, true)
   }
 
   override fun render(delta: Float) {

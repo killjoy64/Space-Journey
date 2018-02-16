@@ -74,5 +74,6 @@ public class LevelOne extends Level {
   public void dispose() {
     player.dispose();
     testCollectible.dispose();
+    getMusic().dispose();
   }
 }

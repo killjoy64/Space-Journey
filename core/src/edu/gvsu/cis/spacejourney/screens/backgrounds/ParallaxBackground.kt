@@ -15,14 +15,22 @@ import java.util.*
 class ParallaxLayer(
         val texture: Texture? = null,
         val scroll_factor: Float,
-        val zindex: Int) {
+        val zindex: Int,
+        val repeat: Boolean = true
+) {
     var offset: Vector2? = null
     var region: TextureRegion? = null
 
     init {
         this.region = TextureRegion(texture)
         this.region?.setRegion(0, 0, Gdx.graphics.width, Gdx.graphics.height)
-        this.texture?.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat)
+
+        if (repeat) {
+            this.texture?.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat)
+        } else {
+            this.texture?.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge)
+        }
+
         this.texture?.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest)
     }
 
@@ -39,13 +47,15 @@ class ParallaxBackground : Actor(), Disposable {
         layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer3.png", Texture::class.java), 0.0020f, ZIndex.PARALLAX_BACKGROUND_LAYER2))
 
         if (Gdx.app.type == Application.ApplicationType.Desktop) {
-            layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer2.png", Texture::class.java), 0.0015f, ZIndex.PARALLAX_BACKGROUND_LAYER3))
+            layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer2.png", Texture::class.java), 0.0015f, ZIndex.PARALLAX_BACKGROUND_LAYER3, false))
         }
 
         layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer1.png", Texture::class.java), 0.05f, ZIndex.PARALLAX_BACKGROUND_LAYER2))
         layers.last().offset = Vector2(5.0f, 50.0f)
 
         layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer1.png", Texture::class.java), 0.15f, ZIndex.PARALLAX_BACKGROUND_LAYER1))
+
+        this.zIndex = ZIndex.BACKGROUND
     }
 
     override fun draw(batch: Batch?, parentAlpha: Float) {
@@ -57,8 +67,6 @@ class ParallaxBackground : Actor(), Disposable {
                 batch?.draw(layer.region, 0f, 0f, this.stage.viewport.worldWidth, this.stage.viewport.worldHeight)
             }
         }
-
-        this.zIndex = ZIndex.BACKGROUND
     }
 
     override fun act(delta: Float) {
