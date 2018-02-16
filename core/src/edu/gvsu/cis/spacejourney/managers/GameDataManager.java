@@ -9,7 +9,7 @@ public class GameDataManager {
   /**
    * Maximum number of lives possible throughout the game.
    */
-  public static int MAX_LIVES = 4;
+  public static final int MAX_LIVES = 4;
 
   private static GameDataManager instance;
 

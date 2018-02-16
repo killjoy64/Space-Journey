@@ -14,11 +14,12 @@ public class Graveyard {
   /**
    * The generic bodies that need to be removed.
    */
-  public static ArrayList<Body> bodies = new ArrayList<Body>();
+  public static final ArrayList<Body> bodies = new ArrayList<Body>();
 
   /**
    * The specific actors of the bodies that need to be removed.
    */
-  public static ArrayList<Actor> actors = new ArrayList<Actor>();
+
+  public static final ArrayList<Actor> actors = new ArrayList<Actor>();
 
 }
