@@ -9,8 +9,8 @@ import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship;
 
 public abstract class Level implements Disposable {
 
-  protected Stage stage;
-  protected World world;
+  private Stage stage;
+  private World world;
 
   private Music music;
   private Table hud;
@@ -45,6 +45,14 @@ public abstract class Level implements Disposable {
 
   public PlayerSpaceship getPlayer() {
     return player;
+  }
+
+  public World getWorld() {
+    return world;
+  }
+
+  public Stage getStage() {
+    return stage;
   }
 }
 

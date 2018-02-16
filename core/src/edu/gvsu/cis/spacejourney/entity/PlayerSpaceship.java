@@ -20,7 +20,7 @@ import edu.gvsu.cis.spacejourney.managers.GameDataManager;
 
 public class PlayerSpaceship extends Entity {
 
-  private final float moveSpeed = 3.0f;
+  private static final float moveSpeed = 3.0f;
 
   private EntityDirection direction;
 
