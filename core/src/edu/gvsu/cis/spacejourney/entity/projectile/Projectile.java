@@ -17,12 +17,14 @@ public abstract class Projectile extends Entity implements Poolable {
   public Projectile(Stage stage, TextureRegion textureRegion) {
     super(stage, textureRegion);
     this.isAlive = false;
+    this.setVisible(true);
   }
 
   public void spawn(World world, float x, float y) {
     setPosition(x, y);
     createBody(world);
     this.isAlive = true;
+    this.setVisible(true);
   }
 
   public boolean isAlive() {
@@ -45,6 +47,7 @@ public abstract class Projectile extends Entity implements Poolable {
 
   @Override
   public void reset() {
+    this.setVisible(false);
     this.setPosition(0.0f, 0.0f);
     this.isAlive = false;
   }
