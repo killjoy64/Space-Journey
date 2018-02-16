@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.utils.viewport.FillViewport
 import com.badlogic.gdx.utils.viewport.FitViewport
 import edu.gvsu.cis.spacejourney.Constants
 import edu.gvsu.cis.spacejourney.SpaceJourney
@@ -17,7 +18,6 @@ import ktx.log.debug
 
 class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScreen") {
 
-  private var viewport: FitViewport? = null
   private var stage: Stage? = null
 
   private var screenData: Table? = null
@@ -32,10 +32,9 @@ class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScree
   override fun show() {
     super.show()
 
-    viewport = FitViewport(Constants.VIRTUAL_WIDTH * 2, Constants.VIRTUAL_HEIGHT * 2, OrthographicCamera())
+    val viewport = FillViewport(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
     stage = Stage(viewport)
 
-    screenData = Table()
 
     font = SpaceJourney.assetManager.get("fonts/default.fnt")
     font?.data?.scale(0.01f)
@@ -43,6 +42,8 @@ class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScree
     option2 = Label(String.format(Strings.LEVEL_TWO, "  "), Label.LabelStyle(font, Color.WHITE))
     option3 = Label(String.format(Strings.LEVEL_THREE, "  "), Label.LabelStyle(font, Color.WHITE))
 
+    screenData = Table()
+    screenData?.setFillParent(true)
     screenData?.add(Label(Strings.LEVEL_SELECT_TITLE, Label.LabelStyle(font, Color.WHITE)))?.padBottom(50.0f)?.expandX
     screenData?.row()
     screenData?.add(option1)?.expandX
@@ -90,7 +91,7 @@ class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScree
 
   override fun resize(width: Int, height: Int) {
     super.resize(width, height)
-    viewport?.update(width, height, true)
+    stage?.viewport?.update(width, height, true)
   }
 
   override fun dispose() {

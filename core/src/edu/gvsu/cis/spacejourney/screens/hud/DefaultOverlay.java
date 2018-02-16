@@ -32,27 +32,29 @@ public class DefaultOverlay extends Table {
    * the actual {@link edu.gvsu.cis.spacejourney.managers.GameDataManager} class.
    */
   public DefaultOverlay() {
-    setFillParent(true);
-    setDebug(true);
-
     this.lives = new Image[GameDataManager.MAX_LIVES];
     this.gameData = GameDataManager.getInstance();
     this.livesDisplayed = 0;
 
     font = new BitmapFont(Gdx.files.internal("fonts/default.fnt"));
-    font.getData().scale(0.25f);
+    font.getData().scale(0.15f);
 
     this.scoreLabel = new Label(String.format(Strings.HUD_SCORE, gameData.getScore()), new Label.LabelStyle(font, Color.WHITE));
 
     System.out.println(this.lives.length + " spaces available");
 
+    this.setFillParent(true);
+    this.setDebug(true);
+
     for (int i = 0; i < this.lives.length; i++) {
       lives[i] = new Image(
           SpaceJourney.Companion.getAssetManager().get("spaceship2.png", Texture.class));
-      top().left().padTop(15.0f).add(lives[i]).width(75.0f).height(75.0f).padRight(25.0f);
+      top().left().padLeft(16f).padTop(16.0f).add(lives[i]).size(64f, 64f).padRight(16.0f);
+
       livesDisplayed++;
     }
-    add(scoreLabel).padLeft(375.0f).padTop(-25.0f);
+
+    add(scoreLabel).align(Align.right).padRight(16f).expandX();
   }
 
   /**

@@ -71,9 +71,9 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
     level?.music?.isLooping = true
     level?.music?.play()
 
-    val info = DebugInfo()
-    info.setPosition(1f, 1f)
-    overlayStage?.addActor(info)
+    //val info = DebugInfo()
+    //info.setPosition(1f, 1f)
+    //overlayStage?.addActor(info)
 
     if (level?.hud != null) {
       overlayStage?.addActor(level?.hud)
