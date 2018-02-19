@@ -175,6 +175,7 @@ public class PlayerSpaceship extends Entity {
 
   @Override
   public void dispose() {
+    damageSound.stop();
     damageSound.dispose();
   }
 }

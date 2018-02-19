@@ -27,7 +27,8 @@ public class LevelOne extends Level {
   private DefaultOverlay defaultHud;
 
   public LevelOne() {
-    setMusic(SpaceJourney.Companion.getAssetManager().get("Space Background Music.mp3", Music.class));
+    setMusic(SpaceJourney.Companion.getAssetManager().get(
+        "Space Background Music.mp3", Music.class));
   }
 
   @Override
@@ -74,6 +75,7 @@ public class LevelOne extends Level {
   public void dispose() {
     player.dispose();
     testCollectible.dispose();
+    getMusic().stop();
     getMusic().dispose();
   }
 }

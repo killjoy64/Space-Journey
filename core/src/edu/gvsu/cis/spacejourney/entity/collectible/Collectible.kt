@@ -54,6 +54,7 @@ abstract class Collectible(stage: Stage?) : AnimatedEntity(stage) {
 
     override fun dispose() {
         super.dispose()
+        sound?.stop()
         sound?.dispose()
     }
 }
