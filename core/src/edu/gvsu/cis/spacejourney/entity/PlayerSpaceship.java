@@ -40,6 +40,7 @@ public class PlayerSpaceship extends Entity {
   public PlayerSpaceship(Stage stage) {
     super(stage, new TextureRegion(
         SpaceJourney.Companion.getAssetManager().get("spaceship2.png", Texture.class)));
+
     direction = EntityDirection.IDLE;
 
     disappearAction = new AlphaAction();
@@ -146,6 +147,9 @@ public class PlayerSpaceship extends Entity {
 
   @Override
   public void createBody(World world) {
+
+    setSize(96, 96);
+
     BodyDef bodyDef = new BodyDef();
     bodyDef.type = BodyDef.BodyType.DynamicBody;
     bodyDef.position.set(getX() + ((getWidth() / 2) / Constants.PX_PER_M),

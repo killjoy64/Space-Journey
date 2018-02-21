@@ -22,13 +22,15 @@ public class EvilSpaceship extends Enemy {
 
   @Override
   public void createBody(World world) {
+
+    setSize(64, 64);
+
     BodyDef bodyDef = new BodyDef();
     bodyDef.type = BodyDef.BodyType.DynamicBody;
     bodyDef.position.set(
-        getX() + ((getWidth() / 2) / Constants.PX_PER_M),
+        getX() + ((getWidth()  / 2) / Constants.PX_PER_M),
         getY() + ((getHeight() / 2) / Constants.PX_PER_M)
     );
-
 
     CircleShape circle = new CircleShape();
     circle.setRadius(((getWidth() / 2) - 2.5f) / Constants.PX_PER_M);

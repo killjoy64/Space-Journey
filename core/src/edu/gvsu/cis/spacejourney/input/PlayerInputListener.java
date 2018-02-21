@@ -16,7 +16,7 @@ import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager;
  */
 public class PlayerInputListener implements InputProcessor {
 
-  private static final float spawnFrequency = 0.225f;
+  private static final float spawnFrequency = 0.135f;
 
   private PlayerSpaceship player;
   private ActiveProjectileManager projManager;
@@ -112,7 +112,12 @@ public class PlayerInputListener implements InputProcessor {
         if (time >= spawnFrequency) {
           float x = (this.player.getX() + (this.player.getWidth() / 2)) / Constants.PX_PER_M;
           float y = (this.player.getY() + (this.player.getHeight())) / Constants.PX_PER_M;
-          this.projManager.spawnLaser(x, y);
+
+          y = y - (32 / Constants.PX_PER_M);
+
+          this.projManager.spawnLaser(x + (16 / Constants.PX_PER_M), y);
+          this.projManager.spawnLaser(x - (16 / Constants.PX_PER_M), y);
+
           this.time = 0.0f;
         }
       }
@@ -125,7 +130,11 @@ public class PlayerInputListener implements InputProcessor {
       if (time >= spawnFrequency) {
         float x = (this.player.getX() + (this.player.getWidth() / 2)) / Constants.PX_PER_M;
         float y = (this.player.getY() + (this.player.getHeight())) / Constants.PX_PER_M;
-        this.projManager.spawnLaser(x, y);
+
+        y = y - (32 / Constants.PX_PER_M);
+
+        this.projManager.spawnLaser(x + (16 / Constants.PX_PER_M), y);
+        this.projManager.spawnLaser(x - (16 / Constants.PX_PER_M), y);
         this.time = 0.0f;
       }
     }

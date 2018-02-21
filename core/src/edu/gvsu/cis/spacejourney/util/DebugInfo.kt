@@ -17,7 +17,8 @@ class DebugInfo : Actor() {
 
         val spacing = 10f.toMeters()
 
-        debugFont!!.draw(batch, "Hello World!", x.toMeters(), y.toMeters())
+        // #TODO Add Player Position
+        //debugFont!!.draw(batch, "Hello World!", x.toMeters(), y.toMeters())
         debugFont!!.draw(batch, "Java Heap Memory ${Gdx.app.javaHeap}", x.toMeters(), (y + spacing).toMeters())
         debugFont!!.draw(batch, "Native Heap Memory ${Gdx.app.nativeHeap}", x.toMeters(), (y + spacing * 2).toMeters())
     }

@@ -61,6 +61,9 @@ class ParallaxBackground : Actor(), Disposable {
     override fun draw(batch: Batch?, parentAlpha: Float) {
         super.draw(batch, parentAlpha)
         for (layer in this.layers) {
+            layer?.region?.regionWidth = Gdx.graphics.width
+            layer?.region?.regionHeight = Gdx.graphics.height
+
             if (layer.offset != null) {
                 batch?.draw(layer.region, layer.offset!!.x, layer.offset!!.y, this.stage.viewport.worldWidth, this.stage.viewport.worldHeight)
             } else {

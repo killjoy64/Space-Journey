@@ -22,7 +22,7 @@ class EnemySpawnEvent : ChoreographEvent() {
 
         enemy?.width = 35.0f
         enemy?.height = 35.0f
-        enemy?.setPosition((Math.random().toFloat() * 5f), 5f)
+        enemy?.setPosition((Math.random().toFloat() * stage.viewport!!.worldWidth), stage.viewport!!.worldHeight)
         enemy?.setMovementPattern(LinearMovement(Vector2(0f, -25f)))
         enemy?.createBody(world)
 

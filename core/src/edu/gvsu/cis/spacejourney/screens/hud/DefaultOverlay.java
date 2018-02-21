@@ -54,7 +54,7 @@ public class DefaultOverlay extends Table {
       livesDisplayed++;
     }
 
-    add(scoreLabel).align(Align.right).padRight(16f).expandX();
+    add(scoreLabel).align(Align.right).padTop(10f).padRight(16f).expandX();
   }
 
   /**

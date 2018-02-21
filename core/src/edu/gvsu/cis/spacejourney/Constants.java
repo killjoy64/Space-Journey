@@ -16,11 +16,11 @@ public class Constants {
   /**
    * Virtual width that the screen represents.
    */
-  public static final float VIRTUAL_WIDTH = 1280 / 2;
+  public static final float VIRTUAL_WIDTH = 1920;
 
   /**
    * Virtual height that the screen represents.
    */
-  public static final float VIRTUAL_HEIGHT = 720 / 2;
+  public static final float VIRTUAL_HEIGHT = 1080;
 
 }

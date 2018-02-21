@@ -45,10 +45,10 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
   override fun show() {
     super.show()
 
-    val viewport = FitViewport(Constants.VIRTUAL_WIDTH.toMeters(), Constants.VIRTUAL_HEIGHT.toMeters(), OrthographicCamera())
+    val viewport = FitViewport(Constants.VIRTUAL_WIDTH.toMeters(), Constants.VIRTUAL_HEIGHT.toMeters())
     stage = Stage(viewport)
 
-    val overlayViewport = FillViewport(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
+    val overlayViewport = ScreenViewport()
     overlayStage = Stage(overlayViewport)
 
     world = World(Vector2(0.0f, 0.0f), true)
