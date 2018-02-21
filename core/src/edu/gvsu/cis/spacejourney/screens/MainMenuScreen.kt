@@ -1,6 +1,7 @@
 package edu.gvsu.cis.spacejourney.screens
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.BitmapFont
@@ -27,8 +28,9 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
     private var option2: Label? = null
 
     private var font: BitmapFont? = null
-
     private var inputListener: MainMenuInputListener? = null
+
+    private var music: Music? = null
 
     override fun show() {
         super.show()
@@ -61,12 +63,19 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
         inputListener = MainMenuInputListener(2)
         Gdx.input.inputProcessor = inputListener
 
-        this.game.setScreen<LevelSelectScreen>()
+        music = SpaceJourney.assetManager.get("title.mp3", Music::class.java)
+        music?.volume = 0.1f
+        music?.isLooping = true
+        music?.play()
+
+//        this.game.setScreen<LevelSelectScreen>()
     }
 
     override fun dispose() {
         super.dispose()
         stage?.dispose()
+        music?.stop()
+        music?.dispose()
     }
 
     override fun render(delta: Float) {
@@ -86,7 +95,8 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
         }
 
         if (inputListener!!.gameCanStart()) {
-            this.game.setScreen<LevelScreen>()
+            music?.stop()
+            this.game.setScreen<LevelSelectScreen>()
         }
 
     }

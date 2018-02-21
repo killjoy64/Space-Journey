@@ -38,6 +38,7 @@ class LoadingScreen(game: SpaceJourney) : BaseScreen(game, "LoadingScreen") {
         SpaceJourney.assetManager.load("parallax_background_layer3.png", Texture::class.java)
         SpaceJourney.assetManager.load("rotating_pickup.png", Texture::class.java)
         SpaceJourney.assetManager.load("Space Background Music.mp3", Music::class.java)
+        SpaceJourney.assetManager.load("title.mp3", Music::class.java)
         SpaceJourney.assetManager.load("take_damage.wav", Sound::class.java)
         SpaceJourney.assetManager.load("default_pickup.wav", Sound::class.java)
         SpaceJourney.assetManager.load("fonts/default.fnt", BitmapFont::class.java)
