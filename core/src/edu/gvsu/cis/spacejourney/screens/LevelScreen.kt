@@ -136,7 +136,8 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
   override fun hide() {
     super.hide()
-    dispose()
+//    dispose()
+    level?.music?.stop()
   }
 
 }
