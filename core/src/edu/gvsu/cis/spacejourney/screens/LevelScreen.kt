@@ -110,7 +110,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
     stage?.draw()
 
     // Draw the UI
-    //overlayStage?.viewport?.apply() // This should work but it breaks the UI!?
+    overlayStage?.viewport?.apply() // This should work but it breaks the UI!?
     overlayStage?.draw()
 
   }
