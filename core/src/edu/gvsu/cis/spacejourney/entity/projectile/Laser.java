@@ -29,7 +29,7 @@ public class Laser extends Projectile {
   public void spawn(World world, float x, float y) {
     super.spawn(world, x, y);
 
-    getBody().applyLinearImpulse(new Vector2(0.0f, 3.0f), getBody().getWorldCenter(), true);
+    getBody().applyLinearImpulse(new Vector2(0.0f, 6.0f), getBody().getWorldCenter(), true);
   }
 
   @Override
