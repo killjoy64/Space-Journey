@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
 import edu.gvsu.cis.spacejourney.entity.enemy.EvilSpaceship
 import edu.gvsu.cis.spacejourney.entity.movement.LinearMovement
+import edu.gvsu.cis.spacejourney.util.toMeters
 import ktx.collections.GdxArray
 import ktx.collections.isNotEmpty
 import ktx.log.debug
@@ -22,7 +23,7 @@ class EnemySpawnEvent : ChoreographEvent() {
 
         enemy?.width = 35.0f
         enemy?.height = 35.0f
-        enemy?.setPosition((Math.random().toFloat() * stage.viewport!!.worldWidth), stage.viewport!!.worldHeight)
+        enemy?.setPosition((Math.random().toFloat() * stage.viewport!!.worldWidth - 50f.toMeters()), stage.viewport!!.worldHeight)
         enemy?.setMovementPattern(LinearMovement(Vector2(0f, -25f)))
         enemy?.createBody(world)
 
