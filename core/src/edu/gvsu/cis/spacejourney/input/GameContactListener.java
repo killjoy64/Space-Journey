@@ -24,29 +24,21 @@ public class GameContactListener implements ContactListener {
     this.gameData = GameDataManager.getInstance();
   }
 
-  @Override
-  public void beginContact(Contact contact) {
+  private void check(Contact contact, Object entityA, Object entityB){
+
+    int currentLives = gameData.getLives();
+
     Fixture a = contact.getFixtureA();
     Fixture b = contact.getFixtureB();
-    Object entityA = a.getBody().getUserData();
-    Object entityB = b.getBody().getUserData();
-    int currentLives = gameData.getLives();
 
     if (entityB instanceof EvilSpaceship && entityA instanceof PlayerSpaceship) {
       PlayerSpaceship player = (PlayerSpaceship) entityA;
-      gameData.setLives(currentLives - 1);
-      player.takeDamage();
-    } else if (entityA instanceof EvilSpaceship && entityB instanceof PlayerSpaceship) {
-      PlayerSpaceship player = (PlayerSpaceship) entityB;
       gameData.setLives(currentLives - 1);
       player.takeDamage();
     }
 
     if (entityA instanceof Collectible && entityB instanceof PlayerSpaceship) {
       Collectible c = (Collectible) entityA;
-      c.collect();
-    } else if (entityA instanceof PlayerSpaceship && entityB instanceof Collectible) {
-      Collectible c = (Collectible) entityB;
       c.collect();
     }
 
@@ -56,14 +48,19 @@ public class GameContactListener implements ContactListener {
       e.takeDamage();
       l.reset();
       Graveyard.bodies.add(a.getBody());
-    } else if (entityB instanceof Laser && entityA instanceof Enemy) {
-      Enemy e = (Enemy) entityA;
-      Laser l = (Laser) entityB;
-      e.takeDamage();
-      l.reset();
-      Graveyard.bodies.add(b.getBody());
     }
+  }
 
+  @Override
+  public void beginContact(Contact contact) {
+    Fixture a = contact.getFixtureA();
+    Fixture b = contact.getFixtureB();
+
+    Object entityA = a.getBody().getUserData();
+    Object entityB = b.getBody().getUserData();
+
+    check(contact, entityA, entityB);
+    check(contact, entityB, entityA);
   }
 
   @Override
