@@ -44,7 +44,7 @@ public class DefaultOverlay extends Table {
     System.out.println(this.lives.length + " spaces available");
 
     this.setFillParent(true);
-    this.setDebug(true);
+//    this.setDebug(true);
 
     for (int i = 0; i < this.lives.length; i++) {
       lives[i] = new Image(

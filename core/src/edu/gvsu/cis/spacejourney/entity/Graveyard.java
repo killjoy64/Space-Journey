@@ -4,6 +4,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Where the bodies are piled up and queued for removal
@@ -12,14 +14,16 @@ import java.util.ArrayList;
 public class Graveyard {
 
   /**
-   * The generic bodies that need to be removed.
+   * The generic bodies that need to be removed. These are sets
+   * because no body should be removed twice.
    */
-  public static final ArrayList<Body> bodies = new ArrayList<Body>();
+  public static final Set<Body> bodies = new HashSet<>();
 
   /**
-   * The specific actors of the bodies that need to be removed.
+   * The specific actors of the bodies that need to be removed. These
+   * are sets, because no actor should be removed twice.
    */
 
-  public static final ArrayList<Actor> actors = new ArrayList<Actor>();
+  public static final Set<Actor> actors = new HashSet<>();
 
 }
