@@ -24,12 +24,11 @@ public class GameContactListener implements ContactListener {
     this.gameData = GameDataManager.getInstance();
   }
 
-  private void check(Contact contact, Object entityA, Object entityB){
+  private void check(Contact contact, Object entityA, Object entityB) {
 
     int currentLives = gameData.getLives();
 
     Fixture a = contact.getFixtureA();
-    Fixture b = contact.getFixtureB();
 
     if (entityB instanceof EvilSpaceship && entityA instanceof PlayerSpaceship) {
       PlayerSpaceship player = (PlayerSpaceship) entityA;

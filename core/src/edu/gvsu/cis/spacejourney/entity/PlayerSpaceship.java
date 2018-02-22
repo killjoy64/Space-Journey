@@ -1,14 +1,10 @@
 package edu.gvsu.cis.spacejourney.entity;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
@@ -150,24 +146,17 @@ public class PlayerSpaceship extends Entity {
 
     setSize(96, 96);
 
-    BodyDef bodyDef = new BodyDef();
-    bodyDef.type = BodyDef.BodyType.DynamicBody;
-    bodyDef.position.set(getX() + ((getWidth() / 2) / Constants.PX_PER_M),
-        getY() + ((getHeight() / 2) / Constants.PX_PER_M));
-
+    BodyBuilder bodyBuilder = new BodyBuilder();
+    float x = getX() + ((getWidth() / 2) / Constants.PX_PER_M);
+    float y = getY() + ((getHeight() / 2) / Constants.PX_PER_M);
     CircleShape circle = new CircleShape();
     circle.setRadius(((getWidth() / 2) - 2.5f) / Constants.PX_PER_M);
 
-    FixtureDef fixtureDef = new FixtureDef();
-    fixtureDef.shape = circle;
-    fixtureDef.isSensor = true;
-    fixtureDef.restitution = 0.0f;
+    bodyBuilder.setBodyShape(circle);
+    bodyBuilder.setBodyPosition(new Vector2(x, y));
+    bodyBuilder.setUserData(this);
 
-    Body body = world.createBody(bodyDef);
-    body.setUserData(this);
-    body.createFixture(fixtureDef);
-
-    setBody(body);
+    setBody(bodyBuilder.build(world));
     setWorld(world);
 
     circle.dispose();
