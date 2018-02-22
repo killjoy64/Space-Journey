@@ -49,7 +49,7 @@ class ParallaxBackground : Actor(), Disposable {
         layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer3.png", Texture::class.java), 0.0020f, ZIndex.PARALLAX_BACKGROUND_LAYER2))
 
         if (Gdx.app.type == Application.ApplicationType.Desktop) {
-            layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer2.png", Texture::class.java), 0.0015f, ZIndex.PARALLAX_BACKGROUND_LAYER3, false))
+            layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer2.png", Texture::class.java), 0.0045f, ZIndex.PARALLAX_BACKGROUND_LAYER3, false))
         }
 
         layers.add(ParallaxLayer(SpaceJourney.assetManager.get("parallax_background_layer1.png", Texture::class.java), 0.05f, ZIndex.PARALLAX_BACKGROUND_LAYER2))
