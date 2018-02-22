@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Disposable
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.util.ZIndex
+import edu.gvsu.cis.spacejourney.util.toMeters
 import java.util.*
 
 class ParallaxLayer(
@@ -18,14 +19,15 @@ class ParallaxLayer(
         val zindex: Int,
         val repeat: Boolean = true
 ) {
-    var offset: Vector2? = null
+    var offset: Vector2 = Vector2(0f, 0f)
     var region: TextureRegion? = null
 
     init {
+
         this.region = TextureRegion(texture)
-        this.region?.setRegion(0, 0, Gdx.graphics.width, Gdx.graphics.height)
 
         if (repeat) {
+            this.region?.setRegion(0, 0, Gdx.graphics.width, Gdx.graphics.height)
             this.texture?.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat)
         } else {
             this.texture?.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge)
@@ -61,13 +63,13 @@ class ParallaxBackground : Actor(), Disposable {
     override fun draw(batch: Batch?, parentAlpha: Float) {
         super.draw(batch, parentAlpha)
         for (layer in this.layers) {
-            layer?.region?.regionWidth = Gdx.graphics.width
-            layer?.region?.regionHeight = Gdx.graphics.height
 
-            if (layer.offset != null) {
-                batch?.draw(layer.region, layer.offset!!.x, layer.offset!!.y, this.stage.viewport.worldWidth, this.stage.viewport.worldHeight)
+            if (layer.repeat) {
+                layer?.region?.regionWidth = Gdx.graphics.width
+                layer?.region?.regionHeight = Gdx.graphics.height
+                batch?.draw(layer.region, layer.offset.x, layer.offset.y, stage?.viewport!!.worldWidth, stage?.viewport!!.worldHeight)
             } else {
-                batch?.draw(layer.region, 0f, 0f, this.stage.viewport.worldWidth, this.stage.viewport.worldHeight)
+                batch?.draw(layer.region, layer.offset.x, layer.offset.y, Gdx.graphics.width.toFloat().toMeters(), Gdx.graphics.height.toMeters())
             }
         }
     }
