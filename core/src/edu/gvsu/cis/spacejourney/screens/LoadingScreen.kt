@@ -4,7 +4,6 @@ import edu.gvsu.cis.spacejourney.SpaceJourney
 import com.sun.awt.SecurityWarning.setPosition
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Color
@@ -17,10 +16,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 
-
-/*
-Presents a progress bar while the assets are being loaded for the game, then switches to the MainMenu screen.
-#TODO only override methods that need to be overriden
+/**
+ * Presents a progress bar while the assets are being loaded for the game,
+ * then switches to the MainMenu screen.
  */
 class LoadingScreen(game: SpaceJourney) : BaseScreen(game, "LoadingScreen") {
 
@@ -93,5 +91,4 @@ class LoadingScreen(game: SpaceJourney) : BaseScreen(game, "LoadingScreen") {
             this.game.setScreen<MainMenuScreen>()
         }
     }
-
 }

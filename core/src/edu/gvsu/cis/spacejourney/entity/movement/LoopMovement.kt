@@ -9,5 +9,4 @@ class LoopMovement(val direction: Vector2) : MovementPattern() {
         // TODO
         return Vector2(0f, 0f)
     }
-
 }

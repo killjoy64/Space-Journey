@@ -8,6 +8,7 @@ edu.gvsu.cis.spacejourney.gui
 edu.gvsu.cis.spacejourney.input
 edu.gvsu.cis.spacejourney.level
 edu.gvsu.cis.spacejourney.level.choreography
+edu.gvsu.cis.spacejourney.level.choreography.events
 edu.gvsu.cis.spacejourney.level.one
 edu.gvsu.cis.spacejourney.managers
 edu.gvsu.cis.spacejourney.screens

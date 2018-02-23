@@ -12,5 +12,4 @@ class CurrencyCollectable(stage: Stage?) : Collectible(stage) {
 
         this.addAnimation("idle", SpaceJourney.assetManager.get<Texture>("rotating_pickup.png"), 0, 23, 48, 48)
     }
-
 }

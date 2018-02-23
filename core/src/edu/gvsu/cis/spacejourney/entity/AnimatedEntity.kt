@@ -45,5 +45,4 @@ abstract class AnimatedEntity(stage: Stage?) : Entity(stage, null) {
     override fun dispose() {
         textureAtlas?.dispose()
     }
-
 }

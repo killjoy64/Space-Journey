@@ -36,7 +36,6 @@ class LevelChoreographer(val stage: Stage, val world: World) {
 
     // Load pre-defined events from a file
     fun loadEventsFromFile() {
-
     }
 
     private fun popNextEvent(): ScheduledEvent? {
@@ -73,5 +72,4 @@ class LevelChoreographer(val stage: Stage, val world: World) {
     fun isEmpty(): Boolean {
         return this.events.size == 0
     }
-
 }

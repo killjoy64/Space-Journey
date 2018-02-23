@@ -4,7 +4,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.graphics.Texture
 import edu.gvsu.cis.spacejourney.SpaceJourney
 
-
 class TestCollectible(stage: Stage?) : Collectible(stage) {
 
     init {
@@ -14,5 +13,4 @@ class TestCollectible(stage: Stage?) : Collectible(stage) {
 
         this.addAnimation("idle", SpaceJourney.assetManager.get<Texture>("rotating_pickup.png"), 0, 23, 48, 48)
     }
-
 }

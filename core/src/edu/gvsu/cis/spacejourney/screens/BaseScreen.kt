@@ -7,19 +7,13 @@ import com.badlogic.gdx.controllers.ControllerListener
 import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.controllers.PovDirection
 import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.g2d.BitmapFont
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.graphics.g2d.freetype.FreeType
 import com.badlogic.gdx.math.Vector3
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import ktx.app.KtxScreen
-import ktx.app.use
-import ktx.collections.GdxArray
 import ktx.log.debug
 
-/*
- Convenient base class for all Screens where common functionality can be implemented
- #TODO only override methods that need to be overriden
+/**
+ * Convenient base class for all Screens where common functionality can be implemented.
 */
 open class BaseScreen(val game: SpaceJourney, val screenName: String) : ControllerListener, KtxScreen {
 
@@ -41,7 +35,7 @@ open class BaseScreen(val game: SpaceJourney, val screenName: String) : Controll
     override fun render(delta: Float) {
         super.render(delta)
 
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit()
         }
 

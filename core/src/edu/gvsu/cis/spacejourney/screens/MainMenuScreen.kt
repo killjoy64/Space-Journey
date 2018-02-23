@@ -7,9 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
-import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.badlogic.gdx.utils.viewport.FillViewport
 import com.badlogic.gdx.utils.viewport.FitViewport
 import edu.gvsu.cis.spacejourney.Constants
 import edu.gvsu.cis.spacejourney.SpaceJourney
@@ -17,9 +15,9 @@ import edu.gvsu.cis.spacejourney.Strings
 import edu.gvsu.cis.spacejourney.input.MainMenuInputListener
 import edu.gvsu.cis.spacejourney.managers.MusicManager
 
-/*
-The main menu for the game where we can change settings, start a game, load, save, quit, etc.
-*/
+/**
+ * The main menu for the game where we can change settings, start a game, load, save, quit, etc.
+ */
 class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
 
     private var stage: Stage? = null
@@ -94,7 +92,6 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
         if (inputListener!!.gameCanStart()) {
             this.game.setScreen<LevelSelectScreen>()
         }
-
     }
 
     // Be mindful about nullable-types, as resize is called before show

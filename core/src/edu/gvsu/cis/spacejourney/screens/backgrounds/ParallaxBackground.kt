@@ -13,12 +13,16 @@ import edu.gvsu.cis.spacejourney.util.ZIndex
 import edu.gvsu.cis.spacejourney.util.toMeters
 import java.util.*
 
+/**
+ * Basic helper class to store information on each parallax layer.
+ * This is disposable.
+ */
 class ParallaxLayer(
         val texture: Texture? = null,
         val scroll_factor: Float,
         val zindex: Int,
         val repeat: Boolean = true
-) {
+): Disposable {
     var offset: Vector2 = Vector2(0f, 0f)
     var region: TextureRegion? = null
 
@@ -36,11 +40,14 @@ class ParallaxLayer(
         this.texture?.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest)
     }
 
-    fun dispose() {
+    override fun dispose() {
         this.texture?.dispose()
     }
 }
 
+/**
+ * Class that handles a parallax background given 2-3 layers.
+ */
 class ParallaxBackground : Actor(), Disposable {
 
     var layers: Vector<ParallaxLayer> = Vector()
@@ -80,7 +87,6 @@ class ParallaxBackground : Actor(), Disposable {
         for (layer in this.layers) {
             layer.region?.scroll(0f, -layer.scroll_factor * Gdx.graphics.rawDeltaTime)
         }
-
     }
 
     override fun dispose() {
@@ -88,5 +94,4 @@ class ParallaxBackground : Actor(), Disposable {
             layer.dispose()
         }
     }
-
 }

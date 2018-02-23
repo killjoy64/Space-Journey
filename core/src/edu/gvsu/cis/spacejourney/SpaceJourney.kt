@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.Box2D
 import edu.gvsu.cis.spacejourney.screens.*
 import ktx.app.KtxGame
 
-/*
+/**
 The core of the game, where we spawn the first screen.
  */
 class SpaceJourney : KtxGame<BaseScreen>() {
@@ -22,6 +22,9 @@ class SpaceJourney : KtxGame<BaseScreen>() {
         val assetManager: AssetManager by lazy { Holder.ASSETS }
     }
 
+    /**
+     * Method that LibGDX calls to instantiate the game.
+     */
     override fun create() {
 
         Gdx.graphics.setTitle(Strings.GAME_TITLE)
@@ -42,5 +45,4 @@ class SpaceJourney : KtxGame<BaseScreen>() {
         // Switch to the first screen
         this.setScreen<LoadingScreen>()
     }
-
 }

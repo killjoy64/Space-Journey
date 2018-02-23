@@ -6,12 +6,20 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Actor
 import edu.gvsu.cis.spacejourney.SpaceJourney
 
+/**
+ * Class that carries simple debug info for
+ * easy tracking during runtime.
+ */
 class DebugInfo : Actor() {
 
     private var enabled = true
 
-    private var debugFont : BitmapFont? = null
+    private var debugFont: BitmapFont? = null
 
+    /**
+     * Method that overrides Actor.draw() in order to draw
+     * a few fonts and tables to the screen.
+     */
     override fun draw(batch: Batch?, parentAlpha: Float) {
         super.draw(batch, parentAlpha)
 
@@ -29,5 +37,4 @@ class DebugInfo : Actor() {
 
         this.zIndex = ZIndex.GUI
     }
-
 }
