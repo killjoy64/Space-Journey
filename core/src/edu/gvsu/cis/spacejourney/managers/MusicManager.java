@@ -24,6 +24,7 @@ public class MusicManager implements Disposable {
         this.stop();
         this.currentMusic = music;
         this.currentMusic.play();
+        this.currentMusic.setVolume(0.3f);
         this.currentMusic.setLooping(true);
     }
 
