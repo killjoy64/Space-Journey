@@ -15,6 +15,7 @@ import edu.gvsu.cis.spacejourney.Constants
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.Strings
 import edu.gvsu.cis.spacejourney.input.MainMenuInputListener
+import edu.gvsu.cis.spacejourney.managers.MusicManager
 
 /*
 The main menu for the game where we can change settings, start a game, load, save, quit, etc.
@@ -64,17 +65,13 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
         Gdx.input.inputProcessor = inputListener
 
         music = SpaceJourney.assetManager.get("title.mp3", Music::class.java)
-        music?.volume = 0.1f
-        music?.isLooping = true
-        music?.play()
-
+        MusicManager.getInstance().music = music
 //        this.game.setScreen<LevelSelectScreen>()
     }
 
     override fun dispose() {
         super.dispose()
         stage?.dispose()
-        music?.stop()
         music?.dispose()
     }
 
@@ -95,7 +92,6 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
         }
 
         if (inputListener!!.gameCanStart()) {
-            music?.stop()
             this.game.setScreen<LevelSelectScreen>()
         }
 

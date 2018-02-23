@@ -20,6 +20,7 @@ import edu.gvsu.cis.spacejourney.level.Level
 import edu.gvsu.cis.spacejourney.level.Levels
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
 import edu.gvsu.cis.spacejourney.managers.GameDataManager
+import edu.gvsu.cis.spacejourney.managers.MusicManager
 import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay
 import edu.gvsu.cis.spacejourney.util.DebugInfo
 import edu.gvsu.cis.spacejourney.util.toMeters
@@ -67,9 +68,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
     gameData?.reset()
     level = Levels.getFromId(gameData?.levelNumber!!).level
     level?.init(stage, world)
-    level?.music?.volume = 0.3f
-    level?.music?.isLooping = true
-    level?.music?.play()
+    MusicManager.getInstance().music = level?.music
 
     //val info = DebugInfo()
     //info.setPosition(1f, 1f)
@@ -137,7 +136,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
   override fun hide() {
     super.hide()
 //    dispose()
-    level?.music?.stop()
+    MusicManager.getInstance().stop()
   }
 
 }

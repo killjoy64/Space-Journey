@@ -41,8 +41,6 @@ public class DefaultOverlay extends Table {
 
     this.scoreLabel = new Label(String.format(Strings.HUD_SCORE, gameData.getScore()), new Label.LabelStyle(font, Color.WHITE));
 
-    System.out.println(this.lives.length + " spaces available");
-
     this.setFillParent(true);
 //    this.setDebug(true);
 
@@ -65,11 +63,9 @@ public class DefaultOverlay extends Table {
     if (livesDisplayed > gameData.getLives() && livesDisplayed > 0) {
       removeActor(lives[gameData.getLives()]);
       livesDisplayed--;
-      System.out.println("life taken away");
     } else if (livesDisplayed < gameData.getLives()) {
       top().left().add(lives[gameData.getLives()]);
       livesDisplayed++;
-      System.out.println("life added");
     }
 
     scoreLabel.setText(String.format(Strings.HUD_SCORE, gameData.getScore()));

@@ -1,6 +1,7 @@
 package edu.gvsu.cis.spacejourney.screens
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.BitmapFont
@@ -14,6 +15,7 @@ import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.Strings
 import edu.gvsu.cis.spacejourney.input.MainMenuInputListener
 import edu.gvsu.cis.spacejourney.managers.GameDataManager
+import edu.gvsu.cis.spacejourney.managers.MusicManager
 import ktx.log.debug
 
 class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScreen") {
@@ -56,6 +58,10 @@ class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScree
 
     inputListener = MainMenuInputListener(3)
     Gdx.input.inputProcessor = inputListener
+
+    if (!MusicManager.getInstance().music.isPlaying) {
+      MusicManager.getInstance().music = SpaceJourney.assetManager.get("title.mp3", Music::class.java)
+    }
   }
 
   override fun render(delta: Float) {
@@ -85,6 +91,11 @@ class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScree
 
     if (inputListener!!.gameCanStart()) {
       GameDataManager.getInstance().levelNumber = inputListener!!.currentChoice
+
+      if (MusicManager.getInstance().music != null) {
+        MusicManager.getInstance().stop()
+      }
+
       this.game.setScreen<LevelScreen>()
     }
   }
