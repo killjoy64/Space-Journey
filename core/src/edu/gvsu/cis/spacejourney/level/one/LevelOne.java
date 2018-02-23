@@ -2,21 +2,27 @@ package edu.gvsu.cis.spacejourney.level.one;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.SpaceJourney;
 import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship;
 import edu.gvsu.cis.spacejourney.entity.collectible.Collectible;
 import edu.gvsu.cis.spacejourney.entity.collectible.TestCollectible;
+import edu.gvsu.cis.spacejourney.entity.enemy.EvilSpaceship;
+import edu.gvsu.cis.spacejourney.entity.movement.LinearMovement;
 import edu.gvsu.cis.spacejourney.input.PlayerInputListener;
 import edu.gvsu.cis.spacejourney.level.Level;
-import edu.gvsu.cis.spacejourney.level.choreography.EnemySpawnEvent;
 import edu.gvsu.cis.spacejourney.level.choreography.LevelChoreographer;
+import edu.gvsu.cis.spacejourney.level.choreography.events.EntitySpawnEvent;
 import edu.gvsu.cis.spacejourney.screens.backgrounds.ParallaxBackground;
 import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay;
 import edu.gvsu.cis.spacejourney.util.ZIndex;
 
 public class LevelOne extends Level {
+
+  private final int levelTime = 200;
 
   private ParallaxBackground background;
   private PlayerSpaceship player;
@@ -59,9 +65,14 @@ public class LevelOne extends Level {
 
     choreographer = new LevelChoreographer(stage, world);
 
-    for (int i = 0; i < 200; i++) {
-      choreographer.schedule(1.0f + i, new EnemySpawnEvent());
+    for (int i = 0; i < levelTime; i++) {
+      EvilSpaceship basicEnemy = new EvilSpaceship(stage);
+      basicEnemy.setWidth(35.0f);
+      basicEnemy.setHeight(35.0f);
+      basicEnemy.setMovementPattern(new LinearMovement(new Vector2(0f, -25f)));
+      choreographer.schedule(1.0f + i, new EntitySpawnEvent(basicEnemy));
     }
+
   }
 
   @Override
@@ -69,6 +80,14 @@ public class LevelOne extends Level {
     inputListener.poll(delta);
     choreographer.update(delta);
     defaultHud.poll();
+
+    if (choreographer.isEmpty()) {
+      EntitySpawnEvent event = (EntitySpawnEvent) choreographer.getLastEvent().getEvent();
+      if (event.getEntity().belowScreen()) {
+        // TODO - Implement level completed... or something...
+      }
+    }
+
   }
 
   @Override

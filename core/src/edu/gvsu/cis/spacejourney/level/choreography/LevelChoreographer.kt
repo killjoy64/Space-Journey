@@ -1,37 +1,9 @@
 package edu.gvsu.cis.spacejourney.level.choreography
 
-import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
-import edu.gvsu.cis.spacejourney.entity.enemy.EvilSpaceship
-import edu.gvsu.cis.spacejourney.entity.movement.LinearMovement
-import edu.gvsu.cis.spacejourney.util.toMeters
 import ktx.collections.GdxArray
 import ktx.collections.isNotEmpty
-import ktx.log.debug
-
-class EnemySpawnEvent : ChoreographEvent() {
-
-    val position: Vector2? = null
-
-    override fun onEvent(stage: Stage, world: World) {
-
-        debug { "Enemy added" }
-
-        // Add quick enemy
-        val enemy: EvilSpaceship? = EvilSpaceship(stage)
-
-        enemy?.width = 35.0f
-        enemy?.height = 35.0f
-        enemy?.setPosition((Math.random().toFloat() * stage.viewport!!.worldWidth - 50f.toMeters()), stage.viewport!!.worldHeight)
-        enemy?.setMovementPattern(LinearMovement(Vector2(0f, -25f)))
-        enemy?.createBody(world)
-
-
-        stage.addActor(enemy)
-    }
-
-}
 
 abstract class ChoreographEvent {
 
@@ -51,6 +23,8 @@ class LevelChoreographer(val stage: Stage, val world: World) {
     // Sorted array, the first element should always be the next.
     private var events = GdxArray<ScheduledEvent>()
     private var time: Float = 0f
+
+    private var lastEvent: ScheduledEvent? = null
 
     fun pause() {
         this.paused = true
@@ -76,6 +50,10 @@ class LevelChoreographer(val stage: Stage, val world: World) {
         return null
     }
 
+    fun getLastEvent(): ScheduledEvent? {
+        return this.lastEvent
+    }
+
     fun schedule(scheduled_time: Float, event: ChoreographEvent) {
         this.events.add(ScheduledEvent(scheduled_time, event))
         this.events.sortedBy { it.scheduled_time }
@@ -86,9 +64,14 @@ class LevelChoreographer(val stage: Stage, val world: World) {
 
         if (getNextEvent() != null) {
             if (getNextEvent()!!.scheduled_time < time) {
-                popNextEvent()?.event?.onEvent(stage, world)
+                lastEvent = popNextEvent()
+                lastEvent?.event?.onEvent(stage, world)
             }
         }
+    }
+
+    fun isEmpty(): Boolean {
+        return this.events.size == 0
     }
 
 }
