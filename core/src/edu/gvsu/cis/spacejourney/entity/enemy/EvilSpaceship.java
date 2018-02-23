@@ -33,7 +33,7 @@ public class EvilSpaceship extends Enemy {
     );
 
     CircleShape circle = new CircleShape();
-    circle.setRadius(((getWidth() / 2) - 2.5f) / Constants.PX_PER_M);
+    circle.setRadius((((getWidth() * 0.75f) / 2)) / Constants.PX_PER_M);
 
     FixtureDef fixtureDef = new FixtureDef();
     fixtureDef.shape = circle;

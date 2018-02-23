@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.Disposable
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.util.ZIndex
 import edu.gvsu.cis.spacejourney.util.toMeters
-import java.util.*
+import java.util.Vector
 
 /**
  * Basic helper class to store information on each parallax layer.
@@ -22,7 +22,7 @@ class ParallaxLayer(
         val scroll_factor: Float,
         val zindex: Int,
         val repeat: Boolean = true
-): Disposable {
+) : Disposable {
     var offset: Vector2 = Vector2(0f, 0f)
     var region: TextureRegion? = null
 

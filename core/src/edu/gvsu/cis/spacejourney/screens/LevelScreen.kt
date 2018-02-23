@@ -101,7 +101,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         // Draw the game
         stage?.viewport?.apply()
-//    debugRenderer?.render(world, stage?.viewport?.camera?.combined)
+//        debugRenderer?.render(world, stage?.viewport?.camera?.combined)
         stage?.draw()
 
         // Draw the UI

@@ -150,7 +150,7 @@ public class PlayerSpaceship extends Entity {
     float x = getX() + ((getWidth() / 2) / Constants.PX_PER_M);
     float y = getY() + ((getHeight() / 2) / Constants.PX_PER_M);
     CircleShape circle = new CircleShape();
-    circle.setRadius(((getWidth() / 2) - 2.5f) / Constants.PX_PER_M);
+    circle.setRadius((((getWidth() * 0.625f) / 2)) / Constants.PX_PER_M);
 
     bodyBuilder.setBodyShape(circle);
     bodyBuilder.setBodyPosition(new Vector2(x, y));
