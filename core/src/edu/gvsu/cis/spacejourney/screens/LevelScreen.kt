@@ -1,7 +1,9 @@
 package edu.gvsu.cis.spacejourney.screens
 
+import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
@@ -14,6 +16,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import edu.gvsu.cis.spacejourney.Constants
 import edu.gvsu.cis.spacejourney.SpaceJourney
+import edu.gvsu.cis.spacejourney.component.*
+import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
+import edu.gvsu.cis.spacejourney.component.colliders.CircleCollider
 import edu.gvsu.cis.spacejourney.entity.Graveyard
 import edu.gvsu.cis.spacejourney.input.GameContactListener
 import edu.gvsu.cis.spacejourney.level.Level
@@ -21,122 +26,90 @@ import edu.gvsu.cis.spacejourney.level.Levels
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
 import edu.gvsu.cis.spacejourney.managers.GameDataManager
 import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay
+import edu.gvsu.cis.spacejourney.system.PhysicsSystem
+import edu.gvsu.cis.spacejourney.system.PlayerControllerSystem
+import edu.gvsu.cis.spacejourney.system.RenderingSystem
 import edu.gvsu.cis.spacejourney.util.DebugInfo
 import edu.gvsu.cis.spacejourney.util.toMeters
+import ktx.ashley.add
+import ktx.ashley.entity
 
 /**
  * Where the magic happens
  */
 class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
-  private var debugRenderer: Box2DDebugRenderer? = null
-
-  private var stage: Stage? = null
-  private var overlayStage: Stage? = null
-
-  private var world: World? = null
-  private var contactListener: GameContactListener? = null
-
-  private var projManager: ActiveProjectileManager? = null
-
   private var gameData: GameDataManager? = null
   private var level: Level? = null
+
+  var engine = Engine()
+
+  var renderingSystem : RenderingSystem? = null
 
   override fun show() {
     super.show()
 
-    val viewport = FitViewport(Constants.VIRTUAL_WIDTH.toMeters(), Constants.VIRTUAL_HEIGHT.toMeters())
-    stage = Stage(viewport)
+    renderingSystem = RenderingSystem()
 
-    val overlayViewport = ScreenViewport()
-    overlayStage = Stage(overlayViewport)
+    engine.addSystem(PhysicsSystem())
+    engine.addSystem(PlayerControllerSystem())
+    engine.addSystem(renderingSystem)
 
-    world = World(Vector2(0.0f, 0.0f), true)
-    contactListener = GameContactListener()
+    engine.add {
+      entity {
+        with<Velocity> {}
+        with<Box2D> {}
+        with<BoxCollider> {}
+        with<Player> {}
+        with<Transform> {
+          position = Vector2(10f, 10f)
+        }
+        with<StaticSprite> {
+          texture = SpaceJourney.assetManager.get("spaceship2.png", Texture::class.java)
+        }
+      }
+    }
 
-    world?.setContactListener(contactListener)
-
-    debugRenderer = Box2DDebugRenderer()
-
-    projManager = ActiveProjectileManager.getInstance()
-    projManager?.setStage(stage)
-    projManager?.setWorld(world)
-    projManager?.init()
+    //val viewport = FitViewport(Constants.VIRTUAL_WIDTH.toMeters(), Constants.VIRTUAL_HEIGHT.toMeters())
 
     gameData = GameDataManager.getInstance()
     gameData?.reset()
-    level = Levels.getFromId(gameData?.levelNumber!!).level
-    level?.init(stage, world)
+
+    /*level = Levels.getFromId(gameData?.levelNumber!!).level
+    //level?.init(stage, world)
     level?.music?.volume = 0.3f
     level?.music?.isLooping = true
-    level?.music?.play()
+    level?.music?.play()*/
 
-    //val info = DebugInfo()
-    //info.setPosition(1f, 1f)
-    //overlayStage?.addActor(info)
-
-    if (level?.hud != null) {
-      overlayStage?.addActor(level?.hud)
-    }
   }
 
   // Be mindful about nullable-types, as resize is called before show
   override fun resize(width: Int, height: Int) {
     super.resize(width, height)
 
-    stage?.viewport?.update(width, height, true)
-    overlayStage?.viewport?.update(width, height, true)
+    renderingSystem?.resize(width, height);
   }
 
   override fun render(delta: Float) {
     super.render(delta)
 
     // Switch level if needed
-    if (level != null && level?.player!!.isDead) {
+    /*if (level != null && level?.player!!.isDead) {
       game.setScreen<LevelSelectScreen>()
-    }
+    }*/
 
-    // Update all the things
-    projManager?.poll()
-    level?.update(delta)
-    overlayStage?.act()
-    stage?.act()
-    world?.step(1.0f / 60.0f, 6, 2)
-    getRidOfBodies()
+    engine.update(delta)
 
-    // Draw the game
-    stage?.viewport?.apply()
-//    debugRenderer?.render(world, stage?.viewport?.camera?.combined)
-    stage?.draw()
-
-    // Draw the UI
-    overlayStage?.viewport?.apply() // This should work but it breaks the UI!?
-    overlayStage?.draw()
-
-  }
-
-  private fun getRidOfBodies() {
-    for (body: Body in Graveyard.bodies) {
-      world?.destroyBody(body)
-    }
-    Graveyard.bodies.clear()
-
-    for (actor: Actor in Graveyard.actors) {
-      actor.remove()
-    }
-    Graveyard.actors.clear()
   }
 
   override fun dispose() {
-    getRidOfBodies()
-    level?.dispose()
-    overlayStage?.dispose()
-    stage?.dispose()
+
+
   }
 
   override fun hide() {
     super.hide()
-//    dispose()
+    dispose()
     level?.music?.stop()
   }
 

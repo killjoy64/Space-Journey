@@ -19,11 +19,20 @@ public abstract class Enemy extends Entity {
   private int score;
   private ShapeRenderer shapeRenderer;
   private MovementPattern movementPattern;
+  private OutOfBoundsListener listener;
 
   public Enemy(Stage stage, TextureRegion textureRegion) {
     super(stage, textureRegion);
     this.shapeRenderer = new ShapeRenderer();
     this.score = 10;
+  }
+
+  public void setOutOfBoundsListener(OutOfBoundsListener listener){
+    this.listener = listener;
+  }
+
+  public OutOfBoundsListener getOutOfBoundsListener() {
+    return listener;
   }
 
   @Override
@@ -45,12 +54,16 @@ public abstract class Enemy extends Entity {
     if (hitPoints > 1) {
       hitPoints--;
     } else {
-      hitPoints = 0;
-      Graveyard.bodies.add(getBody());
-      Graveyard.actors.add(this);
+      destroy();
       int prevScore = GameDataManager.getInstance().getScore();
       GameDataManager.getInstance().setScore(prevScore + 10);
     }
+  }
+
+  public void destroy(){
+    hitPoints = 0;
+    Graveyard.bodies.add(getBody());
+    Graveyard.actors.add(this);
   }
 
   @Override
