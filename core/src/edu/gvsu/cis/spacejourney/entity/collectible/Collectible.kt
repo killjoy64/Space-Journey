@@ -11,14 +11,26 @@ import edu.gvsu.cis.spacejourney.entity.AnimatedEntity
 import edu.gvsu.cis.spacejourney.entity.Graveyard
 import edu.gvsu.cis.spacejourney.util.toMeters
 
+/**
+ * Abstract class that describes a template for a collectible that
+ * the player can pickup.
+ */
 abstract class Collectible(stage: Stage?) : AnimatedEntity(stage) {
 
     private var sound: Sound? = null
 
+    /**
+     * Default constructor that initializes a sound to be played once picked up.
+     */
     init {
         sound = SpaceJourney.assetManager.get("default_pickup.wav", Sound::class.java)
     }
 
+    /**
+     * Inherited method from the Collidable interface that
+     * creates a body, and spawns it in the physics world.
+     * @param world current Box2D world that is being
+     */
     override fun createBody(world: World?) {
         val bodyDef = BodyDef()
         bodyDef.type = BodyDef.BodyType.DynamicBody
@@ -45,12 +57,19 @@ abstract class Collectible(stage: Stage?) : AnimatedEntity(stage) {
         circle.dispose()
     }
 
+    /**
+     * Function that is called whenever the player collides with a collectible.
+     */
     open fun collect() {
         sound?.play(0.05f)
         Graveyard.BODIES.add(body)
         Graveyard.ACTORS.add(this)
     }
 
+    /**
+     * Simple dispose method that stops any current sounds being played, and
+     * disposes of those sounds.
+     */
     override fun dispose() {
         super.dispose()
         sound?.stop()

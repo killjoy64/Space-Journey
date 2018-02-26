@@ -31,11 +31,19 @@ public class LevelOne extends Level {
   private LevelChoreographer choreographer;
   private DefaultOverlay defaultHud;
 
+  /**
+   * Default constructor for the first level.
+   */
   public LevelOne() {
     setMusic(SpaceJourney.Companion.getAssetManager().get(
         "Space Background Music.mp3", Music.class));
   }
 
+  /**
+   * Method that initializes logic specific to the first level.
+   * @param stage for the current stage of the game.
+   * @param world for the current world of the game.
+   */
   @Override
   public void init(Stage stage, World world) {
     super.init(stage, world);
@@ -74,6 +82,10 @@ public class LevelOne extends Level {
 
   }
 
+  /**
+   * Method that updates the logic each time the render() method is called.
+   * @param delta float given during a screen's render() method.
+   */
   @Override
   public void update(float delta) {
     inputListener.poll(delta);
@@ -90,6 +102,9 @@ public class LevelOne extends Level {
 
   }
 
+  /**
+   * Disposes of any disposable objects, such as music, textures, or entities.
+   */
   @Override
   public void dispose() {
     player.dispose();

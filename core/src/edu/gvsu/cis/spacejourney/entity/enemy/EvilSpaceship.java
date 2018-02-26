@@ -24,6 +24,10 @@ public class EvilSpaceship extends Enemy {
     setMaxHitPoints(3);
   }
 
+  /**
+   * Creates a body that is readily available to populate a Box2D world.
+   * @param world current Box2D world that is being
+   */
   @Override
   public void createBody(World world) {
 
@@ -53,6 +57,10 @@ public class EvilSpaceship extends Enemy {
     circle.dispose();
   }
 
+  /**
+   * Method that disposes of any resources that implement
+   * the Disposable interface.
+   */
   @Override
   public void dispose() {
 

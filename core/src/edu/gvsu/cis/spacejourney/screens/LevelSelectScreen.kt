@@ -30,6 +30,10 @@ class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScree
 
     private var inputListener: MainMenuInputListener? = null
 
+    /**
+     * Method that creates the initial screen logic, creates a default font, and adds the options
+     * to the screen.
+     */
     override fun show() {
         super.show()
 
@@ -62,6 +66,10 @@ class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScree
         }
     }
 
+    /**
+     * Constantly updates the screen with new content.
+     * @param delta The time between the last and current call of the render() method.
+     */
     override fun render(delta: Float) {
         super.render(delta)
 
@@ -98,11 +106,19 @@ class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScree
         }
     }
 
+    /**
+     * Overriden method that is called whenever the screen changes sizes.
+     * @param width New width that the screen has resized to.
+     * @param height New height that the screen has resized to.
+     */
     override fun resize(width: Int, height: Int) {
         super.resize(width, height)
         stage?.viewport?.update(width, height, true)
     }
 
+    /**
+     * Method that disposes of fonts, and stages used to render the text.
+     */
     override fun dispose() {
         super.dispose()
         stage?.dispose()

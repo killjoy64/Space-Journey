@@ -26,11 +26,18 @@ import edu.gvsu.cis.spacejourney.util.toMeters
  */
 class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
+    /**
+     * Debug variable used to see which Box2D bodies are being drawn
+     * to the screen.
+     */
     private var debugRenderer: Box2DDebugRenderer? = null
 
+    /**
+     * Variables that designate what is being drawn, and what is physics
+     * are happening.
+     */
     private var stage: Stage? = null
     private var overlayStage: Stage? = null
-
     private var world: World? = null
     private var contactListener: GameContactListener? = null
 
@@ -39,6 +46,9 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
     private var gameData: GameDataManager? = null
     private var level: Level? = null
 
+    /**
+     * Method that creates a screen, initializes stages, worlds, and initial level logic.
+     */
     override fun show() {
         super.show()
 
@@ -78,7 +88,11 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         }
     }
 
-    // Be mindful about nullable-types, as resize is called before show
+    /**
+     * Overriden method that is called whenever the screen changes sizes.
+     * @param width New width that the screen has resized to.
+     * @param height New height that the screen has resized to.
+     */
     override fun resize(width: Int, height: Int) {
         super.resize(width, height)
 
@@ -86,6 +100,10 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         overlayStage?.viewport?.update(width, height, true)
     }
 
+    /**
+     * Constantly called render method.
+     * @param delta Time between last and current render() call.
+     */
     override fun render(delta: Float) {
         super.render(delta)
 
@@ -112,6 +130,10 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         overlayStage?.draw()
     }
 
+    /**
+     * Private helper function that destroys all bodies and removes all
+     * actors from the screen.
+     */
     private fun getRidOfBodies() {
         for (body: Body in Graveyard.BODIES) {
             world?.destroyBody(body)
@@ -124,6 +146,10 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         Graveyard.ACTORS.clear()
     }
 
+    /**
+     * Function that disposes of any remain memory from graphics, stages,
+     * or additional level logic.
+     */
     override fun dispose() {
         getRidOfBodies()
         level?.dispose()
@@ -131,9 +157,11 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         stage?.dispose()
     }
 
+    /**
+     * Fucntion that hides the screen, and stops the current music.
+     */
     override fun hide() {
         super.hide()
-//    dispose()
         MusicManager.getInstance().stop()
     }
 }

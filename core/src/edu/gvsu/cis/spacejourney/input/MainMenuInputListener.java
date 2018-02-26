@@ -83,10 +83,18 @@ public class MainMenuInputListener implements InputProcessor {
     return false;
   }
 
+  /**
+   * Gets the index of the current choice that is selected.
+   * @return The index of the item as an integer.
+   */
   public int getCurrentChoice() {
     return currentChoice;
   }
 
+  /**
+   * Method that returns whether or not the "enter" key was pressed.
+   * @return <t>true</t> if yes, <b>false</b> if no.
+   */
   public boolean gameCanStart() {
     return startGame;
   }

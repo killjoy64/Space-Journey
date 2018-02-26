@@ -53,6 +53,10 @@ public abstract class Projectile extends Entity implements Poolable {
     this.isAlive = alive;
   }
 
+  /**
+   * Method that gets called constantly in the render() method.
+   * @param delta The time difference between the last and current render() method call.
+   */
   @Override
   public void act(float delta) {
     super.act(delta);
@@ -63,6 +67,10 @@ public abstract class Projectile extends Entity implements Poolable {
 
   }
 
+  /**
+   * Inherited method that resets the laser so that it may be
+   * pulled from the pool once again for later use.
+   */
   @Override
   public void reset() {
     this.setVisible(false);

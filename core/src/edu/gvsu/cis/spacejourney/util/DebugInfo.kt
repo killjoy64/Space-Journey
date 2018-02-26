@@ -31,6 +31,10 @@ class DebugInfo : Actor() {
         debugFont!!.draw(batch, "Native Heap Memory ${Gdx.app.nativeHeap}", x.toMeters(), (y + spacing * 2).toMeters())
     }
 
+    /**
+     * Default constructor that is called whenever an instance of this class is created.
+     * The constructor initializes the debug font and creates a Zindex for the GUI.
+     */
     init {
         debugFont = SpaceJourney.assetManager.get("fonts/default.fnt")
         debugFont!!.data.scale(1.0f)

@@ -25,7 +25,10 @@ class LoadingScreen(game: SpaceJourney) : BaseScreen(game, "LoadingScreen") {
     private var stage: Stage? = null
     private var progress: ProgressBar? = null
 
-    // Add any assets that need be loaded here and reference them via game.assets in other screens
+    /**
+     * Private helper function that adds any assets that need be loaded.
+     * game.assets in other screens.
+     */
     private fun actuallyLoadAssets() {
 
         SpaceJourney.assetManager.load("laser.png", Texture::class.java)
@@ -42,6 +45,9 @@ class LoadingScreen(game: SpaceJourney) : BaseScreen(game, "LoadingScreen") {
         SpaceJourney.assetManager.load("fonts/default.fnt", BitmapFont::class.java)
     }
 
+    /**
+     * Method that creates initial load logic.
+     */
     override fun show() {
         super.show()
 
@@ -76,6 +82,11 @@ class LoadingScreen(game: SpaceJourney) : BaseScreen(game, "LoadingScreen") {
         actuallyLoadAssets()
     }
 
+    /**
+     * Constantly updates the screen with new content, but more specifically,
+     * this updates the progress bar, and changes screens when everything is loaded.
+     * @param delta The time different between the last and current render() call.
+     */
     override fun render(delta: Float) {
         super.render(delta)
 

@@ -14,6 +14,9 @@ import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.SpaceJourney;
 import edu.gvsu.cis.spacejourney.managers.GameDataManager;
 
+/**
+ * Class that creates an instance of the player, and assigns them a spaceship.
+ */
 public class PlayerSpaceship extends Entity {
 
   private static final float MOVE_SPEED = 3.0f;
@@ -86,6 +89,9 @@ public class PlayerSpaceship extends Entity {
     }
   }
 
+  /**
+   * Self-explanatory method that stops all forces being applied to the player.
+   */
   public void stopMoving() {
     getBody().setLinearVelocity(0.0f, 0.0f);
   }
@@ -131,6 +137,10 @@ public class PlayerSpaceship extends Entity {
     return false;
   }
 
+  /**
+   * Method that gets called constantly.
+   * @param delta The time difference between the last and current render() method call.
+   */
   @Override
   public void act(float delta) {
     super.act(delta);
@@ -141,6 +151,11 @@ public class PlayerSpaceship extends Entity {
 
   }
 
+  /**
+   * Inherited method from the Collidable interface that
+   * creates a body, and spawns it in the physics world.
+   * @param world current Box2D world that is being
+   */
   @Override
   public void createBody(World world) {
 
@@ -162,10 +177,18 @@ public class PlayerSpaceship extends Entity {
     circle.dispose();
   }
 
+  /**
+   * Is the player dead? Find out by calling this method.
+   * @return Dead, or not dead (boolean value).
+   */
   public boolean isDead() {
     return this.dead;
   }
 
+  /**
+   * Simple dispose method that stops any current sounds being played, and
+   * disposes of those sounds.
+   */
   @Override
   public void dispose() {
     damageSound.stop();

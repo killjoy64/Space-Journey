@@ -31,6 +31,10 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
 
     private var music: Music? = null
 
+    /**
+     * Method that creates initial logic for the screen, and shows the options
+     * in a default font.
+     */
     override fun show() {
         super.show()
 
@@ -67,12 +71,19 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
 //        this.game.setScreen<LevelSelectScreen>()
     }
 
+    /**
+     * Disposes of the stage, and current game music.
+     */
     override fun dispose() {
         super.dispose()
         stage?.dispose()
         music?.dispose()
     }
 
+    /**
+     * Constantly updates the screen with new content.
+     * @param delta The time between the last and current call of the render() method.
+     */
     override fun render(delta: Float) {
         super.render(delta)
 
@@ -94,7 +105,11 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
         }
     }
 
-    // Be mindful about nullable-types, as resize is called before show
+    /**
+     * Overriden method that is called whenever the screen changes sizes.
+     * @param width New width that the screen has resized to.
+     * @param height New height that the screen has resized to.
+     */
     override fun resize(width: Int, height: Int) {
         super.resize(width, height)
 

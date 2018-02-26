@@ -4,8 +4,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.graphics.Texture
 import edu.gvsu.cis.spacejourney.SpaceJourney
 
+/**
+ * Class that is meant to be a test collectible.
+ */
 class TestCollectible(stage: Stage?) : Collectible(stage) {
 
+    /**
+     * Default constructor that initializes specifics for this collectible.
+     */
     init {
 
         this.setSize(50f, 50f)

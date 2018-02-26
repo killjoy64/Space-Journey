@@ -96,6 +96,10 @@ public class ActiveProjectileManager implements Disposable {
     this.world = world;
   }
 
+  /**
+   * Method that disposes of the projectile pool, since it does
+   * implement the Disposable interface.
+   */
   @Override
   public void dispose() {
     this.projectilePool.clear();

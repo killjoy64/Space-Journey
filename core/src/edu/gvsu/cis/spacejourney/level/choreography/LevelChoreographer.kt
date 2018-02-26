@@ -62,10 +62,17 @@ class LevelChoreographer(val stage: Stage, val world: World) {
     fun loadEventsFromFile() {
     }
 
+    /**
+     * Private method that pops the next event to queue it up for
+     * execution.
+     */
     private fun popNextEvent(): ScheduledEvent? {
         return this.events.removeIndex(0)
     }
 
+    /**
+     * Private method that retrieves the next event in the queue.
+     */
     private fun getNextEvent(): ScheduledEvent? {
         if (this.events.isNotEmpty()) {
             return this.events[0]

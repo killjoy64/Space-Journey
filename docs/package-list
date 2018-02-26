@@ -4,7 +4,6 @@ edu.gvsu.cis.spacejourney.entity.collectible
 edu.gvsu.cis.spacejourney.entity.enemy
 edu.gvsu.cis.spacejourney.entity.movement
 edu.gvsu.cis.spacejourney.entity.projectile
-edu.gvsu.cis.spacejourney.gui
 edu.gvsu.cis.spacejourney.input
 edu.gvsu.cis.spacejourney.level
 edu.gvsu.cis.spacejourney.level.choreography

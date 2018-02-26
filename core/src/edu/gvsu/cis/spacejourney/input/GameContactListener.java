@@ -20,10 +20,20 @@ public class GameContactListener implements ContactListener {
 
   private GameDataManager gameData;
 
+  /**
+   * Default constructor that initializes the singleton instance of the
+   * GameDataManager class.
+   */
   public GameContactListener() {
     this.gameData = GameDataManager.getInstance();
   }
 
+  /**
+   * Private helper method that checks for collisions between two entities.
+   * @param contact Please refer to {@link com.badlogic.gdx.physics.box2d.Contact}.
+   * @param entityA The first entity that is a part of the collision.
+   * @param entityB The second entity that is a part of the collision.
+   */
   private void check(Contact contact, Object entityA, Object entityB) {
 
     int currentLives = gameData.getLives();
@@ -50,6 +60,10 @@ public class GameContactListener implements ContactListener {
     }
   }
 
+  /**
+   * Method that checks contact between two entities.
+   * @param contact The box2D contact instance.
+   */
   @Override
   public void beginContact(Contact contact) {
     Fixture a = contact.getFixtureA();
@@ -62,16 +76,30 @@ public class GameContactListener implements ContactListener {
     check(contact, entityB, entityA);
   }
 
+  /**
+   * Currently not used method in Space Journey.
+   * @param contact Please refer to {@link com.badlogic.gdx.physics.box2d.Contact}.
+   */
   @Override
   public void endContact(Contact contact) {
 
   }
 
+  /**
+   * Currently not used method in Space Journey.
+   * @param contact Please refer to {@link com.badlogic.gdx.physics.box2d.Contact}.
+   * @param oldManifold Please refer to {@link com.badlogic.gdx.physics.box2d.Manifold}.
+   */
   @Override
   public void preSolve(Contact contact, Manifold oldManifold) {
 
   }
 
+  /**
+   * Currently not used method in Space Journey.
+   * @param contact Please refer to {@link com.badlogic.gdx.physics.box2d.Contact}.
+   * @param impulse Please refer to {@link com.badlogic.gdx.physics.box2d.ContactImpulse}.
+   */
   @Override
   public void postSolve(Contact contact, ContactImpulse impulse) {
 

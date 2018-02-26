@@ -44,6 +44,10 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
     this.setPosition(0.0f, 0.0f);
   }
 
+  /**
+   * Method that updates every render() call.
+   * @param delta The time difference betwen the last and current render() method call.
+   */
   @Override
   public void act(float delta) {
     super.act(delta);
@@ -56,6 +60,11 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
 
   }
 
+  /**
+   * Draws the three parallax layers on to the screen.
+   * @param batch The sprite batch used in the game.
+   * @param parentAlpha Alpha value of the entire object.
+   */
   @Override
   public void draw(Batch batch, float parentAlpha) {
     super.draw(batch, parentAlpha);
@@ -75,10 +84,8 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
    *         the actor is clearly visible on the screen.
    */
   public boolean outOfBounds() {
-    int screenW = (int) (stage.getViewport().getWorldWidth() 
-    		* Constants.PX_PER_M);
-    int screenH = (int) (stage.getViewport().getWorldHeight() 
-    		* Constants.PX_PER_M);
+    int screenW = (int) (stage.getViewport().getWorldWidth() * Constants.PX_PER_M);
+    int screenH = (int) (stage.getViewport().getWorldHeight() * Constants.PX_PER_M);
     int x = (int) getX();
     int y = (int) getY();
     int w = (int) getWidth();

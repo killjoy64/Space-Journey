@@ -30,6 +30,12 @@ public class Laser extends Projectile {
     setZIndex(ZIndex.PROJECTILES);
   }
 
+  /**
+   * Method that spawns a projectile.
+   * @param world current world that the projectile will live in.
+   * @param x normalized x coordinate.
+   * @param y normalized y coordinate.
+   */
   @Override
   public void spawn(World world, float x, float y) {
     super.spawn(world, x, y);
@@ -37,6 +43,11 @@ public class Laser extends Projectile {
     getBody().applyLinearImpulse(new Vector2(0.0f, 6.0f), getBody().getWorldCenter(), true);
   }
 
+  /**
+   * Inherited method from the Collidable interface that
+   * creates a body, and spawns it in the physics world.
+   * @param world current Box2D world that is being
+   */
   @Override
   public void createBody(World world) {
 
@@ -61,6 +72,10 @@ public class Laser extends Projectile {
     square.dispose();
   }
 
+  /**
+   * Simple dispose method that stops any current sounds being played, and
+   * disposes of those sounds.
+   */
   @Override
   public void dispose() {
     Graveyard.BODIES.add(getBody());

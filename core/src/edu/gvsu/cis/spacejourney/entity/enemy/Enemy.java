@@ -65,6 +65,11 @@ public abstract class Enemy extends Entity {
     }
   }
 
+  /**
+   * Method that draws the enemy on the screen using the given sprite batch.
+   * @param batch The sprite batch used in the game.
+   * @param parentAlpha Alpha value of the entire object.
+   */
   @Override
   public void draw(Batch batch, float parentAlpha) {
     super.draw(batch, parentAlpha);

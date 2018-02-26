@@ -67,6 +67,11 @@ class ParallaxBackground : Actor(), Disposable {
         this.zIndex = ZIndex.BACKGROUND
     }
 
+    /**
+     * Draws the three parallax layers on to the screen.
+     * @param batch The sprite batch used in the game.
+     * @param parentAlpha Alpha value of the entire object.
+     */
     override fun draw(batch: Batch?, parentAlpha: Float) {
         super.draw(batch, parentAlpha)
         for (layer in this.layers) {
@@ -81,6 +86,10 @@ class ParallaxBackground : Actor(), Disposable {
         }
     }
 
+    /**
+     * Method that is constantly called to update the layers, instead of render.
+     * @param delta The time different between the last and current render() method calls.
+     */
     override fun act(delta: Float) {
         super.act(delta)
 
@@ -89,6 +98,9 @@ class ParallaxBackground : Actor(), Disposable {
         }
     }
 
+    /**
+     * Method that disposes the textures used to compose the parallax layers.
+     */
     override fun dispose() {
         for (layer in this.layers) {
             layer.dispose()
