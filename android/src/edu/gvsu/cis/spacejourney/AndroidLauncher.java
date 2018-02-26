@@ -7,11 +7,13 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import edu.gvsu.cis.spacejourney.SpaceJourney;
 
 public class AndroidLauncher extends AndroidApplication {
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-	  super.onCreate(savedInstanceState);
-	  AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-	  config.useImmersiveMode = true;
-	  initialize(new SpaceJourney(), config);
-	}
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+    config.useImmersiveMode = true;
+    initialize(new SpaceJourney(), config);
+  }
+
 }

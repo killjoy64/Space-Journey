@@ -27,6 +27,9 @@ public class GameDataManager {
     this.score = 0;
   }
 
+  /**
+   * Method that resets all of the game data to it's original state.
+   */
   public void reset() {
     this.lives = 3;
     this.levelNumber = 1;

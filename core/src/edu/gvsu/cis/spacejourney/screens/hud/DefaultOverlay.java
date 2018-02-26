@@ -39,10 +39,11 @@ public class DefaultOverlay extends Table {
     font = new BitmapFont(Gdx.files.internal("fonts/default.fnt"));
     font.getData().scale(0.15f);
 
-    this.scoreLabel = new Label(String.format(Strings.HUD_SCORE, gameData.getScore()), new Label.LabelStyle(font, Color.WHITE));
+    this.scoreLabel = new Label(
+        String.format(Strings.HUD_SCORE, gameData.getScore()),
+        new Label.LabelStyle(font, Color.WHITE));
 
     this.setFillParent(true);
-//    this.setDebug(true);
 
     for (int i = 0; i < this.lives.length; i++) {
       lives[i] = new Image(

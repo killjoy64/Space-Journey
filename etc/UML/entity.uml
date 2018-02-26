@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>edu.gvsu.cis.spacejourney.entity</OriginalElement>
+  <nodes>
+    <node x="895.5" y="567.0">edu.gvsu.cis.spacejourney.entity.enemy.Enemy</node>
+    <node x="0.0" y="1298.0">edu.gvsu.cis.spacejourney.entity.BodyBuilder</node>
+    <node x="0.0" y="1202.0">edu.gvsu.cis.spacejourney.entity.collectible.TestCollectible</node>
+    <node x="365.50000000000006" y="666.0">edu.gvsu.cis.spacejourney.entity.projectile.Projectile</node>
+    <node x="314.0" y="1422.0">edu.gvsu.cis.spacejourney.entity.movement.LoopMovement</node>
+    <node x="625.5" y="556.0">edu.gvsu.cis.spacejourney.entity.PlayerSpaceship</node>
+    <node x="953.5" y="1033.5">edu.gvsu.cis.spacejourney.entity.enemy.EvilSpaceship</node>
+    <node x="521.0" y="0.0">edu.gvsu.cis.spacejourney.entity.Collidable</node>
+    <node x="483.00000000000006" y="101.0">edu.gvsu.cis.spacejourney.entity.Entity</node>
+    <node x="431.5" y="1298.0">edu.gvsu.cis.spacejourney.entity.movement.MovementPattern</node>
+    <node x="809.0" y="1298.0">edu.gvsu.cis.spacejourney.entity.Graveyard</node>
+    <node x="27.500000000000057" y="655.0">edu.gvsu.cis.spacejourney.entity.AnimatedEntity</node>
+    <node x="189.00000000000006" y="1202.0">edu.gvsu.cis.spacejourney.entity.collectible.CurrencyCollectable</node>
+    <node x="1250.5" y="0.0">edu.gvsu.cis.spacejourney.entity.EntityDirection</node>
+    <node x="98.50000000000006" y="1011.0">edu.gvsu.cis.spacejourney.entity.collectible.Collectible</node>
+    <node x="371.00000000000006" y="1022.5">edu.gvsu.cis.spacejourney.entity.projectile.Laser</node>
+    <node x="549.0" y="1422.0">edu.gvsu.cis.spacejourney.entity.movement.LinearMovement</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="edu.gvsu.cis.spacejourney.entity.enemy.EvilSpaceship" target="edu.gvsu.cis.spacejourney.entity.enemy.Enemy">
+      <point x="0.0" y="-48.0" />
+      <point x="0.0" y="191.5" />
+    </edge>
+    <edge source="edu.gvsu.cis.spacejourney.entity.enemy.Enemy" target="edu.gvsu.cis.spacejourney.entity.Entity">
+      <point x="0.0" y="-191.5" />
+      <point x="1050.5" y="526.0" />
+      <point x="719.25" y="526.0" />
+      <point x="101.25" y="202.5" />
+    </edge>
+    <edge source="edu.gvsu.cis.spacejourney.entity.AnimatedEntity" target="edu.gvsu.cis.spacejourney.entity.Entity">
+      <point x="0.0" y="-103.5" />
+      <point x="186.50000000000006" y="526.0" />
+      <point x="516.75" y="526.0" />
+      <point x="-101.25" y="202.5" />
+    </edge>
+    <edge source="edu.gvsu.cis.spacejourney.entity.collectible.CurrencyCollectable" target="edu.gvsu.cis.spacejourney.entity.collectible.Collectible">
+      <point x="0.0" y="-25.5" />
+      <point x="288.50000000000006" y="1177.0" />
+      <point x="230.50000000000006" y="1177.0" />
+      <point x="44.0" y="70.5" />
+    </edge>
+    <edge source="edu.gvsu.cis.spacejourney.entity.projectile.Laser" target="edu.gvsu.cis.spacejourney.entity.projectile.Projectile">
+      <point x="0.0" y="-59.0" />
+      <point x="0.0" y="92.5" />
+    </edge>
+    <edge source="edu.gvsu.cis.spacejourney.entity.projectile.Projectile" target="edu.gvsu.cis.spacejourney.entity.Entity">
+      <point x="0.0" y="-92.5" />
+      <point x="485.50000000000006" y="536.0" />
+      <point x="584.25" y="536.0" />
+      <point x="-33.75" y="202.5" />
+    </edge>
+    <edge source="edu.gvsu.cis.spacejourney.entity.Entity" target="edu.gvsu.cis.spacejourney.entity.Collidable">
+      <point x="0.0" y="-202.5" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="edu.gvsu.cis.spacejourney.entity.PlayerSpaceship" target="edu.gvsu.cis.spacejourney.entity.Entity">
+      <point x="0.0" y="-202.5" />
+      <point x="750.5" y="536.0" />
+      <point x="651.75" y="536.0" />
+      <point x="33.75" y="202.5" />
+    </edge>
+    <edge source="edu.gvsu.cis.spacejourney.entity.movement.LoopMovement" target="edu.gvsu.cis.spacejourney.entity.movement.MovementPattern">
+      <point x="0.0" y="-59.5" />
+      <point x="421.5" y="1397.0" />
+      <point x="485.25" y="1397.0" />
+      <point x="-53.75" y="37.0" />
+    </edge>
+    <edge source="edu.gvsu.cis.spacejourney.entity.collectible.TestCollectible" target="edu.gvsu.cis.spacejourney.entity.collectible.Collectible">
+      <point x="0.0" y="-25.5" />
+      <point x="84.5" y="1177.0" />
+      <point x="142.50000000000006" y="1177.0" />
+      <point x="-44.0" y="70.5" />
+    </edge>
+    <edge source="edu.gvsu.cis.spacejourney.entity.collectible.Collectible" target="edu.gvsu.cis.spacejourney.entity.AnimatedEntity">
+      <point x="0.0" y="-70.5" />
+      <point x="0.0" y="103.5" />
+    </edge>
+    <edge source="edu.gvsu.cis.spacejourney.entity.movement.LinearMovement" target="edu.gvsu.cis.spacejourney.entity.movement.MovementPattern">
+      <point x="0.0" y="-59.5" />
+      <point x="656.5" y="1397.0" />
+      <point x="592.75" y="1397.0" />
+      <point x="53.75" y="37.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.7286827747466874" x="945.4406888437267" y="575.5952508289657" />
+  <SelectedNodes>
+    <node>edu.gvsu.cis.spacejourney.entity.EntityDirection</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

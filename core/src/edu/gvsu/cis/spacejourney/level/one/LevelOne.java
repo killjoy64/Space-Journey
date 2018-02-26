@@ -22,7 +22,7 @@ import edu.gvsu.cis.spacejourney.util.ZIndex;
 
 public class LevelOne extends Level {
 
-  private final int levelTime = 200;
+  private static final int levelTime = 200;
 
   private ParallaxBackground background;
   private PlayerSpaceship player;

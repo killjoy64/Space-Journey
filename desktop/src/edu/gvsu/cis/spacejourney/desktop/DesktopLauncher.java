@@ -7,6 +7,10 @@ import edu.gvsu.cis.spacejourney.SpaceJourney;
 
 public class DesktopLauncher {
 
+  /**
+   * Main method that launches the Space Journey application as a desktop application.
+   * @param arg the arg that comes from running a java program.
+   */
   public static void main(String[] arg) {
     LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 

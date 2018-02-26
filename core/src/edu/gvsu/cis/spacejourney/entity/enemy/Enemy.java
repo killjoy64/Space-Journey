@@ -20,6 +20,11 @@ public abstract class Enemy extends Entity {
   private ShapeRenderer shapeRenderer;
   private MovementPattern movementPattern;
 
+  /**
+   * Default constructor that creates a new enemy instance.
+   * @param stage current stage that the entity will live in.
+   * @param textureRegion texture to draw the entity with.
+   */
   public Enemy(Stage stage, TextureRegion textureRegion) {
     super(stage, textureRegion);
     this.shapeRenderer = new ShapeRenderer();
@@ -37,10 +42,18 @@ public abstract class Enemy extends Entity {
     }
   }
 
+  /**
+   * Method that sets the movement pattern for a given enemy. This could be a linear movement,
+   * or a path-finding algorithm.
+   * @param pattern A movement pattern.
+   */
   public void setMovementPattern(MovementPattern pattern) {
     movementPattern = pattern;
   }
 
+  /**
+   * Method that gives the enemy damage.
+   */
   public void takeDamage() {
     if (hitPoints > 1) {
       hitPoints--;
@@ -77,23 +90,44 @@ public abstract class Enemy extends Entity {
     }
   }
 
+  /**
+   * Method that returns the maximum hit points for the enemy.
+   * @return
+   */
   public int getMaxHitPoints() {
     return maxHitPoints;
   }
 
+  /**
+   * Method that sets the current maximum hit points for an enemy. This also
+   * resets their hit points to the new maximum.
+   * @param maxHitPoints New maximum hit points to assign to an enemy.
+   */
   public void setMaxHitPoints(int maxHitPoints) {
     this.maxHitPoints = maxHitPoints;
     this.hitPoints = maxHitPoints;
   }
 
+  /**
+   * Method that returns the current hit points of the enemy.
+   * @return Hit points as an integer.
+   */
   public int getHitPoints() {
     return hitPoints;
   }
 
+  /**
+   * Method that returns the score of an enemy.
+   * @return Score as an integer.
+   */
   public int getScore() {
     return score;
   }
 
+  /**
+   * Method that sets the current hit points of the enemy.
+   * @param hitPoints new hit points to give to the enemy.
+   */
   public void setHitPoints(int hitPoints) {
     if (hitPoints > maxHitPoints) {
       this.hitPoints = maxHitPoints;
@@ -102,6 +136,10 @@ public abstract class Enemy extends Entity {
     }
   }
 
+  /**
+   * Method that sets the score that the player will receive once the enemy is destroyed.
+   * @param score New score to assign to the enemy.
+   */
   public void setScore(int score) {
     this.score = score;
   }

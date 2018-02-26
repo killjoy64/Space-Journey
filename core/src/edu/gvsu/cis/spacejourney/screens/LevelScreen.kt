@@ -64,7 +64,10 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         gameData?.reset()
         level = Levels.getFromId(gameData?.levelNumber!!).level
         level?.init(stage, world)
-        MusicManager.getInstance().music = level?.music
+
+        if (level?.music != null) {
+            MusicManager.getInstance().music = level?.music
+        }
 
         //val info = DebugInfo()
         //info.setPosition(1f, 1f)

@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.Stage
 import edu.gvsu.cis.spacejourney.util.ZIndex
@@ -12,7 +11,6 @@ import ktx.collections.GdxArray
 
 abstract class AnimatedEntity(stage: Stage?) : Entity(stage, null) {
 
-    private var textureAtlas: TextureAtlas? = null
     private var animation: Animation<TextureRegion>? = null
     private var elapsedTime = 0f
 
@@ -43,6 +41,5 @@ abstract class AnimatedEntity(stage: Stage?) : Entity(stage, null) {
     }
 
     override fun dispose() {
-        textureAtlas?.dispose()
     }
 }

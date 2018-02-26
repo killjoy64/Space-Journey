@@ -19,6 +19,11 @@ import edu.gvsu.cis.spacejourney.util.ZIndex;
  */
 public class Laser extends Projectile {
 
+  /**
+   * Default constructor that creates an instance of a laser and assigns it
+   * a given texture region.
+   * @param stage current stage that the laser will live in.
+   */
   public Laser(Stage stage) {
     super(stage, new TextureRegion(
         SpaceJourney.Companion.getAssetManager().get("laser.png", Texture.class)));

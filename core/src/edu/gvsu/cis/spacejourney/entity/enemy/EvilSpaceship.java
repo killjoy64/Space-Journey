@@ -13,6 +13,10 @@ import edu.gvsu.cis.spacejourney.SpaceJourney;
 
 public class EvilSpaceship extends Enemy {
 
+  /**
+   * Default constructor that creates an enemy spaceship.
+   * @param stage current stage that the evil spaceship will live in.
+   */
   public EvilSpaceship(Stage stage) {
     super(stage, new TextureRegion(
         SpaceJourney.Companion.getAssetManager().get("spaceship3.png", Texture.class)));

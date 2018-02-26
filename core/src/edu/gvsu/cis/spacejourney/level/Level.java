@@ -20,8 +20,7 @@ public abstract class Level implements Disposable {
   private PlayerSpaceship player;
 
   /**
-   * Default constructor that initializes the
-   * level and world
+   * Default constructor that initializes the level and world.
    * @param stage for the current stage of the game.
    * @param world for the current world of the game.
    */
@@ -33,7 +32,7 @@ public abstract class Level implements Disposable {
   /**
    * Abstract method that is called every update cycle
    * inside of the render() method in the {@link edu.gvsu.cis.spacejourney.screens.LevelScreen}.
-   * @param delta
+   * @param delta float given during a screen's render() method.
    */
   public abstract void update(float delta);
 

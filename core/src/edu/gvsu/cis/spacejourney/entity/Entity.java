@@ -88,7 +88,7 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
   /**
    * Method that checks if the current actor is below the screen's bounds.
    * @return <b>true</b> if the actor is below the screen, or <b>false</b> if
-   * the actor is clearly visible above the bottom of the screen.
+   *      the actor is clearly visible above the bottom of the screen.
    */
   public boolean belowScreen() {
     int y = (int) getY();

@@ -60,7 +60,8 @@ public class PlayerInputListener implements InputProcessor {
   @Override
   public boolean touchDragged(int screenX, int screenY, int pointer) {
 
-    if (Gdx.app.getType() == Application.ApplicationType.Android || Gdx.app.getType() == Application.ApplicationType.iOS ) {
+    if (Gdx.app.getType() == Application.ApplicationType.Android
+        || Gdx.app.getType() == Application.ApplicationType.iOS) {
 
       if (screenX < Gdx.graphics.getWidth() / 2.0f) {
         player.move(EntityDirection.LEFT);

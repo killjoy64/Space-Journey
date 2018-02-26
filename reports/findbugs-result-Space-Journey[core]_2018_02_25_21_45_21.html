@@ -1,0 +1,576 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>FindBugs Report</title>
+<style type="text/css">
+		.tablerow0 {
+			background: #EEEEEE;
+		}
+
+		.tablerow1 {
+			background: white;
+		}
+
+		.detailrow0 {
+			background: #EEEEEE;
+		}
+
+		.detailrow1 {
+			background: white;
+		}
+
+		.tableheader {
+			background: #b9b9fe;
+			font-size: larger;
+		}
+		</style>
+</head>
+<body>
+<h1>FindBugs Report</h1>
+<p>Produced using <a href="http://findbugs.sourceforge.net">FindBugs</a>3.0.1.</p>
+<p>Project: 
+			Space-Journey[core]</p>
+<h2>Metrics</h2>
+<p>1452 lines of code analyzed,
+	in 51 classes, 
+	in 17 packages.</p>
+<table width="500" cellpadding="5" cellspacing="2">
+<tr class="tableheader">
+<th align="left">Metric</th>
+<th align="right">Total</th>
+<th align="right">Density*</th>
+</tr>
+<tr class="tablerow0">
+<td>High Priority Warnings</td>
+<td align="right">9</td>
+<td align="right">6.20</td>
+</tr>
+<tr class="tablerow1">
+<td>Medium Priority Warnings</td>
+<td align="right">13</td>
+<td align="right">8.95</td>
+</tr>
+<tr class="$totalClass">
+<td>
+<b>Total Warnings</b>
+</td>
+<td align="right">
+<b>22</b>
+</td>
+<td align="right">
+<b>15.15</b>
+</td>
+</tr>
+</table>
+<p>
+<i>(* Defects per Thousand lines of non-commenting source statements)</i>
+</p>
+<p>
+<br/>
+<br/>
+</p>
+<h2>Summary</h2>
+<table width="500" cellpadding="5" cellspacing="2">
+<tr class="tableheader">
+<th align="left">Warning Type</th>
+<th align="right">Number</th>
+</tr>
+<tr class="tablerow0">
+<td>
+<a href="#Warnings_CORRECTNESS">Correctness Warnings</a>
+</td>
+<td align="right">6</td>
+</tr>
+<tr class="tablerow1">
+<td>
+<a href="#Warnings_MALICIOUS_CODE">Malicious code vulnerability Warnings</a>
+</td>
+<td align="right">2</td>
+</tr>
+<tr class="tablerow0">
+<td>
+<a href="#Warnings_PERFORMANCE">Performance Warnings</a>
+</td>
+<td align="right">3</td>
+</tr>
+<tr class="tablerow1">
+<td>
+<a href="#Warnings_STYLE">Dodgy code Warnings</a>
+</td>
+<td align="right">11</td>
+</tr>
+<tr class="tablerow0">
+<td>
+<b>Total</b>
+</td>
+<td align="right">
+<b>22</b>
+</td>
+</tr>
+</table>
+<p>
+<br/>
+<br/>
+</p>
+<h1>Warnings</h1>
+<p>Click on each warning link to see a full description of the issue, and
+	    details of how to resolve it.</p>
+<h2>
+<a name="Warnings_CORRECTNESS">Correctness Warnings</a>
+</h2>
+<table class="warningtable" width="100%" cellspacing="2" cellpadding="5">
+<tr class="tableheader">
+<th align="left">Warning</th>
+<th align="left">Priority</th>
+<th align="left">Details</th>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE">Nullcheck of value previously dereferenced</a>
+</td>
+<td width="10%" valign="top">High</td>
+<td width="70%">
+<p>Nullcheck of LevelSelectScreen.inputListener at line 78 of value previously dereferenced in edu.gvsu.cis.spacejourney.screens.LevelSelectScreen.render(float)<br/>
+<br/>
+<br/>In file LevelSelectScreen.kt,
+					
+						line 73<br/>In class edu.gvsu.cis.spacejourney.screens.LevelSelectScreen<br/>In method edu.gvsu.cis.spacejourney.screens.LevelSelectScreen.render(float)<br/>Value loaded from field edu.gvsu.cis.spacejourney.screens.LevelSelectScreen.inputListener<br/>At LevelSelectScreen.kt:[line 73]<br/>Redundant null check at LevelSelectScreen.kt:[line 78]<br/>Redundant null check at LevelSelectScreen.kt:[line 78]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE">Nullcheck of value previously dereferenced</a>
+</td>
+<td width="10%" valign="top">High</td>
+<td width="70%">
+<p>Nullcheck of MainMenuScreen.inputListener at line 87 of value previously dereferenced in edu.gvsu.cis.spacejourney.screens.MainMenuScreen.render(float)<br/>
+<br/>
+<br/>In file MainMenuScreen.kt,
+					
+						line 84<br/>In class edu.gvsu.cis.spacejourney.screens.MainMenuScreen<br/>In method edu.gvsu.cis.spacejourney.screens.MainMenuScreen.render(float)<br/>Value loaded from field edu.gvsu.cis.spacejourney.screens.MainMenuScreen.inputListener<br/>At MainMenuScreen.kt:[line 84]<br/>Redundant null check at MainMenuScreen.kt:[line 87]<br/>Redundant null check at MainMenuScreen.kt:[line 87]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE">Nullcheck of value previously dereferenced</a>
+</td>
+<td width="10%" valign="top">High</td>
+<td width="70%">
+<p>Nullcheck of DebugInfo.debugFont at line 31 of value previously dereferenced in edu.gvsu.cis.spacejourney.util.DebugInfo.draw(Batch, float)<br/>
+<br/>
+<br/>In file DebugInfo.kt,
+					
+						line 30<br/>In class edu.gvsu.cis.spacejourney.util.DebugInfo<br/>In method edu.gvsu.cis.spacejourney.util.DebugInfo.draw(Batch, float)<br/>Value loaded from field edu.gvsu.cis.spacejourney.util.DebugInfo.debugFont<br/>At DebugInfo.kt:[line 30]<br/>Redundant null check at DebugInfo.kt:[line 31]<br/>Redundant null check at DebugInfo.kt:[line 31]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#NP_NULL_PARAM_DEREF">Method call passes null for non-null parameter</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>Null passed for non-null parameter of edu.gvsu.cis.spacejourney.managers.MusicManager.setMusic(Music) in edu.gvsu.cis.spacejourney.screens.LevelScreen.show()<br/>
+<br/>
+<br/>In file LevelScreen.kt,
+					
+						line 67<br/>In class edu.gvsu.cis.spacejourney.screens.LevelScreen<br/>In method edu.gvsu.cis.spacejourney.screens.LevelScreen.show()<br/>Called method edu.gvsu.cis.spacejourney.managers.MusicManager.setMusic(Music)<br/>Argument 1 might be null but must not be null<br/>Constant value null<br/>Method invoked at LevelScreen.kt:[line 67]<br/>Known null at LevelScreen.kt:[line 67]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE">Nullcheck of value previously dereferenced</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>Nullcheck of layer at line 74 of value previously dereferenced in edu.gvsu.cis.spacejourney.screens.backgrounds.ParallaxBackground.draw(Batch, float)<br/>
+<br/>
+<br/>In file ParallaxBackground.kt,
+					
+						line 74<br/>In class edu.gvsu.cis.spacejourney.screens.backgrounds.ParallaxBackground<br/>In method edu.gvsu.cis.spacejourney.screens.backgrounds.ParallaxBackground.draw(Batch, float)<br/>Value loaded from layer<br/>Return value of java.util.Iterator.next() of type Object<br/>At ParallaxBackground.kt:[line 74]<br/>Redundant null check at ParallaxBackground.kt:[line 75]<br/>Redundant null check at ParallaxBackground.kt:[line 75]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#UWF_UNWRITTEN_FIELD">Unwritten field</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>Unwritten field: edu.gvsu.cis.spacejourney.entity.AnimatedEntity.textureAtlas<br/>
+<br/>
+<br/>In file AnimatedEntity.kt,
+					
+						line 46<br/>In class edu.gvsu.cis.spacejourney.entity.AnimatedEntity<br/>Field edu.gvsu.cis.spacejourney.entity.AnimatedEntity.textureAtlas<br/>At AnimatedEntity.kt:[line 46]</p>
+</td>
+</tr>
+</table>
+<p>
+<br/>
+<br/>
+</p>
+<h2>
+<a name="Warnings_MALICIOUS_CODE">Malicious code vulnerability Warnings</a>
+</h2>
+<table class="warningtable" width="100%" cellspacing="2" cellpadding="5">
+<tr class="tableheader">
+<th align="left">Warning</th>
+<th align="left">Priority</th>
+<th align="left">Details</th>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#MS_MUTABLE_COLLECTION">Field is a mutable collection</a>
+</td>
+<td width="10%" valign="top">High</td>
+<td width="70%">
+<p>edu.gvsu.cis.spacejourney.entity.Graveyard.actors is a mutable collection<br/>
+<br/>
+<br/>In file Graveyard.java,
+					
+						line 26<br/>In class edu.gvsu.cis.spacejourney.entity.Graveyard<br/>Field edu.gvsu.cis.spacejourney.entity.Graveyard.actors<br/>At Graveyard.java:[line 26]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#MS_MUTABLE_COLLECTION">Field is a mutable collection</a>
+</td>
+<td width="10%" valign="top">High</td>
+<td width="70%">
+<p>edu.gvsu.cis.spacejourney.entity.Graveyard.bodies is a mutable collection<br/>
+<br/>
+<br/>In file Graveyard.java,
+					
+						line 19<br/>In class edu.gvsu.cis.spacejourney.entity.Graveyard<br/>Field edu.gvsu.cis.spacejourney.entity.Graveyard.bodies<br/>At Graveyard.java:[line 19]</p>
+</td>
+</tr>
+</table>
+<p>
+<br/>
+<br/>
+</p>
+<h2>
+<a name="Warnings_PERFORMANCE">Performance Warnings</a>
+</h2>
+<table class="warningtable" width="100%" cellspacing="2" cellpadding="5">
+<tr class="tableheader">
+<th align="left">Warning</th>
+<th align="left">Priority</th>
+<th align="left">Details</th>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#SS_SHOULD_BE_STATIC">Unread field: should this field be static?</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>Unread field: edu.gvsu.cis.spacejourney.level.one.LevelOne.levelTime; should this field be static?<br/>
+<br/>
+<br/>In file LevelOne.java,
+					
+						line 25<br/>In class edu.gvsu.cis.spacejourney.level.one.LevelOne<br/>Field edu.gvsu.cis.spacejourney.level.one.LevelOne.levelTime<br/>At LevelOne.java:[line 25]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#URF_UNREAD_FIELD">Unread field</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>Unread field: edu.gvsu.cis.spacejourney.level.choreography.LevelChoreographer.paused<br/>
+<br/>
+<br/>In file LevelChoreographer.kt,
+					
+						line 49<br/>In class edu.gvsu.cis.spacejourney.level.choreography.LevelChoreographer<br/>Field edu.gvsu.cis.spacejourney.level.choreography.LevelChoreographer.paused<br/>At LevelChoreographer.kt:[line 49]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#URF_UNREAD_FIELD">Unread field</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>Unread field: edu.gvsu.cis.spacejourney.util.DebugInfo.enabled<br/>
+<br/>
+<br/>In file DebugInfo.kt,
+					
+						line 15<br/>In class edu.gvsu.cis.spacejourney.util.DebugInfo<br/>Field edu.gvsu.cis.spacejourney.util.DebugInfo.enabled<br/>At DebugInfo.kt:[line 15]</p>
+</td>
+</tr>
+</table>
+<p>
+<br/>
+<br/>
+</p>
+<h2>
+<a name="Warnings_STYLE">Dodgy code Warnings</a>
+</h2>
+<table class="warningtable" width="100%" cellspacing="2" cellpadding="5">
+<tr class="tableheader">
+<th align="left">Warning</th>
+<th align="left">Priority</th>
+<th align="left">Details</th>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE">Redundant nullcheck of value known to be non-null</a>
+</td>
+<td width="10%" valign="top">High</td>
+<td width="70%">
+<p>Redundant nullcheck of edu.gvsu.cis.spacejourney.screens.LevelScreen.level, which is known to be non-null in edu.gvsu.cis.spacejourney.screens.LevelScreen.render(float)<br/>
+<br/>
+<br/>In file LevelScreen.kt,
+					
+						line 90<br/>In class edu.gvsu.cis.spacejourney.screens.LevelScreen<br/>In method edu.gvsu.cis.spacejourney.screens.LevelScreen.render(float)<br/>Value loaded from field edu.gvsu.cis.spacejourney.screens.LevelScreen.level<br/>Redundant null check at LevelScreen.kt:[line 90]<br/>Redundant null check at LevelScreen.kt:[line 90]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE">Redundant nullcheck of value known to be non-null</a>
+</td>
+<td width="10%" valign="top">High</td>
+<td width="70%">
+<p>Redundant nullcheck of edu.gvsu.cis.spacejourney.screens.LevelSelectScreen.screenData, which is known to be non-null in edu.gvsu.cis.spacejourney.screens.LevelSelectScreen.show()<br/>
+<br/>
+<br/>In file LevelSelectScreen.kt,
+					
+						line 48<br/>In class edu.gvsu.cis.spacejourney.screens.LevelSelectScreen<br/>In method edu.gvsu.cis.spacejourney.screens.LevelSelectScreen.show()<br/>Value loaded from field edu.gvsu.cis.spacejourney.screens.LevelSelectScreen.screenData<br/>Redundant null check at LevelSelectScreen.kt:[line 48]<br/>Redundant null check at LevelSelectScreen.kt:[line 48]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE">Redundant nullcheck of value known to be non-null</a>
+</td>
+<td width="10%" valign="top">High</td>
+<td width="70%">
+<p>Redundant nullcheck of edu.gvsu.cis.spacejourney.screens.LoadingScreen.progress, which is known to be non-null in edu.gvsu.cis.spacejourney.screens.LoadingScreen.show()<br/>
+<br/>
+<br/>In file LoadingScreen.kt,
+					
+						line 67<br/>In class edu.gvsu.cis.spacejourney.screens.LoadingScreen<br/>In method edu.gvsu.cis.spacejourney.screens.LoadingScreen.show()<br/>Value loaded from field edu.gvsu.cis.spacejourney.screens.LoadingScreen.progress<br/>Redundant null check at LoadingScreen.kt:[line 67]<br/>Redundant null check at LoadingScreen.kt:[line 67]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE">Redundant nullcheck of value known to be non-null</a>
+</td>
+<td width="10%" valign="top">High</td>
+<td width="70%">
+<p>Redundant nullcheck of edu.gvsu.cis.spacejourney.screens.MainMenuScreen.screenData, which is known to be non-null in edu.gvsu.cis.spacejourney.screens.MainMenuScreen.show()<br/>
+<br/>
+<br/>In file MainMenuScreen.kt,
+					
+						line 55<br/>In class edu.gvsu.cis.spacejourney.screens.MainMenuScreen<br/>In method edu.gvsu.cis.spacejourney.screens.MainMenuScreen.show()<br/>Value loaded from field edu.gvsu.cis.spacejourney.screens.MainMenuScreen.screenData<br/>Redundant null check at MainMenuScreen.kt:[line 55]<br/>Redundant null check at MainMenuScreen.kt:[line 55]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE">Possible null pointer dereference due to return value of called method</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>Possible null pointer dereference in edu.gvsu.cis.spacejourney.level.one.LevelOne.update(float) due to return value of called method<br/>
+<br/>
+<br/>In file LevelOne.java,
+					
+						line 85<br/>In class edu.gvsu.cis.spacejourney.level.one.LevelOne<br/>In method edu.gvsu.cis.spacejourney.level.one.LevelOne.update(float)<br/>Local variable stored in JVM register ?<br/>Dereferenced at LevelOne.java:[line 85]<br/>Known null at LevelOne.java:[line 85]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE">Redundant nullcheck of value known to be non-null</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>Redundant nullcheck of edu.gvsu.cis.spacejourney.screens.backgrounds.ParallaxLayer.region, which is known to be non-null in new edu.gvsu.cis.spacejourney.screens.backgrounds.ParallaxLayer(Texture, float, int, boolean)<br/>
+<br/>
+<br/>In file ParallaxBackground.kt,
+					
+						line 34<br/>In class edu.gvsu.cis.spacejourney.screens.backgrounds.ParallaxLayer<br/>In method new edu.gvsu.cis.spacejourney.screens.backgrounds.ParallaxLayer(Texture, float, int, boolean)<br/>Value loaded from field edu.gvsu.cis.spacejourney.screens.backgrounds.ParallaxLayer.region<br/>Redundant null check at ParallaxBackground.kt:[line 34]<br/>Redundant null check at ParallaxBackground.kt:[line 34]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE">Redundant nullcheck of value known to be non-null</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>Redundant nullcheck of edu.gvsu.cis.spacejourney.screens.LevelScreen.overlayStage, which is known to be non-null in edu.gvsu.cis.spacejourney.screens.LevelScreen.show()<br/>
+<br/>
+<br/>In file LevelScreen.kt,
+					
+						line 74<br/>In class edu.gvsu.cis.spacejourney.screens.LevelScreen<br/>In method edu.gvsu.cis.spacejourney.screens.LevelScreen.show()<br/>Value loaded from field edu.gvsu.cis.spacejourney.screens.LevelScreen.overlayStage<br/>Redundant null check at LevelScreen.kt:[line 74]<br/>Redundant null check at LevelScreen.kt:[line 74]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE">Redundant nullcheck of value known to be non-null</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>Redundant nullcheck of edu.gvsu.cis.spacejourney.screens.LevelScreen.world, which is known to be non-null in edu.gvsu.cis.spacejourney.screens.LevelScreen.show()<br/>
+<br/>
+<br/>In file LevelScreen.kt,
+					
+						line 54<br/>In class edu.gvsu.cis.spacejourney.screens.LevelScreen<br/>In method edu.gvsu.cis.spacejourney.screens.LevelScreen.show()<br/>Value loaded from field edu.gvsu.cis.spacejourney.screens.LevelScreen.world<br/>Redundant null check at LevelScreen.kt:[line 54]<br/>Redundant null check at LevelScreen.kt:[line 54]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE">Redundant nullcheck of value known to be non-null</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>Redundant nullcheck of edu.gvsu.cis.spacejourney.screens.LevelSelectScreen.stage, which is known to be non-null in edu.gvsu.cis.spacejourney.screens.LevelSelectScreen.show()<br/>
+<br/>
+<br/>In file LevelSelectScreen.kt,
+					
+						line 55<br/>In class edu.gvsu.cis.spacejourney.screens.LevelSelectScreen<br/>In method edu.gvsu.cis.spacejourney.screens.LevelSelectScreen.show()<br/>Value loaded from field edu.gvsu.cis.spacejourney.screens.LevelSelectScreen.stage<br/>Redundant null check at LevelSelectScreen.kt:[line 55]<br/>Redundant null check at LevelSelectScreen.kt:[line 55]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE">Redundant nullcheck of value known to be non-null</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>Redundant nullcheck of edu.gvsu.cis.spacejourney.screens.LoadingScreen.stage, which is known to be non-null in edu.gvsu.cis.spacejourney.screens.LoadingScreen.show()<br/>
+<br/>
+<br/>In file LoadingScreen.kt,
+					
+						line 74<br/>In class edu.gvsu.cis.spacejourney.screens.LoadingScreen<br/>In method edu.gvsu.cis.spacejourney.screens.LoadingScreen.show()<br/>Value loaded from field edu.gvsu.cis.spacejourney.screens.LoadingScreen.stage<br/>Redundant null check at LoadingScreen.kt:[line 74]<br/>Redundant null check at LoadingScreen.kt:[line 74]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE">Redundant nullcheck of value known to be non-null</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>Redundant nullcheck of edu.gvsu.cis.spacejourney.screens.MainMenuScreen.stage, which is known to be non-null in edu.gvsu.cis.spacejourney.screens.MainMenuScreen.show()<br/>
+<br/>
+<br/>In file MainMenuScreen.kt,
+					
+						line 60<br/>In class edu.gvsu.cis.spacejourney.screens.MainMenuScreen<br/>In method edu.gvsu.cis.spacejourney.screens.MainMenuScreen.show()<br/>Value loaded from field edu.gvsu.cis.spacejourney.screens.MainMenuScreen.stage<br/>Redundant null check at MainMenuScreen.kt:[line 60]<br/>Redundant null check at MainMenuScreen.kt:[line 60]</p>
+</td>
+</tr>
+</table>
+<p>
+<br/>
+<br/>
+</p>
+<p>
+<br/>
+<br/>
+</p>
+<h1>
+<a name="Details">Warning Types</a>
+</h1>
+<h2>
+<a name="MS_MUTABLE_COLLECTION">Field is a mutable collection</a>
+</h2>
+
+ <p>A mutable collection instance is assigned to a final static field, 
+   thus can be changed by malicious code or by accident from another package.
+   Consider wrapping this field into Collections.unmodifiableSet/List/Map/etc.
+   to avoid this vulnerability.</p>
+
+    
+<p>
+<br/>
+<br/>
+</p>
+<h2>
+<a name="NP_NULL_PARAM_DEREF">Method call passes null for non-null parameter</a>
+</h2>
+      
+      <p>
+      This method call passes a null value for a non-null method parameter.
+    Either the parameter is annotated as a parameter that should
+    always be non-null, or analysis has shown that it will always be
+    dereferenced.
+      </p>
+      
+   
+<p>
+<br/>
+<br/>
+</p>
+<h2>
+<a name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE">Possible null pointer dereference due to return value of called method</a>
+</h2>
+      
+<p> The return value from a method is dereferenced without a null check,
+and the return value of that method is one that should generally be checked
+for null.  This may lead to a <code>NullPointerException</code> when the code is executed.
+</p>
+      
+   
+<p>
+<br/>
+<br/>
+</p>
+<h2>
+<a name="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE">Nullcheck of value previously dereferenced</a>
+</h2>
+
+<p> A value is checked here to see whether it is null, but this value can't
+be null because it was previously dereferenced and if it were null a null pointer
+exception would have occurred at the earlier dereference.
+Essentially, this code and the previous dereference
+disagree as to whether this value is allowed to be null. Either the check is redundant
+or the previous dereference is erroneous.</p>
+
+    
+<p>
+<br/>
+<br/>
+</p>
+<h2>
+<a name="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE">Redundant nullcheck of value known to be non-null</a>
+</h2>
+
+<p> This method contains a redundant check of a known non-null value against
+the constant null.</p>
+
+    
+<p>
+<br/>
+<br/>
+</p>
+<h2>
+<a name="SS_SHOULD_BE_STATIC">Unread field: should this field be static?</a>
+</h2>
+
+  <p> This class contains an instance final field that
+   is initialized to a compile-time static value.
+   Consider making the field static.</p>
+
+    
+<p>
+<br/>
+<br/>
+</p>
+<h2>
+<a name="URF_UNREAD_FIELD">Unread field</a>
+</h2>
+
+  <p> This field is never read.&nbsp; Consider removing it from the class.</p>
+
+    
+<p>
+<br/>
+<br/>
+</p>
+<h2>
+<a name="UWF_UNWRITTEN_FIELD">Unwritten field</a>
+</h2>
+
+  <p> This field is never written.&nbsp; All reads of it will return the default
+value. Check for errors (should it have been initialized?), or remove it if it is useless.</p>
+
+    
+<p>
+<br/>
+<br/>
+</p>
+</body>
+</html>
