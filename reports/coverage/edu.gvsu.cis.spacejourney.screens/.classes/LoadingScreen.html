@@ -1,0 +1,177 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: LoadingScreen</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">edu.gvsu.cis.spacejourney.screens</a> ]
+</div>
+
+<h1>Coverage Summary for Class: LoadingScreen (edu.gvsu.cis.spacejourney.screens)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LoadingScreen</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (38/ 38)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package edu.gvsu.cis.spacejourney.screens
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import edu.gvsu.cis.spacejourney.SpaceJourney
+<i>4</i>&nbsp;import com.sun.awt.SecurityWarning.setPosition
+<i>5</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle
+<i>6</i>&nbsp;import com.badlogic.gdx.Gdx
+<i>7</i>&nbsp;import com.badlogic.gdx.audio.Music
+<i>8</i>&nbsp;import com.badlogic.gdx.audio.Sound
+<i>9</i>&nbsp;import com.badlogic.gdx.graphics.Color
+<i>10</i>&nbsp;import com.badlogic.gdx.graphics.g2d.TextureRegion
+<i>11</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
+<i>12</i>&nbsp;import com.badlogic.gdx.graphics.Pixmap
+<i>13</i>&nbsp;import com.badlogic.gdx.graphics.Texture
+<i>14</i>&nbsp;import com.badlogic.gdx.graphics.g2d.BitmapFont
+<i>15</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.Stage
+<i>16</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar
+<i>17</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Skin
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;/**
+<i>20</i>&nbsp; * Presents a progress bar while the assets are being loaded for the game,
+<i>21</i>&nbsp; * then switches to the MainMenu screen.
+<i>22</i>&nbsp; */
+<b class="fc"><i>23</i>&nbsp;class LoadingScreen(game: SpaceJourney) : BaseScreen(game, &quot;LoadingScreen&quot;) {</b>
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    private var stage: Stage? = null
+<i>26</i>&nbsp;    private var progress: ProgressBar? = null
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    // Add any assets that need be loaded here and reference them via game.assets in other screens
+<i>29</i>&nbsp;    private fun actuallyLoadAssets() {
+<i>30</i>&nbsp;
+<b class="fc"><i>31</i>&nbsp;        SpaceJourney.assetManager.load(&quot;laser.png&quot;, Texture::class.java)</b>
+<b class="fc"><i>32</i>&nbsp;        SpaceJourney.assetManager.load(&quot;spaceship2.png&quot;, Texture::class.java)</b>
+<b class="fc"><i>33</i>&nbsp;        SpaceJourney.assetManager.load(&quot;spaceship3.png&quot;, Texture::class.java)</b>
+<b class="fc"><i>34</i>&nbsp;        SpaceJourney.assetManager.load(&quot;parallax_background_layer1.png&quot;, Texture::class.java)</b>
+<b class="fc"><i>35</i>&nbsp;        SpaceJourney.assetManager.load(&quot;parallax_background_layer2.png&quot;, Texture::class.java)</b>
+<b class="fc"><i>36</i>&nbsp;        SpaceJourney.assetManager.load(&quot;parallax_background_layer3.png&quot;, Texture::class.java)</b>
+<b class="fc"><i>37</i>&nbsp;        SpaceJourney.assetManager.load(&quot;rotating_pickup.png&quot;, Texture::class.java)</b>
+<b class="fc"><i>38</i>&nbsp;        SpaceJourney.assetManager.load(&quot;Space Background Music.mp3&quot;, Music::class.java)</b>
+<b class="fc"><i>39</i>&nbsp;        SpaceJourney.assetManager.load(&quot;title.mp3&quot;, Music::class.java)</b>
+<b class="fc"><i>40</i>&nbsp;        SpaceJourney.assetManager.load(&quot;take_damage.wav&quot;, Sound::class.java)</b>
+<b class="fc"><i>41</i>&nbsp;        SpaceJourney.assetManager.load(&quot;default_pickup.wav&quot;, Sound::class.java)</b>
+<b class="fc"><i>42</i>&nbsp;        SpaceJourney.assetManager.load(&quot;fonts/default.fnt&quot;, BitmapFont::class.java)</b>
+<b class="fc"><i>43</i>&nbsp;    }</b>
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    override fun show() {
+<b class="fc"><i>46</i>&nbsp;        super.show()</b>
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;        // Setup the stage for the UI
+<b class="fc"><i>49</i>&nbsp;        stage = Stage()</b>
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;        // Setup a basic UI Skin for the progress bar
+<b class="fc"><i>52</i>&nbsp;        val skin = Skin()</b>
+<b class="fc"><i>53</i>&nbsp;        val pixmap = Pixmap(10, 10, Pixmap.Format.RGBA8888)</b>
+<b class="fc"><i>54</i>&nbsp;        pixmap.setColor(Color.WHITE)</b>
+<b class="fc"><i>55</i>&nbsp;        pixmap.fill()</b>
+<b class="fc"><i>56</i>&nbsp;        skin.add(&quot;white&quot;, Texture(pixmap))</b>
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;        // Load a texture for the progress bar
+<b class="fc"><i>59</i>&nbsp;        val textureBar = TextureRegionDrawable(TextureRegion(Texture(Gdx.files.internal(&quot;progress_bar.png&quot;))))</b>
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;        // Create a style for the progress bar
+<b class="fc"><i>62</i>&nbsp;        val barStyle = ProgressBarStyle(skin.newDrawable(&quot;white&quot;, Color.DARK_GRAY), textureBar)</b>
+<b class="fc"><i>63</i>&nbsp;        barStyle.knobBefore = barStyle.knob</b>
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;        // Create the progress bar
+<b class="fc"><i>66</i>&nbsp;        progress = ProgressBar(0f, 100f, 0.5f, false, barStyle)</b>
+<b class="fc"><i>67</i>&nbsp;        progress?.setSize(290f, progress?.prefHeight!!)</b>
+<b class="fc"><i>68</i>&nbsp;        progress?.setPosition(Gdx.graphics.width.toFloat() / 2f - progress?.width!! / 2f, Gdx.graphics.height.toFloat() / 2f)</b>
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;        // Just make it load crazy fast since we&#39;re not actually stalling for any loads yet.
+<b class="fc"><i>71</i>&nbsp;        progress?.setAnimateDuration(0.2f)</b>
+<i>72</i>&nbsp;
+<i>73</i>&nbsp;        // Add the progress bar to the scene
+<b class="fc"><i>74</i>&nbsp;        stage?.addActor(progress)</b>
+<i>75</i>&nbsp;
+<b class="fc"><i>76</i>&nbsp;        actuallyLoadAssets()</b>
+<b class="fc"><i>77</i>&nbsp;    }</b>
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    override fun render(delta: Float) {
+<b class="fc"><i>80</i>&nbsp;        super.render(delta)</b>
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;        // Update and render the scene
+<b class="fc"><i>83</i>&nbsp;        stage?.act(delta)</b>
+<b class="fc"><i>84</i>&nbsp;        stage?.draw()</b>
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;        // Normally this should be updated when assets are loaded,
+<b class="fc"><i>87</i>&nbsp;        progress?.value = SpaceJourney.assetManager.progress * 100.0f</b>
+<i>88</i>&nbsp;
+<i>89</i>&nbsp;        // Once the progress bar hits max value it will start the MainMenu screen
+<b class="fc"><i>90</i>&nbsp;        if (SpaceJourney.assetManager.update() &amp;&amp; progress?.visualPercent == 1.0f) {</b>
+<b class="fc"><i>91</i>&nbsp;            this.game.setScreen&lt;MainMenuScreen&gt;()</b>
+<i>92</i>&nbsp;        }
+<b class="fc"><i>93</i>&nbsp;    }</b>
+<i>94</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-02-26 14:03</div>
+</div>
+</body>
+</html>

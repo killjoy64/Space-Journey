@@ -1,0 +1,194 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: LevelSelectScreen</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">edu.gvsu.cis.spacejourney.screens</a> ]
+</div>
+
+<h1>Coverage Summary for Class: LevelSelectScreen (edu.gvsu.cis.spacejourney.screens)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LevelSelectScreen</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    85.5%
+  </span>
+  <span class="absValue">
+    (47/ 55)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package edu.gvsu.cis.spacejourney.screens
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.badlogic.gdx.Gdx
+<i>4</i>&nbsp;import com.badlogic.gdx.audio.Music
+<i>5</i>&nbsp;import com.badlogic.gdx.graphics.Color
+<i>6</i>&nbsp;import com.badlogic.gdx.graphics.g2d.BitmapFont
+<i>7</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.Stage
+<i>8</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Label
+<i>9</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Table
+<i>10</i>&nbsp;import com.badlogic.gdx.utils.viewport.FillViewport
+<i>11</i>&nbsp;import edu.gvsu.cis.spacejourney.SpaceJourney
+<i>12</i>&nbsp;import edu.gvsu.cis.spacejourney.Strings
+<i>13</i>&nbsp;import edu.gvsu.cis.spacejourney.input.MainMenuInputListener
+<i>14</i>&nbsp;import edu.gvsu.cis.spacejourney.managers.GameDataManager
+<i>15</i>&nbsp;import edu.gvsu.cis.spacejourney.managers.MusicManager
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;/**
+<i>18</i>&nbsp; * Class that designates all logic within the level select screen.
+<i>19</i>&nbsp; */
+<b class="fc"><i>20</i>&nbsp;class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, &quot;LevelSelectScreen&quot;) {</b>
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    private var stage: Stage? = null
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    private var screenData: Table? = null
+<i>25</i>&nbsp;    private var option1: Label? = null
+<i>26</i>&nbsp;    private var option2: Label? = null
+<i>27</i>&nbsp;    private var option3: Label? = null
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    private var font: BitmapFont? = null
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    private var inputListener: MainMenuInputListener? = null
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    override fun show() {
+<b class="fc"><i>34</i>&nbsp;        super.show()</b>
+<i>35</i>&nbsp;
+<b class="fc"><i>36</i>&nbsp;        val viewport = FillViewport(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())</b>
+<b class="fc"><i>37</i>&nbsp;        stage = Stage(viewport)</b>
+<i>38</i>&nbsp;
+<b class="fc"><i>39</i>&nbsp;        font = SpaceJourney.assetManager.get(&quot;fonts/default.fnt&quot;)</b>
+<b class="fc"><i>40</i>&nbsp;        font?.data?.scale(0.01f)</b>
+<b class="fc"><i>41</i>&nbsp;        option1 = Label(String.format(Strings.LEVEL_ONE, &quot;  &quot;), Label.LabelStyle(font, Color.WHITE))</b>
+<b class="fc"><i>42</i>&nbsp;        option2 = Label(String.format(Strings.LEVEL_TWO, &quot;  &quot;), Label.LabelStyle(font, Color.WHITE))</b>
+<b class="fc"><i>43</i>&nbsp;        option3 = Label(String.format(Strings.LEVEL_THREE, &quot;  &quot;), Label.LabelStyle(font, Color.WHITE))</b>
+<i>44</i>&nbsp;
+<b class="fc"><i>45</i>&nbsp;        screenData = Table()</b>
+<b class="fc"><i>46</i>&nbsp;        screenData?.setFillParent(true)</b>
+<b class="fc"><i>47</i>&nbsp;        screenData?.add(Label(Strings.LEVEL_SELECT_TITLE, Label.LabelStyle(font, Color.WHITE)))?.padBottom(50.0f)?.expandX</b>
+<b class="fc"><i>48</i>&nbsp;        screenData?.row()</b>
+<b class="fc"><i>49</i>&nbsp;        screenData?.add(option1)?.expandX</b>
+<b class="fc"><i>50</i>&nbsp;        screenData?.row()</b>
+<b class="fc"><i>51</i>&nbsp;        screenData?.add(option2)?.expandX</b>
+<b class="fc"><i>52</i>&nbsp;        screenData?.row()</b>
+<b class="fc"><i>53</i>&nbsp;        screenData?.add(option3)?.expandX</b>
+<i>54</i>&nbsp;
+<b class="fc"><i>55</i>&nbsp;        stage?.addActor(screenData)</b>
+<i>56</i>&nbsp;
+<b class="fc"><i>57</i>&nbsp;        inputListener = MainMenuInputListener(3)</b>
+<b class="fc"><i>58</i>&nbsp;        Gdx.input.inputProcessor = inputListener</b>
+<i>59</i>&nbsp;
+<b class="fc"><i>60</i>&nbsp;        if (!MusicManager.getInstance().music.isPlaying) {</b>
+<b class="fc"><i>61</i>&nbsp;            MusicManager.getInstance().music = SpaceJourney.assetManager.get(&quot;title.mp3&quot;, Music::class.java)</b>
+<i>62</i>&nbsp;        }
+<b class="fc"><i>63</i>&nbsp;    }</b>
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    override fun render(delta: Float) {
+<b class="fc"><i>66</i>&nbsp;        super.render(delta)</b>
+<i>67</i>&nbsp;
+<b class="fc"><i>68</i>&nbsp;        stage?.viewport?.apply()</b>
+<b class="fc"><i>69</i>&nbsp;        stage?.act()</b>
+<b class="fc"><i>70</i>&nbsp;        stage?.draw()</b>
+<i>71</i>&nbsp;
+<b class="fc"><i>72</i>&nbsp;        when {</b>
+<b class="fc"><i>73</i>&nbsp;            inputListener!!.currentChoice == 1 -&gt; {</b>
+<b class="fc"><i>74</i>&nbsp;                option1?.setText(String.format(Strings.LEVEL_ONE, &quot;-&gt;&quot;))</b>
+<b class="fc"><i>75</i>&nbsp;                option2?.setText(String.format(Strings.LEVEL_TWO, &quot;  &quot;))</b>
+<b class="fc"><i>76</i>&nbsp;                option3?.setText(String.format(Strings.LEVEL_THREE, &quot;  &quot;))</b>
+<i>77</i>&nbsp;            }
+<b class="nc"><i>78</i>&nbsp;            inputListener!!.currentChoice == 2 -&gt; {</b>
+<b class="nc"><i>79</i>&nbsp;                option1?.setText(String.format(Strings.LEVEL_ONE, &quot;  &quot;))</b>
+<b class="nc"><i>80</i>&nbsp;                option2?.setText(String.format(Strings.LEVEL_TWO, &quot;-&gt;&quot;))</b>
+<b class="nc"><i>81</i>&nbsp;                option3?.setText(String.format(Strings.LEVEL_THREE, &quot;  &quot;))</b>
+<i>82</i>&nbsp;            }
+<b class="nc"><i>83</i>&nbsp;            inputListener!!.currentChoice == 3 -&gt; {</b>
+<b class="nc"><i>84</i>&nbsp;                option1?.setText(String.format(Strings.LEVEL_ONE, &quot;  &quot;))</b>
+<b class="nc"><i>85</i>&nbsp;                option2?.setText(String.format(Strings.LEVEL_TWO, &quot;  &quot;))</b>
+<b class="nc"><i>86</i>&nbsp;                option3?.setText(String.format(Strings.LEVEL_THREE, &quot;-&gt;&quot;))</b>
+<i>87</i>&nbsp;            }
+<b class="fc"><i>88</i>&nbsp;        }</b>
+<i>89</i>&nbsp;
+<b class="fc"><i>90</i>&nbsp;        if (inputListener!!.gameCanStart()) {</b>
+<b class="fc"><i>91</i>&nbsp;            GameDataManager.getInstance().levelNumber = inputListener!!.currentChoice</b>
+<i>92</i>&nbsp;
+<b class="fc"><i>93</i>&nbsp;            if (MusicManager.getInstance().music != null) {</b>
+<b class="fc"><i>94</i>&nbsp;                MusicManager.getInstance().stop()</b>
+<i>95</i>&nbsp;            }
+<i>96</i>&nbsp;
+<b class="fc"><i>97</i>&nbsp;            this.game.setScreen&lt;LevelScreen&gt;()</b>
+<i>98</i>&nbsp;        }
+<b class="fc"><i>99</i>&nbsp;    }</b>
+<i>100</i>&nbsp;
+<i>101</i>&nbsp;    override fun resize(width: Int, height: Int) {
+<b class="fc"><i>102</i>&nbsp;        super.resize(width, height)</b>
+<b class="fc"><i>103</i>&nbsp;        stage?.viewport?.update(width, height, true)</b>
+<b class="fc"><i>104</i>&nbsp;    }</b>
+<i>105</i>&nbsp;
+<i>106</i>&nbsp;    override fun dispose() {
+<b class="fc"><i>107</i>&nbsp;        super.dispose()</b>
+<b class="fc"><i>108</i>&nbsp;        stage?.dispose()</b>
+<b class="fc"><i>109</i>&nbsp;        font?.dispose()</b>
+<b class="fc"><i>110</i>&nbsp;    }</b>
+<i>111</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-02-26 14:03</div>
+</div>
+</body>
+</html>

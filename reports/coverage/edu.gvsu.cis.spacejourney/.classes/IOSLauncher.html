@@ -1,0 +1,108 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: IOSLauncher</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">edu.gvsu.cis.spacejourney</a> ]
+</div>
+
+<h1>Coverage Summary for Class: IOSLauncher (edu.gvsu.cis.spacejourney)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">IOSLauncher</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package edu.gvsu.cis.spacejourney;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
+<i>4</i>&nbsp;import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration;
+<i>5</i>&nbsp;import edu.gvsu.cis.spacejourney.SpaceJourney;
+<i>6</i>&nbsp;import org.robovm.apple.foundation.NSAutoreleasePool;
+<i>7</i>&nbsp;import org.robovm.apple.uikit.UIApplication;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;public class IOSLauncher extends IOSApplication.Delegate {
+<b class="nc"><i>10</i>&nbsp;  @Override</b>
+<i>11</i>&nbsp;  protected IOSApplication createApplication() {
+<i>12</i>&nbsp;    IOSApplicationConfiguration config = new IOSApplicationConfiguration();
+<b class="nc"><i>13</i>&nbsp;    return new IOSApplication(new SpaceJourney(), config);</b>
+<b class="nc"><i>14</i>&nbsp;  }</b>
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;  /**
+<i>17</i>&nbsp;   * Main method that creates an instance of the Space Journey application for iOS.
+<b class="nc"><i>18</i>&nbsp;   * @param argv args from a java program.</b>
+<b class="nc"><i>19</i>&nbsp;   */</b>
+<b class="nc"><i>20</i>&nbsp;  public static void main(String[] argv) {</b>
+<i>21</i>&nbsp;    NSAutoreleasePool pool = new NSAutoreleasePool();
+<i>22</i>&nbsp;    UIApplication.main(argv, null, IOSLauncher.class);
+<i>23</i>&nbsp;    pool.close();
+<i>24</i>&nbsp;  }
+<i>25</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-02-26 14:03</div>
+</div>
+</body>
+</html>
