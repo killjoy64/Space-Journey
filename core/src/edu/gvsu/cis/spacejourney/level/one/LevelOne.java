@@ -5,7 +5,6 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.SpaceJourney;
 import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship;
 import edu.gvsu.cis.spacejourney.entity.collectible.Collectible;
@@ -22,7 +21,7 @@ import edu.gvsu.cis.spacejourney.util.ZIndex;
 
 public class LevelOne extends Level {
 
-  private static final int levelTime = 200;
+  private static final int LEVEL_TIME = 200;
 
   private ParallaxBackground background;
   private PlayerSpaceship player;
@@ -65,7 +64,7 @@ public class LevelOne extends Level {
 
     choreographer = new LevelChoreographer(stage, world);
 
-    for (int i = 0; i < levelTime; i++) {
+    for (int i = 0; i < LEVEL_TIME; i++) {
       EvilSpaceship basicEnemy = new EvilSpaceship(stage);
       basicEnemy.setWidth(35.0f);
       basicEnemy.setHeight(35.0f);
@@ -85,6 +84,7 @@ public class LevelOne extends Level {
       EntitySpawnEvent event = (EntitySpawnEvent) choreographer.getLastEvent().getEvent();
       if (event.getEntity().belowScreen()) {
         // TODO - Implement level completed... or something...
+    	  System.out.println("FINISHED");
       }
     }
 

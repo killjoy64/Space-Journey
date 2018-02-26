@@ -5,7 +5,7 @@ package edu.gvsu.cis.spacejourney;
  * used across the project. This is specifically
  * used for String resources.
  */
-public class Strings {
+public final class Strings {
 
   /**
    * Title of the game.

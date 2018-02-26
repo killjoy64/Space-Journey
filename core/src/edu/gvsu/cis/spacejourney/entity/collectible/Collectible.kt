@@ -47,8 +47,8 @@ abstract class Collectible(stage: Stage?) : AnimatedEntity(stage) {
 
     open fun collect() {
         sound?.play(0.05f)
-        Graveyard.bodies.add(body)
-        Graveyard.actors.add(this)
+        Graveyard.BODIES.add(body)
+        Graveyard.ACTORS.add(this)
     }
 
     override fun dispose() {

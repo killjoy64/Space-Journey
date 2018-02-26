@@ -4,8 +4,6 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
 import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.entity.EntityDirection;
 import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship;
@@ -16,7 +14,7 @@ import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager;
  */
 public class PlayerInputListener implements InputProcessor {
 
-  private static final float spawnFrequency = 0.135f;
+  private static final float SPAWN_FREQUENCY = 0.135f;
 
   private PlayerSpaceship player;
   private ActiveProjectileManager projManager;
@@ -110,7 +108,7 @@ public class PlayerInputListener implements InputProcessor {
       }
       if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
         time += delta;
-        if (time >= spawnFrequency) {
+        if (time >= SPAWN_FREQUENCY) {
           float x = (this.player.getX() + (this.player.getWidth() / 2)) / Constants.PX_PER_M;
           float y = (this.player.getY() + (this.player.getHeight())) / Constants.PX_PER_M;
 
@@ -128,7 +126,7 @@ public class PlayerInputListener implements InputProcessor {
       }
     } else {
       time += delta;
-      if (time >= spawnFrequency) {
+      if (time >= SPAWN_FREQUENCY) {
         float x = (this.player.getX() + (this.player.getWidth() / 2)) / Constants.PX_PER_M;
         float y = (this.player.getY() + (this.player.getHeight())) / Constants.PX_PER_M;
 

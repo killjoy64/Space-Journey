@@ -76,8 +76,9 @@ public class GameTest extends BlockJUnit4ClassRunner implements ApplicationListe
       while (true) {
         Thread.sleep(10);
         synchronized (invokeInRender) {
-          if (invokeInRender.isEmpty())
-            break;
+          if (invokeInRender.isEmpty()) {
+        	  break;  
+          }
         }
       }
     } catch (InterruptedException e) {

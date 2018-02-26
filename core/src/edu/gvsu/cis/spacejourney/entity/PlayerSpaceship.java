@@ -16,7 +16,7 @@ import edu.gvsu.cis.spacejourney.managers.GameDataManager;
 
 public class PlayerSpaceship extends Entity {
 
-  private static final float moveSpeed = 3.0f;
+  private static final float MOVE_SPEED = 3.0f;
 
   private EntityDirection direction;
 
@@ -69,7 +69,7 @@ public class PlayerSpaceship extends Entity {
     damageSound.play(0.05f);
     if (GameDataManager.getInstance().getLives() <= 0) {
       dead = true;
-      Graveyard.bodies.add(getBody());
+      Graveyard.BODIES.add(getBody());
     }
   }
 
@@ -82,7 +82,7 @@ public class PlayerSpaceship extends Entity {
     this.direction = direction;
 
     if (canMove(direction)) {
-      getBody().setLinearVelocity(moveSpeed * direction.getX(), moveSpeed * direction.getY());
+      getBody().setLinearVelocity(MOVE_SPEED * direction.getX(), MOVE_SPEED * direction.getY());
     }
   }
 

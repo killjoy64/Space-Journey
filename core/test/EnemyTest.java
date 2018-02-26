@@ -1,4 +1,3 @@
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,7 +11,11 @@ import edu.gvsu.cis.spacejourney.SpaceJourney;
 import edu.gvsu.cis.spacejourney.entity.Graveyard;
 import edu.gvsu.cis.spacejourney.entity.enemy.Enemy;
 import edu.gvsu.cis.spacejourney.entity.enemy.EvilSpaceship;
-import org.junit.*;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
@@ -35,7 +38,7 @@ public class EnemyTest {
     camera = new OrthographicCamera();
     viewport = new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT, camera);
     stage = mock(Stage.class);
-    world = new World(new Vector2(0.0f,0.0f), false);
+    world = new World(new Vector2(0.0f, 0.0f), false);
 
     when(stage.getViewport()).thenReturn(viewport);
     SpaceJourney.Companion.getAssetManager().load("spaceship3.png", Texture.class);
@@ -75,7 +78,7 @@ public class EnemyTest {
     assertEquals(enemy.getHitPoints(), enemy.getMaxHitPoints() - 2);
     assertEquals(enemy.getHitPoints(), 0);
 
-    assertTrue(Graveyard.bodies.contains(enemy.getBody()));
+    assertTrue(Graveyard.BODIES.contains(enemy.getBody()));
   }
 
   @Test
@@ -91,8 +94,8 @@ public class EnemyTest {
 
   @AfterClass
   public static void dispose() {
-    Graveyard.bodies.clear();
-    Graveyard.actors.clear();
+    Graveyard.BODIES.clear();
+    Graveyard.ACTORS.clear();
     stage.dispose();
   }
 

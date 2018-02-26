@@ -3,7 +3,6 @@ package edu.gvsu.cis.spacejourney.entity.enemy;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.gvsu.cis.spacejourney.Constants;
@@ -59,8 +58,8 @@ public abstract class Enemy extends Entity {
       hitPoints--;
     } else {
       hitPoints = 0;
-      Graveyard.bodies.add(getBody());
-      Graveyard.actors.add(this);
+      Graveyard.BODIES.add(getBody());
+      Graveyard.ACTORS.add(this);
       int prevScore = GameDataManager.getInstance().getScore();
       GameDataManager.getInstance().setScore(prevScore + 10);
     }
@@ -92,7 +91,7 @@ public abstract class Enemy extends Entity {
 
   /**
    * Method that returns the maximum hit points for the enemy.
-   * @return
+   * @return maximum hit points as an integer.
    */
   public int getMaxHitPoints() {
     return maxHitPoints;

@@ -113,15 +113,15 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
     }
 
     private fun getRidOfBodies() {
-        for (body: Body in Graveyard.bodies) {
+        for (body: Body in Graveyard.BODIES) {
             world?.destroyBody(body)
         }
-        Graveyard.bodies.clear()
+        Graveyard.BODIES.clear()
 
-        for (actor: Actor in Graveyard.actors) {
+        for (actor: Actor in Graveyard.ACTORS) {
             actor.remove()
         }
-        Graveyard.actors.clear()
+        Graveyard.ACTORS.clear()
     }
 
     override fun dispose() {

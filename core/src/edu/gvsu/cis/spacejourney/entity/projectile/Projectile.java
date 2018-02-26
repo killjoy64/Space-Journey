@@ -5,7 +5,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import edu.gvsu.cis.spacejourney.entity.Entity;
-import edu.gvsu.cis.spacejourney.entity.Graveyard;
 
 /**
  * Created by Kyle Flynn on 2/3/2018.

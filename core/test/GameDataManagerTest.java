@@ -30,7 +30,7 @@ public class GameDataManagerTest {
     camera = new OrthographicCamera();
     viewport = new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT, camera);
     stage = mock(Stage.class);
-    world = new World(new Vector2(0.0f,0.0f), false);
+    world = new World(new Vector2(0.0f, 0.0f), false);
 
     when(stage.getViewport()).thenReturn(viewport);
 

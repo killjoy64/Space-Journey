@@ -4,7 +4,7 @@ package edu.gvsu.cis.spacejourney.managers;
  * Singleton class that stores and manages
  * universal game data.
  */
-public class GameDataManager {
+public final class GameDataManager {
 
   /**
    * Maximum number of lives possible throughout the game.

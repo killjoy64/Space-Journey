@@ -69,7 +69,8 @@ public class BodyBuilder {
   /**
    * Method that sets whether or not a given body is a sensor and
    * can feel things around the world.
-   * @param sensor <t>true</t> if the body is a sensor. <b>false</b> if it is not.
+   * @param sensor <b>true</b> if the body is a sensor. <b>false</b> 
+   * if it is not.
    * @return {@link edu.gvsu.cis.spacejourney.entity.BodyBuilder} instance.
    */
   public BodyBuilder setIsSensor(boolean sensor) {

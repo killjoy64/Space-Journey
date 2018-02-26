@@ -63,8 +63,8 @@ public class Laser extends Projectile {
 
   @Override
   public void dispose() {
-    Graveyard.bodies.add(getBody());
-    Graveyard.actors.add(this);
+    Graveyard.BODIES.add(getBody());
+    Graveyard.ACTORS.add(this);
   }
 
 }

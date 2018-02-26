@@ -46,7 +46,7 @@ public class GameContactListener implements ContactListener {
       Laser l = (Laser) entityA;
       e.takeDamage();
       l.reset();
-      Graveyard.bodies.add(a.getBody());
+      Graveyard.BODIES.add(a.getBody());
     }
   }
 

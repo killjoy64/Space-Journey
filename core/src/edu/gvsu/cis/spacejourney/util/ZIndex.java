@@ -5,7 +5,7 @@ package edu.gvsu.cis.spacejourney.util;
  * used across the project. This is specifically used
  * for Z-indexing across entities and backgrounds.
  */
-public class ZIndex {
+public final class ZIndex {
 
   public static final int PARALLAX_BACKGROUND_LAYER3 = 0;
   public static final int PARALLAX_BACKGROUND_LAYER2 = 0;

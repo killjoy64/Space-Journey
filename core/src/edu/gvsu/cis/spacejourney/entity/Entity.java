@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import edu.gvsu.cis.spacejourney.Constants;
 
@@ -50,7 +49,8 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
     super.act(delta);
 
     if (body != null) {
-      setPosition((body.getPosition().x * Constants.PX_PER_M) - (getWidth() / 2),
+      setPosition(
+    	  (body.getPosition().x * Constants.PX_PER_M) - (getWidth() / 2),
           (body.getPosition().y * Constants.PX_PER_M) - (getHeight() / 2));
     }
 
@@ -75,8 +75,10 @@ public abstract class Entity extends Actor implements Collidable, Disposable {
    *         the actor is clearly visible on the screen.
    */
   public boolean outOfBounds() {
-    int screenW = (int) (this.stage.getViewport().getWorldWidth() * Constants.PX_PER_M);
-    int screenH = (int) (this.stage.getViewport().getWorldHeight() * Constants.PX_PER_M);
+    int screenW = (int) (stage.getViewport().getWorldWidth() 
+    		* Constants.PX_PER_M);
+    int screenH = (int) (stage.getViewport().getWorldHeight() 
+    		* Constants.PX_PER_M);
     int x = (int) getX();
     int y = (int) getY();
     int w = (int) getWidth();

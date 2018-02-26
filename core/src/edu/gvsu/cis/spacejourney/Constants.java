@@ -5,8 +5,8 @@ package edu.gvsu.cis.spacejourney;
  * used across the project. This is specifically used
  * for screen dimensions and unit conversions.
  */
-public class Constants {
-
+public final class Constants {
+	
   /**
    * The amount of pixels per meter on
    * the screen for Box2D.
