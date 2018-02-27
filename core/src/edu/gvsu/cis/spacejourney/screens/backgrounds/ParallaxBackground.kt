@@ -46,7 +46,7 @@ class ParallaxLayer(
 }
 
 /**
- * Class that handles a parallax background given 2-3 layers.
+ * Class that handles a parallax background given N layers.
  */
 class ParallaxBackground : Actor(), Disposable {
 
