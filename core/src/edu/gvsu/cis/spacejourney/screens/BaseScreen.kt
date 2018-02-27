@@ -15,7 +15,7 @@ import ktx.log.debug
 /**
  * Convenient base class for all Screens where common functionality can be implemented.
 */
-open class BaseScreen(val game: SpaceJourney, val screenName: String) : ControllerListener, KtxScreen {
+open class BaseScreen(val game: SpaceJourney, val screenName: String) : KtxScreen {
 
     /**
      * Implemented method that will dispose a screen once
@@ -83,44 +83,8 @@ open class BaseScreen(val game: SpaceJourney, val screenName: String) : Controll
      */
     override fun show() {
         super.show()
-        Controllers.addListener(this)
 
         debug { "Screen Shown: $screenName " }
     }
 
-    override fun connected(controller: Controller?) {
-        debug { "Controller ${controller?.name} connected" }
-    }
-
-    override fun disconnected(controller: Controller?) {
-        debug { "Controller ${controller?.name} disconnected" }
-    }
-
-    override fun buttonUp(controller: Controller?, buttonCode: Int): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun ySliderMoved(controller: Controller?, sliderCode: Int, value: Boolean): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun accelerometerMoved(controller: Controller?, accelerometerCode: Int, value: Vector3?): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun axisMoved(controller: Controller?, axisCode: Int, value: Float): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun xSliderMoved(controller: Controller?, sliderCode: Int, value: Boolean): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun povMoved(controller: Controller?, povCode: Int, value: PovDirection?): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun buttonDown(controller: Controller?, buttonCode: Int): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }
