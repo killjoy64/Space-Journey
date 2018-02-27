@@ -19,6 +19,11 @@ import edu.gvsu.cis.spacejourney.screens.backgrounds.ParallaxBackground;
 import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay;
 import edu.gvsu.cis.spacejourney.util.ZIndex;
 
+/**
+ * Level logic for the first initial level of Spcae Journey.
+ * @author Kyle Flynn
+ *
+ */
 public class LevelOne extends Level {
 
   private static final int LEVEL_TIME = 200;

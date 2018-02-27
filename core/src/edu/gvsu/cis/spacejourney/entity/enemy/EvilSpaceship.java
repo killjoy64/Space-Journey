@@ -11,6 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.SpaceJourney;
 
+/**
+ * Enemy class that defines an evil spaceship.
+ */
 public class EvilSpaceship extends Enemy {
 
   /**

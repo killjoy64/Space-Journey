@@ -11,6 +11,9 @@ import edu.gvsu.cis.spacejourney.entity.Graveyard;
 import edu.gvsu.cis.spacejourney.entity.movement.MovementPattern;
 import edu.gvsu.cis.spacejourney.managers.GameDataManager;
 
+/**
+ * Abstract class that defines a template for an enemy framework.
+ */
 public abstract class Enemy extends Entity {
 
   private int maxHitPoints;
