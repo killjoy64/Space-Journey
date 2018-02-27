@@ -22,6 +22,9 @@ class SpaceJourney : KtxGame<BaseScreen>() {
         val ASSETS = AssetManager()
     }
 
+    /**
+     * Companion object that holds a static instance of the game's asset manager.
+     */
     companion object {
         val assetManager: AssetManager by lazy { Holder.ASSETS }
     }

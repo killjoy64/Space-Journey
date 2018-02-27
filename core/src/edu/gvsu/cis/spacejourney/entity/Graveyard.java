@@ -13,6 +13,11 @@ import java.util.Set;
 public final class Graveyard {
 
   /**
+   * This class should not be instantiated.
+   */
+  private Graveyard() { }
+	
+  /**
    * The generic bodies that need to be removed. These are sets
    * because no body should be removed twice.
    */

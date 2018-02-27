@@ -93,7 +93,7 @@ public class MainMenuInputListener implements InputProcessor {
 
   /**
    * Method that returns whether or not the "enter" key was pressed.
-   * @return <t>true</t> if yes, <b>false</b> if no.
+   * @return <b>true</b> if yes, <b>false</b> if no.
    */
   public boolean gameCanStart() {
     return startGame;
