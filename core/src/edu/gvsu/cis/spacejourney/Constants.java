@@ -22,7 +22,8 @@ public final class Constants {
   public static final float PX_PER_M = 100;
 
   /**
-   * Virtual width that the screen represents.
+   * Get the virtual width that the screen represents. This is dependent on the platform.
+   * @return Virtual width that the screen represents.
    */
   public static float getVirtualWidth(){
     if (Gdx.app.getType() != Application.ApplicationType.Android) {
@@ -33,7 +34,8 @@ public final class Constants {
   }
 
   /**
-   * Virtual height that the screen represents.
+   * Get the virtual height that the screen represents. This is dependent on the platform.
+   * @return Virtual height that the screen represents.
    */
   public static float getVirtualHeight(){
     if (Gdx.app.getType() != Application.ApplicationType.Android) {
