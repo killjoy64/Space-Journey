@@ -1,0 +1,186 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Level</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">edu.gvsu.cis.spacejourney.level</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Level (edu.gvsu.cis.spacejourney.level)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Level</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    80%
+  </span>
+  <span class="absValue">
+    (8/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    86.7%
+  </span>
+  <span class="absValue">
+    (13/ 15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package edu.gvsu.cis.spacejourney.level;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.badlogic.gdx.audio.Music;
+<i>4</i>&nbsp;import com.badlogic.gdx.physics.box2d.World;
+<i>5</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.Stage;
+<i>6</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Table;
+<i>7</i>&nbsp;import com.badlogic.gdx.utils.Disposable;
+<i>8</i>&nbsp;import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;/**
+<i>11</i>&nbsp; * Abstract class that defines a layout for each level in the game.
+<i>12</i>&nbsp; */
+<b class="fc"><i>13</i>&nbsp;public abstract class Level implements Disposable {</b>
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;  private Stage stage;
+<i>16</i>&nbsp;  private World world;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;  private Music music;
+<i>19</i>&nbsp;  private Table hud;
+<i>20</i>&nbsp;  private PlayerSpaceship player;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;  /**
+<i>23</i>&nbsp;   * Default constructor that initializes the level and world.
+<i>24</i>&nbsp;   * @param stage for the current stage of the game.
+<i>25</i>&nbsp;   * @param world for the current world of the game.
+<i>26</i>&nbsp;   */
+<i>27</i>&nbsp;  public void init(Stage stage, World world) {
+<b class="fc"><i>28</i>&nbsp;    this.stage = stage;</b>
+<b class="fc"><i>29</i>&nbsp;    this.world = world;</b>
+<b class="fc"><i>30</i>&nbsp;  }</b>
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;  /**
+<i>33</i>&nbsp;   * Abstract method that is called every update cycle
+<i>34</i>&nbsp;   * inside of the render() method in the {@link edu.gvsu.cis.spacejourney.screens.LevelScreen}.
+<i>35</i>&nbsp;   * @param delta float given during a screen&#39;s render() method.
+<i>36</i>&nbsp;   */
+<i>37</i>&nbsp;  public abstract void update(float delta);
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;  /**
+<i>40</i>&nbsp;   * Set the designated music for the level.
+<i>41</i>&nbsp;   * @param music to be set for the level.
+<i>42</i>&nbsp;   */
+<i>43</i>&nbsp;  public void setMusic(Music music) {
+<b class="fc"><i>44</i>&nbsp;    this.music = music;</b>
+<b class="fc"><i>45</i>&nbsp;  }</b>
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;  /**
+<i>48</i>&nbsp;   * Set the table to be used as a heads up display.
+<i>49</i>&nbsp;   * @param hud a table class that displays information.
+<i>50</i>&nbsp;   */
+<i>51</i>&nbsp;  public void setHud(Table hud) {
+<b class="fc"><i>52</i>&nbsp;    this.hud = hud;</b>
+<b class="fc"><i>53</i>&nbsp;  }</b>
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;  /**
+<i>56</i>&nbsp;   * Sets the designated player object.
+<i>57</i>&nbsp;   * @param player a player object.
+<i>58</i>&nbsp;   */
+<i>59</i>&nbsp;  public void setPlayer(PlayerSpaceship player) {
+<b class="fc"><i>60</i>&nbsp;    this.player = player;</b>
+<b class="fc"><i>61</i>&nbsp;  }</b>
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;  /**
+<i>64</i>&nbsp;   * Gets the music designated for the level.
+<i>65</i>&nbsp;   * @return a {@link com.badlogic.gdx.audio.Music} object.
+<i>66</i>&nbsp;   */
+<i>67</i>&nbsp;  public Music getMusic() {
+<b class="fc"><i>68</i>&nbsp;    return music;</b>
+<i>69</i>&nbsp;  }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;  /**
+<i>72</i>&nbsp;   * Gets the heads up display table.
+<i>73</i>&nbsp;   * @return a {@link com.badlogic.gdx.scenes.scene2d.ui.Table} object.
+<i>74</i>&nbsp;   */
+<i>75</i>&nbsp;  public Table getHud() {
+<b class="fc"><i>76</i>&nbsp;    return hud;</b>
+<i>77</i>&nbsp;  }
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;  /**
+<i>80</i>&nbsp;   * Gets the player in the level.
+<i>81</i>&nbsp;   * @return a {@link edu.gvsu.cis.spacejourney.entity.PlayerSpaceship} object.
+<i>82</i>&nbsp;   */
+<i>83</i>&nbsp;  public PlayerSpaceship getPlayer() {
+<b class="fc"><i>84</i>&nbsp;    return player;</b>
+<i>85</i>&nbsp;  }
+<i>86</i>&nbsp;
+<i>87</i>&nbsp;  /**
+<i>88</i>&nbsp;   * Gets the current world the level is in.
+<i>89</i>&nbsp;   * @return a {@link com.badlogic.gdx.physics.box2d.World} object.
+<i>90</i>&nbsp;   */
+<i>91</i>&nbsp;  public World getWorld() {
+<b class="nc"><i>92</i>&nbsp;    return world;</b>
+<i>93</i>&nbsp;  }
+<i>94</i>&nbsp;
+<i>95</i>&nbsp;  /**
+<i>96</i>&nbsp;   * Gets the current stage the level is in.
+<i>97</i>&nbsp;   * @return a {@link com.badlogic.gdx.scenes.scene2d.Stage} object.
+<i>98</i>&nbsp;   */
+<i>99</i>&nbsp;  public Stage getStage() {
+<b class="nc"><i>100</i>&nbsp;    return stage;</b>
+<i>101</i>&nbsp;  }
+<i>102</i>&nbsp;}
+<i>103</i>&nbsp;
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-02-26 20:21</div>
+</div>
+</body>
+</html>

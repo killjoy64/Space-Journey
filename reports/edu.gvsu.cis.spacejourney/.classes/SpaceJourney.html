@@ -1,0 +1,202 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SpaceJourney</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">edu.gvsu.cis.spacejourney</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SpaceJourney (edu.gvsu.cis.spacejourney)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SpaceJourney</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/ 11)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SpaceJourney$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">SpaceJourney$Companion$assetManager$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">SpaceJourney$Holder</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (15/ 15)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package edu.gvsu.cis.spacejourney
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.badlogic.gdx.Application.LOG_DEBUG
+<i>4</i>&nbsp;import com.badlogic.gdx.Gdx
+<i>5</i>&nbsp;import com.badlogic.gdx.assets.AssetManager
+<i>6</i>&nbsp;import com.badlogic.gdx.physics.box2d.Box2D
+<i>7</i>&nbsp;import edu.gvsu.cis.spacejourney.screens.BaseScreen
+<i>8</i>&nbsp;import edu.gvsu.cis.spacejourney.screens.LevelSelectScreen
+<i>9</i>&nbsp;import edu.gvsu.cis.spacejourney.screens.LevelScreen
+<i>10</i>&nbsp;import edu.gvsu.cis.spacejourney.screens.LoadingScreen
+<i>11</i>&nbsp;import edu.gvsu.cis.spacejourney.screens.MainMenuScreen
+<i>12</i>&nbsp;import ktx.app.KtxGame
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;/**
+<i>15</i>&nbsp;The core of the game, where we spawn the first screen.
+<i>16</i>&nbsp; */
+<b class="fc"><i>17</i>&nbsp;class SpaceJourney : KtxGame&lt;BaseScreen&gt;() {</b>
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    // Global asset manager shared between all screens via reference to this class
+<i>20</i>&nbsp;    // Most of the assets should be pre-loaded in the `LoadingScreen` class
+<b class="fc"><i>21</i>&nbsp;    private object Holder {</b>
+<b class="fc"><i>22</i>&nbsp;        val ASSETS = AssetManager()</b>
+<i>23</i>&nbsp;    }
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    /**
+<i>26</i>&nbsp;     * Companion object that holds a static instance of the game&#39;s asset manager.
+<i>27</i>&nbsp;     */
+<b class="fc"><i>28</i>&nbsp;    companion object {</b>
+<b class="fc"><i>29</i>&nbsp;        val assetManager: AssetManager by lazy { Holder.ASSETS }</b>
+<i>30</i>&nbsp;    }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    /**
+<i>33</i>&nbsp;     * Method that LibGDX calls to instantiate the game.
+<i>34</i>&nbsp;     */
+<i>35</i>&nbsp;    override fun create() {
+<i>36</i>&nbsp;
+<b class="fc"><i>37</i>&nbsp;        Gdx.graphics.setTitle(Strings.GAME_TITLE)</b>
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;        // Reference: https://github.com/libktx/ktx/tree/master/log
+<b class="fc"><i>40</i>&nbsp;        Gdx.app.logLevel = LOG_DEBUG</b>
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;        // Initialize our Box2D physics.
+<b class="fc"><i>43</i>&nbsp;        Box2D.init()</b>
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;        // Register all of the screens upfront so we can easily switch between
+<i>46</i>&nbsp;        // them by classname and make sure we don&#39;t end up in an invalid state
+<b class="fc"><i>47</i>&nbsp;        this.addScreen(LoadingScreen(this))</b>
+<b class="fc"><i>48</i>&nbsp;        this.addScreen(MainMenuScreen(this))</b>
+<b class="fc"><i>49</i>&nbsp;        this.addScreen(LevelSelectScreen(this))</b>
+<b class="fc"><i>50</i>&nbsp;        this.addScreen(LevelScreen(this))</b>
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;        // Switch to the first screen
+<b class="fc"><i>53</i>&nbsp;        this.setScreen&lt;LoadingScreen&gt;()</b>
+<b class="fc"><i>54</i>&nbsp;    }</b>
+<i>55</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-02-26 20:21</div>
+</div>
+</body>
+</html>

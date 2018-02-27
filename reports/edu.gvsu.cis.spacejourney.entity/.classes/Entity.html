@@ -1,0 +1,221 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Entity</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">edu.gvsu.cis.spacejourney.entity</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Entity (edu.gvsu.cis.spacejourney.entity)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Entity</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    76.9%
+  </span>
+  <span class="absValue">
+    (10/ 13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    79.5%
+  </span>
+  <span class="absValue">
+    (35/ 44)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package edu.gvsu.cis.spacejourney.entity;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.badlogic.gdx.graphics.Color;
+<i>4</i>&nbsp;import com.badlogic.gdx.graphics.g2d.Batch;
+<i>5</i>&nbsp;import com.badlogic.gdx.graphics.g2d.TextureRegion;
+<i>6</i>&nbsp;import com.badlogic.gdx.physics.box2d.Body;
+<i>7</i>&nbsp;import com.badlogic.gdx.physics.box2d.World;
+<i>8</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.Actor;
+<i>9</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.Stage;
+<i>10</i>&nbsp;import com.badlogic.gdx.utils.Disposable;
+<i>11</i>&nbsp;import edu.gvsu.cis.spacejourney.Constants;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;/**
+<i>14</i>&nbsp; * Abstract class that designs a template for creating any type of entity.
+<i>15</i>&nbsp; * These entities are meant to be have created bodies in a Box2D world.
+<i>16</i>&nbsp; */
+<i>17</i>&nbsp;public abstract class Entity extends Actor implements Collidable, Disposable {
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;  private Body body;
+<i>20</i>&nbsp;  private Stage stage;
+<i>21</i>&nbsp;  private TextureRegion textureRegion;
+<i>22</i>&nbsp;  private World world;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;  /**
+<i>25</i>&nbsp;   * Creates a textureless entity, and sets
+<i>26</i>&nbsp;   * the state to be used for future reference.
+<i>27</i>&nbsp;   * @param stage current stage that updates actors.
+<i>28</i>&nbsp;   */
+<b class="nc"><i>29</i>&nbsp;  public Entity(Stage stage) {</b>
+<b class="nc"><i>30</i>&nbsp;    this.stage = stage;</b>
+<b class="nc"><i>31</i>&nbsp;    this.textureRegion = null;</b>
+<b class="nc"><i>32</i>&nbsp;    this.setPosition(0.0f, 0.0f);</b>
+<b class="nc"><i>33</i>&nbsp;  }</b>
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;  /**
+<i>36</i>&nbsp;   * Creates an entity using a desired texture to attach to a
+<i>37</i>&nbsp;   * Box2D body.
+<i>38</i>&nbsp;   * @param stage current stage that updates actors.
+<i>39</i>&nbsp;   * @param textureRegion texture to bind to the Box2D.
+<i>40</i>&nbsp;   */
+<b class="fc"><i>41</i>&nbsp;  public Entity(Stage stage, TextureRegion textureRegion) {</b>
+<b class="fc"><i>42</i>&nbsp;    this.stage = stage;</b>
+<b class="fc"><i>43</i>&nbsp;    this.textureRegion = textureRegion;</b>
+<b class="fc"><i>44</i>&nbsp;    this.setPosition(0.0f, 0.0f);</b>
+<b class="fc"><i>45</i>&nbsp;  }</b>
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;  /**
+<i>48</i>&nbsp;   * Method that updates every render() call.
+<i>49</i>&nbsp;   * @param delta The time difference betwen the last and current render() method call.
+<i>50</i>&nbsp;   */
+<i>51</i>&nbsp;  @Override
+<i>52</i>&nbsp;  public void act(float delta) {
+<b class="fc"><i>53</i>&nbsp;    super.act(delta);</b>
+<i>54</i>&nbsp;
+<b class="fc"><i>55</i>&nbsp;    if (body != null) {</b>
+<b class="fc"><i>56</i>&nbsp;      setPosition(</b>
+<b class="fc"><i>57</i>&nbsp;    	  (body.getPosition().x * Constants.PX_PER_M) - (getWidth() / 2),</b>
+<b class="fc"><i>58</i>&nbsp;          (body.getPosition().y * Constants.PX_PER_M) - (getHeight() / 2));</b>
+<i>59</i>&nbsp;    }
+<i>60</i>&nbsp;
+<b class="fc"><i>61</i>&nbsp;  }</b>
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;  /**
+<i>64</i>&nbsp;   * Draws the three parallax layers on to the screen.
+<i>65</i>&nbsp;   * @param batch The sprite batch used in the game.
+<i>66</i>&nbsp;   * @param parentAlpha Alpha value of the entire object.
+<i>67</i>&nbsp;   */
+<i>68</i>&nbsp;  @Override
+<i>69</i>&nbsp;  public void draw(Batch batch, float parentAlpha) {
+<b class="fc"><i>70</i>&nbsp;    super.draw(batch, parentAlpha);</b>
+<b class="fc"><i>71</i>&nbsp;    Color color = getColor();</b>
+<b class="fc"><i>72</i>&nbsp;    batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);</b>
+<i>73</i>&nbsp;
+<b class="fc"><i>74</i>&nbsp;    if (this.textureRegion != null) {</b>
+<b class="fc"><i>75</i>&nbsp;      batch.draw(this.textureRegion,</b>
+<b class="fc"><i>76</i>&nbsp;          getX() / Constants.PX_PER_M, getY() / Constants.PX_PER_M,</b>
+<b class="fc"><i>77</i>&nbsp;          getWidth() / Constants.PX_PER_M, getHeight() / Constants.PX_PER_M);</b>
+<i>78</i>&nbsp;    }
+<b class="fc"><i>79</i>&nbsp;  }</b>
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;  /**
+<i>82</i>&nbsp;   * Method that checks if the current actor is out of the screen&#39;s bounds.
+<i>83</i>&nbsp;   * @return &lt;b&gt;true&lt;/b&gt; if the actor is out of bounds, or &lt;b&gt;false&lt;/b&gt; if
+<i>84</i>&nbsp;   *         the actor is clearly visible on the screen.
+<i>85</i>&nbsp;   */
+<i>86</i>&nbsp;  public boolean outOfBounds() {
+<b class="fc"><i>87</i>&nbsp;    int screenW = (int) (stage.getViewport().getWorldWidth() * Constants.PX_PER_M);</b>
+<b class="fc"><i>88</i>&nbsp;    int screenH = (int) (stage.getViewport().getWorldHeight() * Constants.PX_PER_M);</b>
+<b class="fc"><i>89</i>&nbsp;    int x = (int) getX();</b>
+<b class="fc"><i>90</i>&nbsp;    int y = (int) getY();</b>
+<b class="fc"><i>91</i>&nbsp;    int w = (int) getWidth();</b>
+<b class="fc"><i>92</i>&nbsp;    int h = (int) getHeight();</b>
+<i>93</i>&nbsp;
+<b class="fc"><i>94</i>&nbsp;    return (x + w) &gt; screenW || x &lt; 0 || (y + h) &gt; screenH || y &lt; 0;</b>
+<i>95</i>&nbsp;  }
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;  /**
+<i>98</i>&nbsp;   * Method that checks if the current actor is below the screen&#39;s bounds.
+<i>99</i>&nbsp;   * @return &lt;b&gt;true&lt;/b&gt; if the actor is below the screen, or &lt;b&gt;false&lt;/b&gt; if
+<i>100</i>&nbsp;   *      the actor is clearly visible above the bottom of the screen.
+<i>101</i>&nbsp;   */
+<i>102</i>&nbsp;  public boolean belowScreen() {
+<b class="nc"><i>103</i>&nbsp;    int y = (int) getY();</b>
+<b class="nc"><i>104</i>&nbsp;    int h = (int) getHeight();</b>
+<i>105</i>&nbsp;
+<b class="nc"><i>106</i>&nbsp;    return (y + h) &lt; 0;</b>
+<i>107</i>&nbsp;  }
+<i>108</i>&nbsp;
+<i>109</i>&nbsp;  public void setBody(Body body) {
+<b class="fc"><i>110</i>&nbsp;    this.body = body;</b>
+<b class="fc"><i>111</i>&nbsp;  }</b>
+<i>112</i>&nbsp;
+<i>113</i>&nbsp;  public Body getBody() {
+<b class="fc"><i>114</i>&nbsp;    return body;</b>
+<i>115</i>&nbsp;  }
+<i>116</i>&nbsp;
+<i>117</i>&nbsp;  public World getWorld() {
+<b class="nc"><i>118</i>&nbsp;    return world;</b>
+<i>119</i>&nbsp;  }
+<i>120</i>&nbsp;
+<i>121</i>&nbsp;  public void setWorld(World world) {
+<b class="fc"><i>122</i>&nbsp;    this.world = world;</b>
+<b class="fc"><i>123</i>&nbsp;  }</b>
+<i>124</i>&nbsp;
+<i>125</i>&nbsp;  @Override
+<i>126</i>&nbsp;  public Stage getStage() {
+<b class="fc"><i>127</i>&nbsp;    return this.stage;</b>
+<i>128</i>&nbsp;  }
+<i>129</i>&nbsp;
+<i>130</i>&nbsp;  public TextureRegion getTextureRegion() {
+<b class="fc"><i>131</i>&nbsp;    return textureRegion;</b>
+<i>132</i>&nbsp;  }
+<i>133</i>&nbsp;
+<i>134</i>&nbsp;  public void setTextureRegion(TextureRegion textureRegion) {
+<b class="fc"><i>135</i>&nbsp;    this.textureRegion = textureRegion;</b>
+<b class="fc"><i>136</i>&nbsp;  }</b>
+<i>137</i>&nbsp;
+<i>138</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-02-26 20:21</div>
+</div>
+</body>
+</html>

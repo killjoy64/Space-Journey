@@ -1,0 +1,158 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DefaultOverlay</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">edu.gvsu.cis.spacejourney.screens.hud</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DefaultOverlay (edu.gvsu.cis.spacejourney.screens.hud)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DefaultOverlay</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    91.7%
+  </span>
+  <span class="absValue">
+    (22/ 24)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package edu.gvsu.cis.spacejourney.screens.hud;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.badlogic.gdx.Gdx;
+<i>4</i>&nbsp;import com.badlogic.gdx.graphics.Color;
+<i>5</i>&nbsp;import com.badlogic.gdx.graphics.Texture;
+<i>6</i>&nbsp;import com.badlogic.gdx.graphics.g2d.BitmapFont;
+<i>7</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Image;
+<i>8</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Label;
+<i>9</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Table;
+<i>10</i>&nbsp;import com.badlogic.gdx.utils.Align;
+<i>11</i>&nbsp;import edu.gvsu.cis.spacejourney.SpaceJourney;
+<i>12</i>&nbsp;import edu.gvsu.cis.spacejourney.Strings;
+<i>13</i>&nbsp;import edu.gvsu.cis.spacejourney.managers.GameDataManager;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;/**
+<i>16</i>&nbsp; * Default head-up display (HUD) for the game play screen.
+<i>17</i>&nbsp; */
+<i>18</i>&nbsp;public class DefaultOverlay extends Table {
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;  private Image[] lives;
+<i>21</i>&nbsp;  private GameDataManager gameData;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;  private int livesDisplayed;
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;  private BitmapFont font;
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;  private Label scoreLabel;
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;  /**
+<i>30</i>&nbsp;   * Default constructor that initially maxes
+<i>31</i>&nbsp;   * out space on the screen, which is then updated by
+<i>32</i>&nbsp;   * the actual {@link edu.gvsu.cis.spacejourney.managers.GameDataManager} class.
+<i>33</i>&nbsp;   */
+<b class="fc"><i>34</i>&nbsp;  public DefaultOverlay() {</b>
+<b class="fc"><i>35</i>&nbsp;    this.lives = new Image[GameDataManager.MAX_LIVES];</b>
+<b class="fc"><i>36</i>&nbsp;    this.gameData = GameDataManager.getInstance();</b>
+<b class="fc"><i>37</i>&nbsp;    this.livesDisplayed = 0;</b>
+<i>38</i>&nbsp;
+<b class="fc"><i>39</i>&nbsp;    font = new BitmapFont(Gdx.files.internal(&quot;fonts/default.fnt&quot;));</b>
+<b class="fc"><i>40</i>&nbsp;    font.getData().scale(0.15f);</b>
+<i>41</i>&nbsp;
+<b class="fc"><i>42</i>&nbsp;    this.scoreLabel = new Label(</b>
+<b class="fc"><i>43</i>&nbsp;        String.format(Strings.HUD_SCORE, gameData.getScore()),</b>
+<i>44</i>&nbsp;        new Label.LabelStyle(font, Color.WHITE));
+<i>45</i>&nbsp;
+<b class="fc"><i>46</i>&nbsp;    this.setFillParent(true);</b>
+<i>47</i>&nbsp;
+<b class="fc"><i>48</i>&nbsp;    for (int i = 0; i &lt; this.lives.length; i++) {</b>
+<b class="fc"><i>49</i>&nbsp;      lives[i] = new Image(</b>
+<b class="fc"><i>50</i>&nbsp;          SpaceJourney.Companion.getAssetManager().get(&quot;spaceship2.png&quot;, Texture.class));</b>
+<b class="fc"><i>51</i>&nbsp;      top().left().padLeft(16f).padTop(16.0f).add(lives[i]).size(64f, 64f).padRight(16.0f);</b>
+<i>52</i>&nbsp;
+<b class="fc"><i>53</i>&nbsp;      livesDisplayed++;</b>
+<i>54</i>&nbsp;    }
+<i>55</i>&nbsp;
+<b class="fc"><i>56</i>&nbsp;    add(scoreLabel).align(Align.right).padTop(10f).padRight(16f).expandX();</b>
+<b class="fc"><i>57</i>&nbsp;  }</b>
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;  /**
+<i>60</i>&nbsp;   * Polls for updates that need to be done to the HUD by
+<i>61</i>&nbsp;   * the {@link edu.gvsu.cis.spacejourney.managers.GameDataManager} class.
+<i>62</i>&nbsp;   */
+<i>63</i>&nbsp;  public void poll() {
+<b class="fc"><i>64</i>&nbsp;    if (livesDisplayed &gt; gameData.getLives() &amp;&amp; livesDisplayed &gt; 0) {</b>
+<b class="fc"><i>65</i>&nbsp;      removeActor(lives[gameData.getLives()]);</b>
+<b class="fc"><i>66</i>&nbsp;      livesDisplayed--;</b>
+<b class="fc"><i>67</i>&nbsp;    } else if (livesDisplayed &lt; gameData.getLives()) {</b>
+<b class="nc"><i>68</i>&nbsp;      top().left().add(lives[gameData.getLives()]);</b>
+<b class="nc"><i>69</i>&nbsp;      livesDisplayed++;</b>
+<i>70</i>&nbsp;    }
+<i>71</i>&nbsp;
+<b class="fc"><i>72</i>&nbsp;    scoreLabel.setText(String.format(Strings.HUD_SCORE, gameData.getScore()));</b>
+<b class="fc"><i>73</i>&nbsp;  }</b>
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-02-26 20:21</div>
+</div>
+</body>
+</html>
