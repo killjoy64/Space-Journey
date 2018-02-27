@@ -92,6 +92,13 @@ public class MainMenuInputListener implements InputProcessor {
   }
 
   /**
+   * Sets the index of the current choice that is selected.
+   */
+  public void setCurrentChoice(int choice) {
+     this.currentChoice = choice;
+  }
+
+  /**
    * Method that returns whether or not the "enter" key was pressed.
    * @return <b>true</b> if yes, <b>false</b> if no.
    */

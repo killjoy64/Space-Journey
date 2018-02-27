@@ -1,6 +1,7 @@
 package edu.gvsu.cis.spacejourney.screens
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.BitmapFont
@@ -8,11 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.viewport.FillViewport
+import com.sun.org.apache.xpath.internal.operations.Bool
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.Strings
 import edu.gvsu.cis.spacejourney.input.MainMenuInputListener
 import edu.gvsu.cis.spacejourney.managers.GameDataManager
 import edu.gvsu.cis.spacejourney.managers.MusicManager
+import ktx.actors.onClick
 
 /**
  * Class that designates all logic within the level select screen.
@@ -29,6 +32,8 @@ class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScree
     private var font: BitmapFont? = null
 
     private var inputListener: MainMenuInputListener? = null
+
+    private var touched : Boolean = false;
 
     /**
      * Method that creates the initial screen logic, creates a default font, and adds the options
@@ -59,10 +64,34 @@ class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScree
         stage?.addActor(screenData)
 
         inputListener = MainMenuInputListener(3)
-        Gdx.input.inputProcessor = inputListener
+        Gdx.input.inputProcessor = InputMultiplexer(inputListener, stage)
 
         if (!MusicManager.getInstance().music.isPlaying) {
             MusicManager.getInstance().music = SpaceJourney.assetManager.get("title.mp3", Music::class.java)
+        }
+
+        option1?.onClick {
+            option1?.setText(String.format(Strings.LEVEL_ONE, "->"))
+            option2?.setText(String.format(Strings.LEVEL_TWO, "  "))
+            option3?.setText(String.format(Strings.LEVEL_THREE, "  "))
+            inputListener!!.currentChoice = 1
+            touched = true
+        }
+
+        option2?.onClick {
+            option1?.setText(String.format(Strings.LEVEL_ONE, "  "))
+            option2?.setText(String.format(Strings.LEVEL_TWO, "->"))
+            option3?.setText(String.format(Strings.LEVEL_THREE, "  "))
+            inputListener!!.currentChoice = 2
+            touched = true
+        }
+
+        option3?.onClick {
+            option1?.setText(String.format(Strings.LEVEL_ONE, "  "))
+            option2?.setText(String.format(Strings.LEVEL_TWO, "  "))
+            option3?.setText(String.format(Strings.LEVEL_THREE, "->"))
+            inputListener!!.currentChoice = 3
+            touched = true
         }
     }
 
@@ -95,7 +124,7 @@ class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScree
             }
         }
 
-        if (inputListener!!.gameCanStart()) {
+        if (inputListener!!.gameCanStart() || touched) {
             GameDataManager.getInstance().levelNumber = inputListener!!.currentChoice
 
             if (MusicManager.getInstance().music != null) {

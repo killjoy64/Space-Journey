@@ -1,5 +1,8 @@
 package edu.gvsu.cis.spacejourney;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
+
 /**
  * Static class that holds vital information to be
  * used across the project. This is specifically used
@@ -21,11 +24,23 @@ public final class Constants {
   /**
    * Virtual width that the screen represents.
    */
-  public static final float VIRTUAL_WIDTH = 1920;
+  public static float getVirtualWidth(){
+    if (Gdx.app.getType() != Application.ApplicationType.Android) {
+      return 1920;
+    } else {
+      return 1080;
+    }
+  }
 
   /**
    * Virtual height that the screen represents.
    */
-  public static final float VIRTUAL_HEIGHT = 1080;
+  public static float getVirtualHeight(){
+    if (Gdx.app.getType() != Application.ApplicationType.Android) {
+      return 1080;
+    } else {
+      return 1920;
+    }
+  }
 
 }

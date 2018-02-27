@@ -1,11 +1,12 @@
 package edu.gvsu.cis.spacejourney.screens
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.BitmapFont
-import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.*
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.viewport.FitViewport
@@ -14,6 +15,7 @@ import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.Strings
 import edu.gvsu.cis.spacejourney.input.MainMenuInputListener
 import edu.gvsu.cis.spacejourney.managers.MusicManager
+import ktx.actors.onClick
 
 /**
  * The main menu for the game where we can change settings, start a game, load, save, quit, etc.
@@ -31,6 +33,8 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
 
     private var music: Music? = null
 
+    private var touched : Boolean = false;
+
     /**
      * Method that creates initial logic for the screen, and shows the options
      * in a default font.
@@ -40,8 +44,8 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
 
         val camera = OrthographicCamera()
         val viewport = FitViewport(
-                Constants.VIRTUAL_WIDTH * 2,
-                Constants.VIRTUAL_HEIGHT * 2,
+                Constants.getVirtualWidth(),
+                Constants.getVirtualHeight(),
                 camera)
 
         stage = Stage(viewport)
@@ -64,11 +68,27 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
         stage?.addActor(screenData)
 
         inputListener = MainMenuInputListener(2)
-        Gdx.input.inputProcessor = inputListener
+
+        Gdx.input.inputProcessor = InputMultiplexer(inputListener, stage)
 
         music = SpaceJourney.assetManager.get("title.mp3", Music::class.java)
         MusicManager.getInstance().music = music
 //        this.game.setScreen<LevelSelectScreen>()
+
+        option1?.onClick {
+            option1?.setText(String.format(Strings.MENU_OPTION_1, "->"))
+            option2?.setText(String.format(Strings.MENU_OPTION_2, "  "))
+            inputListener!!.currentChoice = 1
+            touched = true
+        }
+
+        option2?.onClick {
+            option1?.setText(String.format(Strings.MENU_OPTION_1, "  "))
+            option2?.setText(String.format(Strings.MENU_OPTION_2, "->"))
+            inputListener!!.currentChoice = 2
+            touched = true
+        }
+
     }
 
     /**
@@ -100,7 +120,7 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
             option2?.setText(String.format(Strings.MENU_OPTION_2, "->"))
         }
 
-        if (inputListener!!.gameCanStart()) {
+        if (inputListener!!.gameCanStart() || touched) {
             this.game.setScreen<LevelSelectScreen>()
         }
     }
