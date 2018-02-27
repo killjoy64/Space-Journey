@@ -28,6 +28,8 @@ dokka {
 
     sourceDirs = files('core/src/edu/gvsu/cis/spacejourney')
 
+    includes = ['core/packages.md']
+
     linkMapping {
         // Source directory
         dir = "core/src/edu/gvsu/cis/spacejourney"

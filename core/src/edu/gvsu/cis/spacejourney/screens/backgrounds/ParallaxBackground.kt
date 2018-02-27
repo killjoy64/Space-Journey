@@ -40,6 +40,9 @@ class ParallaxLayer(
         this.texture?.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest)
     }
 
+    /**
+     * Method that disposes of the current background texture.
+     */
     override fun dispose() {
         this.texture?.dispose()
     }

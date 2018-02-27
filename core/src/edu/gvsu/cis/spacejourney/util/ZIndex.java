@@ -8,6 +8,11 @@ package edu.gvsu.cis.spacejourney.util;
 public final class ZIndex {
 
   /**
+   * This class should not be instantiated.
+   */
+  private ZIndex() { }
+	
+  /**
    * Z-index value for the 3rd parallax layer.
    */
   public static final int PARALLAX_BACKGROUND_LAYER3 = 0;

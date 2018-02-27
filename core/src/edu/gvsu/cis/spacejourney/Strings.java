@@ -8,6 +8,11 @@ package edu.gvsu.cis.spacejourney;
 public final class Strings {
 
   /**
+   * This class should not be instantiated.
+   */
+  private Strings() { }
+	
+  /**
    * Title of the game.
    */
   public static final String GAME_TITLE = "Space Journey";

@@ -8,6 +8,11 @@ package edu.gvsu.cis.spacejourney;
 public final class Constants {
 	
   /**
+   * This class should not be instantiated.
+   */
+  private Constants() { }
+	
+  /**
    * The amount of pixels per meter on
    * the screen for Box2D.
    */
