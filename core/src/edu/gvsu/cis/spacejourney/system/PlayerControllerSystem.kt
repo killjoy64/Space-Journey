@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.*
 import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
+import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import edu.gvsu.cis.spacejourney.Constants
@@ -17,9 +18,14 @@ import edu.gvsu.cis.spacejourney.util.Mappers
 import ktx.log.debug
 import ktx.math.plus
 import ktx.math.times
+import com.badlogic.gdx.controllers.Controllers
+import com.badlogic.gdx.controllers.mappings.Xbox
+
 
 class PlayerControllerSystem : EntitySystem() {
     private var entities: ImmutableArray<Entity>? = null
+
+    private val CONTROLLER_DEADZONE = 0.1
 
     init {
         priority = 0
@@ -38,16 +44,31 @@ class PlayerControllerSystem : EntitySystem() {
 
             val movement = Vector2()
 
-            if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            Controllers.getControllers().asSequence().take(1).forEach {
+                if (it.getAxis(Xbox.L_STICK_VERTICAL_AXIS) > CONTROLLER_DEADZONE) {
+                    movement.y = player.movespeed * it.getAxis(Xbox.L_STICK_VERTICAL_AXIS)
+                }
+                if (it.getAxis(Xbox.L_STICK_VERTICAL_AXIS) < CONTROLLER_DEADZONE) {
+                    movement.y = player.movespeed * it.getAxis(Xbox.L_STICK_VERTICAL_AXIS)
+                }
+                if (it.getAxis(Xbox.L_STICK_HORIZONTAL_AXIS) > CONTROLLER_DEADZONE) {
+                    movement.x = player.movespeed * it.getAxis(Xbox.L_STICK_HORIZONTAL_AXIS)
+                }
+                if (it.getAxis(Xbox.L_STICK_HORIZONTAL_AXIS) < CONTROLLER_DEADZONE) {
+                    movement.x = player.movespeed * it.getAxis(Xbox.L_STICK_HORIZONTAL_AXIS)
+                }
+            }
+
+            if (Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                 movement.x = player.movespeed
             }
-            if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                 movement.x = -player.movespeed
             }
-            if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP)) {
                 movement.y = player.movespeed
             }
-            if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
                 movement.y = -player.movespeed
             }
 
