@@ -15,6 +15,8 @@ class Mappers {
         val boxCollider = ComponentMapper.getFor(BoxCollider::class.java)
         val circleCollider = ComponentMapper.getFor(CircleCollider::class.java)
         val staticSprite = ComponentMapper.getFor(StaticSprite::class.java)
+        val player = ComponentMapper.getFor(Player::class.java)
+
     }
 }
 

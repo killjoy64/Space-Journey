@@ -1,36 +1,17 @@
 package edu.gvsu.cis.spacejourney.screens
 
 import com.badlogic.ashley.core.Engine
-import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.Body
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
-import com.badlogic.gdx.physics.box2d.World
-import com.badlogic.gdx.scenes.scene2d.Actor
-import com.badlogic.gdx.scenes.scene2d.Stage
 
-import com.badlogic.gdx.utils.viewport.FillViewport
-import com.badlogic.gdx.utils.viewport.FitViewport
-import com.badlogic.gdx.utils.viewport.ScreenViewport
-import edu.gvsu.cis.spacejourney.Constants
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.component.*
 import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
-import edu.gvsu.cis.spacejourney.component.colliders.CircleCollider
-import edu.gvsu.cis.spacejourney.entity.Graveyard
-import edu.gvsu.cis.spacejourney.input.GameContactListener
 import edu.gvsu.cis.spacejourney.level.Level
-import edu.gvsu.cis.spacejourney.level.Levels
-import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
 import edu.gvsu.cis.spacejourney.managers.GameDataManager
-import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay
-import edu.gvsu.cis.spacejourney.system.PhysicsSystem
+import edu.gvsu.cis.spacejourney.system.VelocitySystem
 import edu.gvsu.cis.spacejourney.system.PlayerControllerSystem
 import edu.gvsu.cis.spacejourney.system.RenderingSystem
-import edu.gvsu.cis.spacejourney.util.DebugInfo
-import edu.gvsu.cis.spacejourney.util.toMeters
 import ktx.ashley.add
 import ktx.ashley.entity
 
@@ -51,15 +32,12 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     renderingSystem = RenderingSystem()
 
-    engine.addSystem(PhysicsSystem())
+    engine.addSystem(VelocitySystem())
     engine.addSystem(PlayerControllerSystem())
     engine.addSystem(renderingSystem)
 
     engine.add {
       entity {
-        with<Velocity> {}
-        with<Box2D> {}
-        with<BoxCollider> {}
         with<Player> {}
         with<Transform> {
           position = Vector2(10f, 10f)

@@ -5,6 +5,7 @@ import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.math.Vector3
 import edu.gvsu.cis.spacejourney.Constants
 import edu.gvsu.cis.spacejourney.component.Player
 import edu.gvsu.cis.spacejourney.component.Transform
@@ -15,6 +16,7 @@ import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
 import edu.gvsu.cis.spacejourney.util.Mappers
 import ktx.log.debug
 import ktx.math.plus
+import ktx.math.times
 
 class PlayerControllerSystem : EntitySystem() {
     private var entities: ImmutableArray<Entity>? = null
@@ -24,7 +26,7 @@ class PlayerControllerSystem : EntitySystem() {
     }
 
     override fun addedToEngine(engine: Engine) {
-        entities = engine.getEntitiesFor(Family.all(Player::class.java, Transform::class.java, Velocity::class.java).get())
+        entities = engine.getEntitiesFor(Family.all(Player::class.java, Transform::class.java).get())
     }
 
     override fun update(deltaTime: Float) {
@@ -32,27 +34,26 @@ class PlayerControllerSystem : EntitySystem() {
             val entity = entities!!.get(i)
 
             val transform = Mappers.transform.get(entity)
-            val velocity = Mappers.velocity.get(entity)
+            val player = Mappers.player.get(entity)
 
-            val newVelocity = Vector2()
+            val movement = Vector2()
 
             if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-                newVelocity.x = 1.0f
+                movement.x = player.movespeed
             }
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-                newVelocity.x = -1.0f
+                movement.x = -player.movespeed
             }
             if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-                newVelocity.y = 1.0f
+                movement.y = player.movespeed
             }
             if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-                newVelocity.y = -1.0f
+                movement.y = -player.movespeed
             }
 
-            //velocity.value = newVelocity
-            transform.position += newVelocity
+            transform.position += movement * deltaTime
 
-            debug { "Player Position: ${transform.position} Player Velocity: ${velocity.value}" }
+            //debug { "Player Position: ${transform.position} Player Velocity: ${velocity.value}" }
         }
 
 
