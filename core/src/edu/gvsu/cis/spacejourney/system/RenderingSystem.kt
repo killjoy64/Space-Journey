@@ -59,8 +59,7 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
             val size = Vector2(staticSprite.texture?.width!!.toFloat(), staticSprite.texture?.height!!.toFloat())
             val scale = staticSprite.scale.toFloat()
 
-            it.draw(TextureRegion(staticSprite.texture), position.x, position.y, (size.x * scale) / 2.0f, (size.y * scale) / 2.0f, size.x, size.y, scale, scale, transform.rotation)
-
+            it.draw(TextureRegion(staticSprite.texture), position.x, position.y, (size.x / 2.0f) * scale, (size.y / 2.0f) * scale, size.x, size.y, scale, scale, transform.rotation)
 
         }
     }

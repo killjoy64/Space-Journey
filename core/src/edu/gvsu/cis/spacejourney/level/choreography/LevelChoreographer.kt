@@ -11,6 +11,7 @@ import edu.gvsu.cis.spacejourney.component.Player
 import edu.gvsu.cis.spacejourney.component.StaticSprite
 import edu.gvsu.cis.spacejourney.component.Transform
 import edu.gvsu.cis.spacejourney.component.Velocity
+import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
 import edu.gvsu.cis.spacejourney.component.colliders.CircleCollider
 import edu.gvsu.cis.spacejourney.entity.Collidable
 import edu.gvsu.cis.spacejourney.entity.enemy.Enemy
@@ -33,12 +34,19 @@ class EnemySpawnEvent : ChoreographEvent() {
 
         debug { "Enemy added" }
 
-        val randomPosition = Vector2(Math.random().toFloat() * Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
+        val randomPosition = Vector2((Math.random().toFloat() * Gdx.graphics.width.toFloat() - 50.0f) + 50.0f, Gdx.graphics.height.toFloat())
+
+        val enemyTexture = SpaceJourney.assetManager.get("spaceship3.png", Texture::class.java)
+
 
         engine.add {
             entity {
-                with<CircleCollider> {
+                with<edu.gvsu.cis.spacejourney.component.Enemy> {
 
+                }
+                with<BoxCollider> {
+                    width = enemyTexture.width
+                    height = enemyTexture.height
                 }
                 with<Transform> {
                     position = randomPosition
@@ -49,7 +57,7 @@ class EnemySpawnEvent : ChoreographEvent() {
                 }
                 with<StaticSprite> {
                     zindex = ZIndex.ENEMY
-                    texture = SpaceJourney.assetManager.get("spaceship3.png", Texture::class.java)
+                    texture = enemyTexture
                 }
             }
         }

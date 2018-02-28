@@ -60,8 +60,8 @@ public class LevelOne extends Level {
 
     choreographer = new LevelChoreographer(engine);
 
-    for (int i = 0; i < 200; i++) {
-      choreographer.schedule(1.0f + i, new EnemySpawnEvent());
+    for (int i = 0; i < 400; i++) {
+      choreographer.schedule(1.0f + i * (0.2f), new EnemySpawnEvent());
     }
   }
 

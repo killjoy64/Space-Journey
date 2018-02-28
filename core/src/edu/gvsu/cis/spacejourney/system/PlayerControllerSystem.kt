@@ -98,10 +98,15 @@ class PlayerControllerSystem : EntitySystem() {
 
                 val playerCenter = Vector2(transform.position)
 
+                val laserTexture = SpaceJourney.assetManager.get("laser.png", Texture::class.java)
+
                 engine.add {
                     entity {
                         with<Projectile> {}
-                        with<BoxCollider> {}
+                        with<BoxCollider> {
+                            width = laserTexture.height
+                            height = laserTexture.width
+                        }
                         with<Velocity> {
                             value = Vector2(deltaMovement.x * bulletInheritedVelocityFactor, 6.0f)
                         }
@@ -110,24 +115,29 @@ class PlayerControllerSystem : EntitySystem() {
                         }
                         with<StaticSprite> {
                             zindex = ZIndex.PROJECTILES
-                            texture = SpaceJourney.assetManager.get("laser.png", Texture::class.java)
+                            texture = laserTexture
                         }
                     }
                 }
 
+
+
                 engine.add {
                     entity {
                         with<Projectile> {}
-                        with<BoxCollider> {}
+                        with<BoxCollider> {
+                            width = laserTexture.height
+                            height = laserTexture.width
+                        }
                         with<Velocity> {
                             value = Vector2(deltaMovement.x * bulletInheritedVelocityFactor, 6.0f)
                         }
                         with<Transform> {
-                            position = Vector2(playerCenter.x - 16, playerCenter.y)
+                            position = Vector2(playerCenter.x - 32, playerCenter.y)
                         }
                         with<StaticSprite> {
                             zindex = ZIndex.PROJECTILES
-                            texture = SpaceJourney.assetManager.get("laser.png", Texture::class.java)
+                            texture = laserTexture
                         }
                     }
                 }

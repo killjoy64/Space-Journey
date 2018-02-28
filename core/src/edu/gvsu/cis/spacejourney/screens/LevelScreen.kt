@@ -11,6 +11,7 @@ import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
 import edu.gvsu.cis.spacejourney.level.Level
 import edu.gvsu.cis.spacejourney.level.Levels
 import edu.gvsu.cis.spacejourney.managers.GameDataManager
+import edu.gvsu.cis.spacejourney.system.CollisionSystem
 import edu.gvsu.cis.spacejourney.system.VelocitySystem
 import edu.gvsu.cis.spacejourney.system.PlayerControllerSystem
 import edu.gvsu.cis.spacejourney.system.RenderingSystem
@@ -38,6 +39,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
     engine.addSystem(VelocitySystem())
     engine.addSystem(PlayerControllerSystem())
     engine.addSystem(renderingSystem)
+    engine.addSystem(CollisionSystem())
 
     engine.add {
       entity {
