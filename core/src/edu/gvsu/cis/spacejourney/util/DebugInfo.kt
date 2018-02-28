@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor
 import edu.gvsu.cis.spacejourney.SpaceJourney
 
 /**
- * Class that carries simple debug info for
- * easy tracking during runtime.
+ * Class that displays simple debug info for
+ * ease of debugging during runtime.
  */
 class DebugInfo : Actor() {
 
