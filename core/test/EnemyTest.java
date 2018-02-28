@@ -35,7 +35,7 @@ public class EnemyTest {
   @BeforeClass
   public static void setup() {
     Camera camera = new OrthographicCamera();
-    FitViewport viewport = new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT, camera);
+    FitViewport viewport = new FitViewport(Constants.getVirtualWidth(), Constants.getVirtualHeight(), camera);
     stage = mock(Stage.class);
     world = new World(new Vector2(0.0f, 0.0f), false);
 
