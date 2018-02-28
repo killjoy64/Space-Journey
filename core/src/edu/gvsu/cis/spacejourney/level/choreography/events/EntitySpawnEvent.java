@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.entity.Entity;
 import edu.gvsu.cis.spacejourney.level.choreography.ChoreographEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -31,11 +32,16 @@ public class EntitySpawnEvent extends ChoreographEvent {
    * @param world for the current world of the game.
    */
   @Override
-  public void onEvent(Stage stage, World world) {
+  public void onEvent(@NotNull Stage stage, @NotNull World world) {
     Random random = new Random();
 
     float r = random.nextFloat();
-    float x = (r * stage.getViewport().getWorldWidth() - (50f / Constants.PX_PER_M));
+
+    float offsetFromSides = 100.0f;
+
+    float x = ((r * stage.getViewport().getWorldWidth()
+        - offsetFromSides) + offsetFromSides);
+
     float y = stage.getViewport().getWorldHeight();
 
     entity.setPosition(x, y);
