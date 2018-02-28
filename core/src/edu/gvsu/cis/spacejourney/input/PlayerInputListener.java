@@ -47,17 +47,6 @@ public class PlayerInputListener implements InputProcessor {
 
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    return false;
-  }
-
-  @Override
-  public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-    return false;
-  }
-
-  @Override
-  public boolean touchDragged(int screenX, int screenY, int pointer) {
-
     if (Gdx.app.getType() == Application.ApplicationType.Android
         || Gdx.app.getType() == Application.ApplicationType.iOS) {
 
@@ -68,6 +57,16 @@ public class PlayerInputListener implements InputProcessor {
       }
     }
 
+    return false;
+  }
+
+  @Override
+  public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+    return false;
+  }
+
+  @Override
+  public boolean touchDragged(int screenX, int screenY, int pointer) {
     return false;
   }
 
