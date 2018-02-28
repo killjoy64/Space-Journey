@@ -1,5 +1,6 @@
 package edu.gvsu.cis.spacejourney.level.one;
 
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.physics.box2d.World;
@@ -32,10 +33,10 @@ public class LevelOne extends Level {
   }
 
   @Override
-  public void init(Stage stage, World world) {
-    super.init(stage, world);
+  public void init(Engine engine) {
+    super.init(engine);
 
-    background = new ParallaxBackground();
+    /*background = new ParallaxBackground();
     background.setZIndex(ZIndex.BACKGROUND);
     stage.addActor(background);
 
@@ -55,9 +56,9 @@ public class LevelOne extends Level {
 
     testCollectible = new TestCollectible(stage);
     testCollectible.createBody(world);
-    stage.addActor(testCollectible);
+    stage.addActor(testCollectible);*/
 
-    choreographer = new LevelChoreographer(stage, world);
+    choreographer = new LevelChoreographer(engine);
 
     for (int i = 0; i < 200; i++) {
       choreographer.schedule(1.0f + i, new EnemySpawnEvent());
@@ -66,15 +67,15 @@ public class LevelOne extends Level {
 
   @Override
   public void update(float delta) {
-    inputListener.poll(delta);
+    //inputListener.poll(delta);
     choreographer.update(delta);
-    defaultHud.poll();
+    //defaultHud.poll();
   }
 
   @Override
   public void dispose() {
     player.dispose();
-    testCollectible.dispose();
+    //testCollectible.dispose();
     getMusic().stop();
     getMusic().dispose();
   }

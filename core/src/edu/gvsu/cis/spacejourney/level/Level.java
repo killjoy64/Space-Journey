@@ -1,5 +1,6 @@
 package edu.gvsu.cis.spacejourney.level;
 
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -9,16 +10,14 @@ import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship;
 
 public abstract class Level implements Disposable {
 
-  private Stage stage;
-  private World world;
+  private Engine engine;
 
   private Music music;
   private Table hud;
   private PlayerSpaceship player;
 
-  public void init(Stage stage, World world) {
-    this.stage = stage;
-    this.world = world;
+  public void init(Engine engine) {
+    this.engine = engine;
   }
 
   public abstract void update(float delta);
@@ -47,12 +46,5 @@ public abstract class Level implements Disposable {
     return player;
   }
 
-  public World getWorld() {
-    return world;
-  }
-
-  public Stage getStage() {
-    return stage;
-  }
 }
 

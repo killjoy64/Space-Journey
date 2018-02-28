@@ -12,7 +12,10 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.math.Vector3
 import edu.gvsu.cis.spacejourney.component.*
 import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
 import edu.gvsu.cis.spacejourney.util.Mappers
@@ -30,26 +33,35 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
     private var camera : OrthographicCamera = OrthographicCamera()
 
     init {
+        priority = SystemPriorities.RenderingSystem
         spriteBatch = SpriteBatch()
+
+        camera.viewportWidth = Gdx.graphics.width.toFloat()
+        camera.viewportHeight = Gdx.graphics.height.toFloat()
+        camera.translate(camera.viewportWidth / 2.0f, camera.viewportHeight / 2.0f)
+        camera.update()
     }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
 
-        val transform = Mappers.transform.get(entity);
-        val staticSprite = Mappers.staticSprite.get(entity);
+        val transform = Mappers.transform.get(entity)
+        val staticSprite = Mappers.staticSprite.get(entity)
 
-        camera.viewportWidth = Gdx.graphics.width.toFloat()
-        camera.viewportHeight = Gdx.graphics.height.toFloat()
-        //camera.translate(camera.viewportWidth / 2.0f, camera.viewportHeight / 2.0f)
         camera.update()
 
         spriteBatch?.projectionMatrix = camera.combined
 
         // Render the entity
         spriteBatch?.use {
+
             // #TODO Add Rotation to this draw call
-            debug { "Drawing" }
-            it.draw(staticSprite.texture, transform.position.x, transform.position.y)
+            val position = transform.position
+            val size = Vector2(staticSprite.texture?.width!!.toFloat(), staticSprite.texture?.height!!.toFloat())
+            val scale = staticSprite.scale.toFloat()
+
+            it.draw(TextureRegion(staticSprite.texture), position.x, position.y, (size.x * scale) / 2.0f, (size.y * scale) / 2.0f, size.x, size.y, scale, scale, transform.rotation)
+
+
         }
     }
 
@@ -57,14 +69,14 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
         private val staticSprite = ComponentMapper.getFor(StaticSprite::class.java)
 
         override fun compare(e1: Entity, e2: Entity): Int {
-            return Math.signum(staticSprite.get(e1).zindex - staticSprite.get(e2).zindex).toInt()
+            return staticSprite.get(e2).zindex - staticSprite.get(e1).zindex
         }
     }
 
     fun resize(width: Int, height: Int) {
         camera.viewportWidth = width.toFloat()
         camera.viewportHeight = height.toFloat()
-        camera.translate(camera.viewportWidth / 2.0f, camera.viewportHeight / 2.0f)
+        //camera.translate(camera.viewportWidth / 2.0f, camera.viewportHeight / 2.0f)
         camera.update()
     }
 }

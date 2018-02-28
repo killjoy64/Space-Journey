@@ -8,9 +8,6 @@ import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import edu.gvsu.cis.spacejourney.Constants
-import edu.gvsu.cis.spacejourney.component.Player
-import edu.gvsu.cis.spacejourney.component.Transform
-import edu.gvsu.cis.spacejourney.component.Velocity
 import edu.gvsu.cis.spacejourney.entity.EntityDirection
 import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship
 import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
@@ -20,6 +17,14 @@ import ktx.math.plus
 import ktx.math.times
 import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.controllers.mappings.Xbox
+import com.badlogic.gdx.graphics.Texture
+import edu.gvsu.cis.spacejourney.SpaceJourney
+import edu.gvsu.cis.spacejourney.component.*
+import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
+import edu.gvsu.cis.spacejourney.util.ZIndex
+import ktx.ashley.add
+import ktx.ashley.entity
+import ktx.math.div
 
 
 class PlayerControllerSystem : EntitySystem() {
@@ -27,12 +32,14 @@ class PlayerControllerSystem : EntitySystem() {
 
     private val CONTROLLER_DEADZONE = 0.1
 
+    private var time = 0.0
+
     init {
-        priority = 0
+        priority = SystemPriorities.PlayerControllerSystem
     }
 
     override fun addedToEngine(engine: Engine) {
-        entities = engine.getEntitiesFor(Family.all(Player::class.java, Transform::class.java).get())
+        entities = engine.getEntitiesFor(Family.all(Player::class.java, StaticSprite::class.java, Transform::class.java).get())
     }
 
     override fun update(deltaTime: Float) {
@@ -41,8 +48,10 @@ class PlayerControllerSystem : EntitySystem() {
 
             val transform = Mappers.transform.get(entity)
             val player = Mappers.player.get(entity)
+            val staticSprite = Mappers.staticSprite.get(entity)
 
             val movement = Vector2()
+            var attack = false
 
             Controllers.getControllers().asSequence().take(1).forEach {
                 if (it.getAxis(Xbox.L_STICK_VERTICAL_AXIS) > CONTROLLER_DEADZONE) {
@@ -56,6 +65,9 @@ class PlayerControllerSystem : EntitySystem() {
                 }
                 if (it.getAxis(Xbox.L_STICK_HORIZONTAL_AXIS) < CONTROLLER_DEADZONE) {
                     movement.x = player.movespeed * it.getAxis(Xbox.L_STICK_HORIZONTAL_AXIS)
+                }
+                if (it.getButton(Xbox.A)) {
+                    attack = true
                 }
             }
 
@@ -71,27 +83,60 @@ class PlayerControllerSystem : EntitySystem() {
             if (Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
                 movement.y = -player.movespeed
             }
+            if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+                attack = true
+            }
 
-            transform.position += movement * deltaTime
+            val deltaMovement = movement * deltaTime
 
-            //debug { "Player Position: ${transform.position} Player Velocity: ${velocity.value}" }
+            transform.position += deltaMovement
+
+            val bulletInheritedVelocityFactor = 0.2f
+
+            time += deltaTime
+            if (attack && time >= player.firerate) {
+
+                val playerCenter = Vector2(transform.position)
+
+                engine.add {
+                    entity {
+                        with<Projectile> {}
+                        with<BoxCollider> {}
+                        with<Velocity> {
+                            value = Vector2(deltaMovement.x * bulletInheritedVelocityFactor, 6.0f)
+                        }
+                        with<Transform> {
+                            position = Vector2(playerCenter.x + 16, playerCenter.y)
+                        }
+                        with<StaticSprite> {
+                            zindex = ZIndex.PROJECTILES
+                            texture = SpaceJourney.assetManager.get("laser.png", Texture::class.java)
+                        }
+                    }
+                }
+
+                engine.add {
+                    entity {
+                        with<Projectile> {}
+                        with<BoxCollider> {}
+                        with<Velocity> {
+                            value = Vector2(deltaMovement.x * bulletInheritedVelocityFactor, 6.0f)
+                        }
+                        with<Transform> {
+                            position = Vector2(playerCenter.x - 16, playerCenter.y)
+                        }
+                        with<StaticSprite> {
+                            zindex = ZIndex.PROJECTILES
+                            texture = SpaceJourney.assetManager.get("laser.png", Texture::class.java)
+                        }
+                    }
+                }
+
+                this.time = 0.0
+            }
+
         }
 
-
-        /*if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            time += delta
-            if (time >= spawnFrequency) {
-                val x = (this.player.getX() + this.player.getWidth() / 2) / Constants.PX_PER_M
-                var y = (this.player.getY() + this.player.getHeight()) / Constants.PX_PER_M
-
-                y = y - 32 / Constants.PX_PER_M
-
-                this.projManager.spawnLaser(x + 16 / Constants.PX_PER_M, y)
-                this.projManager.spawnLaser(x - 16 / Constants.PX_PER_M, y)
-
-                this.time = 0.0f
-            }
-        }*/
 
 
     }

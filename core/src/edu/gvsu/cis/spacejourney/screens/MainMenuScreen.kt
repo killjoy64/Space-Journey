@@ -37,8 +37,8 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
 
         val camera = OrthographicCamera()
         val viewport = FitViewport(
-                Constants.VIRTUAL_WIDTH * 2,
-                Constants.VIRTUAL_HEIGHT * 2,
+                Constants.VIRTUAL_WIDTH,
+                Constants.VIRTUAL_HEIGHT,
                 camera)
 
         stage = Stage(viewport)

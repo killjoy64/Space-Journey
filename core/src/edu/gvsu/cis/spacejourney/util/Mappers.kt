@@ -11,7 +11,6 @@ class Mappers {
     companion object {
         val transform = ComponentMapper.getFor(Transform::class.java)
         val velocity = ComponentMapper.getFor(Velocity::class.java)
-        val box2D = ComponentMapper.getFor(Box2D::class.java)
         val boxCollider = ComponentMapper.getFor(BoxCollider::class.java)
         val circleCollider = ComponentMapper.getFor(CircleCollider::class.java)
         val staticSprite = ComponentMapper.getFor(StaticSprite::class.java)

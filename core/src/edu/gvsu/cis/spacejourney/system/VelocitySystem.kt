@@ -2,17 +2,9 @@ package edu.gvsu.cis.spacejourney.system
 
 import com.badlogic.ashley.core.*
 import com.badlogic.ashley.utils.ImmutableArray
-import com.badlogic.gdx.physics.box2d.BodyDef
-import edu.gvsu.cis.spacejourney.component.Box2D
 import edu.gvsu.cis.spacejourney.component.Transform
 import edu.gvsu.cis.spacejourney.component.Velocity
 import edu.gvsu.cis.spacejourney.util.Mappers
-import edu.gvsu.cis.spacejourney.util.toMeters
-import edu.gvsu.cis.spacejourney.util.toPixels
-import ktx.ashley.get
-import ktx.ashley.has
-import ktx.box2d.body
-import ktx.box2d.createWorld
 import ktx.math.plus
 
 class VelocitySystem : EntitySystem() {
@@ -21,7 +13,7 @@ class VelocitySystem : EntitySystem() {
     private var entities: ImmutableArray<Entity>? = null
 
     init {
-        priority = 1
+        priority = SystemPriorities.VelocitySystem
     }
 
     override fun addedToEngine(engine: Engine) {
