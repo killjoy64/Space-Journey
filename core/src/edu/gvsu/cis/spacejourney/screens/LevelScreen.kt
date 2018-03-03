@@ -52,7 +52,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         with<StaticSprite> {
           scale = 2
           zindex = ZIndex.PLAYER
-          texture = SpaceJourney.assetManager.get("spaceship2.png", Texture::class.java)
+          texture = SpaceJourney.assetManager.get("player_spaceship.png", Texture::class.java)
         }
       }
     }
@@ -90,7 +90,6 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
   }
 
   override fun dispose() {
-
 
   }
 

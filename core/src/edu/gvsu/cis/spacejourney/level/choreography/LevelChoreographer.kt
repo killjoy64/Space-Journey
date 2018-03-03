@@ -36,8 +36,7 @@ class EnemySpawnEvent : ChoreographEvent() {
 
         val randomPosition = Vector2((Math.random().toFloat() * Gdx.graphics.width.toFloat() - 50.0f) + 50.0f, Gdx.graphics.height.toFloat())
 
-        val enemyTexture = SpaceJourney.assetManager.get("spaceship3.png", Texture::class.java)
-
+        val enemyTexture = SpaceJourney.assetManager.get("enemy_spaceship.png", Texture::class.java)
 
         engine.add {
             entity {
