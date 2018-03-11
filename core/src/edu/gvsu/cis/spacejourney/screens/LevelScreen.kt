@@ -4,17 +4,17 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Vector2
-
 import edu.gvsu.cis.spacejourney.SpaceJourney
-import edu.gvsu.cis.spacejourney.component.*
-import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
+import edu.gvsu.cis.spacejourney.component.Player
+import edu.gvsu.cis.spacejourney.component.StaticSprite
+import edu.gvsu.cis.spacejourney.component.Transform
 import edu.gvsu.cis.spacejourney.level.Level
 import edu.gvsu.cis.spacejourney.level.Levels
 import edu.gvsu.cis.spacejourney.managers.GameDataManager
 import edu.gvsu.cis.spacejourney.system.CollisionSystem
-import edu.gvsu.cis.spacejourney.system.VelocitySystem
 import edu.gvsu.cis.spacejourney.system.PlayerControllerSystem
 import edu.gvsu.cis.spacejourney.system.RenderingSystem
+import edu.gvsu.cis.spacejourney.system.VelocitySystem
 import edu.gvsu.cis.spacejourney.util.ZIndex
 import ktx.ashley.add
 import ktx.ashley.entity
@@ -44,10 +44,10 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
     engine.add {
       entity {
         with<Player> {
-          movespeed = 150.0f
+          movespeed = 300.0f
         }
         with<Transform> {
-          position = Vector2(Gdx.graphics.width.toFloat() / 2.0f, 25.0f)
+          position = Vector2(Gdx.graphics.width.toFloat() / 2.0f, 45.0f)
         }
         with<StaticSprite> {
           scale = 2

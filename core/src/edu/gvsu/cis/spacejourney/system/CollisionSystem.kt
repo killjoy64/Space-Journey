@@ -5,16 +5,12 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.utils.ImmutableArray
-import com.badlogic.gdx.math.Vector2
 import edu.gvsu.cis.spacejourney.component.Transform
-import edu.gvsu.cis.spacejourney.component.Velocity
 import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
 import edu.gvsu.cis.spacejourney.component.colliders.CircleCollider
 import edu.gvsu.cis.spacejourney.util.Mappers
 import ktx.ashley.has
-import ktx.ashley.mapperFor
 import ktx.log.debug
-import ktx.math.plus
 
 private data class CollisionRectangle(
         val x : Float,
@@ -53,6 +49,32 @@ class CollisionSystem : EntitySystem() {
                 rect1.height + rect1.y > rect2.y)
     }
 
+    fun onCollision(){
+        /*val currentLives = gameData.getLives()
+
+        val a = contact.getFixtureA()
+        val b = contact.getFixtureB()
+
+        if (entityB is EvilSpaceship && entityA is PlayerSpaceship) {
+            val player = entityA as PlayerSpaceship
+            gameData.setLives(currentLives - 1)
+            player.takeDamage()
+        }
+
+        if (entityA is Collectible && entityB is PlayerSpaceship) {
+            val c = entityA as Collectible
+            c.collect()
+        }
+
+        if (entityA is Laser && entityB is Enemy) {
+            val e = entityB as Enemy
+            val l = entityA as Laser
+            e.takeDamage()
+            l.reset()
+            Graveyard.bodies.add(a.getBody())
+        }*/
+    }
+
     fun collisionCheck(entityA: Entity, entityB :Entity){
 
         val boxA = Mappers.boxCollider.get(entityA)
@@ -72,7 +94,7 @@ class CollisionSystem : EntitySystem() {
                 CollisionRectangle.fromComponents(boxATransform, boxA),
                 CollisionRectangle.fromComponents(boxBTransform, boxB)
             )){
-                debug { "Collision Occured" }
+                //debug { "Collision Occured" }
 
                 if (entityA.has(Mappers.enemy) && entityB.has(Mappers.projectile)){
                     engine.removeEntity(entityA)

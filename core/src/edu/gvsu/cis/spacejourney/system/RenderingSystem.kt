@@ -1,45 +1,50 @@
 package edu.gvsu.cis.spacejourney.system
 
-import com.badlogic.ashley.core.Engine
-import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.core.EntitySystem
-import com.badlogic.ashley.core.Family
-import com.badlogic.ashley.utils.ImmutableArray
-import ktx.box2d.createWorld
 import com.badlogic.ashley.core.ComponentMapper
+import com.badlogic.ashley.core.Entity
+import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.systems.SortedIteratingSystem
-import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.math.Vector3
-import edu.gvsu.cis.spacejourney.component.*
-import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
+import com.badlogic.gdx.utils.viewport.FitViewport
+import edu.gvsu.cis.spacejourney.component.StaticSprite
+import edu.gvsu.cis.spacejourney.component.Transform
 import edu.gvsu.cis.spacejourney.util.Mappers
-import edu.gvsu.cis.spacejourney.util.toMeters
-import edu.gvsu.cis.spacejourney.util.toPixels
-import ktx.app.use
-import ktx.ashley.get
-import ktx.ashley.has
-import ktx.box2d.body
-import ktx.log.debug
 
 class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.java, Transform::class.java).get(), ZComparator()) {
 
     private var spriteBatch : SpriteBatch? = null
     private var camera : OrthographicCamera = OrthographicCamera()
+    private var viewport : FitViewport? = null
 
     init {
         priority = SystemPriorities.RenderingSystem
         spriteBatch = SpriteBatch()
 
-        camera.viewportWidth = Gdx.graphics.width.toFloat()
-        camera.viewportHeight = Gdx.graphics.height.toFloat()
-        camera.translate(camera.viewportWidth / 2.0f, camera.viewportHeight / 2.0f)
+        viewport = FitViewport(1920f, 1080f)
+
+        //viewport?.camera?.translate(viewport!!.worldWidth / 2.0f, viewport!!.worldHeight / 2.0f, 0.0f)
+
+        viewport?.update(1920, 1080, true)
+
+    }
+
+    override fun update(deltaTime: Float) {
+
         camera.update()
+
+        viewport.apply {
+
+            spriteBatch?.projectionMatrix = viewport?.camera?.combined
+
+            spriteBatch?.begin()
+
+            super.update(deltaTime)
+
+            spriteBatch?.end()
+        }
     }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
@@ -47,21 +52,15 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
         val transform = Mappers.transform.get(entity)
         val staticSprite = Mappers.staticSprite.get(entity)
 
-        camera.update()
-
-        spriteBatch?.projectionMatrix = camera.combined
-
         // Render the entity
-        spriteBatch?.use {
 
-            // #TODO Add Rotation to this draw call
-            val position = transform.position
-            val size = Vector2(staticSprite.texture?.width!!.toFloat(), staticSprite.texture?.height!!.toFloat())
-            val scale = staticSprite.scale.toFloat()
+        // #TODO Add Rotation to this draw call
+        val position = transform.position
+        val size = Vector2(staticSprite.texture?.width!!.toFloat(), staticSprite.texture?.height!!.toFloat())
+        val scale = staticSprite.scale.toFloat()
 
-            it.draw(TextureRegion(staticSprite.texture), position.x, position.y, (size.x / 2.0f) * scale, (size.y / 2.0f) * scale, size.x, size.y, scale, scale, transform.rotation)
+        spriteBatch?.draw(TextureRegion(staticSprite.texture), position.x, position.y, (size.x / 2.0f) * scale, (size.y / 2.0f) * scale, size.x, size.y, scale, scale, transform.rotation)
 
-        }
     }
 
     private class ZComparator : Comparator<Entity> {
@@ -73,9 +72,7 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
     }
 
     fun resize(width: Int, height: Int) {
-        camera.viewportWidth = width.toFloat()
-        camera.viewportHeight = height.toFloat()
-        //camera.translate(camera.viewportWidth / 2.0f, camera.viewportHeight / 2.0f)
-        camera.update()
+
+        viewport?.update(width, height, true)
     }
 }

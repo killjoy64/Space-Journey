@@ -4,27 +4,16 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.World
-import com.badlogic.gdx.scenes.scene2d.Stage
 import edu.gvsu.cis.spacejourney.SpaceJourney
-import edu.gvsu.cis.spacejourney.component.Player
 import edu.gvsu.cis.spacejourney.component.StaticSprite
 import edu.gvsu.cis.spacejourney.component.Transform
 import edu.gvsu.cis.spacejourney.component.Velocity
 import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
-import edu.gvsu.cis.spacejourney.component.colliders.CircleCollider
-import edu.gvsu.cis.spacejourney.entity.Collidable
-import edu.gvsu.cis.spacejourney.entity.enemy.Enemy
-import edu.gvsu.cis.spacejourney.entity.enemy.EvilSpaceship
-import edu.gvsu.cis.spacejourney.entity.enemy.OutOfBoundsListener
-import edu.gvsu.cis.spacejourney.entity.movement.LinearMovement
 import edu.gvsu.cis.spacejourney.util.ZIndex
-import edu.gvsu.cis.spacejourney.util.toMeters
 import ktx.ashley.add
 import ktx.ashley.entity
 import ktx.collections.GdxArray
 import ktx.collections.isNotEmpty
-import ktx.log.debug
 
 class EnemySpawnEvent : ChoreographEvent() {
 
@@ -32,7 +21,7 @@ class EnemySpawnEvent : ChoreographEvent() {
 
     override fun onEvent(engine: Engine) {
 
-        debug { "Enemy added" }
+        //debug { "Enemy added" }
 
         val randomPosition = Vector2((Math.random().toFloat() * Gdx.graphics.width.toFloat() - 50.0f) + 50.0f, Gdx.graphics.height.toFloat())
 

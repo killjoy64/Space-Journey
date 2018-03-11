@@ -1,6 +1,5 @@
 package edu.gvsu.cis.spacejourney.desktop;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import edu.gvsu.cis.spacejourney.SpaceJourney;

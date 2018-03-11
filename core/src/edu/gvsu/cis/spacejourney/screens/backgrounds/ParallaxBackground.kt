@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Disposable
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.util.ZIndex
-import edu.gvsu.cis.spacejourney.util.toMeters
 import java.util.*
 
 class ParallaxLayer(
@@ -69,7 +68,7 @@ class ParallaxBackground : Actor(), Disposable {
                 layer?.region?.regionHeight = Gdx.graphics.height
                 batch?.draw(layer.region, layer.offset.x, layer.offset.y, stage?.viewport!!.worldWidth, stage?.viewport!!.worldHeight)
             } else {
-                batch?.draw(layer.region, layer.offset.x, layer.offset.y, Gdx.graphics.width.toFloat().toMeters(), Gdx.graphics.height.toMeters())
+                batch?.draw(layer.region, layer.offset.x, layer.offset.y, Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
             }
         }
     }

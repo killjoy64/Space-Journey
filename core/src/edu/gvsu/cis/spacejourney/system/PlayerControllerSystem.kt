@@ -1,36 +1,33 @@
 package edu.gvsu.cis.spacejourney.system
 
-import com.badlogic.ashley.core.*
+import com.badlogic.ashley.core.Engine
+import com.badlogic.ashley.core.Entity
+import com.badlogic.ashley.core.EntitySystem
+import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
-import com.badlogic.gdx.controllers.Controller
-import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.math.Vector3
-import edu.gvsu.cis.spacejourney.Constants
-import edu.gvsu.cis.spacejourney.entity.EntityDirection
-import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship
-import edu.gvsu.cis.spacejourney.managers.ActiveProjectileManager
-import edu.gvsu.cis.spacejourney.util.Mappers
-import ktx.log.debug
-import ktx.math.plus
-import ktx.math.times
 import com.badlogic.gdx.controllers.Controllers
-import com.badlogic.gdx.controllers.mappings.Xbox
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.math.Vector2
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.component.*
 import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
+import edu.gvsu.cis.spacejourney.util.Mappers
 import edu.gvsu.cis.spacejourney.util.ZIndex
 import ktx.ashley.add
 import ktx.ashley.entity
-import ktx.math.div
+import ktx.log.debug
+import ktx.math.plus
+import ktx.math.times
+
+
 
 
 class PlayerControllerSystem : EntitySystem() {
     private var entities: ImmutableArray<Entity>? = null
 
-    private val CONTROLLER_DEADZONE = 0.1
+    private val CONTROLLER_DEADZONE = 0.05
 
     private var time = 0.0
 
@@ -40,6 +37,10 @@ class PlayerControllerSystem : EntitySystem() {
 
     override fun addedToEngine(engine: Engine) {
         entities = engine.getEntitiesFor(Family.all(Player::class.java, StaticSprite::class.java, Transform::class.java).get())
+
+        for (controller in Controllers.getControllers()) {
+            debug { "Found controller: " + controller.name }
+        }
     }
 
     override fun update(deltaTime: Float) {
@@ -53,21 +54,34 @@ class PlayerControllerSystem : EntitySystem() {
             val movement = Vector2()
             var attack = false
 
-            Controllers.getControllers().asSequence().take(1).forEach {
-                if (it.getAxis(Xbox.L_STICK_VERTICAL_AXIS) > CONTROLLER_DEADZONE) {
-                    movement.y = player.movespeed * it.getAxis(Xbox.L_STICK_VERTICAL_AXIS)
-                }
-                if (it.getAxis(Xbox.L_STICK_VERTICAL_AXIS) < CONTROLLER_DEADZONE) {
-                    movement.y = player.movespeed * it.getAxis(Xbox.L_STICK_VERTICAL_AXIS)
-                }
-                if (it.getAxis(Xbox.L_STICK_HORIZONTAL_AXIS) > CONTROLLER_DEADZONE) {
-                    movement.x = player.movespeed * it.getAxis(Xbox.L_STICK_HORIZONTAL_AXIS)
-                }
-                if (it.getAxis(Xbox.L_STICK_HORIZONTAL_AXIS) < CONTROLLER_DEADZONE) {
-                    movement.x = player.movespeed * it.getAxis(Xbox.L_STICK_HORIZONTAL_AXIS)
-                }
-                if (it.getButton(Xbox.A)) {
-                    attack = true
+            Controllers.getControllers().asSequence().withIndex().forEach {
+
+                val controllerID = it.index
+                val controller = it.value
+
+                if (controllerID == 0) {
+
+                    // The official controller mappings by LibGDX for Xbox360 controllers
+                    // don't work on Windows of all platforms... so we have to hardcode them
+                    val L_STICK_HORIZONTAL_AXIS = 1
+                    val L_STICK_VERTICAL_AXIS = 0
+                    val A_BUTTON = 0
+
+                    if (controller.getAxis(L_STICK_VERTICAL_AXIS) > CONTROLLER_DEADZONE) {
+                        movement.y = player.movespeed * -controller.getAxis(L_STICK_VERTICAL_AXIS)
+                    }
+                    if (controller.getAxis(L_STICK_VERTICAL_AXIS) < -CONTROLLER_DEADZONE) {
+                        movement.y = player.movespeed * -controller.getAxis(L_STICK_VERTICAL_AXIS)
+                    }
+                    if (controller.getAxis(L_STICK_HORIZONTAL_AXIS) > CONTROLLER_DEADZONE) {
+                        movement.x = player.movespeed * controller.getAxis(L_STICK_HORIZONTAL_AXIS)
+                    }
+                    if (controller.getAxis(L_STICK_HORIZONTAL_AXIS) < -CONTROLLER_DEADZONE) {
+                        movement.x = player.movespeed * controller.getAxis(L_STICK_HORIZONTAL_AXIS)
+                    }
+                    if (controller.getButton(A_BUTTON)) {
+                        attack = true
+                    }
                 }
             }
 
@@ -100,6 +114,8 @@ class PlayerControllerSystem : EntitySystem() {
 
                 val laserTexture = SpaceJourney.assetManager.get("laser.png", Texture::class.java)
 
+                val projectileVelocity = 10.0f
+
                 engine.add {
                     entity {
                         with<Projectile> {}
@@ -108,7 +124,7 @@ class PlayerControllerSystem : EntitySystem() {
                             height = laserTexture.width
                         }
                         with<Velocity> {
-                            value = Vector2(deltaMovement.x * bulletInheritedVelocityFactor, 6.0f)
+                            value = Vector2(deltaMovement.x * bulletInheritedVelocityFactor, projectileVelocity)
                         }
                         with<Transform> {
                             position = Vector2(playerCenter.x + 16, playerCenter.y)
@@ -130,7 +146,7 @@ class PlayerControllerSystem : EntitySystem() {
                             height = laserTexture.width
                         }
                         with<Velocity> {
-                            value = Vector2(deltaMovement.x * bulletInheritedVelocityFactor, 6.0f)
+                            value = Vector2(deltaMovement.x * bulletInheritedVelocityFactor, projectileVelocity)
                         }
                         with<Transform> {
                             position = Vector2(playerCenter.x - 32, playerCenter.y)
