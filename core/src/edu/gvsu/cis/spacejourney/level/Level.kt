@@ -3,29 +3,21 @@ package edu.gvsu.cis.spacejourney.level
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Music
+import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Disposable
+import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay
 
 abstract class Level : Disposable {
 
     private var engine: Engine? = null
 
-    /*
-  public void setMusic(Music music) {
-    this.music = music;
-  }
-
-  public void setHud(Table hud) {
-    this.hud = hud;
-  }
-  */
-
-    /*public void setPlayer(PlayerSpaceship player) {
-    this.player = player;
-  }*/
-
-    val music: Music? = null
-    //private Table hud;
+    var music: Music? = null
+    var hud: DefaultOverlay? = null
     //private PlayerSpaceship player;
+
+    /*fun setHud(hud : Table) {
+        this.hud = hud;
+    }*/
 
     open fun init(engine: Engine) {
         this.engine = engine
@@ -43,14 +35,5 @@ abstract class Level : Disposable {
                 "Pixel Perfect: $pixel_perfect")
 
     }
-
-    /*public Table getHud() {
-    return hud;
-  }*/
-
-    /*public PlayerSpaceship getPlayer() {
-    return player;
-  }*/
-
 }
 

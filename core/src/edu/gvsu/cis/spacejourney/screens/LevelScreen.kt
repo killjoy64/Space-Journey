@@ -62,9 +62,10 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     level = Levels.getFromId(gameData?.levelNumber!!).level
     level?.init(engine)
-    /*level?.music?.volume = 0.3f
+
+    level?.music?.volume = 0.3f
     level?.music?.isLooping = true
-    level?.music?.play()*/
+    level?.music?.play()
 
   }
 
@@ -80,12 +81,20 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     // Switch level if needed
     /*if (level != null && level?.player!!.isDead) {
-      game.setScreen<LevelSelectScreen>()
+    game.setScreen<LevelSelectScreen>()
     }*/
 
     engine.update(delta)
 
     level?.update(delta)
+
+    // #TODO Replace the following code, it's a bit hacky, spriteBatch should be private.
+    // Maybe add .drawGUI(Table) to renderingSystem
+    renderingSystem?.spriteBatch?.begin()
+    level?.hud?.setPosition(0.0f, Gdx.graphics.height.toFloat())
+    level?.hud?.act(delta)
+    level?.hud?.draw(renderingSystem?.spriteBatch, 1.0f)
+    renderingSystem?.spriteBatch?.end()
 
   }
 

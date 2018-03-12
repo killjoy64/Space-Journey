@@ -17,6 +17,7 @@ class Mappers {
         val player = ComponentMapper.getFor(Player::class.java)
         val projectile = ComponentMapper.getFor(Projectile::class.java)
         val enemy = ComponentMapper.getFor(Enemy::class.java)
+        val parallax = ComponentMapper.getFor(Parallax::class.java)
     }
 }
 

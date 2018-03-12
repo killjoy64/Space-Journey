@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Align;
 import edu.gvsu.cis.spacejourney.SpaceJourney;
 import edu.gvsu.cis.spacejourney.Strings;
 import edu.gvsu.cis.spacejourney.managers.GameDataManager;
+import edu.gvsu.cis.spacejourney.util.JMP;
 
 /**
  * Default head-up display (HUD) for the game play screen.
@@ -37,24 +38,24 @@ public class DefaultOverlay extends Table {
     this.livesDisplayed = 0;
 
     font = new BitmapFont(Gdx.files.internal("fonts/default.fnt"));
-    font.getData().scale(0.15f);
+    font.getData().scale(0.5f);
 
-    this.scoreLabel = new Label(String.format(Strings.HUD_SCORE, gameData.getScore()), new Label.LabelStyle(font, Color.WHITE));
+    this.scoreLabel = new Label(String.format(Strings.HUD_SCORE, gameData.getScore()), new Label.LabelStyle(font, JMP.Companion.getWhite()));
 
     System.out.println(this.lives.length + " spaces available");
 
-    this.setFillParent(true);
-//    this.setDebug(true);
+    this.setWidth(Gdx.graphics.getWidth());
+    this.setDebug(true);
 
     for (int i = 0; i < this.lives.length; i++) {
       lives[i] = new Image(
-          SpaceJourney.Companion.getAssetManager().get("spaceship2.png", Texture.class));
-      top().left().padLeft(16f).padTop(16.0f).add(lives[i]).size(64f, 64f).padRight(16.0f);
+          SpaceJourney.Companion.getAssetManager().get("player_spaceship.png", Texture.class));
+      top().left().padLeft(32.0f).padTop(16.0f).add(lives[i]).size(32f * 3f, 32f * 3f).padRight(16.0f);
 
       livesDisplayed++;
     }
 
-    add(scoreLabel).align(Align.right).padTop(10f).padRight(16f).expandX();
+    add(scoreLabel).align(Align.right).padTop(10f).padRight(32f).expandX();
   }
 
   /**

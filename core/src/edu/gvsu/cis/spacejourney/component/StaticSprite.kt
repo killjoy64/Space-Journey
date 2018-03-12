@@ -10,7 +10,10 @@ class StaticSprite : Component {
     var texture : Texture? = null
 
     // If size is null the renderer uses the pixel size of the image
-    // var size : Vector2? = null
+    var size : Vector2? = null
+
+    // Is the sprite repeating across it's size?
+    var repeating = false
 
     // This is an integer to make sure we respect the Pixels so we get Pixel-Perfect-Rendering
     var scale : Int = 1
