@@ -1,0 +1,203 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: LevelOne</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">edu.gvsu.cis.spacejourney.level.one</a> ]
+</div>
+
+<h1>Coverage Summary for Class: LevelOne (edu.gvsu.cis.spacejourney.level.one)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LevelOne</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    92.9%
+  </span>
+  <span class="absValue">
+    (39/ 42)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package edu.gvsu.cis.spacejourney.level.one;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.badlogic.gdx.Gdx;
+<i>4</i>&nbsp;import com.badlogic.gdx.audio.Music;
+<i>5</i>&nbsp;import com.badlogic.gdx.math.Vector2;
+<i>6</i>&nbsp;import com.badlogic.gdx.physics.box2d.World;
+<i>7</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.Stage;
+<i>8</i>&nbsp;import edu.gvsu.cis.spacejourney.SpaceJourney;
+<i>9</i>&nbsp;import edu.gvsu.cis.spacejourney.entity.PlayerSpaceship;
+<i>10</i>&nbsp;import edu.gvsu.cis.spacejourney.entity.collectible.Collectible;
+<i>11</i>&nbsp;import edu.gvsu.cis.spacejourney.entity.collectible.TestCollectible;
+<i>12</i>&nbsp;import edu.gvsu.cis.spacejourney.entity.enemy.EvilSpaceship;
+<i>13</i>&nbsp;import edu.gvsu.cis.spacejourney.entity.movement.LinearMovement;
+<i>14</i>&nbsp;import edu.gvsu.cis.spacejourney.input.PlayerInputListener;
+<i>15</i>&nbsp;import edu.gvsu.cis.spacejourney.level.Level;
+<i>16</i>&nbsp;import edu.gvsu.cis.spacejourney.level.choreography.LevelChoreographer;
+<i>17</i>&nbsp;import edu.gvsu.cis.spacejourney.level.choreography.events.EntitySpawnEvent;
+<i>18</i>&nbsp;import edu.gvsu.cis.spacejourney.screens.backgrounds.ParallaxBackground;
+<i>19</i>&nbsp;import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay;
+<i>20</i>&nbsp;import edu.gvsu.cis.spacejourney.util.ZIndex;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;/**
+<i>23</i>&nbsp; * Level logic for the first initial level of Spcae Journey.
+<i>24</i>&nbsp; * @author Kyle Flynn
+<i>25</i>&nbsp; *
+<i>26</i>&nbsp; */
+<i>27</i>&nbsp;public class LevelOne extends Level {
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;  private static final int LEVEL_TIME = 200;
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;  private ParallaxBackground background;
+<i>32</i>&nbsp;  private PlayerSpaceship player;
+<i>33</i>&nbsp;  private PlayerInputListener inputListener;
+<i>34</i>&nbsp;  private Collectible testCollectible;
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;  private LevelChoreographer choreographer;
+<i>37</i>&nbsp;  private DefaultOverlay defaultHud;
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;  /**
+<i>40</i>&nbsp;   * Default constructor for the first level.
+<i>41</i>&nbsp;   */
+<b class="fc"><i>42</i>&nbsp;  public LevelOne() {</b>
+<b class="fc"><i>43</i>&nbsp;    setMusic(SpaceJourney.Companion.getAssetManager().get(</b>
+<i>44</i>&nbsp;        &quot;Space Background Music.mp3&quot;, Music.class));
+<b class="fc"><i>45</i>&nbsp;  }</b>
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;  /**
+<i>48</i>&nbsp;   * Method that initializes logic specific to the first level.
+<i>49</i>&nbsp;   * @param stage for the current stage of the game.
+<i>50</i>&nbsp;   * @param world for the current world of the game.
+<i>51</i>&nbsp;   */
+<i>52</i>&nbsp;  @Override
+<i>53</i>&nbsp;  public void init(Stage stage, World world) {
+<b class="fc"><i>54</i>&nbsp;    super.init(stage, world);</b>
+<i>55</i>&nbsp;
+<b class="fc"><i>56</i>&nbsp;    background = new ParallaxBackground();</b>
+<b class="fc"><i>57</i>&nbsp;    background.setZIndex(ZIndex.BACKGROUND);</b>
+<b class="fc"><i>58</i>&nbsp;    stage.addActor(background);</b>
+<i>59</i>&nbsp;
+<b class="fc"><i>60</i>&nbsp;    player = new PlayerSpaceship(stage);</b>
+<b class="fc"><i>61</i>&nbsp;    player.setPosition(1.5f, 0.0f);</b>
+<b class="fc"><i>62</i>&nbsp;    player.setWidth(50.0f);</b>
+<b class="fc"><i>63</i>&nbsp;    player.setHeight(50.0f);</b>
+<b class="fc"><i>64</i>&nbsp;    player.createBody(world);</b>
+<b class="fc"><i>65</i>&nbsp;    stage.addActor(player);</b>
+<b class="fc"><i>66</i>&nbsp;    setPlayer(player);</b>
+<i>67</i>&nbsp;
+<b class="fc"><i>68</i>&nbsp;    defaultHud = new DefaultOverlay();</b>
+<b class="fc"><i>69</i>&nbsp;    setHud(defaultHud);</b>
+<i>70</i>&nbsp;
+<b class="fc"><i>71</i>&nbsp;    inputListener = new PlayerInputListener(player);</b>
+<b class="fc"><i>72</i>&nbsp;    Gdx.input.setInputProcessor(inputListener);</b>
+<i>73</i>&nbsp;
+<b class="fc"><i>74</i>&nbsp;    testCollectible = new TestCollectible(stage);</b>
+<b class="fc"><i>75</i>&nbsp;    testCollectible.createBody(world);</b>
+<b class="fc"><i>76</i>&nbsp;    stage.addActor(testCollectible);</b>
+<i>77</i>&nbsp;
+<b class="fc"><i>78</i>&nbsp;    choreographer = new LevelChoreographer(stage, world);</b>
+<i>79</i>&nbsp;
+<b class="fc"><i>80</i>&nbsp;    for (int i = 0; i &lt; LEVEL_TIME; i++) {</b>
+<b class="fc"><i>81</i>&nbsp;      EvilSpaceship basicEnemy = new EvilSpaceship(stage);</b>
+<b class="fc"><i>82</i>&nbsp;      basicEnemy.setWidth(35.0f);</b>
+<b class="fc"><i>83</i>&nbsp;      basicEnemy.setHeight(35.0f);</b>
+<b class="fc"><i>84</i>&nbsp;      basicEnemy.setMovementPattern(new LinearMovement(new Vector2(0f, -25f)));</b>
+<b class="fc"><i>85</i>&nbsp;      choreographer.schedule(1.0f + i, new EntitySpawnEvent(basicEnemy));</b>
+<i>86</i>&nbsp;    }
+<i>87</i>&nbsp;
+<b class="fc"><i>88</i>&nbsp;  }</b>
+<i>89</i>&nbsp;
+<i>90</i>&nbsp;  /**
+<i>91</i>&nbsp;   * Method that updates the logic each time the render() method is called.
+<i>92</i>&nbsp;   * @param delta float given during a screen&#39;s render() method.
+<i>93</i>&nbsp;   */
+<i>94</i>&nbsp;  @Override
+<i>95</i>&nbsp;  public void update(float delta) {
+<b class="fc"><i>96</i>&nbsp;    inputListener.poll(delta);</b>
+<b class="fc"><i>97</i>&nbsp;    choreographer.update(delta);</b>
+<b class="fc"><i>98</i>&nbsp;    defaultHud.poll();</b>
+<i>99</i>&nbsp;
+<b class="fc"><i>100</i>&nbsp;    if (choreographer.isEmpty()) {</b>
+<b class="nc"><i>101</i>&nbsp;      EntitySpawnEvent event = (EntitySpawnEvent) choreographer.getLastEvent().getEvent();</b>
+<b class="nc"><i>102</i>&nbsp;      if (event.getEntity().belowScreen()) {</b>
+<i>103</i>&nbsp;        // TODO - Implement level completed... or something...
+<b class="nc"><i>104</i>&nbsp;    	  System.out.println(&quot;FINISHED&quot;);</b>
+<i>105</i>&nbsp;      }
+<i>106</i>&nbsp;    }
+<i>107</i>&nbsp;
+<b class="fc"><i>108</i>&nbsp;  }</b>
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;  /**
+<i>111</i>&nbsp;   * Disposes of any disposable objects, such as music, textures, or entities.
+<i>112</i>&nbsp;   */
+<i>113</i>&nbsp;  @Override
+<i>114</i>&nbsp;  public void dispose() {
+<b class="fc"><i>115</i>&nbsp;    player.dispose();</b>
+<b class="fc"><i>116</i>&nbsp;    testCollectible.dispose();</b>
+<b class="fc"><i>117</i>&nbsp;    getMusic().stop();</b>
+<b class="fc"><i>118</i>&nbsp;    getMusic().dispose();</b>
+<b class="fc"><i>119</i>&nbsp;  }</b>
+<i>120</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-02-26 20:21</div>
+</div>
+</body>
+</html>

@@ -4,10 +4,14 @@ import com.badlogic.gdx.Application.LOG_DEBUG
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.physics.box2d.Box2D
-import edu.gvsu.cis.spacejourney.screens.*
+import edu.gvsu.cis.spacejourney.screens.BaseScreen
+import edu.gvsu.cis.spacejourney.screens.LevelSelectScreen
+import edu.gvsu.cis.spacejourney.screens.LevelScreen
+import edu.gvsu.cis.spacejourney.screens.LoadingScreen
+import edu.gvsu.cis.spacejourney.screens.MainMenuScreen
 import ktx.app.KtxGame
 
-/*
+/**
 The core of the game, where we spawn the first screen.
  */
 class SpaceJourney : KtxGame<BaseScreen>() {
@@ -18,10 +22,16 @@ class SpaceJourney : KtxGame<BaseScreen>() {
         val ASSETS = AssetManager()
     }
 
+    /**
+     * Companion object that holds a static instance of the game's asset manager.
+     */
     companion object {
         val assetManager: AssetManager by lazy { Holder.ASSETS }
     }
 
+    /**
+     * Method that LibGDX calls to instantiate the game.
+     */
     override fun create() {
 
         Gdx.graphics.setTitle(Strings.GAME_TITLE)
@@ -42,5 +52,4 @@ class SpaceJourney : KtxGame<BaseScreen>() {
         // Switch to the first screen
         this.setScreen<LoadingScreen>()
     }
-
 }

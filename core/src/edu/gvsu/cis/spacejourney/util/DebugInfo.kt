@@ -5,12 +5,20 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Actor
 import edu.gvsu.cis.spacejourney.SpaceJourney
 
+/**
+ * Class that displays simple debug info for
+ * ease of debugging during runtime.
+ */
 class DebugInfo : Actor() {
 
     private var enabled = true
 
-    private var debugFont : BitmapFont? = null
+    private var debugFont: BitmapFont? = null
 
+    /**
+     * Method that overrides Actor.draw() in order to draw
+     * a few fonts and tables to the screen.
+     */
     override fun draw(batch: Batch?, parentAlpha: Float) {
         super.draw(batch, parentAlpha)
 
@@ -22,11 +30,14 @@ class DebugInfo : Actor() {
         //debugFont!!.draw(batch, "Native Heap Memory ${Gdx.app.nativeHeap}", x.toMeters(), (y + spacing * 2).toMeters())
     }
 
+    /**
+     * Default constructor that is called whenever an instance of this class is created.
+     * The constructor initializes the debug font and creates a Zindex for the GUI.
+     */
     init {
         debugFont = SpaceJourney.assetManager.get("fonts/default.fnt")
         debugFont!!.data.scale(1.0f)
 
         this.zIndex = ZIndex.GUI
     }
-
 }

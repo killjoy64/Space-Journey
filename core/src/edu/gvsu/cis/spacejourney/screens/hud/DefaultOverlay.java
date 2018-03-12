@@ -66,11 +66,9 @@ public class DefaultOverlay extends Table {
     if (livesDisplayed > gameData.getLives() && livesDisplayed > 0) {
       removeActor(lives[gameData.getLives()]);
       livesDisplayed--;
-      System.out.println("life taken away");
     } else if (livesDisplayed < gameData.getLives()) {
       top().left().add(lives[gameData.getLives()]);
       livesDisplayed++;
-      System.out.println("life added");
     }
 
     scoreLabel.setText(String.format(Strings.HUD_SCORE, gameData.getScore()));

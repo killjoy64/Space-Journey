@@ -1,4 +1,3 @@
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,14 +9,19 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import edu.gvsu.cis.spacejourney.Constants;
 import edu.gvsu.cis.spacejourney.SpaceJourney;
 import edu.gvsu.cis.spacejourney.entity.Graveyard;
-import edu.gvsu.cis.spacejourney.entity.enemy.Enemy;
-import edu.gvsu.cis.spacejourney.entity.enemy.EvilSpaceship;
 import edu.gvsu.cis.spacejourney.entity.projectile.Laser;
 import edu.gvsu.cis.spacejourney.entity.projectile.Projectile;
-import org.junit.*;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -33,9 +37,9 @@ public class ProjectileTest {
   @BeforeClass
   public static void setup() {
     camera = new OrthographicCamera();
-    viewport = new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT, camera);
+    viewport = new FitViewport(Constants.getVirtualWidth(), Constants.getVirtualHeight(), camera);
     stage = mock(Stage.class);
-    world = new World(new Vector2(0.0f,0.0f), false);
+    world = new World(new Vector2(0.0f, 0.0f), false);
 
     when(stage.getViewport()).thenReturn(viewport);
     SpaceJourney.Companion.getAssetManager().load("laser.png", Texture.class);
@@ -87,8 +91,8 @@ public class ProjectileTest {
 
   @AfterClass
   public static void dispose() {
-    Graveyard.bodies.clear();
-    Graveyard.actors.clear();
+    Graveyard.BODIES.clear();
+    Graveyard.ACTORS.clear();
     stage.dispose();
   }
 

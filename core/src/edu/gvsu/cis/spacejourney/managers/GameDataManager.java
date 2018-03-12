@@ -4,7 +4,7 @@ package edu.gvsu.cis.spacejourney.managers;
  * Singleton class that stores and manages
  * universal game data.
  */
-public class GameDataManager {
+public final class GameDataManager {
 
   /**
    * Maximum number of lives possible throughout the game.
@@ -27,6 +27,9 @@ public class GameDataManager {
     this.score = 0;
   }
 
+  /**
+   * Method that resets all of the game data to it's original state.
+   */
   public void reset() {
     this.lives = 3;
     this.levelNumber = 1;

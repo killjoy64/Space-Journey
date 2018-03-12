@@ -14,7 +14,8 @@ import static org.mockito.Mockito.mock;
 
 public class GameTest extends BlockJUnit4ClassRunner implements ApplicationListener {
 
-  private Map<FrameworkMethod, RunNotifier> invokeInRender = new HashMap<FrameworkMethod, RunNotifier>();
+  private Map<FrameworkMethod, RunNotifier> invokeInRender = 
+		  new HashMap<FrameworkMethod, RunNotifier>();
 
   public GameTest(Class<?> klass) throws InitializationError {
     super(klass);
@@ -76,8 +77,9 @@ public class GameTest extends BlockJUnit4ClassRunner implements ApplicationListe
       while (true) {
         Thread.sleep(10);
         synchronized (invokeInRender) {
-          if (invokeInRender.isEmpty())
-            break;
+          if (invokeInRender.isEmpty()) {
+        	  break;  
+          }
         }
       }
     } catch (InterruptedException e) {

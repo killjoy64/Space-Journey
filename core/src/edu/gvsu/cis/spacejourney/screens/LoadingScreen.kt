@@ -4,7 +4,6 @@ import edu.gvsu.cis.spacejourney.SpaceJourney
 import com.sun.awt.SecurityWarning.setPosition
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Color
@@ -17,17 +16,19 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 
-
-/*
-Presents a progress bar while the assets are being loaded for the game, then switches to the MainMenu screen.
-#TODO only override methods that need to be overriden
+/**
+ * Presents a progress bar while the assets are being loaded for the game,
+ * then switches to the MainMenu screen.
  */
 class LoadingScreen(game: SpaceJourney) : BaseScreen(game, "LoadingScreen") {
 
     private var stage: Stage? = null
     private var progress: ProgressBar? = null
 
-    // Add any assets that need be loaded here and reference them via game.assets in other screens
+    /**
+     * Private helper function that adds any assets that need be loaded.
+     * game.assets in other screens.
+     */
     private fun actuallyLoadAssets() {
 
         SpaceJourney.assetManager.load("laser.png", Texture::class.java)
@@ -37,13 +38,16 @@ class LoadingScreen(game: SpaceJourney) : BaseScreen(game, "LoadingScreen") {
         SpaceJourney.assetManager.load("parallax_planet_layer.png", Texture::class.java)
         SpaceJourney.assetManager.load("parallax_small_star_layer.png", Texture::class.java)
         SpaceJourney.assetManager.load("rotating_pickup.png", Texture::class.java)
-        /*SpaceJourney.assetManager.load("Space Background Music.mp3", Music::class.java)
+        SpaceJourney.assetManager.load("Space Background Music.mp3", Music::class.java)
         SpaceJourney.assetManager.load("title.mp3", Music::class.java)
         SpaceJourney.assetManager.load("take_damage.wav", Sound::class.java)
-        SpaceJourney.assetManager.load("default_pickup.wav", Sound::class.java)*/
+        SpaceJourney.assetManager.load("default_pickup.wav", Sound::class.java)
         SpaceJourney.assetManager.load("fonts/default.fnt", BitmapFont::class.java)
     }
 
+    /**
+     * Method that creates initial load logic.
+     */
     override fun show() {
         super.show()
 
@@ -78,6 +82,11 @@ class LoadingScreen(game: SpaceJourney) : BaseScreen(game, "LoadingScreen") {
         actuallyLoadAssets()
     }
 
+    /**
+     * Constantly updates the screen with new content, but more specifically,
+     * this updates the progress bar, and changes screens when everything is loaded.
+     * @param delta The time different between the last and current render() call.
+     */
     override fun render(delta: Float) {
         super.render(delta)
 
@@ -93,5 +102,4 @@ class LoadingScreen(game: SpaceJourney) : BaseScreen(game, "LoadingScreen") {
             this.game.setScreen<MainMenuScreen>()
         }
     }
-
 }

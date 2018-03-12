@@ -1,0 +1,181 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GameDataManager</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">edu.gvsu.cis.spacejourney.managers</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GameDataManager (edu.gvsu.cis.spacejourney.managers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GameDataManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (21/ 21)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package edu.gvsu.cis.spacejourney.managers;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;/**
+<i>4</i>&nbsp; * Singleton class that stores and manages
+<i>5</i>&nbsp; * universal game data.
+<i>6</i>&nbsp; */
+<i>7</i>&nbsp;public class GameDataManager {
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;  /**
+<i>10</i>&nbsp;   * Maximum number of lives possible throughout the game.
+<i>11</i>&nbsp;   */
+<i>12</i>&nbsp;  public static final int MAX_LIVES = 4;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;  private static GameDataManager instance;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;  private int lives;
+<i>17</i>&nbsp;  private int levelNumber;
+<i>18</i>&nbsp;  private int score;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;  /**
+<i>21</i>&nbsp;   * Default constructor that initializes all game defaults
+<i>22</i>&nbsp;   * ONCE every instance of the game.
+<i>23</i>&nbsp;   */
+<b class="fc"><i>24</i>&nbsp;  private GameDataManager() {</b>
+<b class="fc"><i>25</i>&nbsp;    this.lives = 3;</b>
+<b class="fc"><i>26</i>&nbsp;    this.levelNumber = 1;</b>
+<b class="fc"><i>27</i>&nbsp;    this.score = 0;</b>
+<b class="fc"><i>28</i>&nbsp;  }</b>
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;  /**
+<i>31</i>&nbsp;   * Method that resets all of the game data to it&#39;s original state.
+<i>32</i>&nbsp;   */
+<i>33</i>&nbsp;  public void reset() {
+<b class="fc"><i>34</i>&nbsp;    this.lives = 3;</b>
+<b class="fc"><i>35</i>&nbsp;    this.levelNumber = 1;</b>
+<b class="fc"><i>36</i>&nbsp;    this.score = 0;</b>
+<b class="fc"><i>37</i>&nbsp;  }</b>
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;  /**
+<i>40</i>&nbsp;   * Gets the current game data singleton being used.
+<i>41</i>&nbsp;   * @return {@link edu.gvsu.cis.spacejourney.managers.GameDataManager} singleton.
+<i>42</i>&nbsp;   */
+<i>43</i>&nbsp;  public static GameDataManager getInstance() {
+<b class="fc"><i>44</i>&nbsp;    if (instance == null) {</b>
+<b class="fc"><i>45</i>&nbsp;      instance = new GameDataManager();</b>
+<i>46</i>&nbsp;    }
+<b class="fc"><i>47</i>&nbsp;    return instance;</b>
+<i>48</i>&nbsp;  }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;  /**
+<i>51</i>&nbsp;   * Get the number of lives the player has left.
+<i>52</i>&nbsp;   * @return int as the number of lives the player has left.
+<i>53</i>&nbsp;   */
+<i>54</i>&nbsp;  public int getLives() {
+<b class="fc"><i>55</i>&nbsp;    return lives;</b>
+<i>56</i>&nbsp;  }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;  /**
+<i>59</i>&nbsp;   * Get the current level number that the game
+<i>60</i>&nbsp;   * is on.
+<i>61</i>&nbsp;   * @return int as the number associated to the current level.
+<i>62</i>&nbsp;   */
+<i>63</i>&nbsp;  public int getLevelNumber() {
+<b class="fc"><i>64</i>&nbsp;    return levelNumber;</b>
+<i>65</i>&nbsp;  }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;  /**
+<i>68</i>&nbsp;   * Get the current score of the player.
+<i>69</i>&nbsp;   * @return int as the number associated with the player&#39;s score.
+<i>70</i>&nbsp;   */
+<i>71</i>&nbsp;  public int getScore() {
+<b class="fc"><i>72</i>&nbsp;    return score;</b>
+<i>73</i>&nbsp;  }
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;  /**
+<i>76</i>&nbsp;   * Set the number of lives the player currently has.
+<i>77</i>&nbsp;   * @param lives to give to the player.
+<i>78</i>&nbsp;   */
+<i>79</i>&nbsp;  public void setLives(int lives) {
+<b class="fc"><i>80</i>&nbsp;    this.lives = lives;</b>
+<b class="fc"><i>81</i>&nbsp;  }</b>
+<i>82</i>&nbsp;
+<i>83</i>&nbsp;  /**
+<i>84</i>&nbsp;   * Set the level that the game is currently on.
+<i>85</i>&nbsp;   * @param levelNumber to set the game to.
+<i>86</i>&nbsp;   */
+<i>87</i>&nbsp;  public void setLevelNumber(int levelNumber) {
+<b class="fc"><i>88</i>&nbsp;    this.levelNumber = levelNumber;</b>
+<b class="fc"><i>89</i>&nbsp;  }</b>
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;  /**
+<i>92</i>&nbsp;   * Set the current score of the player.
+<i>93</i>&nbsp;   * @param score to set the score to.
+<i>94</i>&nbsp;   */
+<i>95</i>&nbsp;  public void setScore(int score) {
+<b class="fc"><i>96</i>&nbsp;    this.score = score;</b>
+<b class="fc"><i>97</i>&nbsp;  }</b>
+<i>98</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-02-26 14:52</div>
+</div>
+</body>
+</html>

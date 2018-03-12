@@ -1,4 +1,3 @@
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,7 +11,12 @@ import edu.gvsu.cis.spacejourney.SpaceJourney;
 import edu.gvsu.cis.spacejourney.entity.Graveyard;
 import edu.gvsu.cis.spacejourney.entity.enemy.Enemy;
 import edu.gvsu.cis.spacejourney.entity.enemy.EvilSpaceship;
-import org.junit.*;
+import edu.gvsu.cis.spacejourney.entity.movement.LinearMovement;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
@@ -24,18 +28,16 @@ import static org.mockito.Mockito.when;
 @RunWith(GameTest.class)
 public class EnemyTest {
 
-  private static Camera camera;
-  private static FitViewport viewport;
   private static Stage stage;
   private static World world;
   private static Enemy enemy;
 
   @BeforeClass
   public static void setup() {
-    camera = new OrthographicCamera();
-    viewport = new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT, camera);
+    Camera camera = new OrthographicCamera();
+    FitViewport viewport = new FitViewport(Constants.getVirtualWidth(), Constants.getVirtualHeight(), camera);
     stage = mock(Stage.class);
-    world = new World(new Vector2(0.0f,0.0f), false);
+    world = new World(new Vector2(0.0f, 0.0f), false);
 
     when(stage.getViewport()).thenReturn(viewport);
     SpaceJourney.Companion.getAssetManager().load("spaceship3.png", Texture.class);
@@ -75,12 +77,23 @@ public class EnemyTest {
     assertEquals(enemy.getHitPoints(), enemy.getMaxHitPoints() - 2);
     assertEquals(enemy.getHitPoints(), 0);
 
-    assertTrue(Graveyard.bodies.contains(enemy.getBody()));
+    assertTrue(Graveyard.BODIES.contains(enemy.getBody()));
   }
 
+
+  /*
+   * Test the enemy objects movement by seeing how its Box2D body reacts to a LinearMovement pattern
+   */
   @Test
   public void testEnemyMovement() {
-    // TODO - John help please.
+    enemy.setMovementPattern(new LinearMovement(new Vector2(1.0f, 1.0f)));
+
+    enemy.act(1.0f);
+
+    world.step(1.0f / 60.0f, 6, 2);
+
+    assertEquals(enemy.getBody().getPosition().x, 0.336f, 0.01f);
+    assertEquals(enemy.getBody().getPosition().y, 0.336f, 0.01f);
   }
 
   @After
@@ -91,8 +104,8 @@ public class EnemyTest {
 
   @AfterClass
   public static void dispose() {
-    Graveyard.bodies.clear();
-    Graveyard.actors.clear();
+    Graveyard.BODIES.clear();
+    Graveyard.ACTORS.clear();
     stage.dispose();
   }
 
