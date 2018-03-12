@@ -16,7 +16,7 @@ class MainMenuInputListener(private val maxChoices: Int) : InputProcessor {
     private var startGame: Boolean = false
 
     private fun decrementChoice(){
-        currentChoice++
+        currentChoice--
         if (currentChoice < 0){
             currentChoice = 0
         }
@@ -32,11 +32,11 @@ class MainMenuInputListener(private val maxChoices: Int) : InputProcessor {
     override fun keyDown(keycode: Int): Boolean {
 
         if (keycode == Input.Keys.DOWN) {
-            decrementChoice()
+            incrementChoice()
         }
 
         if (keycode == Input.Keys.UP) {
-            incrementChoice()
+            decrementChoice()
         }
 
         if (keycode == Input.Keys.ENTER) {
