@@ -20,17 +20,17 @@ public final class ZIndex {
   /**
    * Z-index value for the 2nd parallax layer.
    */
-  public static final int PARALLAX_BACKGROUND_LAYER2 = 0;
+  public static final int PARALLAX_BACKGROUND_LAYER2 = 1;
 
   /**
    * Z-index value for the 1st parallax layer.
    */
-  public static final int PARALLAX_BACKGROUND_LAYER1 = 1;
+  public static final int PARALLAX_BACKGROUND_LAYER1 = 2;
 
   /**
    * Z-index value for the background layer.
    */
-  public static final int BACKGROUND = 2;
+  public static final int BACKGROUND = 3;
 
   /**
    * Z-index value for the entity layer.

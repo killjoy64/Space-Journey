@@ -1,9 +1,59 @@
 package edu.gvsu.cis.spacejourney.level.choreography
 
-import com.badlogic.gdx.physics.box2d.World
-import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.ashley.core.Engine
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.math.Vector2
+import edu.gvsu.cis.spacejourney.SpaceJourney
+import edu.gvsu.cis.spacejourney.component.StaticSprite
+import edu.gvsu.cis.spacejourney.component.Transform
+import edu.gvsu.cis.spacejourney.component.Velocity
+import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
+import edu.gvsu.cis.spacejourney.util.ZIndex
+import ktx.ashley.add
+import ktx.ashley.entity
 import ktx.collections.GdxArray
 import ktx.collections.isNotEmpty
+
+
+class EnemySpawnEvent : ChoreographEvent() {
+
+    val position: Vector2? = null
+
+    override fun onEvent(engine: Engine) {
+
+        //debug { "Enemy added" }
+
+        val randomPosition = Vector2((Math.random().toFloat() * Gdx.graphics.width.toFloat() - 50.0f) + 50.0f, Gdx.graphics.height.toFloat())
+
+        val enemyTexture = SpaceJourney.assetManager.get("enemy_spaceship.png", Texture::class.java)
+
+        engine.add {
+            entity {
+                with<edu.gvsu.cis.spacejourney.component.Enemy> {
+
+                }
+                with<BoxCollider> {
+                    width = enemyTexture.width
+                    height = enemyTexture.height
+                }
+                with<Transform> {
+                    position = randomPosition
+                    rotation = 180.0f
+                }
+                with<Velocity> {
+                    value = Vector2(0.0f, -1.5f)
+                }
+                with<StaticSprite> {
+                    zindex = ZIndex.ENEMY
+                    texture = enemyTexture
+                }
+            }
+        }
+
+    }
+
+}
 
 /**
  * Small abstract helper class that defines a
@@ -12,10 +62,10 @@ import ktx.collections.isNotEmpty
 abstract class ChoreographEvent {
 
     /**
-     * Abstract method that is called whenever the Choreographer
-     * schedules an event, and calls it.
-     */
-    abstract fun onEvent(stage: Stage, world: World)
+    * Abstract method that is called whenever the Choreographer
+    * schedules an event, and calls it.
+    */
+    abstract fun onEvent(engine : Engine)
 }
 
 /**
@@ -32,7 +82,7 @@ data class ScheduledEvent(
  * specific level. Events can be scheduled and called upon
  * through the use of a queue/stack ADT.
  */
-class LevelChoreographer(val stage: Stage, val world: World) {
+class LevelChoreographer(val engine: Engine) {
 
     private var paused = false
 
@@ -109,7 +159,7 @@ class LevelChoreographer(val stage: Stage, val world: World) {
         if (getNextEvent() != null) {
             if (getNextEvent()!!.scheduled_time < time) {
                 lastEvent = popNextEvent()
-                lastEvent?.event?.onEvent(stage, world)
+                lastEvent?.event?.onEvent(engine)
             }
         }
     }

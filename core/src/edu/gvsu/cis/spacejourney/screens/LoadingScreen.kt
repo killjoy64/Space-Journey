@@ -32,11 +32,11 @@ class LoadingScreen(game: SpaceJourney) : BaseScreen(game, "LoadingScreen") {
     private fun actuallyLoadAssets() {
 
         SpaceJourney.assetManager.load("laser.png", Texture::class.java)
-        SpaceJourney.assetManager.load("spaceship2.png", Texture::class.java)
-        SpaceJourney.assetManager.load("spaceship3.png", Texture::class.java)
-        SpaceJourney.assetManager.load("parallax_background_layer1.png", Texture::class.java)
-        SpaceJourney.assetManager.load("parallax_background_layer2.png", Texture::class.java)
-        SpaceJourney.assetManager.load("parallax_background_layer3.png", Texture::class.java)
+        SpaceJourney.assetManager.load("enemy_spaceship.png", Texture::class.java)
+        SpaceJourney.assetManager.load("player_spaceship.png", Texture::class.java)
+        SpaceJourney.assetManager.load("parallax_medium_star_layer.png", Texture::class.java)
+        SpaceJourney.assetManager.load("parallax_planet_layer.png", Texture::class.java)
+        SpaceJourney.assetManager.load("parallax_small_star_layer.png", Texture::class.java)
         SpaceJourney.assetManager.load("rotating_pickup.png", Texture::class.java)
         SpaceJourney.assetManager.load("Space Background Music.mp3", Music::class.java)
         SpaceJourney.assetManager.load("title.mp3", Music::class.java)

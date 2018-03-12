@@ -40,6 +40,7 @@ dependencies {
     compile "io.github.libktx:ktx-style:$ktxVersion"
     compile "io.github.libktx:ktx-vis:$ktxVersion"
     compile "io.github.libktx:ktx-vis-style:$ktxVersion"
+    compile "com.badlogicgames.ashley:ashley:1.7.3"
 
     compile 'junit:junit:4.12'
 }

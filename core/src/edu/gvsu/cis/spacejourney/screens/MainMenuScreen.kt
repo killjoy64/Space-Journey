@@ -69,6 +69,11 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
 
         inputListener = MainMenuInputListener(2)
 
+        /*music = SpaceJourney.assetManager.get("title.mp3", Music::class.java)
+        music?.volume = 0.1f
+        music?.isLooping = true
+        music?.play()*/
+
         Gdx.input.inputProcessor = InputMultiplexer(inputListener, stage)
 
         music = SpaceJourney.assetManager.get("title.mp3", Music::class.java)
