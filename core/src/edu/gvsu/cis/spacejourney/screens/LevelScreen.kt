@@ -47,6 +47,8 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     private val isDesktop = Gdx.app.type == ApplicationType.Desktop
 
+    private var music: MusicManager? = null
+
     override fun show() {
         super.show()
 
