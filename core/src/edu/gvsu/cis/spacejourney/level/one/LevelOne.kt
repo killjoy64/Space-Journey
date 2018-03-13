@@ -2,6 +2,7 @@ package edu.gvsu.cis.spacejourney.level.one
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Vector2
 import edu.gvsu.cis.spacejourney.SpaceJourney
@@ -26,7 +27,7 @@ class LevelOne : Level() {
         super.init(engine)
 
         this.hud = DefaultOverlay()
-        //this.music = SpaceJourney.assetManager.get("Space Background Music.mp3", Music::class.java)
+        this.music = SpaceJourney.assetManager.get("Space Background Music.mp3", Music::class.java)
 
         engine.add {
             entity {
