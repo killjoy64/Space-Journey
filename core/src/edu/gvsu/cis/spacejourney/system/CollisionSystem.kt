@@ -12,6 +12,9 @@ import edu.gvsu.cis.spacejourney.util.Mappers
 import ktx.ashley.has
 import ktx.log.debug
 
+/**
+ * Helper class for dealing with collision components
+ */
 private data class CollisionRectangle(
         val x : Float,
         val y : Float,
@@ -94,11 +97,37 @@ class CollisionSystem : EntitySystem() {
                 CollisionRectangle.fromComponents(boxATransform, boxA),
                 CollisionRectangle.fromComponents(boxBTransform, boxB)
             )){
-                //debug { "Collision Occured" }
-
                 if (entityA.has(Mappers.enemy) && entityB.has(Mappers.projectile)){
-                    engine.removeEntity(entityA)
-                    engine.removeEntity(entityB)
+
+                    val enemyEntity = entityA
+                    val projectileEntity = entityB
+
+                    val health = Mappers.health.get(enemyEntity)
+                    val projectile = Mappers.projectile.get(projectileEntity)
+
+                    health.value -= projectile.damage
+
+                    if (health.value <= 0){
+                        engine.removeEntity(enemyEntity)
+                    }
+
+                    engine.removeEntity(projectileEntity)
+                }
+                if (entityA.has(Mappers.player) && entityB.has(Mappers.enemy)){
+
+                    val playerEntity = entityA
+                    val projectileEntity = entityB
+
+                    val health = Mappers.health.get(playerEntity)
+                    val projectile = Mappers.projectile.get(projectileEntity)
+
+                    health.value -= projectile.damage
+
+                    if (health.value <= 0){
+                        engine.removeEntity(playerEntity)
+                    }
+
+                    engine.removeEntity(projectileEntity)
                 }
 
 

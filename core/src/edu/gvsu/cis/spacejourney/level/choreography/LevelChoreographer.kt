@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Vector2
 import edu.gvsu.cis.spacejourney.SpaceJourney
+import edu.gvsu.cis.spacejourney.component.Health
 import edu.gvsu.cis.spacejourney.component.StaticSprite
 import edu.gvsu.cis.spacejourney.component.Transform
 import edu.gvsu.cis.spacejourney.component.Velocity
@@ -33,9 +34,13 @@ class EnemySpawnEvent : ChoreographEvent() {
                 with<edu.gvsu.cis.spacejourney.component.Enemy> {
 
                 }
+                with<Health> {
+                    value = 3
+                    maxValue = 3
+                }
                 with<BoxCollider> {
-                    width = enemyTexture.width
-                    height = enemyTexture.height
+                    width = enemyTexture.width - 16
+                    height = enemyTexture.height - 16
                 }
                 with<Transform> {
                     position = randomPosition

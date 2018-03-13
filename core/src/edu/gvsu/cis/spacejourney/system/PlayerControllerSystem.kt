@@ -118,7 +118,9 @@ class PlayerControllerSystem : EntitySystem() {
 
                 engine.add {
                     entity {
-                        with<Projectile> {}
+                        with<Projectile> {
+                            damage = 1
+                        }
                         with<BoxCollider> {
                             width = laserTexture.height
                             height = laserTexture.width

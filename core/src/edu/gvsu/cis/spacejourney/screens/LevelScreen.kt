@@ -27,6 +27,7 @@ import com.bitfire.postprocessing.effects.Bloom
 import com.bitfire.postprocessing.effects.CrtMonitor
 import com.bitfire.postprocessing.effects.Vignette
 import com.bitfire.postprocessing.filters.CrtScreen
+import edu.gvsu.cis.spacejourney.component.Health
 
 
 /**
@@ -71,6 +72,10 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
           entity {
             with<Player> {
               movespeed = 300.0f
+            }
+            with<Health> {
+                value = 3
+                maxValue = 3
             }
             with<Transform> {
               position = Vector2(Gdx.graphics.width.toFloat() / 2.0f, 45.0f)
