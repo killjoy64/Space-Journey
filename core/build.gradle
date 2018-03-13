@@ -23,6 +23,8 @@ dependencies {
     def kotlin_version = '1.2.10'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
+    compile project(":postprocessing")
+
     // Ktx Kotlin Utilities for LibGDX
     // https://github.com/libktx/ktx
     def ktxVersion = '1.9.7-b1'

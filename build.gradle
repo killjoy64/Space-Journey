@@ -165,6 +165,23 @@ project(":core") {
     }
 }
 
+project(":utils") {
+    apply plugin: "java"
+
+    dependencies {
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+    }
+}
+
+project(":postprocessing") {
+    apply plugin: "java"
+
+    dependencies {
+        compile project(":utils")
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+    }
+}
+
 tasks.eclipse.doLast {
     delete ".project"
 }

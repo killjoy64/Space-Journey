@@ -20,6 +20,13 @@ import edu.gvsu.cis.spacejourney.system.VelocitySystem
 import edu.gvsu.cis.spacejourney.util.ZIndex
 import ktx.ashley.add
 import ktx.ashley.entity
+import com.bitfire.postprocessing.PostProcessor
+import com.bitfire.utils.ShaderLoader
+import com.badlogic.gdx.Application.ApplicationType
+import com.bitfire.postprocessing.effects.Bloom
+import com.bitfire.postprocessing.effects.CrtMonitor
+import com.bitfire.postprocessing.effects.Vignette
+import com.bitfire.postprocessing.filters.CrtScreen
 
 
 /**
@@ -36,8 +43,22 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     var renderingSystem : RenderingSystem? = null
 
+    var postProcessor : PostProcessor? = null
+
+    private val isDesktop = Gdx.app.type == ApplicationType.Desktop
+
     override fun show() {
         super.show()
+
+        ShaderLoader.BasePath = "data/shaders/"
+        postProcessor = PostProcessor(false, false, isDesktop)
+
+        val bloom = Bloom((Gdx.graphics.width * 0.25f).toInt(), (Gdx.graphics.height * 0.25f).toInt())
+        bloom.setBloomIntesity(2.25f)
+        postProcessor!!.addEffect(bloom)
+
+        val vignette = Vignette(Gdx.graphics.width, Gdx.graphics.height, false)
+        postProcessor!!.addEffect(vignette)
 
         renderingSystem = RenderingSystem()
 
@@ -88,14 +109,19 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
     override fun render(delta: Float) {
         super.render(delta)
 
+
+
         // Switch level if needed
         /*if (level != null && level?.player!!.isDead) {
         game.setScreen<LevelSelectScreen>()
         }*/
 
-        engine.update(delta)
+        postProcessor?.capture()
 
+        engine.update(delta)
         level?.update(delta)
+
+        postProcessor?.render()
 
         // #TODO Replace the following code, it's a bit hacky, spriteBatch should be private.
         // Maybe add .drawGUI(Table) to renderingSystem
@@ -108,7 +134,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
     }
 
     override fun dispose() {
-
+        postProcessor?.dispose();
     }
 
     /**
