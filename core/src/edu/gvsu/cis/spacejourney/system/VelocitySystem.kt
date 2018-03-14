@@ -2,9 +2,14 @@ package edu.gvsu.cis.spacejourney.system
 
 import com.badlogic.ashley.core.*
 import com.badlogic.ashley.utils.ImmutableArray
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.math.Rectangle
+import com.badlogic.gdx.math.Vector2
 import edu.gvsu.cis.spacejourney.component.Transform
 import edu.gvsu.cis.spacejourney.component.Velocity
+import edu.gvsu.cis.spacejourney.util.Bounds
 import edu.gvsu.cis.spacejourney.util.Mappers
+import ktx.ashley.remove
 import ktx.math.plus
 
 class VelocitySystem : EntitySystem() {
@@ -30,6 +35,14 @@ class VelocitySystem : EntitySystem() {
 
             if (entity != null){
                 transform.position += velocity.value
+            }
+
+            if (Bounds.isOutOfBounds(
+                position = transform.position,
+                size = Vector2(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat()),
+                padding = 0.0f
+            )){
+                engine.removeEntity(entity)
             }
         }
     }
