@@ -5,10 +5,16 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.utils.ImmutableArray
-import edu.gvsu.cis.spacejourney.component.Transform
+import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.math.Vector2
+import edu.gvsu.cis.spacejourney.SpaceJourney
+import edu.gvsu.cis.spacejourney.component.*
 import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
 import edu.gvsu.cis.spacejourney.component.colliders.CircleCollider
 import edu.gvsu.cis.spacejourney.util.Mappers
+import edu.gvsu.cis.spacejourney.util.ZIndex
+import ktx.ashley.add
+import ktx.ashley.entity
 import ktx.ashley.has
 import ktx.log.debug
 
@@ -85,6 +91,29 @@ class CollisionSystem : EntitySystem() {
                     health.value -= projectile.damage
 
                     if (health.value <= 0){
+
+                        val enemyPosition = Mappers.transform.get(enemyEntity)
+
+                        val enemyTexture = SpaceJourney.assetManager.get("enemy_spaceship.png", Texture::class.java)
+
+                        engine.add {
+                            entity {
+                                with<Enemy> {}
+                                with<Transform> {
+                                    position = enemyPosition.position
+                                    rotation = 180.0f
+                                }
+                                with<Velocity> {
+                                    value = Vector2(0.0f, -2.5f)
+                                    angular = -3.0f
+                                }
+                                with<StaticSprite> {
+                                    zindex = ZIndex.PARALLAX_BACKGROUND_LAYER1
+                                    texture = enemyTexture
+                                }
+                            }
+                        }
+
                         engine.removeEntity(enemyEntity)
                     }
 

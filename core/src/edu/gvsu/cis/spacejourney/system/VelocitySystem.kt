@@ -38,6 +38,7 @@ class VelocitySystem : EntitySystem() {
 
             if (entity != null){
                 transform.position += velocity.value
+                transform.rotation += velocity.angular
             }
 
             if (Bounds.isOutOfBounds(
