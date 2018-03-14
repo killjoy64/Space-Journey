@@ -12,6 +12,9 @@ import edu.gvsu.cis.spacejourney.util.Mappers
 import ktx.ashley.remove
 import ktx.math.plus
 
+/*
+ * Velocity System, moves entities transform component positions in accordance with their velocity
+ */
 class VelocitySystem : EntitySystem() {
 
     // All related entities used by this system

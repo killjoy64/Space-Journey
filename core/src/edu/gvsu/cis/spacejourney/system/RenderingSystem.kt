@@ -14,6 +14,9 @@ import edu.gvsu.cis.spacejourney.component.StaticSprite
 import edu.gvsu.cis.spacejourney.component.Transform
 import edu.gvsu.cis.spacejourney.util.Mappers
 
+/*
+ * Rendering System, renders entities in order of their Z-Index
+ */
 class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.java, Transform::class.java).get(), ZComparator()) {
 
     var spriteBatch : SpriteBatch? = null

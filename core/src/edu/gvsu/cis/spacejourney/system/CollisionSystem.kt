@@ -29,6 +29,9 @@ private data class CollisionRectangle(
 
 }
 
+/*
+ * Collision System, handles collisions between entities
+ */
 class CollisionSystem : EntitySystem() {
 
     // All related entities used by this system
@@ -52,33 +55,7 @@ class CollisionSystem : EntitySystem() {
                 rect1.height + rect1.y > rect2.y)
     }
 
-    fun onCollision(){
-        /*val currentLives = gameData.getLives()
-
-        val a = contact.getFixtureA()
-        val b = contact.getFixtureB()
-
-        if (entityB is EvilSpaceship && entityA is PlayerSpaceship) {
-            val player = entityA as PlayerSpaceship
-            gameData.setLives(currentLives - 1)
-            player.takeDamage()
-        }
-
-        if (entityA is Collectible && entityB is PlayerSpaceship) {
-            val c = entityA as Collectible
-            c.collect()
-        }
-
-        if (entityA is Laser && entityB is Enemy) {
-            val e = entityB as Enemy
-            val l = entityA as Laser
-            e.takeDamage()
-            l.reset()
-            Graveyard.bodies.add(a.getBody())
-        }*/
-    }
-
-    fun collisionCheck(entityA: Entity, entityB :Entity){
+    private fun collisionCheck(entityA: Entity, entityB :Entity){
 
         val boxA = Mappers.boxCollider.get(entityA)
         val boxB = Mappers.boxCollider.get(entityB)

@@ -19,13 +19,13 @@ import edu.gvsu.cis.spacejourney.util.ZIndex
 import ktx.ashley.add
 import ktx.ashley.entity
 import ktx.log.debug
-import ktx.math.compareTo
 import ktx.math.plus
 import ktx.math.times
 
-
-
-
+/*
+ * Player Controller System
+ * Handles everything the player can do in the level
+ */
 class PlayerControllerSystem : EntitySystem() {
     private var entities: ImmutableArray<Entity>? = null
 

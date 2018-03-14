@@ -16,7 +16,6 @@ class SystemPriorities {
         val RenderingSystem = 1
 
         // General updates are less important
-        val ProjectileSystem = 2
         val CollisionSystem = 2
         val VelocitySystem = 2
     }
