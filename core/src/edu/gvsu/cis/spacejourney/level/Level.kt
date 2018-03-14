@@ -9,7 +9,7 @@ import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay
 
 abstract class Level : Disposable {
 
-    private var engine: Engine? = null
+    protected var engine: Engine? = null
 
     var music: Music? = null
     var hud: DefaultOverlay? = null

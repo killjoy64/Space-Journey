@@ -77,28 +77,6 @@ class LevelOne : Level() {
             }
         }
 
-        /*background = new ParallaxBackground();
-        background.setZIndex(ZIndex.BACKGROUND);
-        stage.addActor(background);
-
-        player = new PlayerSpaceship(stage);
-        player.setPosition(1.5f, 0.0f);
-        player.setWidth(50.0f);
-        player.setHeight(50.0f);
-        player.createBody(world);
-        stage.addActor(player);
-        setPlayer(player);
-
-        defaultHud = new DefaultOverlay();
-        setHud(defaultHud);
-
-        inputListener = new PlayerInputListener(player);
-        Gdx.input.setInputProcessor(inputListener);
-
-        testCollectible = new TestCollectible(stage);
-        testCollectible.createBody(world);
-        stage.addActor(testCollectible);*/
-
         choreographer = LevelChoreographer(engine)
 
         for (i in 0..399) {
@@ -110,13 +88,11 @@ class LevelOne : Level() {
         super.update(delta)
 
         choreographer!!.update(delta)
-        this.hud?.poll()
+        this.hud?.poll(engine!!)
     }
 
     override fun dispose() {
-        //player.dispose();
-        //testCollectible.dispose();
         music?.stop()
         music?.dispose()
     }
-}//
+}

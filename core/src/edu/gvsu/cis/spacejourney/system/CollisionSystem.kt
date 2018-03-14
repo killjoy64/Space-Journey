@@ -11,6 +11,7 @@ import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.component.*
 import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
 import edu.gvsu.cis.spacejourney.component.colliders.CircleCollider
+import edu.gvsu.cis.spacejourney.managers.GameDataManager
 import edu.gvsu.cis.spacejourney.util.Mappers
 import edu.gvsu.cis.spacejourney.util.ZIndex
 import ktx.ashley.add
@@ -61,7 +62,7 @@ class CollisionSystem : EntitySystem() {
                 rect1.height + rect1.y > rect2.y)
     }
 
-    private fun collisionCheck(entityA: Entity, entityB :Entity){
+    private fun collisionCheck(entityA: Entity, entityB :Entity) : Boolean {
 
         val boxA = Mappers.boxCollider.get(entityA)
         val boxB = Mappers.boxCollider.get(entityB)
@@ -92,6 +93,8 @@ class CollisionSystem : EntitySystem() {
 
                     if (health.value <= 0){
 
+                        GameDataManager.getInstance().score += 100
+
                         val enemyPosition = Mappers.transform.get(enemyEntity)
 
                         val enemyTexture = SpaceJourney.assetManager.get("enemy_spaceship.png", Texture::class.java)
@@ -118,28 +121,61 @@ class CollisionSystem : EntitySystem() {
                     }
 
                     engine.removeEntity(projectileEntity)
+
+                    return true
                 }
                 if (entityA.has(Mappers.player) && entityB.has(Mappers.enemy)){
 
                     val playerEntity = entityA
-                    val projectileEntity = entityB
+                    val enemyEntity = entityB
 
                     val health = Mappers.health.get(playerEntity)
-                    val projectile = Mappers.projectile.get(projectileEntity)
 
-                    health.value -= projectile.damage
+                    health.value -= 1
+
+                    GameDataManager.getInstance().lives = health.value
 
                     if (health.value <= 0){
+                        debug { "Player has died" }
                         engine.removeEntity(playerEntity)
+                    } else {
+                        debug { "Player now has ${health.value} lives remaining" }
                     }
 
-                    engine.removeEntity(projectileEntity)
-                }
+                    GameDataManager.getInstance().score += 100
 
+                    val enemyPosition = Mappers.transform.get(enemyEntity)
+
+                    val enemyTexture = SpaceJourney.assetManager.get("enemy_spaceship.png", Texture::class.java)
+
+                    engine.add {
+                        entity {
+                            with<Enemy> {}
+                            with<Transform> {
+                                position = enemyPosition.position
+                                rotation = 180.0f
+                            }
+                            with<Velocity> {
+                                value = Vector2(0.0f, -2.5f)
+                                angular = -3.0f
+                            }
+                            with<StaticSprite> {
+                                zindex = ZIndex.PARALLAX_BACKGROUND_LAYER1
+                                texture = enemyTexture
+                            }
+                        }
+                    }
+
+                    engine.removeEntity(enemyEntity)
+
+                    return true
+                }
 
             }
 
         }
+
+        return false
 
     }
 
@@ -166,8 +202,9 @@ class CollisionSystem : EntitySystem() {
                 val entityB = entities!!.get(b)
 
                 if (entityA != null && entityB != null) {
-                    collisionCheck(entityA, entityB)
-                    collisionCheck(entityB, entityA)
+                    if (collisionCheck(entityA, entityB)) {
+                        collisionCheck(entityB, entityA)
+                    }
                 }
             }
         }

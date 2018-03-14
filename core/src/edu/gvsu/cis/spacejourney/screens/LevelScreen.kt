@@ -3,6 +3,7 @@ package edu.gvsu.cis.spacejourney.screens
 import edu.gvsu.cis.spacejourney.managers.MusicManager
 
 import com.badlogic.ashley.core.Engine
+import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Vector2
@@ -28,6 +29,7 @@ import com.bitfire.postprocessing.effects.CrtMonitor
 import com.bitfire.postprocessing.effects.Vignette
 import com.bitfire.postprocessing.filters.CrtScreen
 import edu.gvsu.cis.spacejourney.component.Health
+import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
 
 
 /**
@@ -70,14 +72,20 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         engine.addSystem(renderingSystem)
         engine.addSystem(CollisionSystem())
 
+        val playerTexture = SpaceJourney.assetManager.get("player_spaceship.png", Texture::class.java)
+
         engine.add {
           entity {
             with<Player> {
               movespeed = 300.0f
             }
+            with<BoxCollider> {
+                width = playerTexture.width - 16
+                height = playerTexture.height - 16
+            }
             with<Health> {
-                value = 3
-                maxValue = 3
+                value = 4
+                maxValue = 4
             }
             with<Transform> {
               position = Vector2(Gdx.graphics.width.toFloat() / 2.0f, 45.0f)
@@ -85,7 +93,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
             with<StaticSprite> {
               scale = 2
               zindex = ZIndex.PLAYER
-              texture = SpaceJourney.assetManager.get("player_spaceship.png", Texture::class.java)
+              texture = playerTexture
             }
           }
         }
@@ -137,6 +145,16 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         level?.hud?.act(delta)
         level?.hud?.draw(renderingSystem?.spriteBatch, 1.0f)
         renderingSystem?.spriteBatch?.end()
+
+        val players = engine.getEntitiesFor(Family.all(Player::class.java).get())
+
+        if (players.size() <= 0){
+
+            engine.removeAllEntities()
+
+            this.game.setScreen<LevelSelectScreen>()
+        }
+
 
     }
 
