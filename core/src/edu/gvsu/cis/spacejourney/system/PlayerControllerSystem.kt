@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.component.*
@@ -18,6 +19,7 @@ import edu.gvsu.cis.spacejourney.util.ZIndex
 import ktx.ashley.add
 import ktx.ashley.entity
 import ktx.log.debug
+import ktx.math.compareTo
 import ktx.math.plus
 import ktx.math.times
 
@@ -104,6 +106,31 @@ class PlayerControllerSystem : EntitySystem() {
             val deltaMovement = movement * deltaTime
 
             transform.position += deltaMovement
+
+            // Bounds checking for the player
+
+            val boundsPadding = 30.0f
+            val bounds = Rectangle(
+                    boundsPadding,
+                    boundsPadding,
+                    Gdx.graphics.width.toFloat()  - boundsPadding * 2f,
+                    Gdx.graphics.height.toFloat() - boundsPadding * 2f
+            )
+
+            if (transform.position.x < bounds.x){
+                transform.position.x = bounds.x
+            }
+            if (transform.position.y < bounds.y){
+                transform.position.y = bounds.y
+            }
+            if (transform.position.x > bounds.x + bounds.width){
+                transform.position.x = bounds.x + bounds.width
+            }
+            if (transform.position.y > bounds.y + bounds.height){
+                transform.position.y = bounds.y + bounds.height
+            }
+
+            // Attacking Logic
 
             val bulletInheritedVelocityFactor = 0.2f
 
