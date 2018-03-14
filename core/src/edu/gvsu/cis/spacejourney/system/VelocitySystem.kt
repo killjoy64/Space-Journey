@@ -40,9 +40,14 @@ class VelocitySystem : EntitySystem() {
             if (Bounds.isOutOfBounds(
                 position = transform.position,
                 size = Vector2(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat()),
-                padding = 0.0f
+                padding = -10.0f
             )){
-                engine.removeEntity(entity)
+                if (Mappers.projectile.get(entity) != null) {
+                    engine.removeEntity(entity)
+                }
+                if (Mappers.enemy.get(entity) != null) {
+                    engine.removeEntity(entity)
+                }
             }
         }
     }
