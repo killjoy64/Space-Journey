@@ -4,6 +4,9 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Vector2
 
+/*
+ * Depends on `Transform`
+ */
 class StaticSprite : Component {
 
     // The texture to draw

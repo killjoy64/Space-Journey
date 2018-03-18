@@ -3,6 +3,9 @@ package edu.gvsu.cis.spacejourney.component.colliders
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.math.Vector2
 
+/*
+ * Depends on `Transform`
+ */
 class BoxCollider : Component {
     var width = 50
     var height = 50
