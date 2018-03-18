@@ -104,25 +104,9 @@ class CollisionSystem : EntitySystem() {
 
                         val enemyTexture = SpaceJourney.assetManager.get("enemy_spaceship.png", Texture::class.java)
 
-                        engine.add {
-                            entity {
-                                with<Enemy> {}
-                                with<Transform> {
-                                    position = enemyPosition.position
-                                    rotation = 180.0f
-                                }
-                                with<Velocity> {
-                                    value = Vector2(0.0f, -2.5f)
-                                    angular = -3.0f
-                                }
-                                with<StaticSprite> {
-                                    zindex = ZIndex.PARALLAX_BACKGROUND_LAYER1
-                                    texture = enemyTexture
-                                }
-                            }
-                        }
+                        enemyEntity.remove(BoxCollider::class.java)
 
-                        engine.removeEntity(enemyEntity)
+                        //engine.removeEntity(enemyEntity)
                     }
 
                     engine.removeEntity(projectileEntity)
