@@ -80,8 +80,8 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
               movespeed = 300.0f
             }
             with<BoxCollider> {
-                width = playerTexture.width - 16
-                height = playerTexture.height - 16
+                width = playerTexture.width
+                height = playerTexture.height
             }
             with<Health> {
                 value = 4
@@ -91,7 +91,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
               position = Vector2(Gdx.graphics.width.toFloat() / 2.0f, 45.0f)
             }
             with<StaticSprite> {
-              scale = 2
+              scale = 2.0f
               zindex = ZIndex.PLAYER
               texture = playerTexture
             }
@@ -104,10 +104,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         level = Levels.getFromId(gameData?.levelNumber!!).level
         level?.init(engine)
 
-        level?.music?.volume = 0.3f
-        level?.music?.isLooping = true
-        level?.music?.play()
-
+        MusicManager.getInstance().music = level?.music
     }
 
     /**
@@ -118,7 +115,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
     override fun resize(width: Int, height: Int) {
         super.resize(width, height)
 
-        renderingSystem?.resize(width, height);
+        renderingSystem?.resize(width, height)
     }
 
     override fun render(delta: Float) {
@@ -159,11 +156,11 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
     }
 
     override fun dispose() {
-        postProcessor?.dispose();
+        postProcessor?.dispose()
     }
 
     /**
-     * Fucntion that hides the screen, and stops the current music.
+     * Function that hides the screen, and stops the current music.
      */
     override fun hide() {
         super.hide()
