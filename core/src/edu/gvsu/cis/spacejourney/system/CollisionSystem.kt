@@ -2,7 +2,10 @@ package edu.gvsu.cis.spacejourney.system
 
 import aurelienribon.tweenengine.BaseTween
 import aurelienribon.tweenengine.Tween
+import aurelienribon.tweenengine.equations.Circ
 import aurelienribon.tweenengine.equations.Elastic
+import aurelienribon.tweenengine.equations.Linear
+import aurelienribon.tweenengine.equations.Sine
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
@@ -17,6 +20,7 @@ import edu.gvsu.cis.spacejourney.component.colliders.CircleCollider
 import edu.gvsu.cis.spacejourney.managers.GameDataManager
 import edu.gvsu.cis.spacejourney.util.Mappers
 import edu.gvsu.cis.spacejourney.util.StaticSpriteAccessor
+import edu.gvsu.cis.spacejourney.util.VelocityAccessor
 import edu.gvsu.cis.spacejourney.util.ZIndex
 import ktx.ashley.add
 import ktx.ashley.entity
@@ -104,13 +108,18 @@ class CollisionSystem : EntitySystem() {
 
                         GameDataManager.getInstance().score += 100
 
-                        val enemyPosition = Mappers.transform.get(enemyEntity)
-
-                        val enemyTexture = SpaceJourney.assetManager.get("enemy_spaceship.png", Texture::class.java)
-
                         enemyEntity.remove(BoxCollider::class.java)
-
-                        //engine.removeEntity(enemyEntity)
+                        val enemyPosition = Mappers.transform.get(enemyEntity)
+                        val enemyTexture = SpaceJourney.assetManager.get("enemy_spaceship.png", Texture::class.java)
+                        val enemySprite = Mappers.staticSprite.get(enemyEntity)
+                        val enemyVelocity = Mappers.velocity.get(enemyEntity)
+                        Tween.to(enemySprite, StaticSpriteAccessor
+                            .TYPE_SCALE, 1.0f).target(0.0f).ease(Sine.OUT).start(SpaceJourney.tweenManager)
+                            .setCallback({ _: Int, _: BaseTween<*> ->
+                                engine.removeEntity(enemyEntity)
+                            })
+                        Tween.to(enemyVelocity, VelocityAccessor
+                            .TYPE_ANGULAR, 0.5f).target(-6f).ease(Linear.INOUT).start(SpaceJourney.tweenManager)
                     }
 
                     engine.removeEntity(projectileEntity)
@@ -137,32 +146,20 @@ class CollisionSystem : EntitySystem() {
 
                     GameDataManager.getInstance().score += 100
 
+                    enemyEntity.remove(BoxCollider::class.java)
                     val enemyPosition = Mappers.transform.get(enemyEntity)
-
                     val enemyTexture = SpaceJourney.assetManager.get("enemy_spaceship.png", Texture::class.java)
-                    val entity: Entity = engine.entity {
-                        with<Enemy> {}
-                        with<Transform> {
-                            position = enemyPosition.position
-                            rotation = 180.0f
-                        }
-                        with<Velocity> {
-                            value = Vector2(0.0f, -2.5f)
-                            angular = -3.0f
-                        }
-                        with<StaticSprite> {
-                            zindex = ZIndex.PARALLAX_BACKGROUND_LAYER1
-                            texture = enemyTexture
-                        }
-                    }
-                    engine.add{entity}
-
-                    val enemySprite = Mappers.staticSprite.get(entity)
+                    val enemySprite = Mappers.staticSprite.get(enemyEntity)
+                    val enemyVelocity = Mappers.velocity.get(enemyEntity)
                     Tween.to(enemySprite, StaticSpriteAccessor
-                        .TYPE_SCALE, 1.0f).target(0.0f).ease(Elastic.INOUT).start(SpaceJourney.tweenManager)
-                        .setCallback({ i: Int, baseTween: BaseTween<*> ->
-                            engine.removeEntity(enemyEntity)  
+                        .TYPE_SCALE, 2.0f).target(0.0f).ease(Elastic.INOUT).start(SpaceJourney.tweenManager)
+                        .setCallback({ _: Int, _: BaseTween<*> ->
+                            if (engine != null) {
+                                engine.removeEntity(enemyEntity)
+                            }
                     })
+                    Tween.to(enemyVelocity, VelocityAccessor
+                        .TYPE_ANGULAR, 0.5f).target(-6f).ease(Linear.INOUT).start(SpaceJourney.tweenManager)
 
                     return true
                 }
