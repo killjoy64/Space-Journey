@@ -1,5 +1,8 @@
 package edu.gvsu.cis.spacejourney.system
 
+import aurelienribon.tweenengine.BaseTween
+import aurelienribon.tweenengine.Tween
+import aurelienribon.tweenengine.equations.Elastic
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
@@ -13,6 +16,7 @@ import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
 import edu.gvsu.cis.spacejourney.component.colliders.CircleCollider
 import edu.gvsu.cis.spacejourney.managers.GameDataManager
 import edu.gvsu.cis.spacejourney.util.Mappers
+import edu.gvsu.cis.spacejourney.util.StaticSpriteAccessor
 import edu.gvsu.cis.spacejourney.util.ZIndex
 import ktx.ashley.add
 import ktx.ashley.entity
@@ -147,26 +151,29 @@ class CollisionSystem : EntitySystem() {
                     val enemyPosition = Mappers.transform.get(enemyEntity)
 
                     val enemyTexture = SpaceJourney.assetManager.get("enemy_spaceship.png", Texture::class.java)
-
-                    engine.add {
-                        entity {
-                            with<Enemy> {}
-                            with<Transform> {
-                                position = enemyPosition.position
-                                rotation = 180.0f
-                            }
-                            with<Velocity> {
-                                value = Vector2(0.0f, -2.5f)
-                                angular = -3.0f
-                            }
-                            with<StaticSprite> {
-                                zindex = ZIndex.PARALLAX_BACKGROUND_LAYER1
-                                texture = enemyTexture
-                            }
+                    val entity: Entity = engine.entity {
+                        with<Enemy> {}
+                        with<Transform> {
+                            position = enemyPosition.position
+                            rotation = 180.0f
+                        }
+                        with<Velocity> {
+                            value = Vector2(0.0f, -2.5f)
+                            angular = -3.0f
+                        }
+                        with<StaticSprite> {
+                            zindex = ZIndex.PARALLAX_BACKGROUND_LAYER1
+                            texture = enemyTexture
                         }
                     }
+                    engine.add{entity}
 
-                    engine.removeEntity(enemyEntity)
+                    val enemySprite = Mappers.staticSprite.get(entity)
+                    Tween.to(enemySprite, StaticSpriteAccessor
+                        .TYPE_SCALE, 1.0f).target(0.0f).ease(Elastic.INOUT).start(SpaceJourney.tweenManager)
+                        .setCallback({ i: Int, baseTween: BaseTween<*> ->
+                            engine.removeEntity(enemyEntity)  
+                    })
 
                     return true
                 }
