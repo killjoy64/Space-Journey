@@ -118,7 +118,8 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86_64"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
-        
+
+        compile fileTree(dir: 'libs', include: '*.jar')
     }
 }
 
@@ -154,6 +155,8 @@ project(":core") {
         compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
+
+        compile fileTree(dir: 'libs', include: '*.jar')
 
         testCompile "junit:junit:4.12"
         testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"

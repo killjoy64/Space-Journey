@@ -39,7 +39,7 @@ class LevelOne : Level() {
                     texture = SpaceJourney.assetManager.get("parallax_medium_star_layer.png", Texture::class.java)
                     repeating = true
                     size = Vector2(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
-                    scale = 1
+                    scale = 1.0f
                 }
                 with<Parallax> {
                     speed = 0.25f
@@ -54,7 +54,7 @@ class LevelOne : Level() {
                     texture = SpaceJourney.assetManager.get("parallax_planet_layer.png", Texture::class.java)
                     repeating = true
                     size = Vector2(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
-                    scale = 1
+                    scale = 1.0f
                 }
                 with<Parallax> {
                     speed = 0.1f
@@ -69,7 +69,7 @@ class LevelOne : Level() {
                     texture = SpaceJourney.assetManager.get("parallax_small_star_layer.png", Texture::class.java)
                     repeating = true
                     size = Vector2(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
-                    scale = 1
+                    scale = 1.0f
                 }
                 with<Parallax> {
                     speed = 0.075f

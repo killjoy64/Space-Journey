@@ -16,7 +16,7 @@ class StaticSprite : Component {
     var repeating = false
 
     // This is an integer to make sure we respect the Pixels so we get Pixel-Perfect-Rendering
-    var scale : Int = 1
+    var scale : Float = 1.0f
 
     // The ZIndex to draw the sprite at
     var zindex = 1
