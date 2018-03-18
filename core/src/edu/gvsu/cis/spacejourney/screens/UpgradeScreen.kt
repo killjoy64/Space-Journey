@@ -26,7 +26,6 @@ class UpgradeScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     override fun show() {
         super.show()
-
     }
 
     // Be mindful about nullable-types, as resize is called before show
