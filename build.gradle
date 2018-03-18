@@ -155,6 +155,7 @@ project(":core") {
         compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
+        compile "org.mini2Dx:universal-tween-engine:6.3.3"
 
         compile fileTree(dir: 'libs', include: '*.jar')
 

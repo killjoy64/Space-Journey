@@ -37,6 +37,8 @@ open class BaseScreen(val game: SpaceJourney, val screenName: String) : KtxScree
 
         Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+
+        SpaceJourney.tweenManager.update(delta)
     }
 
     override fun resize(width: Int, height: Int) {
