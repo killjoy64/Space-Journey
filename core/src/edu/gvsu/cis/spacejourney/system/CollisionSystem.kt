@@ -30,7 +30,12 @@ private data class CollisionRectangle(
 
     companion object {
         fun fromComponents(transform: Transform, collider : BoxCollider) : CollisionRectangle {
-            return CollisionRectangle(transform.position.x, transform.position.y, collider.width.toFloat(), collider.height.toFloat())
+            return CollisionRectangle(
+                    transform.position.x + collider.offset.x,
+                    transform.position.y + collider.offset.y,
+                    collider.width.toFloat(),
+                    collider.height.toFloat()
+            )
         }
     }
 

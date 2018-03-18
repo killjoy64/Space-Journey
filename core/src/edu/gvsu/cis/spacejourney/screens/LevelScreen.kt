@@ -24,6 +24,7 @@ import ktx.ashley.entity
 import com.bitfire.postprocessing.PostProcessor
 import com.bitfire.utils.ShaderLoader
 import com.badlogic.gdx.Application.ApplicationType
+import com.badlogic.gdx.math.Vector
 import com.bitfire.postprocessing.effects.Bloom
 import com.bitfire.postprocessing.effects.CrtMonitor
 import com.bitfire.postprocessing.effects.Vignette
@@ -82,6 +83,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
             with<BoxCollider> {
                 width = playerTexture.width
                 height = playerTexture.height
+                offset = Vector2(-24f, -24f)
             }
             with<Health> {
                 value = 4

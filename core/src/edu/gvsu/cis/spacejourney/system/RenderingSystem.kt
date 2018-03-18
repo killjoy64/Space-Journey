@@ -4,6 +4,8 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.systems.SortedIteratingSystem
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -24,7 +26,7 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
     private var camera : OrthographicCamera = OrthographicCamera()
     private var viewport : FitViewport? = null
     private var debugBatch : ShapeRenderer? = null
-    private var debug : Boolean = true
+    private var debug : Boolean = false
 
     init {
         priority = SystemPriorities.RenderingSystem
@@ -38,6 +40,11 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
     }
 
     override fun update(deltaTime: Float) {
+
+        // Toggle Debug Rendering
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F3)){
+            debug = !debug
+        }
 
         camera.update()
 
@@ -82,7 +89,10 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
                 val boxCollider = Mappers.boxCollider.get(entity)
                 val transform = Mappers.transform.get(entity)
 
-                debugBatch?.box(transform.position.x, transform.position.y, 0.0f, boxCollider.width.toFloat(), boxCollider.height.toFloat(), 0.0f)
+                val positionX = transform.position.x + boxCollider.offset.x
+                val positionY = transform.position.y + boxCollider.offset.y
+
+                debugBatch?.box(positionX, positionY, 0.0f, boxCollider.width.toFloat(), boxCollider.height.toFloat(), 0.0f)
             }
 
         }
