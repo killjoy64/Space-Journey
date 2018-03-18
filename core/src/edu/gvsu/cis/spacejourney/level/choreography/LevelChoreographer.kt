@@ -38,6 +38,7 @@ class EnemySpawnEvent : ChoreographEvent() {
                 with<BoxCollider> {
                     width = enemyTexture.width - 16
                     height = enemyTexture.height - 16
+                    offset = Vector2(8f, 8f)
                 }
                 with<Transform> {
                     position = randomPosition

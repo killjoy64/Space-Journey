@@ -20,4 +20,5 @@ class StaticSprite : Component {
 
     // The ZIndex to draw the sprite at
     var zindex = 1
+
 }

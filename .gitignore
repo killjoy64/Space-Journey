@@ -123,3 +123,5 @@ Thumbs.db
 !/ios-moe/xcode/*.xcodeproj/xcshareddata
 !/ios-moe/xcode/*.xcodeproj/project.pbxproj
 /ios-moe/xcode/native/
+postprocessing/build/libs/postprocessing-1.0.jar
+utils/build/libs/utils-1.0.jar
