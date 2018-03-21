@@ -11,6 +11,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.utils.ImmutableArray
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Vector2
 import edu.gvsu.cis.spacejourney.SpaceJourney
@@ -21,9 +22,6 @@ import edu.gvsu.cis.spacejourney.managers.GameDataManager
 import edu.gvsu.cis.spacejourney.util.Mappers
 import edu.gvsu.cis.spacejourney.util.StaticSpriteAccessor
 import edu.gvsu.cis.spacejourney.util.VelocityAccessor
-import edu.gvsu.cis.spacejourney.util.ZIndex
-import ktx.ashley.add
-import ktx.ashley.entity
 import ktx.ashley.has
 import ktx.log.debug
 
@@ -119,7 +117,7 @@ class CollisionSystem : EntitySystem() {
                                 engine.removeEntity(enemyEntity)
                             })
                         Tween.to(enemyVelocity, VelocityAccessor
-                            .TYPE_ANGULAR, 0.5f).target(-6f).ease(Linear.INOUT).start(SpaceJourney.tweenManager)
+                            .TYPE_ANGULAR, 0.5f).target(-10f).ease(Linear.INOUT).start(SpaceJourney.tweenManager)
                     }
 
                     engine.removeEntity(projectileEntity)
@@ -136,7 +134,7 @@ class CollisionSystem : EntitySystem() {
                     health.value -= 1
 
                     GameDataManager.getInstance().lives = health.value
-
+                    
                     if (health.value <= 0){
                         debug { "Player has died" }
                         engine.removeEntity(playerEntity)
@@ -160,7 +158,6 @@ class CollisionSystem : EntitySystem() {
                     })
                     Tween.to(enemyVelocity, VelocityAccessor
                         .TYPE_ANGULAR, 0.5f).target(-6f).ease(Linear.INOUT).start(SpaceJourney.tweenManager)
-
                     return true
                 }
 

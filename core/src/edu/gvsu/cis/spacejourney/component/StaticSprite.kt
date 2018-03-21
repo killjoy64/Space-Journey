@@ -1,6 +1,7 @@
 package edu.gvsu.cis.spacejourney.component
 
 import com.badlogic.ashley.core.Component
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Vector2
 
@@ -24,4 +25,5 @@ class StaticSprite : Component {
     // The ZIndex to draw the sprite at
     var zindex = 1
 
+    var color: Color? = null
 }

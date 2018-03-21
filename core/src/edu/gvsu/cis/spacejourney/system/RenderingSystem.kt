@@ -107,6 +107,7 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
         // #TODO Add Rotation to this draw call
         val position = transform.position
         val scale = staticSprite.scale.toFloat()
+        val color = staticSprite.color
 
         // Get size
         val size : Vector2
@@ -121,6 +122,9 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
         val repeating = staticSprite.repeating
 
         if (!repeating) {
+            if (color != null) {
+                spriteBatch?.color = staticSprite.color
+            }
             spriteBatch?.draw(TextureRegion(staticSprite.texture), position.x, position.y, (size.x / 2.0f) * scale, (size.y / 2.0f) * scale, size.x, size.y, scale, scale, transform.rotation)
         } else {
 
