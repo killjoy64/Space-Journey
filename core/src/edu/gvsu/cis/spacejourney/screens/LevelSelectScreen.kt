@@ -16,6 +16,7 @@ import edu.gvsu.cis.spacejourney.input.MainMenuInputListener
 import edu.gvsu.cis.spacejourney.managers.GameDataManager
 import edu.gvsu.cis.spacejourney.managers.MusicManager
 import ktx.actors.onClick
+import ktx.log.debug
 
 /**
  * Class that designates all logic within the level select screen.

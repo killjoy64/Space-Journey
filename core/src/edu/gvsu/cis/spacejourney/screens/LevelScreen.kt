@@ -31,6 +31,7 @@ import com.bitfire.postprocessing.effects.Vignette
 import com.bitfire.postprocessing.filters.CrtScreen
 import edu.gvsu.cis.spacejourney.component.Health
 import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
+import ktx.log.debug
 
 
 /**
@@ -103,6 +104,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         gameData = GameDataManager.getInstance()
         gameData?.reset()
 
+        debug { "Level: ${gameData?.levelNumber}" }
         level = Levels.getFromId(gameData?.levelNumber!!).level
         level?.init(engine)
 

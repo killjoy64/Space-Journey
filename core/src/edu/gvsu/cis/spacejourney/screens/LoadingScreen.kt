@@ -34,6 +34,7 @@ class LoadingScreen(game: SpaceJourney) : BaseScreen(game, "LoadingScreen") {
         SpaceJourney.assetManager.load("laser.png", Texture::class.java)
         SpaceJourney.assetManager.load("enemy_spaceship.png", Texture::class.java)
         SpaceJourney.assetManager.load("player_spaceship.png", Texture::class.java)
+        SpaceJourney.assetManager.load("parallax_medium_cloud_layer.png", Texture::class.java)
         SpaceJourney.assetManager.load("parallax_medium_star_layer.png", Texture::class.java)
         SpaceJourney.assetManager.load("parallax_planet_layer.png", Texture::class.java)
         SpaceJourney.assetManager.load("parallax_small_star_layer.png", Texture::class.java)
