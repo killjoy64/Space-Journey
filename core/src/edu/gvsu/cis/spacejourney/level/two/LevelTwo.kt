@@ -10,7 +10,6 @@ import edu.gvsu.cis.spacejourney.component.Parallax
 import edu.gvsu.cis.spacejourney.component.StaticSprite
 import edu.gvsu.cis.spacejourney.component.Transform
 import edu.gvsu.cis.spacejourney.level.Level
-import edu.gvsu.cis.spacejourney.level.choreography.EnemySpawnEvent
 import edu.gvsu.cis.spacejourney.level.choreography.LevelChoreographer
 import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay
 import edu.gvsu.cis.spacejourney.util.ZIndex
@@ -33,7 +32,7 @@ class LevelTwo : Level() {
                 }
                 with<StaticSprite> {
                     zindex = ZIndex.PARALLAX_BACKGROUND_LAYER1
-                    texture = SpaceJourney.assetManager.get("parallax_medium_cloud_layer.png", Texture::class.java)
+                    texture = SpaceJourney.assetManager.get("cloud_test.jpg", Texture::class.java)
                     repeating = true
                     size = Vector2(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
                     scale = 1.0f
@@ -57,21 +56,21 @@ class LevelTwo : Level() {
 //                    speed = 0.1f
 //                }
 //            }
-//            entity {
-//                with<Transform> {
-//                    position = Vector2(0f, 0f)
-//                }
-//                with<StaticSprite> {
-//                    zindex = ZIndex.PARALLAX_BACKGROUND_LAYER3
-//                    texture = SpaceJourney.assetManager.get("parallax_small_star_layer.png", Texture::class.java)
-//                    repeating = true
-//                    size = Vector2(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
-//                    scale = 1.0f
-//                }
-//                with<Parallax> {
-//                    speed = 0.075f
-//                }
-//            }
+            entity {
+                with<Transform> {
+                    position = Vector2(0f, 0f)
+                }
+                with<StaticSprite> {
+                    zindex = ZIndex.PARALLAX_BACKGROUND_LAYER3
+                    texture = SpaceJourney.assetManager.get("parallax_small_cloud_layer.png", Texture::class.java)
+                    repeating = true
+                    size = Vector2(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
+                    scale = 1.0f
+                }
+                with<Parallax> {
+                    speed = 0.075f
+                }
+            }
         }
 
         choreographer = LevelChoreographer(engine)

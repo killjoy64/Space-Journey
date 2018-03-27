@@ -10,7 +10,7 @@ import edu.gvsu.cis.spacejourney.component.Parallax
 import edu.gvsu.cis.spacejourney.component.StaticSprite
 import edu.gvsu.cis.spacejourney.component.Transform
 import edu.gvsu.cis.spacejourney.level.Level
-import edu.gvsu.cis.spacejourney.level.choreography.EnemySpawnEvent
+import edu.gvsu.cis.spacejourney.level.choreography.events.EnemySpawnEvent
 import edu.gvsu.cis.spacejourney.level.choreography.LevelChoreographer
 import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay
 import edu.gvsu.cis.spacejourney.util.ZIndex

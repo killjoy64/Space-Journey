@@ -14,49 +14,49 @@ import ktx.collections.GdxArray
 import ktx.collections.isNotEmpty
 
 
-class EnemySpawnEvent : ChoreographEvent() {
-
-    val position: Vector2? = null
-
-    override fun onEvent(engine: Engine) {
-
-        //debug { "Enemy added" }
-
-        val randomPosition = Vector2((Math.random().toFloat() * Gdx.graphics.width.toFloat() - 50.0f) + 50.0f, Gdx.graphics.height.toFloat())
-
-        val enemyTexture = SpaceJourney.assetManager.get("enemy_spaceship.png", Texture::class.java)
-
-        engine.add {
-            entity {
-                with<Enemy> {
-
-                }
-                with<Health> {
-                    value = 3
-                    maxValue = 3
-                }
-                with<BoxCollider> {
-                    width = enemyTexture.width - 16
-                    height = enemyTexture.height - 16
-                    offset = Vector2(8f, 8f)
-                }
-                with<Transform> {
-                    position = randomPosition
-                    rotation = 180.0f
-                }
-                with<Velocity> {
-                    value = Vector2(0.0f, -1.5f)
-                }
-                with<StaticSprite> {
-                    zindex = ZIndex.ENEMY
-                    texture = enemyTexture
-                }
-            }
-        }
-
-    }
-
-}
+//class EnemySpawnEvent : ChoreographEvent() {
+//
+//    val position1: Vector2? = null
+//
+//    override fun onEvent(engine: Engine) {
+//
+//
+//
+//        val randomPosition = Vector2((Math.random().toFloat() * Gdx.graphics.width.toFloat() - 50.0f) + 50.0f, Gdx.graphics.height.toFloat())
+//
+//        val enemyTexture = SpaceJourney.assetManager.get("enemy_spaceship.png", Texture::class.java)
+//
+//        engine.add {
+//            entity {
+//                with<Enemy> {
+//
+//                }
+//                with<Health> {
+//                    value = 3
+//                    maxValue = 3
+//                }
+//                with<BoxCollider> {
+//                    width = enemyTexture.width - 16
+//                    height = enemyTexture.height - 16
+//                    offset = Vector2(8f, 8f)
+//                }
+//                with<Transform> {
+//                    position = randomPosition
+//                    rotation = 180.0f
+//                }
+//                with<Velocity> {
+//                    value = Vector2(0.0f, -1.5f)
+//                }
+//                with<StaticSprite> {
+//                    zindex = ZIndex.ENEMY
+//                    texture = enemyTexture
+//                }
+//            }
+//        }
+//
+//    }
+//
+//}
 
 /**
  * Small abstract helper class that defines a
