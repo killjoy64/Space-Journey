@@ -12,6 +12,7 @@ import edu.gvsu.cis.spacejourney.component.Transform
 import edu.gvsu.cis.spacejourney.level.Level
 import edu.gvsu.cis.spacejourney.level.choreography.events.EnemySpawnEvent
 import edu.gvsu.cis.spacejourney.level.choreography.LevelChoreographer
+import edu.gvsu.cis.spacejourney.managers.GameDataManager
 import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay
 import edu.gvsu.cis.spacejourney.util.ZIndex
 import ktx.ashley.add
@@ -79,7 +80,7 @@ class LevelOne : Level() {
 
         choreographer = LevelChoreographer(engine)
 
-        for (i in 0..399) {
+        for (i in 0..499) {
             choreographer!!.schedule(1.0f + i * 0.2f, EnemySpawnEvent())
         }
     }
@@ -88,7 +89,14 @@ class LevelOne : Level() {
         super.update(delta)
 
         choreographer!!.update(delta)
-        this.hud?.poll(engine!!)
+        hud?.poll(engine!!)
+
+        if (choreographer!!.isEmpty()) {
+            val lastEvent = choreographer!!.getLastEvent()?.event as? EnemySpawnEvent
+            if (!engine!!.entities.contains(lastEvent?.enemyEntity)) {
+                // TODO - Implement level end transition!
+            }
+        }
     }
 
     override fun dispose() {
