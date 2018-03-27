@@ -80,7 +80,7 @@ class LevelOne : Level() {
 
         choreographer = LevelChoreographer(engine)
 
-        for (i in 0..499) {
+        for (i in 0..49) {
             choreographer!!.schedule(1.0f + i * 0.2f, EnemySpawnEvent())
         }
     }

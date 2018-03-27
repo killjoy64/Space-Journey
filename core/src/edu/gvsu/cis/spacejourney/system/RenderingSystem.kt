@@ -96,14 +96,29 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
                 val positionX = transform.position.x + boxCollider.offset.x
                 val positionY = transform.position.y + boxCollider.offset.y
 
+                debugBatch?.set(ShapeRenderer.ShapeType.Line)
+                debugBatch?.setColor(1.0f, 1.0f, 1.0f, 1.0f)
                 debugBatch?.box(positionX, positionY, 0.0f, boxCollider.width.toFloat(), boxCollider.height.toFloat(), 0.0f)
             }
 
         }
 
-        // General Rendering
+        // Hitpoint Bar Rendering
 
+        if (Mappers.health.has(entity) && !Mappers.player.has(entity)) {
+            val health = Mappers.health.get(entity)
+            val x = transform.position.x
+            val y = transform.position.y + staticSprite.texture!!.height + 5.0f
+            val w = staticSprite.texture!!.width.toFloat()
+            val hpW = (w / health.maxValue) * health.value
+            val h = 2.5f
+            debugBatch?.set(ShapeRenderer.ShapeType.Filled)
+            debugBatch?.setColor(1.0f, 0.0f, 0.0f, 1.0f)
+            debugBatch?.rect(x, y, w, h)
+            debugBatch?.setColor(0.0f, 1.0f, 0.0f, 1.0f)
+            debugBatch?.rect(x, y, hpW, h)
 
+        }
 
 
         // Render the entity

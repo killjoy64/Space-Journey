@@ -106,6 +106,8 @@ class CollisionSystem : EntitySystem() {
                         GameDataManager.getInstance().score += 100
 
                         enemyEntity.remove(BoxCollider::class.java)
+                        enemyEntity.remove(Health::class.java)
+
                         val enemyPosition = Mappers.transform.get(enemyEntity)
                         val enemyTexture = SpaceJourney.assetManager.get("enemy_spaceship.png", Texture::class.java)
                         val enemySprite = Mappers.staticSprite.get(enemyEntity)
@@ -146,6 +148,8 @@ class CollisionSystem : EntitySystem() {
                     // Logic to try and change the player's pixmap
 
                     enemyEntity.remove(BoxCollider::class.java)
+                    enemyEntity.remove(Health::class.java)
+
                     val enemyPosition = Mappers.transform.get(enemyEntity)
                     val enemyTexture = SpaceJourney.assetManager.get("enemy_spaceship.png", Texture::class.java)
                     val enemySprite = Mappers.staticSprite.get(enemyEntity)
