@@ -6,6 +6,8 @@ import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
+import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -56,6 +58,8 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
 
             debugBatch?.setAutoShapeType(true)
             debugBatch?.begin()
+
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
             spriteBatch?.begin()
 
@@ -108,6 +112,7 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
         val position = transform.position
         val scale = staticSprite.scale.toFloat()
         val color = staticSprite.color
+        val alpha = staticSprite.transparency
 
         // Get size
         val size : Vector2
@@ -122,8 +127,11 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
         val repeating = staticSprite.repeating
 
         if (!repeating) {
+            val curColor: Color = spriteBatch?.color!!
             if (color != null) {
                 spriteBatch?.color = staticSprite.color
+            } else {
+                spriteBatch?.color = Color(curColor.r, curColor.g, curColor.b, alpha)
             }
             spriteBatch?.draw(TextureRegion(staticSprite.texture), position.x, position.y, (size.x / 2.0f) * scale, (size.y / 2.0f) * scale, size.x, size.y, scale, scale, transform.rotation)
         } else {

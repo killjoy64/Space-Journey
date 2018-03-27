@@ -2,16 +2,14 @@ package edu.gvsu.cis.spacejourney.system
 
 import aurelienribon.tweenengine.BaseTween
 import aurelienribon.tweenengine.Tween
-import aurelienribon.tweenengine.equations.Circ
-import aurelienribon.tweenengine.equations.Elastic
-import aurelienribon.tweenengine.equations.Linear
-import aurelienribon.tweenengine.equations.Sine
+import aurelienribon.tweenengine.equations.*
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Vector2
 import edu.gvsu.cis.spacejourney.SpaceJourney
@@ -23,6 +21,7 @@ import edu.gvsu.cis.spacejourney.util.Mappers
 import edu.gvsu.cis.spacejourney.util.StaticSpriteAccessor
 import edu.gvsu.cis.spacejourney.util.VelocityAccessor
 import ktx.ashley.has
+import ktx.assets.disposeSafely
 import ktx.log.debug
 
 /**
@@ -144,11 +143,14 @@ class CollisionSystem : EntitySystem() {
 
                     GameDataManager.getInstance().score += 100
 
+                    // Logic to try and change the player's pixmap
+
                     enemyEntity.remove(BoxCollider::class.java)
                     val enemyPosition = Mappers.transform.get(enemyEntity)
                     val enemyTexture = SpaceJourney.assetManager.get("enemy_spaceship.png", Texture::class.java)
                     val enemySprite = Mappers.staticSprite.get(enemyEntity)
                     val enemyVelocity = Mappers.velocity.get(enemyEntity)
+                    val playerSprite = Mappers.staticSprite.get(playerEntity)
                     Tween.to(enemySprite, StaticSpriteAccessor
                         .TYPE_SCALE, 2.0f).target(0.0f).ease(Elastic.INOUT).start(SpaceJourney.tweenManager)
                         .setCallback({ _: Int, _: BaseTween<*> ->
@@ -158,6 +160,13 @@ class CollisionSystem : EntitySystem() {
                     })
                     Tween.to(enemyVelocity, VelocityAccessor
                         .TYPE_ANGULAR, 0.5f).target(-6f).ease(Linear.INOUT).start(SpaceJourney.tweenManager)
+
+                    // TODO - Implement temporary invincibility period.
+                    playerSprite.transparency = 0.0f
+                    Tween.to(playerSprite, StaticSpriteAccessor
+                            .TYPE_ALPHA, 0.175f).target(1.0f).ease(Elastic.INOUT)
+                            .repeat(3, 0.0f)
+                            .start(SpaceJourney.tweenManager)
                     return true
                 }
 

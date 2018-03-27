@@ -1,6 +1,5 @@
 package edu.gvsu.cis.spacejourney.util
 
-import com.badlogic.gdx.math.Vector2
 import aurelienribon.tweenengine.TweenAccessor
 import edu.gvsu.cis.spacejourney.component.StaticSprite
 
@@ -12,7 +11,10 @@ class StaticSpriteAccessor : TweenAccessor<StaticSprite> {
                 returnValues[0] = target.scale
                 2
             }
-
+            TYPE_ALPHA -> {
+                returnValues[0] = target.transparency
+                3
+            }
             else -> {
                 assert(false)
                 -1
@@ -25,11 +27,15 @@ class StaticSpriteAccessor : TweenAccessor<StaticSprite> {
             TYPE_SCALE -> {
                 target.scale = newValues[0]
             }
+            TYPE_ALPHA -> {
+                target.transparency = newValues[0]
+            }
             else -> assert(false)
         }
     }
 
     companion object {
         const val TYPE_SCALE = 1
+        const val TYPE_ALPHA = 2
     }
 }
