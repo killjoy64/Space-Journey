@@ -162,11 +162,23 @@ class CollisionSystem : EntitySystem() {
                         .TYPE_ANGULAR, 0.5f).target(-6f).ease(Linear.INOUT).start(SpaceJourney.tweenManager)
 
                     // TODO - Implement temporary invincibility period.
-                    playerSprite.transparency = 0.0f
+                    val originalColor = playerSprite.color
+                    playerSprite.color = Color(1.0f, 0.0f, 0.0f, 1.0f)
                     Tween.to(playerSprite, StaticSpriteAccessor
-                            .TYPE_ALPHA, 0.175f).target(1.0f).ease(Elastic.INOUT)
+                            .TYPE_COLOR, 0.175f).target(
+                                originalColor?.r!!,
+                                originalColor.g,
+                                originalColor.b,
+                                originalColor.a
+                            )
+                            .ease(Linear.INOUT)
                             .repeat(3, 0.0f)
                             .start(SpaceJourney.tweenManager)
+//                    playerSprite.transparency = 0.0f
+//                    Tween.to(playerSprite, StaticSpriteAccessor
+//                            .TYPE_ALPHA, 0.175f).target(1.0f).ease(Elastic.INOUT)
+//                            .repeat(3, 0.0f)
+//                            .start(SpaceJourney.tweenManager)
                     return true
                 }
 

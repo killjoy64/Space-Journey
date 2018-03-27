@@ -1,6 +1,7 @@
 package edu.gvsu.cis.spacejourney.util
 
 import aurelienribon.tweenengine.TweenAccessor
+import com.badlogic.gdx.graphics.Color
 import edu.gvsu.cis.spacejourney.component.StaticSprite
 
 class StaticSpriteAccessor : TweenAccessor<StaticSprite> {
@@ -14,6 +15,13 @@ class StaticSpriteAccessor : TweenAccessor<StaticSprite> {
             TYPE_ALPHA -> {
                 returnValues[0] = target.transparency
                 3
+            }
+            TYPE_COLOR -> {
+                returnValues[0] = target.color?.r!!
+                returnValues[1] = target.color?.g!!
+                returnValues[2] = target.color?.b!!
+                returnValues[3] = target.color?.a!!
+                4
             }
             else -> {
                 assert(false)
@@ -30,6 +38,9 @@ class StaticSpriteAccessor : TweenAccessor<StaticSprite> {
             TYPE_ALPHA -> {
                 target.transparency = newValues[0]
             }
+            TYPE_COLOR -> {
+                target.color = Color(newValues[0], newValues[1], newValues[2], newValues[3])
+            }
             else -> assert(false)
         }
     }
@@ -37,5 +48,6 @@ class StaticSpriteAccessor : TweenAccessor<StaticSprite> {
     companion object {
         const val TYPE_SCALE = 1
         const val TYPE_ALPHA = 2
+        const val TYPE_COLOR = 3
     }
 }

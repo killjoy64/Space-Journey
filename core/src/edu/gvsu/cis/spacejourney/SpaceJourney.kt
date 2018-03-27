@@ -53,6 +53,7 @@ class SpaceJourney : KtxGame<BaseScreen>() {
         // Register our custom Accessors
         Tween.registerAccessor(StaticSprite::class.java, StaticSpriteAccessor())
         Tween.registerAccessor(Velocity::class.java, VelocityAccessor())
+        Tween.setCombinedAttributesLimit(4)
 
         // Register all of the screens upfront so we can easily switch between
         // them by classname and make sure we don't end up in an invalid state
