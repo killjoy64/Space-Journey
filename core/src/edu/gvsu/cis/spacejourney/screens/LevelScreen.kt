@@ -125,13 +125,6 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
     override fun render(delta: Float) {
         super.render(delta)
 
-
-
-        // Switch level if needed
-        /*if (level != null && level?.player!!.isDead) {
-        game.setScreen<LevelSelectScreen>()
-        }*/
-
         postProcessor?.capture()
 
         engine.update(delta)

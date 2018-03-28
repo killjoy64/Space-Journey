@@ -33,6 +33,8 @@ class PlayerControllerSystem : EntitySystem() {
 
     private var time = 0.0
 
+    var inputEnabled: Boolean = true
+
     init {
         priority = SystemPriorities.PlayerControllerSystem
     }
@@ -61,7 +63,7 @@ class PlayerControllerSystem : EntitySystem() {
                 val controllerID = it.index
                 val controller = it.value
 
-                if (controllerID == 0) {
+                if (controllerID == 0 && inputEnabled) {
 
                     // The official controller mappings by LibGDX for Xbox360 controllers
                     // don't work on Windows of all platforms... so we have to hardcode them
@@ -87,20 +89,22 @@ class PlayerControllerSystem : EntitySystem() {
                 }
             }
 
-            if (Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-                movement.x = player.movespeed
-            }
-            if (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-                movement.x = -player.movespeed
-            }
-            if (Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP)) {
-                movement.y = player.movespeed
-            }
-            if (Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-                movement.y = -player.movespeed
-            }
-            if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-                attack = true
+            if (inputEnabled) {
+                if (Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+                    movement.x = player.movespeed
+                }
+                if (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+                    movement.x = -player.movespeed
+                }
+                if (Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP)) {
+                    movement.y = player.movespeed
+                }
+                if (Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+                    movement.y = -player.movespeed
+                }
+                if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+                    attack = true
+                }
             }
 
             val deltaMovement = movement * deltaTime

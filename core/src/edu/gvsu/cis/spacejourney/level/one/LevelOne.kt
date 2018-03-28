@@ -14,9 +14,11 @@ import edu.gvsu.cis.spacejourney.level.choreography.events.EnemySpawnEvent
 import edu.gvsu.cis.spacejourney.level.choreography.LevelChoreographer
 import edu.gvsu.cis.spacejourney.managers.GameDataManager
 import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay
+import edu.gvsu.cis.spacejourney.system.PlayerControllerSystem
 import edu.gvsu.cis.spacejourney.util.ZIndex
 import ktx.ashley.add
 import ktx.ashley.entity
+import ktx.log.debug
 
 //private DefaultOverlay defaultHud;
 
@@ -93,8 +95,12 @@ class LevelOne : Level() {
 
         if (choreographer!!.isEmpty()) {
             val lastEvent = choreographer!!.getLastEvent()?.event as? EnemySpawnEvent
-            if (!engine!!.entities.contains(lastEvent?.enemyEntity)) {
+            val inputEnabled = engine?.getSystem(PlayerControllerSystem::class.java)?.inputEnabled
+            if (!engine!!.entities.contains(lastEvent?.enemyEntity) && inputEnabled!!) {
                 // TODO - Implement level end transition!
+                engine?.getSystem(PlayerControllerSystem::class.java)?.inputEnabled = false
+                debug { "Last entity removed. Starting level end sequence." }
+
             }
         }
     }
