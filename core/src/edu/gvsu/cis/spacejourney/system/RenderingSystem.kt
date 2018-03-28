@@ -59,8 +59,6 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
             debugBatch?.setAutoShapeType(true)
             debugBatch?.begin()
 
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-
             spriteBatch?.begin()
 
             super.update(deltaTime)
