@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Vector2
 import edu.gvsu.cis.spacejourney.SpaceJourney
+import edu.gvsu.cis.spacejourney.component.Enemy
 import edu.gvsu.cis.spacejourney.component.Parallax
 import edu.gvsu.cis.spacejourney.component.StaticSprite
 import edu.gvsu.cis.spacejourney.component.Transform
@@ -15,9 +16,11 @@ import edu.gvsu.cis.spacejourney.level.choreography.LevelChoreographer
 import edu.gvsu.cis.spacejourney.managers.GameDataManager
 import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay
 import edu.gvsu.cis.spacejourney.system.PlayerControllerSystem
+import edu.gvsu.cis.spacejourney.util.Mappers
 import edu.gvsu.cis.spacejourney.util.ZIndex
 import ktx.ashley.add
 import ktx.ashley.entity
+import ktx.ashley.has
 import ktx.log.debug
 
 //private DefaultOverlay defaultHud;
@@ -96,11 +99,16 @@ class LevelOne : Level() {
         if (choreographer!!.isEmpty()) {
             val lastEvent = choreographer!!.getLastEvent()?.event as? EnemySpawnEvent
             val inputEnabled = engine?.getSystem(PlayerControllerSystem::class.java)?.inputEnabled
-            if (!engine!!.entities.contains(lastEvent?.enemyEntity) && inputEnabled!!) {
+            var noEnemies = true
+            engine!!.entities.forEach {
+                if (it.has(Mappers.enemy)) {
+                    noEnemies = false
+                }
+            }
+            if (noEnemies && inputEnabled!!) {
                 // TODO - Implement level end transition!
                 engine?.getSystem(PlayerControllerSystem::class.java)?.inputEnabled = false
                 debug { "Last entity removed. Starting level end sequence." }
-
             }
         }
     }

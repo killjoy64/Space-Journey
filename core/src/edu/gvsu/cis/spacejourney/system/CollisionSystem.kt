@@ -178,6 +178,9 @@ class CollisionSystem : EntitySystem() {
                             .ease(Linear.INOUT)
                             .repeat(3, 0.0f)
                             .start(SpaceJourney.tweenManager)
+                            .setCallback({ _: Int, _: BaseTween<*> ->
+                                playerSprite?.color = originalColor
+                            })
 //                    playerSprite.transparency = 0.0f
 //                    Tween.to(playerSprite, StaticSpriteAccessor
 //                            .TYPE_ALPHA, 0.175f).target(1.0f).ease(Elastic.INOUT)
