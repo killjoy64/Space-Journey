@@ -165,9 +165,15 @@ class CollisionSystem : EntitySystem() {
                     Tween.to(enemyVelocity, VelocityAccessor
                         .TYPE_ANGULAR, 0.5f).target(-6f).ease(Linear.INOUT).start(SpaceJourney.tweenManager)
 
-                    // TODO - Implement temporary invincibility period.
+                    // TODO - Implement temporary invincibility period, and checking if player has box collision.
+//                    val collider = engine.createComponent(BoxCollider::class.java)
+//                    collider.width = playerSprite.texture!!.width
+//                    collider.height = playerSprite.texture!!.height
+//                    collider.offset = Vector2(-24f, -24f)
+
                     val originalColor = playerSprite.color
                     playerSprite.color = Color(1.0f, 0.0f, 0.0f, 1.0f)
+//                    playerEntity.remove(BoxCollider::class.java)
                     Tween.to(playerSprite, StaticSpriteAccessor
                             .TYPE_COLOR, 0.175f).target(
                                 originalColor?.r!!,
@@ -180,6 +186,7 @@ class CollisionSystem : EntitySystem() {
                             .start(SpaceJourney.tweenManager)
                             .setCallback({ _: Int, _: BaseTween<*> ->
                                 playerSprite?.color = originalColor
+//                                playerEntity?.add(collider)
                             })
 //                    playerSprite.transparency = 0.0f
 //                    Tween.to(playerSprite, StaticSpriteAccessor

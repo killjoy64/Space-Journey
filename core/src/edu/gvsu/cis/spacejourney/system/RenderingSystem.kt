@@ -139,14 +139,15 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
         // Is the sprite specified to repeat?
         val repeating = staticSprite.repeating
 
+        val curColor: Color = spriteBatch?.color!!
+        if (color != null) {
+            spriteBatch?.color = staticSprite.color
+        } else {
+            staticSprite?.color = spriteBatch?.color
+            spriteBatch?.color = Color(curColor.r, curColor.g, curColor.b, alpha)
+        }
+
         if (!repeating) {
-            val curColor: Color = spriteBatch?.color!!
-            if (color != null) {
-                spriteBatch?.color = staticSprite.color
-            } else {
-                staticSprite?.color = spriteBatch?.color
-                spriteBatch?.color = Color(curColor.r, curColor.g, curColor.b, alpha)
-            }
             spriteBatch?.draw(TextureRegion(staticSprite.texture), position.x, position.y, (size.x / 2.0f) * scale, (size.y / 2.0f) * scale, size.x, size.y, scale, scale, transform.rotation)
         } else {
 
