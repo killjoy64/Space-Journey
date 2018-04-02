@@ -13,6 +13,7 @@ abstract class Level : Disposable {
 
     var music: Music? = null
     var hud: DefaultOverlay? = null
+    var complete: Boolean? = false
     //private PlayerSpaceship player;
 
     /*fun setHud(hud : Table) {

@@ -142,6 +142,10 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
         val players = engine.getEntitiesFor(Family.all(Player::class.java).get())
 
+        if (level?.complete!!) {
+            this.game.setScreen<LevelEndScreen>()
+        }
+
         if (players.size() <= 0){
 
             engine.removeAllEntities()

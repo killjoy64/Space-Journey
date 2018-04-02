@@ -159,7 +159,7 @@ class LevelOne : Level() {
         Timeline.createSequence()
                 .push(sequenceOne)
                 .beginParallel()
-                .push(Tween.to(playerTransform, TransformAccessor.TYPE_POSITION, 2.0f)
+                .push(Tween.to(playerTransform, TransformAccessor.TYPE_POSITION, 2.75f)
                         .target(xGoal, yGoal * 2)
                         .ease(Quad.IN))
                 .push(Tween.to(parallaxOne, ParallaxAccessor.TYPE_PARALLAX, 3.0f)
@@ -195,7 +195,7 @@ class LevelOne : Level() {
                 .end()
                 .start(SpaceJourney.tweenManager)
                 .setCallback({ _: Int, _: BaseTween<*> ->
-                    // TODO - Implement new level stats screen.
+                    this.complete = true
                 })
 
     }

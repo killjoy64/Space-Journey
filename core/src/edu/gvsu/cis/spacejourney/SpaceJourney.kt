@@ -10,11 +10,7 @@ import edu.gvsu.cis.spacejourney.component.Parallax
 import edu.gvsu.cis.spacejourney.component.StaticSprite
 import edu.gvsu.cis.spacejourney.component.Transform
 import edu.gvsu.cis.spacejourney.component.Velocity
-import edu.gvsu.cis.spacejourney.screens.BaseScreen
-import edu.gvsu.cis.spacejourney.screens.LevelSelectScreen
-import edu.gvsu.cis.spacejourney.screens.LevelScreen
-import edu.gvsu.cis.spacejourney.screens.LoadingScreen
-import edu.gvsu.cis.spacejourney.screens.MainMenuScreen
+import edu.gvsu.cis.spacejourney.screens.*
 import edu.gvsu.cis.spacejourney.util.ParallaxAccessor
 import edu.gvsu.cis.spacejourney.util.StaticSpriteAccessor
 import edu.gvsu.cis.spacejourney.util.TransformAccessor
@@ -67,6 +63,7 @@ class SpaceJourney : KtxGame<BaseScreen>() {
         this.addScreen(MainMenuScreen(this))
         this.addScreen(LevelSelectScreen(this))
         this.addScreen(LevelScreen(this))
+        this.addScreen(LevelEndScreen(this))
 
         // Switch to the first screen
         this.setScreen<LoadingScreen>()

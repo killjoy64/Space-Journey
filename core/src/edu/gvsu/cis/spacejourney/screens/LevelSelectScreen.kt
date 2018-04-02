@@ -34,7 +34,7 @@ class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScree
 
     private var inputListener: MainMenuInputListener? = null
 
-    private var touched : Boolean = false;
+    private var touched : Boolean = false
 
     /**
      * Method that creates the initial screen logic, creates a default font, and adds the options

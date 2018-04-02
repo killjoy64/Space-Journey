@@ -52,4 +52,9 @@ public final class Strings {
    */
   public static final String HUD_SCORE = "SCORE %06d";
 
+  /**
+   * String text used to represent level end text.
+   */
+  public static final String LEVEL_END = "LEVEL END";
+
 }
