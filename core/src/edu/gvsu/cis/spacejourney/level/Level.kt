@@ -3,8 +3,8 @@ package edu.gvsu.cis.spacejourney.level
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Music
-import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Disposable
+import com.bitfire.postprocessing.PostProcessor
 import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay
 
 abstract class Level : Disposable {
@@ -14,15 +14,12 @@ abstract class Level : Disposable {
     var music: Music? = null
     var hud: DefaultOverlay? = null
     var complete: Boolean? = false
-    //private PlayerSpaceship player;
-
-    /*fun setHud(hud : Table) {
-        this.hud = hud;
-    }*/
 
     open fun init(engine: Engine) {
         this.engine = engine
     }
+
+    abstract fun initEffects(postProcessor: PostProcessor)
 
     open fun update(delta: Float) {
 

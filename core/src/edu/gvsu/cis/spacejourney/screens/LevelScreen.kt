@@ -60,13 +60,6 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         ShaderLoader.BasePath = "data/shaders/"
         postProcessor = PostProcessor(false, false, isDesktop)
 
-        val bloom = Bloom((Gdx.graphics.width * 0.25f).toInt(), (Gdx.graphics.height * 0.25f).toInt())
-        bloom.setBloomIntesity(2.25f)
-        postProcessor!!.addEffect(bloom)
-
-        val vignette = Vignette(Gdx.graphics.width, Gdx.graphics.height, false)
-        postProcessor!!.addEffect(vignette)
-
         renderingSystem = RenderingSystem()
 
         engine.addSystem(VelocitySystem())
@@ -106,6 +99,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         debug { "Level: ${gameData?.levelNumber}" }
         level = Levels.getFromId(gameData?.levelNumber!!)
         level?.init(engine)
+        level?.initEffects(postProcessor!!)
 
         MusicManager.getInstance().music = level?.music
     }

@@ -12,6 +12,9 @@ import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Vector2
+import com.bitfire.postprocessing.PostProcessor
+import com.bitfire.postprocessing.effects.Bloom
+import com.bitfire.postprocessing.effects.Vignette
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.component.Enemy
 import edu.gvsu.cis.spacejourney.component.Parallax
@@ -102,6 +105,15 @@ class LevelOne : Level() {
         for (i in 0..9) {
             choreographer!!.schedule(1.0f + i * 0.2f, EnemySpawnEvent())
         }
+    }
+
+    override fun initEffects(postProcessor: PostProcessor) {
+        val bloom = Bloom((Gdx.graphics.width * 0.25f).toInt(), (Gdx.graphics.height * 0.25f).toInt())
+        bloom.setBloomIntesity(2.25f)
+        postProcessor.addEffect(bloom)
+
+        val vignette = Vignette(Gdx.graphics.width, Gdx.graphics.height, false)
+        postProcessor.addEffect(vignette)
     }
 
     override fun update(delta: Float) {
