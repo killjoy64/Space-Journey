@@ -6,6 +6,8 @@ import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
+import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -92,14 +94,29 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
                 val positionX = transform.position.x + boxCollider.offset.x
                 val positionY = transform.position.y + boxCollider.offset.y
 
+                debugBatch?.set(ShapeRenderer.ShapeType.Line)
+                debugBatch?.setColor(1.0f, 1.0f, 1.0f, 1.0f)
                 debugBatch?.box(positionX, positionY, 0.0f, boxCollider.width.toFloat(), boxCollider.height.toFloat(), 0.0f)
             }
 
         }
 
-        // General Rendering
+        // Hitpoint Bar Rendering
 
+        if (Mappers.health.has(entity) && !Mappers.player.has(entity)) {
+            val health = Mappers.health.get(entity)
+            val x = transform.position.x
+            val y = transform.position.y + staticSprite.texture!!.height + 5.0f
+            val w = staticSprite.texture!!.width.toFloat()
+            val hpW = (w / health.maxValue) * health.value
+            val h = 2.5f
+            debugBatch?.set(ShapeRenderer.ShapeType.Filled)
+            debugBatch?.setColor(1.0f, 0.0f, 0.0f, 1.0f)
+            debugBatch?.rect(x, y, w, h)
+            debugBatch?.setColor(0.0f, 1.0f, 0.0f, 1.0f)
+            debugBatch?.rect(x, y, hpW, h)
 
+        }
 
 
         // Render the entity
@@ -108,6 +125,7 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
         val position = transform.position
         val scale = staticSprite.scale.toFloat()
         val color = staticSprite.color
+        val alpha = staticSprite.transparency
 
         // Get size
         val size : Vector2
@@ -121,10 +139,15 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
         // Is the sprite specified to repeat?
         val repeating = staticSprite.repeating
 
+        val curColor: Color = spriteBatch?.color!!
+        if (color != null) {
+            spriteBatch?.color = staticSprite.color
+        } else {
+            staticSprite?.color = spriteBatch?.color
+            spriteBatch?.color = Color(curColor.r, curColor.g, curColor.b, alpha)
+        }
+
         if (!repeating) {
-            if (color != null) {
-                spriteBatch?.color = staticSprite.color
-            }
             spriteBatch?.draw(TextureRegion(staticSprite.texture), position.x, position.y, (size.x / 2.0f) * scale, (size.y / 2.0f) * scale, size.x, size.y, scale, scale, transform.rotation)
         } else {
 

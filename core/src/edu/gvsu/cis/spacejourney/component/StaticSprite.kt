@@ -26,4 +26,6 @@ class StaticSprite : Component {
     var zindex = 1
 
     var color: Color? = null
+
+    var transparency: Float = 1.0f
 }

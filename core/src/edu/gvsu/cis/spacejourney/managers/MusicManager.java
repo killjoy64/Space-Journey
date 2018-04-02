@@ -40,7 +40,7 @@ public class MusicManager implements Disposable {
   public void setMusic(Music music) {
     this.stop();
     this.currentMusic = music;
-    this.currentMusic.play();
+//    this.currentMusic.play();
     this.currentMusic.setVolume(0.3f);
     this.currentMusic.setLooping(true);
   }

@@ -32,7 +32,6 @@ public final class GameDataManager {
    */
   public void reset() {
     this.lives = 3;
-    this.levelNumber = 1;
     this.score = 0;
   }
 

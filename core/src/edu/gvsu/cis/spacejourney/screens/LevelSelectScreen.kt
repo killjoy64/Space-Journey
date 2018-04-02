@@ -16,6 +16,7 @@ import edu.gvsu.cis.spacejourney.input.MainMenuInputListener
 import edu.gvsu.cis.spacejourney.managers.GameDataManager
 import edu.gvsu.cis.spacejourney.managers.MusicManager
 import ktx.actors.onClick
+import ktx.log.debug
 
 /**
  * Class that designates all logic within the level select screen.
@@ -33,7 +34,7 @@ class LevelSelectScreen(game: SpaceJourney) : BaseScreen(game, "LevelSelectScree
 
     private var inputListener: MainMenuInputListener? = null
 
-    private var touched : Boolean = false;
+    private var touched : Boolean = false
 
     /**
      * Method that creates the initial screen logic, creates a default font, and adds the options

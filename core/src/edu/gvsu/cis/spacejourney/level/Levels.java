@@ -1,6 +1,7 @@
 package edu.gvsu.cis.spacejourney.level;
 
 import edu.gvsu.cis.spacejourney.level.one.LevelOne;
+import edu.gvsu.cis.spacejourney.level.two.LevelTwo;
 
 /**
  * Enum class that holds all level data, including
@@ -8,7 +9,7 @@ import edu.gvsu.cis.spacejourney.level.one.LevelOne;
  */
 public enum Levels {
   SPACE(1, new LevelOne()),
-  EARTH(2, new LevelOne()),
+  EARTH(2, new LevelTwo()),
   BOSS_SPACE(3, new LevelOne());
 
   private int id;
