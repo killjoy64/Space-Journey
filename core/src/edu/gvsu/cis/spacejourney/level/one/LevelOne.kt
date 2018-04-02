@@ -138,6 +138,9 @@ class LevelOne : Level() {
         val spriteOne = Mappers.staticSprite.get(backgroundOne)
         val spriteTwo = Mappers.staticSprite.get(backgroundTwo)
         val spriteThree = Mappers.staticSprite.get(backgroundThree)
+        val colorOne = spriteOne?.color
+        val colorTwo = spriteTwo?.color
+        val colorThree = spriteThree?.color
         val transitionColor = Color(0.0f, 0.0f, 0.0f, 0.0f)
 
         val sequenceOne = Timeline.createSequence()
@@ -195,6 +198,9 @@ class LevelOne : Level() {
                 .end()
                 .start(SpaceJourney.tweenManager)
                 .setCallback({ _: Int, _: BaseTween<*> ->
+//                    spriteOne?.color = colorOne
+//                    spriteTwo?.color = colorTwo
+//                    spriteThree?.color = colorThree
                     this.complete = true
                 })
 
@@ -203,5 +209,6 @@ class LevelOne : Level() {
     override fun dispose() {
         music?.stop()
         music?.dispose()
+        engine?.removeAllEntities()
     }
 }

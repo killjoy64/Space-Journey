@@ -73,7 +73,6 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         engine.addSystem(PlayerControllerSystem())
         engine.addSystem(renderingSystem)
         engine.addSystem(CollisionSystem())
-
         val playerTexture = SpaceJourney.assetManager.get("player_spaceship.png", Texture::class.java)
 
         engine.add {
@@ -105,7 +104,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         gameData?.reset()
 
         debug { "Level: ${gameData?.levelNumber}" }
-        level = Levels.getFromId(gameData?.levelNumber!!).level
+        level = Levels.getFromId(gameData?.levelNumber!!)
         level?.init(engine)
 
         MusicManager.getInstance().music = level?.music
@@ -143,13 +142,10 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         val players = engine.getEntitiesFor(Family.all(Player::class.java).get())
 
         if (level?.complete!!) {
+            this.level?.dispose()
             this.game.setScreen<LevelEndScreen>()
-        }
-
-        if (players.size() <= 0){
-
-            engine.removeAllEntities()
-
+        } else if (players.size() <= 0){
+            this.level?.dispose()
             this.game.setScreen<LevelSelectScreen>()
         }
 
@@ -158,6 +154,7 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     override fun dispose() {
         postProcessor?.dispose()
+        level?.dispose()
     }
 
     /**

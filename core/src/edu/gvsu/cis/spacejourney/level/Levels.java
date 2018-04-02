@@ -8,21 +8,18 @@ import edu.gvsu.cis.spacejourney.level.two.LevelTwo;
  * their class and ID.
  */
 public enum Levels {
-  SPACE(1, new LevelOne()),
-  EARTH(2, new LevelTwo()),
-  BOSS_SPACE(3, new LevelOne());
+  SPACE(1),
+  EARTH(2),
+  BOSS_SPACE(3);
 
   private int id;
-  private Level level;
 
   /**
    * Default constructor for a Level enum.
    * @param id number to assign as the level.
-   * @param level class that the level comes from.
    */
-  Levels(int id, Level level) {
+  Levels(int id) {
     this.id = id;
-    this.level = level;
   }
 
   /**
@@ -34,29 +31,21 @@ public enum Levels {
   }
 
   /**
-   * Gets the level class of the current level enum.
-   * @return {@link edu.gvsu.cis.spacejourney.level.Level} object.
-   */
-  public Level getLevel() {
-    return level;
-  }
-
-  /**
    * Translation method that returns a {@link edu.gvsu.cis.spacejourney.level.Level} object
    * from a given ID.
    * @param id number as the level ID.
    * @return {@link edu.gvsu.cis.spacejourney.level.Level} object.
    */
-  public static Levels getFromId(int id) {
+  public static Level getFromId(int id) {
     switch (id) {
       case 1:
-        return SPACE;
+        return new LevelOne();
       case 2:
-        return EARTH;
+        return new LevelTwo();
       case 3:
-        return BOSS_SPACE;
+        return new LevelOne();
       default:
-        return SPACE;
+        return new LevelOne();
     }
   }
 }

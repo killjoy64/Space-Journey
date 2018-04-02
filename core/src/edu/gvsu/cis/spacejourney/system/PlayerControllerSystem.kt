@@ -37,6 +37,7 @@ class PlayerControllerSystem : EntitySystem() {
 
     init {
         priority = SystemPriorities.PlayerControllerSystem
+        inputEnabled = true
     }
 
     override fun addedToEngine(engine: Engine) {
