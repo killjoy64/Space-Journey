@@ -1,7 +1,7 @@
 package edu.gvsu.cis.spacejourney.level;
 
-import edu.gvsu.cis.spacejourney.level.one.LevelOne;
-import edu.gvsu.cis.spacejourney.level.two.LevelTwo;
+import edu.gvsu.cis.spacejourney.level.space.SpaceLevel;
+import edu.gvsu.cis.spacejourney.level.earth.EarthLevel;
 
 /**
  * Enum class that holds all level data, including
@@ -39,13 +39,13 @@ public enum Levels {
   public static Level getFromId(int id) {
     switch (id) {
       case 1:
-        return new LevelOne();
+        return new EarthLevel();
       case 2:
-        return new LevelTwo();
+        return new SpaceLevel();
       case 3:
-        return new LevelOne();
+        return new SpaceLevel();
       default:
-        return new LevelOne();
+        return new SpaceLevel();
     }
   }
 }
