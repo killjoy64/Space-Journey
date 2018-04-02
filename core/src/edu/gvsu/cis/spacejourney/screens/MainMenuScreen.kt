@@ -94,6 +94,9 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
             touched = true
         }
 
+        // For debugging purposes
+        // this.game.setScreen<UpgradeScreen>()
+
     }
 
     /**

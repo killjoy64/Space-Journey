@@ -63,6 +63,7 @@ class SpaceJourney : KtxGame<BaseScreen>() {
         this.addScreen(MainMenuScreen(this))
         this.addScreen(LevelSelectScreen(this))
         this.addScreen(LevelScreen(this))
+        this.addScreen(UpgradeScreen(this))
         this.addScreen(LevelEndScreen(this))
 
         // Switch to the first screen
