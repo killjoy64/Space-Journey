@@ -47,7 +47,7 @@ class EarthLevel : Level() {
                 position = Vector2(0f, 0f)
             }
             with<StaticSprite> {
-                zindex = ZIndex.PARALLAX_BACKGROUND_LAYER1
+                zindex = ZIndex.PARALLAX_BACKGROUND_LAYER3
                 texture = SpaceJourney.assetManager.get("cloud_test.jpg", Texture::class.java)
                 repeating = true
                 size = Vector2(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
@@ -63,7 +63,7 @@ class EarthLevel : Level() {
                 position = Vector2(0f, 0f)
             }
             with<StaticSprite> {
-                zindex = ZIndex.PARALLAX_BACKGROUND_LAYER3
+                zindex = ZIndex.PARALLAX_BACKGROUND_LAYER1
                 texture = SpaceJourney.assetManager.get("parallax_small_cloud_layer.png", Texture::class.java)
                 repeating = true
                 size = Vector2(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
@@ -161,7 +161,7 @@ class EarthLevel : Level() {
                     transitionColor.b,
                     transitionColor.a)
                 .ease(Quad.IN))
-            .push(Tween.to(spriteTwo, StaticSpriteAccessor.TYPE_COLOR, 3.0f)
+            .push(Tween.to(spriteTwo, StaticSpriteAccessor.TYPE_COLOR, 2.0f)
                 .target(
                     transitionColor.r,
                     transitionColor.g,

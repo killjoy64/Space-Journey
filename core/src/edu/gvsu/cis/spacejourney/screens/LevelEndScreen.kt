@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.viewport.FillViewport
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.Strings
+import edu.gvsu.cis.spacejourney.managers.GameDataManager
+import ktx.log.debug
 
 class LevelEndScreen(game: SpaceJourney) : BaseScreen(game, "LevelEndScreen") {
 
@@ -16,8 +18,15 @@ class LevelEndScreen(game: SpaceJourney) : BaseScreen(game, "LevelEndScreen") {
 
     private var screenData: Table? = null
     private var font: BitmapFont? = null
+    private var style: Label.LabelStyle? = null
+
+    private var scoreLabel: Label? = null
+    private var livesLabel: Label? = null
 
     private var time: Float = 0.0f
+    private var score: Int = 0
+    private var lives: Int = 0
+    private var scoreIncrement: Int = 1
 
     override fun show() {
         super.show()
@@ -27,12 +36,25 @@ class LevelEndScreen(game: SpaceJourney) : BaseScreen(game, "LevelEndScreen") {
 
         font = SpaceJourney.assetManager.get("fonts/default.fnt")
         font?.data?.scale(0.01f)
+        style = Label.LabelStyle(font, Color.WHITE)
+
+        scoreLabel = Label(String.format(Strings.HUD_SCORE, score), style)
+        livesLabel = Label(String.format(Strings.LIVES_LABEL, lives), style)
 
         screenData = Table()
         screenData?.setFillParent(true)
-        screenData?.add(Label(Strings.LEVEL_END, Label.LabelStyle(font, Color.WHITE)))?.padBottom(50.0f)?.expandX
+        screenData?.add(Label(Strings.LEVEL_END, style))?.padBottom(50.0f)?.expandX
+        screenData?.row()
+        screenData?.add(scoreLabel)?.expandX
+        screenData?.row()
+        screenData?.add(livesLabel)?.expandX
 
         stage?.addActor(screenData)
+
+        time = 0.0f
+        score = 0
+        lives = 0
+        scoreIncrement = if (GameDataManager.getInstance().score % 2 == 0) 2 else 3
     }
 
     override fun render(delta: Float) {
@@ -42,10 +64,23 @@ class LevelEndScreen(game: SpaceJourney) : BaseScreen(game, "LevelEndScreen") {
         stage?.act()
         stage?.draw()
 
-        time += delta
+        if (score >= GameDataManager.getInstance().score) {
 
-        if (time > 2.0f) {
-            this.game.setScreen<LevelSelectScreen>()
+            time += delta
+
+            if (time >= 0.5f) {
+                livesLabel?.setText(String.format(Strings.LIVES_LABEL, lives))
+                lives++
+                time = 0.0f
+            }
+
+            if (lives >= GameDataManager.getInstance().lives + 2) {
+                this.game.setScreen<LevelSelectScreen>()
+            }
+
+        } else {
+            score += scoreIncrement
+            scoreLabel?.setText(String.format(Strings.HUD_SCORE, score))
         }
     }
 

@@ -33,7 +33,7 @@ class DefaultOverlay : Table() {
     /**
      * Default constructor that initially maxes
      * out space on the screen, which is then updated by
-     * the actual [edu.gvsu.cis.spacejourney.managers.GameDataManager] class.
+     * the actual {@edu.gvsu.cis.spacejourney.managers.GameDataManager} class.
      */
     init {
         this.gameData = GameDataManager.getInstance()

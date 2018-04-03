@@ -57,4 +57,9 @@ public final class Strings {
    */
   public static final String LEVEL_END = "LEVEL END";
 
+  /**
+   * String text used to represent lives as text.
+   */
+  public static final String LIVES_LABEL = "LIVES %02d";
+
 }
