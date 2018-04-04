@@ -9,9 +9,7 @@ import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.math.Vector2
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.component.*
 import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
@@ -21,20 +19,19 @@ import edu.gvsu.cis.spacejourney.util.Mappers
 import edu.gvsu.cis.spacejourney.util.StaticSpriteAccessor
 import edu.gvsu.cis.spacejourney.util.VelocityAccessor
 import ktx.ashley.has
-import ktx.assets.disposeSafely
 import ktx.log.debug
 
 /**
  * Helper class for dealing with collision components
  */
 private data class CollisionRectangle(
-        val x : Float,
-        val y : Float,
-        val width : Float,
-        val height : Float){
+        val x: Float,
+        val y: Float,
+        val width: Float,
+        val height: Float) {
 
     companion object {
-        fun fromComponents(transform: Transform, collider : BoxCollider) : CollisionRectangle {
+        fun fromComponents(transform: Transform, collider: BoxCollider): CollisionRectangle {
             return CollisionRectangle(
                     transform.position.x + collider.offset.x,
                     transform.position.y + collider.offset.y,
@@ -43,7 +40,6 @@ private data class CollisionRectangle(
             )
         }
     }
-
 }
 
 /*
@@ -65,14 +61,14 @@ class CollisionSystem : EntitySystem() {
                 .get())
     }
 
-    private fun rectangleCollision(rect1 : CollisionRectangle, rect2 : CollisionRectangle) : Boolean {
+    private fun rectangleCollision(rect1: CollisionRectangle, rect2: CollisionRectangle): Boolean {
         return (rect1.x < rect2.x + rect2.width &&
                 rect1.x + rect1.width > rect2.x &&
                 rect1.y < rect2.y + rect2.height &&
                 rect1.height + rect1.y > rect2.y)
     }
 
-    private fun collisionCheck(entityA: Entity, entityB :Entity) : Boolean {
+    private fun collisionCheck(entityA: Entity, entityB: Entity): Boolean {
 
         val boxA = Mappers.boxCollider.get(entityA)
         val boxB = Mappers.boxCollider.get(entityB)
@@ -80,7 +76,7 @@ class CollisionSystem : EntitySystem() {
         //val circleA = Mappers.circleCollider.get(entityA)
         //val circleB = Mappers.circleCollider.get(entityB)
 
-        if (boxA != null && boxB != null){
+        if (boxA != null && boxB != null) {
 
             // #TODO Handle rotation
 
@@ -90,8 +86,8 @@ class CollisionSystem : EntitySystem() {
             if (rectangleCollision(
                 CollisionRectangle.fromComponents(boxATransform, boxA),
                 CollisionRectangle.fromComponents(boxBTransform, boxB)
-            )){
-                if (entityA.has(Mappers.enemy) && entityB.has(Mappers.projectile)){
+            )) {
+                if (entityA.has(Mappers.enemy) && entityB.has(Mappers.projectile)) {
 
                     val enemyEntity = entityA
                     val projectileEntity = entityB
@@ -101,7 +97,7 @@ class CollisionSystem : EntitySystem() {
 
                     health.value -= projectile.damage
 
-                    if (health.value <= 0){
+                    if (health.value <= 0) {
 
                         GameDataManager.getInstance().score += 100
 
@@ -125,7 +121,7 @@ class CollisionSystem : EntitySystem() {
 
                     return true
                 }
-                if (entityA.has(Mappers.player) && entityB.has(Mappers.enemy)){
+                if (entityA.has(Mappers.player) && entityB.has(Mappers.enemy)) {
 
                     val playerEntity = entityA
                     val enemyEntity = entityB
@@ -135,8 +131,8 @@ class CollisionSystem : EntitySystem() {
                     health.value -= 1
 
                     GameDataManager.getInstance().lives = health.value
-                    
-                    if (health.value <= 0){
+
+                    if (health.value <= 0) {
                         debug { "Player has died" }
                         engine.removeEntity(playerEntity)
                     } else {
@@ -195,13 +191,10 @@ class CollisionSystem : EntitySystem() {
 //                            .start(SpaceJourney.tweenManager)
                     return true
                 }
-
             }
-
         }
 
         return false
-
     }
 
     override fun update(deltaTime: Float) {
@@ -216,7 +209,6 @@ class CollisionSystem : EntitySystem() {
                 collisionCheck(entityA, entityB)
                 collisionCheck(entityB, entityA)
                 debug { entityA.toString() + " : " + entityB.toString() }
-
             }
         }
 
@@ -233,9 +225,5 @@ class CollisionSystem : EntitySystem() {
                 }
             }
         }
-
-
-
     }
 }
-

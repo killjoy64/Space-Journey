@@ -7,7 +7,6 @@ import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -24,11 +23,11 @@ import edu.gvsu.cis.spacejourney.util.Mappers
  */
 class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.java, Transform::class.java).get(), ZComparator()) {
 
-    var spriteBatch : SpriteBatch? = null
-    private var camera : OrthographicCamera = OrthographicCamera()
-    private var viewport : FitViewport? = null
-    private var debugBatch : ShapeRenderer? = null
-    private var debug : Boolean = false
+    var spriteBatch: SpriteBatch? = null
+    private var camera: OrthographicCamera = OrthographicCamera()
+    private var viewport: FitViewport? = null
+    private var debugBatch: ShapeRenderer? = null
+    private var debug: Boolean = false
 
     init {
         priority = SystemPriorities.RenderingSystem
@@ -44,7 +43,7 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
     override fun update(deltaTime: Float) {
 
         // Toggle Debug Rendering
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F3)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F3)) {
             debug = !debug
         }
 
@@ -98,7 +97,6 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
                 debugBatch?.setColor(1.0f, 1.0f, 1.0f, 1.0f)
                 debugBatch?.box(positionX, positionY, 0.0f, boxCollider.width.toFloat(), boxCollider.height.toFloat(), 0.0f)
             }
-
         }
 
         // Hitpoint Bar Rendering
@@ -115,9 +113,7 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
             debugBatch?.rect(x, y, w, h)
             debugBatch?.setColor(0.0f, 1.0f, 0.0f, 1.0f)
             debugBatch?.rect(x, y, hpW, h)
-
         }
-
 
         // Render the entity
 
@@ -128,9 +124,9 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
         val alpha = staticSprite.transparency
 
         // Get size
-        val size : Vector2
+        val size: Vector2
 
-        if (staticSprite.size == null){
+        if (staticSprite.size == null) {
             size = Vector2(staticSprite.texture?.width!!.toFloat(), staticSprite.texture?.height!!.toFloat())
         } else {
             size = staticSprite.size!!

@@ -3,13 +3,11 @@ package edu.gvsu.cis.spacejourney.system
 import com.badlogic.ashley.core.*
 import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import edu.gvsu.cis.spacejourney.component.Transform
 import edu.gvsu.cis.spacejourney.component.Velocity
 import edu.gvsu.cis.spacejourney.util.Bounds
 import edu.gvsu.cis.spacejourney.util.Mappers
-import ktx.ashley.remove
 import ktx.math.plus
 
 /*
@@ -36,7 +34,7 @@ class VelocitySystem : EntitySystem() {
             val transform = Mappers.transform.get(entity)
             val velocity = Mappers.velocity.get(entity)
 
-            if (entity != null){
+            if (entity != null) {
                 transform.position += velocity.value
                 transform.rotation += velocity.angular
             }
@@ -45,7 +43,7 @@ class VelocitySystem : EntitySystem() {
                 position = transform.position,
                 size = Vector2(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat()),
                 padding = -10.0f
-            )){
+            )) {
                 if (Mappers.projectile.get(entity) != null) {
                     engine.removeEntity(entity)
                 }
@@ -56,4 +54,3 @@ class VelocitySystem : EntitySystem() {
         }
     }
 }
-

@@ -3,7 +3,6 @@ package edu.gvsu.cis.spacejourney.screens.hud
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.ui.Image
@@ -59,11 +58,11 @@ class DefaultOverlay : Table() {
      * Polls for updates that need to be done to the HUD by
      * the [edu.gvsu.cis.spacejourney.managers.GameDataManager] class.
      */
-    fun poll(engine : Engine) {
+    fun poll(engine: Engine) {
 
         val players = engine.getEntitiesFor(Family.all(Player::class.java).get())
 
-        for (player in players){
+        for (player in players) {
             val health = Mappers.health.get(player)
 
             for (i in 0..health.maxValue - 1) {
@@ -77,5 +76,4 @@ class DefaultOverlay : Table() {
 
         scoreLabel.setText(String.format(Strings.HUD_SCORE, gameData.score))
     }
-
 }

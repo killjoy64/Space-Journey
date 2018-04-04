@@ -1,6 +1,5 @@
 package edu.gvsu.cis.spacejourney.system
 
-
 /***
  * All of our systems have an assigned priority by the engine.
  * Systems with a lower number have a higher priority to the system and are prioritized first
@@ -19,5 +18,4 @@ class SystemPriorities {
         val CollisionSystem = 2
         val VelocitySystem = 2
     }
-
 }

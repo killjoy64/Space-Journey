@@ -24,15 +24,9 @@ import ktx.ashley.entity
 import com.bitfire.postprocessing.PostProcessor
 import com.bitfire.utils.ShaderLoader
 import com.badlogic.gdx.Application.ApplicationType
-import com.badlogic.gdx.math.Vector
-import com.bitfire.postprocessing.effects.Bloom
-import com.bitfire.postprocessing.effects.CrtMonitor
-import com.bitfire.postprocessing.effects.Vignette
-import com.bitfire.postprocessing.filters.CrtScreen
 import edu.gvsu.cis.spacejourney.component.Health
 import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
 import ktx.log.debug
-
 
 /**
  * Where the magic happens. This is the main class for each
@@ -40,15 +34,14 @@ import ktx.log.debug
  */
 class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
-
     private var gameData: GameDataManager? = null
     private var level: Level? = null
 
     var engine = Engine()
 
-    var renderingSystem : RenderingSystem? = null
+    var renderingSystem: RenderingSystem? = null
 
-    var postProcessor : PostProcessor? = null
+    var postProcessor: PostProcessor? = null
 
     private val isDesktop = Gdx.app.type == ApplicationType.Desktop
 
@@ -138,12 +131,10 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         if (level?.complete!!) {
             this.level?.dispose()
             this.game.setScreen<LevelEndScreen>()
-        } else if (players.size() <= 0){
+        } else if (players.size() <= 0) {
             this.level?.dispose()
             this.game.setScreen<LevelSelectScreen>()
         }
-
-
     }
 
     override fun dispose() {
@@ -158,6 +149,4 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         super.hide()
         MusicManager.getInstance().stop()
     }
-
-
 }

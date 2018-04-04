@@ -33,7 +33,7 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
 
     private var music: Music? = null
 
-    private var touched : Boolean = false;
+    private var touched: Boolean = false
 
     /**
      * Method that creates initial logic for the screen, and shows the options
@@ -96,7 +96,6 @@ class MainMenuScreen(game: SpaceJourney) : BaseScreen(game, "MainMenuScreen") {
 
         // For debugging purposes
         // this.game.setScreen<UpgradeScreen>()
-
     }
 
     /**

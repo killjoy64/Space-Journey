@@ -26,7 +26,7 @@ class SpaceJourney : KtxGame<BaseScreen>() {
     // Most of the assets should be pre-loaded in the `LoadingScreen` class
     private object Holder {
         val ASSETS = AssetManager()
-        val TWEEN  = TweenManager()
+        val TWEEN = TweenManager()
     }
 
     /**

@@ -2,7 +2,6 @@ package edu.gvsu.cis.spacejourney.input
 
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputProcessor
-import ktx.log.debug
 
 /**
  * Class that handles all given input for the main menu screen.
@@ -16,16 +15,16 @@ class MainMenuInputListener(private val maxChoices: Int) : InputProcessor {
     var currentChoice: Int = 0
     private var startGame: Boolean = false
 
-    private fun decrementChoice(){
+    private fun decrementChoice() {
         currentChoice--
-        if (currentChoice < 1){
+        if (currentChoice < 1) {
             currentChoice = 1
         }
     }
 
-    private fun incrementChoice(){
+    private fun incrementChoice() {
         currentChoice++
-        if (currentChoice > maxChoices){
+        if (currentChoice > maxChoices) {
             currentChoice = maxChoices
         }
     }
@@ -83,5 +82,4 @@ class MainMenuInputListener(private val maxChoices: Int) : InputProcessor {
         this.currentChoice = 1
         this.startGame = false
     }
-
 }

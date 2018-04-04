@@ -1,8 +1,6 @@
 package edu.gvsu.cis.spacejourney.util
 
-import com.badlogic.gdx.math.Vector2
 import aurelienribon.tweenengine.TweenAccessor
-import edu.gvsu.cis.spacejourney.component.StaticSprite
 import edu.gvsu.cis.spacejourney.component.Velocity
 
 class VelocityAccessor : TweenAccessor<Velocity> {

@@ -10,7 +10,6 @@ import com.badlogic.gdx.utils.viewport.FillViewport
 import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.Strings
 import edu.gvsu.cis.spacejourney.managers.GameDataManager
-import ktx.log.debug
 
 class LevelEndScreen(game: SpaceJourney) : BaseScreen(game, "LevelEndScreen") {
 
@@ -77,7 +76,6 @@ class LevelEndScreen(game: SpaceJourney) : BaseScreen(game, "LevelEndScreen") {
             if (lives >= GameDataManager.getInstance().lives + 2) {
                 this.game.setScreen<LevelSelectScreen>()
             }
-
         } else {
             score += scoreIncrement
             scoreLabel?.setText(String.format(Strings.HUD_SCORE, score))
@@ -94,5 +92,4 @@ class LevelEndScreen(game: SpaceJourney) : BaseScreen(game, "LevelEndScreen") {
         stage?.dispose()
         font?.dispose()
     }
-
 }

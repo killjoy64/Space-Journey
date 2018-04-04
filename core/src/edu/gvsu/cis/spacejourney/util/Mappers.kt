@@ -6,7 +6,6 @@ import edu.gvsu.cis.spacejourney.component.*
 import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
 import edu.gvsu.cis.spacejourney.component.colliders.CircleCollider
 
-
 class Mappers {
     companion object {
         val transform = ComponentMapper.getFor(Transform::class.java)

@@ -14,7 +14,7 @@ abstract class ChoreographEvent {
     * Abstract method that is called whenever the Choreographer
     * schedules an event, and calls it.
     */
-    abstract fun onEvent(engine : Engine)
+    abstract fun onEvent(engine: Engine)
 }
 
 /**

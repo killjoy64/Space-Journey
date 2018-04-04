@@ -12,7 +12,6 @@ import edu.gvsu.cis.spacejourney.level.choreography.ChoreographEvent
 import edu.gvsu.cis.spacejourney.util.ZIndex
 import ktx.ashley.add
 import ktx.ashley.entity
-import ktx.log.debug
 
 class EnemySpawnEvent : ChoreographEvent() {
 
@@ -27,7 +26,6 @@ class EnemySpawnEvent : ChoreographEvent() {
 
         enemyEntity = engine.entity {
             with<Enemy> {
-
             }
             with<Health> {
                 value = 3
@@ -51,7 +49,6 @@ class EnemySpawnEvent : ChoreographEvent() {
             }
         }
 
-        engine.add {enemyEntity}
+        engine.add { enemyEntity }
     }
-
 }

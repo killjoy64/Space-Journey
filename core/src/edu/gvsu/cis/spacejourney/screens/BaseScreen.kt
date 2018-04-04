@@ -31,7 +31,7 @@ open class BaseScreen(val game: SpaceJourney, val screenName: String) : KtxScree
     override fun render(delta: Float) {
         super.render(delta)
 
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit()
         }
 
@@ -57,5 +57,4 @@ open class BaseScreen(val game: SpaceJourney, val screenName: String) : KtxScree
 
         debug { "Screen Shown: $screenName " }
     }
-
 }

@@ -16,14 +16,12 @@ import com.bitfire.postprocessing.PostProcessor
 import com.bitfire.postprocessing.effects.Bloom
 import com.bitfire.postprocessing.effects.Vignette
 import edu.gvsu.cis.spacejourney.SpaceJourney
-import edu.gvsu.cis.spacejourney.component.Enemy
 import edu.gvsu.cis.spacejourney.component.Parallax
 import edu.gvsu.cis.spacejourney.component.StaticSprite
 import edu.gvsu.cis.spacejourney.component.Transform
 import edu.gvsu.cis.spacejourney.level.Level
 import edu.gvsu.cis.spacejourney.level.choreography.events.EnemySpawnEvent
 import edu.gvsu.cis.spacejourney.level.choreography.LevelChoreographer
-import edu.gvsu.cis.spacejourney.managers.GameDataManager
 import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay
 import edu.gvsu.cis.spacejourney.system.PlayerControllerSystem
 import edu.gvsu.cis.spacejourney.util.*
@@ -215,7 +213,6 @@ class SpaceLevel : Level() {
 //                    spriteThree?.color = colorThree
                     this.complete = true
                 })
-
     }
 
     override fun dispose() {

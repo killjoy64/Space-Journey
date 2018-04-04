@@ -176,7 +176,6 @@ class EarthLevel : Level() {
 //                    spriteThree?.color = colorThree
                 this.complete = true
             })
-
     }
 
     override fun dispose() {
@@ -184,5 +183,4 @@ class EarthLevel : Level() {
         music?.dispose()
         engine?.removeAllEntities()
     }
-
 }

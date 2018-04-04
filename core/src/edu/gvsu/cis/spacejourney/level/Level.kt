@@ -31,7 +31,5 @@ abstract class Level : Disposable {
                 "Native Heap: ${Gdx.app.nativeHeap / 1000000}MB, " +
                 "${engine?.entities?.size()} Entities, " +
                 "Pixel Perfect: $pixel_perfect")
-
     }
 }
-

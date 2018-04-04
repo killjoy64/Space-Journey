@@ -118,20 +118,20 @@ class PlayerControllerSystem : EntitySystem() {
             val bounds = Rectangle(
                     boundsPadding,
                     boundsPadding,
-                    Gdx.graphics.width.toFloat()  - boundsPadding * 2f,
+                    Gdx.graphics.width.toFloat() - boundsPadding * 2f,
                     Gdx.graphics.height.toFloat() - boundsPadding * 2f
             )
 
-            if (transform.position.x < bounds.x){
+            if (transform.position.x < bounds.x) {
                 transform.position.x = bounds.x
             }
-            if (transform.position.y < bounds.y){
+            if (transform.position.y < bounds.y) {
                 transform.position.y = bounds.y
             }
-            if (transform.position.x > bounds.x + bounds.width){
+            if (transform.position.x > bounds.x + bounds.width) {
                 transform.position.x = bounds.x + bounds.width
             }
-            if (transform.position.y > bounds.y + bounds.height){
+            if (transform.position.y > bounds.y + bounds.height) {
                 transform.position.y = bounds.y + bounds.height
             }
 
@@ -170,8 +170,6 @@ class PlayerControllerSystem : EntitySystem() {
                     }
                 }
 
-
-
                 engine.add {
                     entity {
                         with<Projectile> {}
@@ -194,10 +192,6 @@ class PlayerControllerSystem : EntitySystem() {
 
                 this.time = 0.0
             }
-
         }
-
-
-
     }
 }
