@@ -37,6 +37,9 @@ class LevelEndScreen(game: SpaceJourney) : BaseScreen(game, "LevelEndScreen") {
         font?.data?.scale(0.01f)
         style = Label.LabelStyle(font, Color.WHITE)
 
+        score = 0
+        lives = 0
+
         scoreLabel = Label(String.format(Strings.HUD_SCORE, score), style)
         livesLabel = Label(String.format(Strings.LIVES_LABEL, lives), style)
 
@@ -51,8 +54,6 @@ class LevelEndScreen(game: SpaceJourney) : BaseScreen(game, "LevelEndScreen") {
         stage?.addActor(screenData)
 
         time = 0.0f
-        score = 0
-        lives = 0
         scoreIncrement = if (GameDataManager.getInstance().score % 2 == 0) 2 else 3
     }
 
