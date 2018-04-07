@@ -26,9 +26,13 @@ All singleton managers used to encompass the game data.
 
 Top-level level logic used to design and implement different scenarios.
 
-# Package edu.gvsu.cis.spacejourney.level.one
+# Package edu.gvsu.cis.spacejourney.level.earth
 
-Level-specific logic for the first level of Space Journey.
+Level-specific logic for the first level of Space Journey (earth).
+
+# Package edu.gvsu.cis.spacejourney.level.space
+
+Level-specific logic for the second level of Space Journey (space).
 
 # Package edu.gvsu.cis.spacejourney.level.choreography
 
@@ -42,22 +46,10 @@ Events meant to be used inside of a level choreographer.
 
 Input listeners used variously throughout the game.
 
-# Package edu.gvsu.cis.spacejourney.entity
+# Package edu.gvsu.cis.spacejourney.component
 
-The top-level entity framework.
+The component-based entity framework used by Ashley.
 
-# Package edu.gvsu.cis.spacejourney.entity.projectile
+# Package edu.gvsu.cis.spacejourney.system
 
-All projectiles coming from players and enemies.
-
-# Package edu.gvsu.cis.spacejourney.entity.movement
-
-Everything that has to do with entity movement and AI paths.
-
-# Package edu.gvsu.cis.spacejourney.entity.enemy
-
-Sub-classes of the Entity package to create multiple enemies.
-
-# Package edu.gvsu.cis.spacejourney.entity.collectible
-
-All collectibles that extend the entity/animated entity framework.
+The systems responsible for managing rendering, collision, and player controllers.
