@@ -18,8 +18,8 @@ import edu.gvsu.cis.spacejourney.component.StaticSprite
 import edu.gvsu.cis.spacejourney.component.Transform
 import edu.gvsu.cis.spacejourney.util.Mappers
 
-/*
- * Rendering System, renders entities in order of their Z-Index
+/**
+ * Rendering System, renders entities in order of their Z-Index.
  */
 class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.java, Transform::class.java).get(), ZComparator()) {
 
@@ -29,6 +29,9 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
     private var debugBatch: ShapeRenderer? = null
     private var debug: Boolean = false
 
+    /**
+     * @constructor initializes system priorities, batches, and debug viewports.
+     */
     init {
         priority = SystemPriorities.RenderingSystem
         spriteBatch = SpriteBatch()
@@ -40,6 +43,11 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
         viewport?.update(1920, 1080, true)
     }
 
+    /**
+     * Function that is used to update the CollisionSystem periodically from a screen's
+     * update method.
+     * @param deltaTime the time between the last and current update cycle.
+     */
     override fun update(deltaTime: Float) {
 
         // Toggle Debug Rendering
@@ -68,6 +76,13 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
         }
     }
 
+    /**
+     * Overriden function that is called every update() cycle, on every entity that is present
+     * in the engine. This is a rather large, costly task, so we try to keep all entity-specific
+     * logic inside of this method.
+     * @param entity Ashley entity that is currently being processed.
+     * @param deltaTime the time between the last and current update cycle.
+     */
     override fun processEntity(entity: Entity, deltaTime: Float) {
 
         val transform = Mappers.transform.get(entity)
@@ -167,14 +182,27 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
         }
     }
 
+    /**
+     * Inner-private class that compares two entity Z-indexes.
+     */
     private class ZComparator : Comparator<Entity> {
         private val staticSprite = ComponentMapper.getFor(StaticSprite::class.java)
 
+        /**
+         * Overriden function that compares two entities and their Z-indexes.
+         * @param e1 the first entity to compare.
+         * @param e2 the second entity to compare.
+         */
         override fun compare(e1: Entity, e2: Entity): Int {
             return staticSprite.get(e1).zindex - staticSprite.get(e2).zindex
         }
     }
 
+    /**
+     * Helper function that is called whenever the screen is resized.
+     * @param width the width that was resized to.
+     * @param height the height that was resized to.
+     */
     fun resize(width: Int, height: Int) {
 
         viewport?.update(width, height, true)

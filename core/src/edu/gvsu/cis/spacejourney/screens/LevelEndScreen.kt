@@ -11,6 +11,10 @@ import edu.gvsu.cis.spacejourney.SpaceJourney
 import edu.gvsu.cis.spacejourney.Strings
 import edu.gvsu.cis.spacejourney.managers.GameDataManager
 
+/**
+ * Screen class that is shown once a level is complete. It displays a short animation of
+ * the points calculation, and how many lives were left.
+ */
 class LevelEndScreen(game: SpaceJourney) : BaseScreen(game, "LevelEndScreen") {
 
     private var stage: Stage? = null
@@ -27,6 +31,10 @@ class LevelEndScreen(game: SpaceJourney) : BaseScreen(game, "LevelEndScreen") {
     private var lives: Int = 0
     private var scoreIncrement: Int = 1
 
+    /**
+     * Overriden method from BaseScreen that initializes a viewport, table labels, and
+     * data placeholders.
+     */
     override fun show() {
         super.show()
 
@@ -57,6 +65,9 @@ class LevelEndScreen(game: SpaceJourney) : BaseScreen(game, "LevelEndScreen") {
         scoreIncrement = if (GameDataManager.getInstance().score % 2 == 0) 2 else 3
     }
 
+    /**
+     * Overriden method that periodically updates the screen.
+     */
     override fun render(delta: Float) {
         super.render(delta)
 
@@ -83,11 +94,19 @@ class LevelEndScreen(game: SpaceJourney) : BaseScreen(game, "LevelEndScreen") {
         }
     }
 
+    /**
+     * Overriden method that resizes the screen, and its viewports.
+     * @param width the new width of the screen.
+     * @param height the new height of the screen.
+     */
     override fun resize(width: Int, height: Int) {
         super.resize(width, height)
         stage?.viewport?.update(width, height, true)
     }
 
+    /**
+     * Overriden method that disposes of the view stage, and display font.
+     */
     override fun dispose() {
         super.dispose()
         stage?.dispose()

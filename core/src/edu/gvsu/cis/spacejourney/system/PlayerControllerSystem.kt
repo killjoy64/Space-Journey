@@ -22,9 +22,8 @@ import ktx.log.debug
 import ktx.math.plus
 import ktx.math.times
 
-/*
- * Player Controller System
- * Handles everything the player can do in the level
+/**
+ * Player Controller System that handles everything the player can do in the level.
  */
 class PlayerControllerSystem : EntitySystem() {
     private var entities: ImmutableArray<Entity>? = null
@@ -35,11 +34,19 @@ class PlayerControllerSystem : EntitySystem() {
 
     var inputEnabled: Boolean = true
 
+    /**
+     * @constructor initializes the system priorities, and enables input on
+     * instantiation.
+     */
     init {
         priority = SystemPriorities.PlayerControllerSystem
         inputEnabled = true
     }
 
+    /**
+     * Overriden function that gets all entites that are added to the current engine.
+     * @param engine the Ashley engine object that is currently used throughout the game.
+     */
     override fun addedToEngine(engine: Engine) {
         entities = engine.getEntitiesFor(Family.all(Player::class.java, StaticSprite::class.java, Transform::class.java).get())
 
@@ -48,6 +55,11 @@ class PlayerControllerSystem : EntitySystem() {
         }
     }
 
+    /**
+     * Function that is used to update the CollisionSystem periodically from a screen's
+     * update method.
+     * @param deltaTime the time between the last and current update cycle.
+     */
     override fun update(deltaTime: Float) {
         for (i in 0 until entities!!.size()) {
             val entity = entities!!.get(i)

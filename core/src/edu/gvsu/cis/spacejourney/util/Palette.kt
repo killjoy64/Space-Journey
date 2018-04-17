@@ -2,8 +2,16 @@ package edu.gvsu.cis.spacejourney.util
 
 import com.badlogic.gdx.graphics.Color as GdxColor
 
-// https://lospec.com/palette-list/jmp-japanese-machine-palette
+/**
+ * Utility class that defines a specific, unique color palette to be used throughout the
+ * game. This color palette was generated through the following link:
+ * https://lospec.com/palette-list/jmp-japanese-machine-palette
+ */
 class JMP {
+
+    /**
+     * Companion object that holds all possible colors in our given palette.
+     */
     companion object {
         val Black = GdxColor.valueOf("#000000")
         val AlmostBlack = GdxColor.valueOf("#191028")

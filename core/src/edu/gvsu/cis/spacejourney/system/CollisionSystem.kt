@@ -22,7 +22,7 @@ import ktx.ashley.has
 import ktx.log.debug
 
 /**
- * Helper class for dealing with collision components
+ * Private data holder that defines a collidable rectangle.
  */
 private data class CollisionRectangle(
         val x: Float,
@@ -30,7 +30,17 @@ private data class CollisionRectangle(
         val width: Float,
         val height: Float) {
 
+    /**
+     * Companion object that is used to store conversions between components.
+     */
     companion object {
+
+        /**
+         * Conversion function that takes a collider component and a transform component to
+         * return a CollisionRectangle class.
+         * @param transform [edu.gvsu.cis.spacejourney.component.Transform] component of the entity.
+         * @param collider [edu.gvsu.cis.spacejourney.component.colliders.BoxCollider] collision component of the entity.
+         */
         fun fromComponents(transform: Transform, collider: BoxCollider): CollisionRectangle {
             return CollisionRectangle(
                     transform.position.x + collider.offset.x,
@@ -42,18 +52,28 @@ private data class CollisionRectangle(
     }
 }
 
-/*
- * Collision System, handles collisions between entities
+/**
+ * System class that handles everything that has to do with collision between two
+ * entities.
  */
 class CollisionSystem : EntitySystem() {
 
-    // All related entities used by this system
+    /**
+     * All related entities used by this system.
+     */
     private var entities: ImmutableArray<Entity>? = null
 
+    /**
+     * @constructor initializes the priorities.
+     */
     init {
         priority = SystemPriorities.CollisionSystem
     }
 
+    /**
+     * Method that populates the entities object with proper data.
+     * @param engine the current Ashley engine object used in the game.
+     */
     override fun addedToEngine(engine: Engine) {
         entities = engine.getEntitiesFor(
                 Family.all(Transform::class.java) // Object must have a transform
@@ -61,6 +81,12 @@ class CollisionSystem : EntitySystem() {
                 .get())
     }
 
+    /**
+     * Private helper function that returns whether or not two CollisionRectangles had collided.
+     * @param rect1 the first rectangle.
+     * @param rect2 the second rectangle.
+     * @return true if the two CollisionRectangles have collided, and false otherwise.
+     */
     private fun rectangleCollision(rect1: CollisionRectangle, rect2: CollisionRectangle): Boolean {
         return (rect1.x < rect2.x + rect2.width &&
                 rect1.x + rect1.width > rect2.x &&
@@ -68,6 +94,12 @@ class CollisionSystem : EntitySystem() {
                 rect1.height + rect1.y > rect2.y)
     }
 
+    /**
+     * Private helper function that checks the collision between two entities.
+     * @param entityA the first entity that initiated the collision.
+     * @param entityB the second entity that did not initiate the collision.
+     * @return true if the collision did happen, and false if the event should be canceled.
+     */
     private fun collisionCheck(entityA: Entity, entityB: Entity): Boolean {
 
         val boxA = Mappers.boxCollider.get(entityA)
@@ -197,6 +229,11 @@ class CollisionSystem : EntitySystem() {
         return false
     }
 
+    /**
+     * Function that is used to update the CollisionSystem periodically from a screen's
+     * update method.
+     * @param deltaTime the time between the last and current update cycle.
+     */
     override fun update(deltaTime: Float) {
 
         // This very high level code simply iterates every entity

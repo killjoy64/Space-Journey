@@ -16,9 +16,7 @@ public final class Constants {
   private Constants() { }
 	
   /**
-<<<<<<< HEAD
    * Virtual width that the screen represents.
-=======
    * The amount of pixels per meter on
    * the screen for Box2D.
    */
@@ -27,7 +25,6 @@ public final class Constants {
   /**
    * Get the virtual width that the screen represents. This is dependent on the platform.
    * @return Virtual width that the screen represents.
->>>>>>> master
    */
   public static float getVirtualWidth(){
     if (Gdx.app.getType() != Application.ApplicationType.Android) {

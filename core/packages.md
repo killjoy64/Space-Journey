@@ -50,6 +50,10 @@ Input listeners used variously throughout the game.
 
 The component-based entity framework used by Ashley.
 
+# Package edu.gvsu.cis.spacejourney.component.colliders
+
+the designated collider components to be used throughout the game.
+
 # Package edu.gvsu.cis.spacejourney.system
 
 The systems responsible for managing rendering, collision, and player controllers.

@@ -22,8 +22,9 @@ The core of the game, where we spawn the first screen.
  */
 class SpaceJourney : KtxGame<BaseScreen>() {
 
-    // Global asset manager shared between all screens via reference to this class
-    // Most of the assets should be pre-loaded in the `LoadingScreen` class
+    /**
+     * Objects that once initialized, will become singletons by lazy loading.
+     */
     private object Holder {
         val ASSETS = AssetManager()
         val TWEEN = TweenManager()
