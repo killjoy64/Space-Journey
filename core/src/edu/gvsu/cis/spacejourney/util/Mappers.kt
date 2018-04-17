@@ -2,9 +2,16 @@ package edu.gvsu.cis.spacejourney.util
 
 import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Family
-import edu.gvsu.cis.spacejourney.component.*
-import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
+import edu.gvsu.cis.spacejourney.component.Enemy
+import edu.gvsu.cis.spacejourney.component.Health
+import edu.gvsu.cis.spacejourney.component.Transform
+import edu.gvsu.cis.spacejourney.component.StaticSprite
+import edu.gvsu.cis.spacejourney.component.Parallax
+import edu.gvsu.cis.spacejourney.component.Player
+import edu.gvsu.cis.spacejourney.component.Projectile
+import edu.gvsu.cis.spacejourney.component.Velocity
 import edu.gvsu.cis.spacejourney.component.colliders.CircleCollider
+import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
 
 /**
  * Utility class that holds a map for components. This converts an ashley

@@ -93,7 +93,7 @@ class RenderingSystem : SortedIteratingSystem(Family.all(StaticSprite::class.jav
         if (Mappers.parallax.has(entity)) {
             val parallax = Mappers.parallax.get(entity)
 
-             parallax.offset -= parallax.speed * deltaTime
+            parallax.offset -= parallax.speed * deltaTime
         }
 
         // Debug Rendering

@@ -24,7 +24,11 @@ import edu.gvsu.cis.spacejourney.level.choreography.events.EnemySpawnEvent
 import edu.gvsu.cis.spacejourney.level.choreography.LevelChoreographer
 import edu.gvsu.cis.spacejourney.screens.hud.DefaultOverlay
 import edu.gvsu.cis.spacejourney.system.PlayerControllerSystem
-import edu.gvsu.cis.spacejourney.util.*
+import edu.gvsu.cis.spacejourney.util.ParallaxAccessor
+import edu.gvsu.cis.spacejourney.util.StaticSpriteAccessor
+import edu.gvsu.cis.spacejourney.util.TransformAccessor
+import edu.gvsu.cis.spacejourney.util.Mappers
+import edu.gvsu.cis.spacejourney.util.ZIndex
 import ktx.ashley.add
 import ktx.ashley.entity
 import ktx.ashley.has

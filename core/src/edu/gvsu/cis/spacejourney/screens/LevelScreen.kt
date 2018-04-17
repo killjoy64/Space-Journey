@@ -66,28 +66,28 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         val playerTexture = SpaceJourney.assetManager.get("player_spaceship.png", Texture::class.java)
 
         engine.add {
-          entity {
-            with<Player> {
-              movespeed = 300.0f
+            entity {
+                with<Player> {
+                    movespeed = 300.0f
+                }
+                with<BoxCollider> {
+                    width = playerTexture.width
+                    height = playerTexture.height
+                    offset = Vector2(-24f, -24f)
+                }
+                with<Health> {
+                    value = 4
+                    maxValue = 4
+                }
+                with<Transform> {
+                    position = Vector2(Gdx.graphics.width.toFloat() / 2.0f, 45.0f)
+                }
+                with<StaticSprite> {
+                    scale = 2.0f
+                    zindex = ZIndex.PLAYER
+                    texture = playerTexture
+                }
             }
-            with<BoxCollider> {
-                width = playerTexture.width
-                height = playerTexture.height
-                offset = Vector2(-24f, -24f)
-            }
-            with<Health> {
-                value = 4
-                maxValue = 4
-            }
-            with<Transform> {
-              position = Vector2(Gdx.graphics.width.toFloat() / 2.0f, 45.0f)
-            }
-            with<StaticSprite> {
-              scale = 2.0f
-              zindex = ZIndex.PLAYER
-              texture = playerTexture
-            }
-          }
         }
 
         gameData = GameDataManager.getInstance()

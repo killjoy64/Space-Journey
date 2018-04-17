@@ -2,7 +2,9 @@ package edu.gvsu.cis.spacejourney.system
 
 import aurelienribon.tweenengine.BaseTween
 import aurelienribon.tweenengine.Tween
-import aurelienribon.tweenengine.equations.*
+import aurelienribon.tweenengine.equations.Elastic
+import aurelienribon.tweenengine.equations.Linear
+import aurelienribon.tweenengine.equations.Sine
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
@@ -11,7 +13,8 @@ import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import edu.gvsu.cis.spacejourney.SpaceJourney
-import edu.gvsu.cis.spacejourney.component.*
+import edu.gvsu.cis.spacejourney.component.Health
+import edu.gvsu.cis.spacejourney.component.Transform
 import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
 import edu.gvsu.cis.spacejourney.component.colliders.CircleCollider
 import edu.gvsu.cis.spacejourney.managers.GameDataManager

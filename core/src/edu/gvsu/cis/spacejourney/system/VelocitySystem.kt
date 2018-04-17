@@ -1,6 +1,9 @@
 package edu.gvsu.cis.spacejourney.system
 
-import com.badlogic.ashley.core.*
+import com.badlogic.ashley.core.Engine
+import com.badlogic.ashley.core.Entity
+import com.badlogic.ashley.core.EntitySystem
+import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.Vector2

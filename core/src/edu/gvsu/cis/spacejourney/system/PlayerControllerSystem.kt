@@ -12,7 +12,11 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import edu.gvsu.cis.spacejourney.SpaceJourney
-import edu.gvsu.cis.spacejourney.component.*
+import edu.gvsu.cis.spacejourney.component.Projectile
+import edu.gvsu.cis.spacejourney.component.Player
+import edu.gvsu.cis.spacejourney.component.StaticSprite
+import edu.gvsu.cis.spacejourney.component.Transform
+import edu.gvsu.cis.spacejourney.component.Velocity
 import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
 import edu.gvsu.cis.spacejourney.util.Mappers
 import edu.gvsu.cis.spacejourney.util.ZIndex
