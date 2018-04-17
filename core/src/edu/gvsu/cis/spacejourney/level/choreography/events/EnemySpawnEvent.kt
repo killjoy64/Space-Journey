@@ -13,10 +13,16 @@ import edu.gvsu.cis.spacejourney.util.ZIndex
 import ktx.ashley.add
 import ktx.ashley.entity
 
+/**
+ * Choreographed event that spawns an enemy in a random position.
+ */
 class EnemySpawnEvent : ChoreographEvent() {
 
     var enemyEntity: Entity? = null
 
+    /**
+     * This function is called whenever the event's schedule time happens.
+     */
     override fun onEvent(engine: Engine) {
 
         val randomPosition = Vector2(

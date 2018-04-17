@@ -30,8 +30,9 @@ import ktx.ashley.entity
 import ktx.ashley.has
 import ktx.log.debug
 
-//private DefaultOverlay defaultHud;
-
+/**
+ * Level class that defines logic for the space level.
+ */
 class SpaceLevel : Level() {
 
     private var choreographer: LevelChoreographer? = null
@@ -40,6 +41,9 @@ class SpaceLevel : Level() {
     private var backgroundTwo: Entity? = null
     private var backgroundThree: Entity? = null
 
+    /**
+     * Overriden function that initializes entities, and schedules events.
+     */
     override fun init(engine: Engine) {
         super.init(engine)
 
@@ -105,6 +109,9 @@ class SpaceLevel : Level() {
         }
     }
 
+    /**
+     * Overriden method that initializes bloom, and vignette post processing effects.
+     */
     override fun initEffects(postProcessor: PostProcessor) {
         val bloom = Bloom((Gdx.graphics.width * 0.25f).toInt(), (Gdx.graphics.height * 0.25f).toInt())
         bloom.setBloomIntesity(2.25f)
@@ -114,6 +121,9 @@ class SpaceLevel : Level() {
         postProcessor.addEffect(vignette)
     }
 
+    /**
+     * Overriden method that updates the screen periodically.
+     */
     override fun update(delta: Float) {
         super.update(delta)
 
@@ -137,6 +147,9 @@ class SpaceLevel : Level() {
         }
     }
 
+    /**
+     * Private helper method that starts the level end animation sequence.
+     */
     private fun startAnimationSequence() {
         val xGoal = Gdx.graphics.width.toFloat() / 2
         val yGoal = Gdx.graphics.height.toFloat() / 2
@@ -215,6 +228,9 @@ class SpaceLevel : Level() {
                 })
     }
 
+    /**
+     * Overriden method that disposes of music, and removes all entities from the engine.
+     */
     override fun dispose() {
         music?.stop()
         music?.dispose()

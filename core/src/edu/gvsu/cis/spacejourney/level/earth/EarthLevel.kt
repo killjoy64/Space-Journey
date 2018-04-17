@@ -36,6 +36,9 @@ class EarthLevel : Level() {
     private var backgroundOne: Entity? = null
     private var backgroundTwo: Entity? = null
 
+    /**
+     * Abstracted function that only initializes the engine object.
+     */
     override fun init(engine: Engine) {
         super.init(engine)
 
@@ -84,6 +87,9 @@ class EarthLevel : Level() {
         }
     }
 
+    /**
+     * Overriden method that initializes bloom, and vignette post processing effects.
+     */
     override fun initEffects(postProcessor: PostProcessor) {
         val bloom = Bloom((Gdx.graphics.width * 0.25f).toInt(), (Gdx.graphics.height * 0.25f).toInt())
         bloom.setBloomIntesity(1.5f)
@@ -93,6 +99,9 @@ class EarthLevel : Level() {
         postProcessor.addEffect(vignette)
     }
 
+    /**
+     * Overriden method that updates the screen periodically.
+     */
     override fun update(delta: Float) {
         super.update(delta)
 
@@ -116,6 +125,9 @@ class EarthLevel : Level() {
         }
     }
 
+    /**
+     * Private helper method that starts the level end animation sequence.
+     */
     private fun startAnimationSequence() {
         val xGoal = Gdx.graphics.width.toFloat() / 2
         val yGoal = Gdx.graphics.height.toFloat() / 2
@@ -178,6 +190,9 @@ class EarthLevel : Level() {
             })
     }
 
+    /**
+     * Overriden method that disposes of music, and removes all entities from the engine.
+     */
     override fun dispose() {
         music?.stop()
         music?.dispose()
