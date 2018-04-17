@@ -47,6 +47,10 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     private var music: MusicManager? = null
 
+    /**
+     * Overriden method from BaseScreen that initializes a viewport, table labels, and
+     * data placeholders.
+     */
     override fun show() {
         super.show()
 
@@ -108,6 +112,9 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         renderingSystem?.resize(width, height)
     }
 
+    /**
+     * Overriden method that periodically updates the screen.
+     */
     override fun render(delta: Float) {
         super.render(delta)
 
@@ -137,6 +144,9 @@ class LevelScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         }
     }
 
+    /**
+     * Overriden method that disposes of the view stage, and display font.
+     */
     override fun dispose() {
         postProcessor?.dispose()
         level?.dispose()

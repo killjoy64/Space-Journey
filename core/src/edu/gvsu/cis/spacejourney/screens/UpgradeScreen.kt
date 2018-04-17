@@ -19,6 +19,10 @@ class UpgradeScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
 
     var spriteBatch: SpriteBatch? = null
 
+    /**
+     * Overriden method from BaseScreen that initializes a viewport, table labels, and
+     * data placeholders.
+     */
     override fun show() {
         super.show()
 
@@ -43,11 +47,18 @@ class UpgradeScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         spriteBatch = SpriteBatch()
     }
 
-    // Be mindful about nullable-types, as resize is called before show
+    /**
+     * Overriden method that is called whenever the screen changes sizes.
+     * @param width New width that the screen has resized to.
+     * @param height New height that the screen has resized to.
+     */
     override fun resize(width: Int, height: Int) {
         super.resize(width, height)
     }
 
+    /**
+     * Overriden method that periodically updates the screen.
+     */
     override fun render(delta: Float) {
         super.render(delta)
 
@@ -56,10 +67,16 @@ class UpgradeScreen(game: SpaceJourney) : BaseScreen(game, "LevelScreen") {
         }
     }
 
+    /**
+     * Overriden method that disposes of the view stage, and display font.
+     */
     override fun dispose() {
         spriteBatch?.dispose()
     }
 
+    /**
+     * Function that hides the screen, and stops the current music.
+     */
     override fun hide() {
         super.hide()
     }
