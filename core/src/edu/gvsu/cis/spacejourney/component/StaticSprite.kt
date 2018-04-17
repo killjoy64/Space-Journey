@@ -5,8 +5,9 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Vector2
 
-/*
- * Depends on `Transform`
+/**
+ * Depends on `Transform` component. A static sprite component defines attributes to be
+ * able to effectively render an entity and texture on to the screen.
  */
 class StaticSprite : Component {
 
