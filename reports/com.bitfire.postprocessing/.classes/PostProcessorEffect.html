@@ -1,0 +1,133 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PostProcessorEffect</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.bitfire.postprocessing</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PostProcessorEffect (com.bitfire.postprocessing)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PostProcessorEffect</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;/*******************************************************************************
+<i>2</i>&nbsp; * Copyright 2012 bmanuel
+<i>3</i>&nbsp; * 
+<i>4</i>&nbsp; * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+<i>5</i>&nbsp; * you may not use this file except in compliance with the License.
+<i>6</i>&nbsp; * You may obtain a copy of the License at
+<i>7</i>&nbsp; * 
+<i>8</i>&nbsp; *   http://www.apache.org/licenses/LICENSE-2.0
+<i>9</i>&nbsp; * 
+<i>10</i>&nbsp; * Unless required by applicable law or agreed to in writing, software
+<i>11</i>&nbsp; * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+<i>12</i>&nbsp; * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+<i>13</i>&nbsp; * See the License for the specific language governing permissions and
+<i>14</i>&nbsp; * limitations under the License.
+<i>15</i>&nbsp; ******************************************************************************/
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;package com.bitfire.postprocessing;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+<i>20</i>&nbsp;import com.badlogic.gdx.utils.Disposable;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;/** This interface defines the base class for the concrete implementation of post-processor effects. An effect is considered
+<i>23</i>&nbsp; * enabled by default.
+<i>24</i>&nbsp; * 
+<i>25</i>&nbsp; * @author bmanuel */
+<b class="nc"><i>26</i>&nbsp;public abstract class PostProcessorEffect implements Disposable {</b>
+<b class="nc"><i>27</i>&nbsp;	protected boolean enabled = true;</b>
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;	/** Concrete objects shall be responsible to recreate or rebind its own resources whenever its needed, usually when the OpenGL
+<i>30</i>&nbsp;	 * context is lost. Eg., framebuffer textures should be updated and shader parameters should be reuploaded/rebound. */
+<i>31</i>&nbsp;	public abstract void rebind ();
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;	/** Concrete objects shall implements its own rendering, given the source and destination buffers. */
+<i>34</i>&nbsp;	public abstract void render (final FrameBuffer src, final FrameBuffer dest);
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;	/** Whether or not this effect is enabled and should be processed */
+<i>37</i>&nbsp;	public boolean isEnabled () {
+<b class="nc"><i>38</i>&nbsp;		return enabled;</b>
+<i>39</i>&nbsp;	}
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;	/** Sets this effect enabled or not */
+<i>42</i>&nbsp;	public void setEnabled (boolean enabled) {
+<b class="nc"><i>43</i>&nbsp;		this.enabled = enabled;</b>
+<i>44</i>&nbsp;	}
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;	/** Convenience method to forward the call to the PostProcessor object while still being a non-publicly accessible method */
+<i>47</i>&nbsp;	protected void restoreViewport (FrameBuffer dest) {
+<b class="nc"><i>48</i>&nbsp;		PostProcessor.restoreViewport(dest);</b>
+<i>49</i>&nbsp;	}
+<i>50</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-04-17 22:01</div>
+</div>
+</body>
+</html>

@@ -58,10 +58,10 @@
 </td>
 <td class="coverageStat">
   <span class="percent">
-    88%
+    88.5%
   </span>
   <span class="absValue">
-    (22/ 25)
+    (23/ 26)
   </span>
 </td>
 </tr>
@@ -76,98 +76,91 @@
 <i>2</i>&nbsp;
 <i>3</i>&nbsp;import com.badlogic.gdx.Gdx
 <i>4</i>&nbsp;import com.badlogic.gdx.Input
-<i>5</i>&nbsp;import com.badlogic.gdx.controllers.Controller
-<i>6</i>&nbsp;import com.badlogic.gdx.controllers.ControllerListener
-<i>7</i>&nbsp;import com.badlogic.gdx.controllers.Controllers
-<i>8</i>&nbsp;import com.badlogic.gdx.controllers.PovDirection
-<i>9</i>&nbsp;import com.badlogic.gdx.graphics.GL20
-<i>10</i>&nbsp;import com.badlogic.gdx.math.Vector3
-<i>11</i>&nbsp;import edu.gvsu.cis.spacejourney.SpaceJourney
-<i>12</i>&nbsp;import ktx.app.KtxScreen
-<i>13</i>&nbsp;import ktx.log.debug
+<i>5</i>&nbsp;import com.badlogic.gdx.graphics.GL20
+<i>6</i>&nbsp;import edu.gvsu.cis.spacejourney.SpaceJourney
+<i>7</i>&nbsp;import ktx.app.KtxScreen
+<i>8</i>&nbsp;import ktx.log.debug
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;/**
+<i>11</i>&nbsp;* Convenient base class for all Screens where common functionality can be implemented
+<i>12</i>&nbsp;*/
+<b class="fc"><i>13</i>&nbsp;open class BaseScreen(val game: SpaceJourney, val screenName: String) : KtxScreen {</b>
 <i>14</i>&nbsp;
-<i>15</i>&nbsp;/**
-<i>16</i>&nbsp; * Convenient base class for all Screens where common functionality can be implemented.
-<i>17</i>&nbsp;*/
-<b class="fc"><i>18</i>&nbsp;open class BaseScreen(val game: SpaceJourney, val screenName: String) : KtxScreen {</b>
-<i>19</i>&nbsp;
-<i>20</i>&nbsp;    /**
-<i>21</i>&nbsp;     * Implemented method that will dispose a screen once
-<i>22</i>&nbsp;     * the game is closed.
-<i>23</i>&nbsp;     */
-<i>24</i>&nbsp;    override fun dispose() {
-<b class="fc"><i>25</i>&nbsp;        super.dispose()</b>
-<b class="fc"><i>26</i>&nbsp;        debug { &quot;Screen Disposed: $screenName &quot; }</b>
-<b class="fc"><i>27</i>&nbsp;    }</b>
-<i>28</i>&nbsp;
-<i>29</i>&nbsp;    /**
-<i>30</i>&nbsp;     * Overriden method that hides the screen when called.
-<i>31</i>&nbsp;     */
-<i>32</i>&nbsp;    override fun hide() {
-<b class="fc"><i>33</i>&nbsp;        super.hide()</b>
-<b class="fc"><i>34</i>&nbsp;        debug { &quot;Screen Hidden: $screenName &quot; }</b>
-<b class="fc"><i>35</i>&nbsp;    }</b>
-<i>36</i>&nbsp;
-<i>37</i>&nbsp;    /**
-<i>38</i>&nbsp;     * Overriden method that pauses the screen when called.
-<i>39</i>&nbsp;     */
-<i>40</i>&nbsp;    override fun pause() {
-<b class="fc"><i>41</i>&nbsp;        super.pause()</b>
-<b class="fc"><i>42</i>&nbsp;        debug { &quot;Screen Paused: $screenName &quot; }</b>
-<b class="fc"><i>43</i>&nbsp;    }</b>
+<i>15</i>&nbsp;    /**
+<i>16</i>&nbsp;     * Overriden function that disposes of the screen once it is finished.
+<i>17</i>&nbsp;     */
+<i>18</i>&nbsp;    override fun dispose() {
+<b class="fc"><i>19</i>&nbsp;        super.dispose()</b>
+<b class="fc"><i>20</i>&nbsp;        debug { &quot;Screen Disposed: $screenName &quot; }</b>
+<b class="fc"><i>21</i>&nbsp;    }</b>
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    /**
+<i>24</i>&nbsp;     * Overriden method that hides the screen on demand.
+<i>25</i>&nbsp;     */
+<i>26</i>&nbsp;    override fun hide() {
+<b class="fc"><i>27</i>&nbsp;        super.hide()</b>
+<b class="fc"><i>28</i>&nbsp;        debug { &quot;Screen Hidden: $screenName &quot; }</b>
+<b class="fc"><i>29</i>&nbsp;    }</b>
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    /**
+<i>32</i>&nbsp;     * Overriden method that pauses the screen on demand.
+<i>33</i>&nbsp;     */
+<i>34</i>&nbsp;    override fun pause() {
+<b class="fc"><i>35</i>&nbsp;        super.pause()</b>
+<b class="fc"><i>36</i>&nbsp;        debug { &quot;Screen Paused: $screenName &quot; }</b>
+<b class="fc"><i>37</i>&nbsp;    }</b>
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    /**
+<i>40</i>&nbsp;     * Overriden method that constantly renders the screen.
+<i>41</i>&nbsp;     */
+<i>42</i>&nbsp;    override fun render(delta: Float) {
+<b class="fc"><i>43</i>&nbsp;        super.render(delta)</b>
 <i>44</i>&nbsp;
-<i>45</i>&nbsp;    /**
-<i>46</i>&nbsp;     * Overriden method that constantly updates and render the contents of the screen.
-<i>47</i>&nbsp;     * @param delta Time between the last and current render updates. This value can be
-<i>48</i>&nbsp;     * added to get a value of time that has passed.
-<i>49</i>&nbsp;     */
-<i>50</i>&nbsp;    override fun render(delta: Float) {
-<b class="fc"><i>51</i>&nbsp;        super.render(delta)</b>
-<i>52</i>&nbsp;
-<b class="fc"><i>53</i>&nbsp;        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {</b>
-<b class="fc"><i>54</i>&nbsp;            Gdx.app.exit()</b>
-<i>55</i>&nbsp;        }
-<i>56</i>&nbsp;
-<b class="fc"><i>57</i>&nbsp;        Gdx.gl.glClearColor(0f, 0f, 0f, 1f)</b>
-<b class="fc"><i>58</i>&nbsp;        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)</b>
-<b class="fc"><i>59</i>&nbsp;    }</b>
-<i>60</i>&nbsp;
-<i>61</i>&nbsp;    /**
-<i>62</i>&nbsp;     * Overriden method that is called whenever the screen changes sizes.
-<i>63</i>&nbsp;     * @param width New width that the screen has resized to.
-<i>64</i>&nbsp;     * @param height New height that the screen has resized to.
-<i>65</i>&nbsp;     */
-<i>66</i>&nbsp;    override fun resize(width: Int, height: Int) {
-<b class="fc"><i>67</i>&nbsp;        super.resize(width, height)</b>
-<b class="fc"><i>68</i>&nbsp;        debug { &quot;Screen Resized: $screenName to $width, $height&quot; }</b>
-<b class="fc"><i>69</i>&nbsp;    }</b>
-<i>70</i>&nbsp;
-<i>71</i>&nbsp;    /**
-<i>72</i>&nbsp;     * Overriden method that is called whenever the screen was paused, and then
-<i>73</i>&nbsp;     * re-focused.
-<i>74</i>&nbsp;     */
-<i>75</i>&nbsp;    override fun resume() {
-<b class="nc"><i>76</i>&nbsp;        super.resume()</b>
-<b class="nc"><i>77</i>&nbsp;        debug { &quot;Screen Resumed: $screenName&quot; }</b>
-<b class="nc"><i>78</i>&nbsp;    }</b>
-<i>79</i>&nbsp;
-<i>80</i>&nbsp;    /**
-<i>81</i>&nbsp;     * Overriden method that is called whenever the screen is initially shown. Put setup
-<i>82</i>&nbsp;     * logic here, however the resize() method may be called before the show() method.
-<i>83</i>&nbsp;     */
-<i>84</i>&nbsp;    override fun show() {
-<b class="fc"><i>85</i>&nbsp;        super.show()</b>
-<i>86</i>&nbsp;
-<b class="fc"><i>87</i>&nbsp;        debug { &quot;Screen Shown: $screenName &quot; }</b>
-<b class="fc"><i>88</i>&nbsp;    }</b>
-<i>89</i>&nbsp;
-<i>90</i>&nbsp;}
+<b class="fc"><i>45</i>&nbsp;        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {</b>
+<b class="fc"><i>46</i>&nbsp;            Gdx.app.exit()</b>
+<i>47</i>&nbsp;        }
+<i>48</i>&nbsp;
+<b class="fc"><i>49</i>&nbsp;        Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1f)</b>
+<b class="fc"><i>50</i>&nbsp;        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)</b>
+<i>51</i>&nbsp;
+<b class="fc"><i>52</i>&nbsp;        SpaceJourney.tweenManager.update(delta)</b>
+<b class="fc"><i>53</i>&nbsp;    }</b>
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    /**
+<i>56</i>&nbsp;     * Overriden method that resizes the screen, and its viewports.
+<i>57</i>&nbsp;     * @param width the new width of the screen.
+<i>58</i>&nbsp;     * @param height the new height of the screen.
+<i>59</i>&nbsp;     */
+<i>60</i>&nbsp;    override fun resize(width: Int, height: Int) {
+<b class="fc"><i>61</i>&nbsp;        super.resize(width, height)</b>
+<b class="fc"><i>62</i>&nbsp;        debug { &quot;Screen Resized: $screenName to $width, $height&quot; }</b>
+<b class="fc"><i>63</i>&nbsp;    }</b>
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    /**
+<i>66</i>&nbsp;     * Overriden function that resumes the screen after it has been paused.
+<i>67</i>&nbsp;     */
+<i>68</i>&nbsp;    override fun resume() {
+<b class="nc"><i>69</i>&nbsp;        super.resume()</b>
+<b class="nc"><i>70</i>&nbsp;        debug { &quot;Screen Resumed: $screenName&quot; }</b>
+<b class="nc"><i>71</i>&nbsp;    }</b>
+<i>72</i>&nbsp;
+<i>73</i>&nbsp;    /**
+<i>74</i>&nbsp;     * Overriden function that shows the screen. This might be called after the
+<i>75</i>&nbsp;     * resize method, so objects should be initialized carefully in show/resize.
+<i>76</i>&nbsp;     */
+<i>77</i>&nbsp;    override fun show() {
+<b class="fc"><i>78</i>&nbsp;        super.show()</b>
+<i>79</i>&nbsp;        //Controllers.addListener(this)
+<i>80</i>&nbsp;
+<b class="fc"><i>81</i>&nbsp;        debug { &quot;Screen Shown: $screenName &quot; }</b>
+<b class="fc"><i>82</i>&nbsp;    }</b>
+<i>83</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2018-02-26 20:21</div>
+    <div style="float:right;">generated on 2018-04-17 22:02</div>
 </div>
 </body>
 </html>

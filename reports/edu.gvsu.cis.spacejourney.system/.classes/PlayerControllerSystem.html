@@ -1,0 +1,296 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PlayerControllerSystem</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">edu.gvsu.cis.spacejourney.system</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PlayerControllerSystem (edu.gvsu.cis.spacejourney.system)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PlayerControllerSystem</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    82.6%
+  </span>
+  <span class="absValue">
+    (90/ 109)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package edu.gvsu.cis.spacejourney.system
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.badlogic.ashley.core.Engine
+<i>4</i>&nbsp;import com.badlogic.ashley.core.Entity
+<i>5</i>&nbsp;import com.badlogic.ashley.core.EntitySystem
+<i>6</i>&nbsp;import com.badlogic.ashley.core.Family
+<i>7</i>&nbsp;import com.badlogic.ashley.utils.ImmutableArray
+<i>8</i>&nbsp;import com.badlogic.gdx.Gdx
+<i>9</i>&nbsp;import com.badlogic.gdx.Input
+<i>10</i>&nbsp;import com.badlogic.gdx.controllers.Controllers
+<i>11</i>&nbsp;import com.badlogic.gdx.graphics.Texture
+<i>12</i>&nbsp;import com.badlogic.gdx.math.Rectangle
+<i>13</i>&nbsp;import com.badlogic.gdx.math.Vector2
+<i>14</i>&nbsp;import edu.gvsu.cis.spacejourney.SpaceJourney
+<i>15</i>&nbsp;import edu.gvsu.cis.spacejourney.component.Projectile
+<i>16</i>&nbsp;import edu.gvsu.cis.spacejourney.component.Player
+<i>17</i>&nbsp;import edu.gvsu.cis.spacejourney.component.StaticSprite
+<i>18</i>&nbsp;import edu.gvsu.cis.spacejourney.component.Transform
+<i>19</i>&nbsp;import edu.gvsu.cis.spacejourney.component.Velocity
+<i>20</i>&nbsp;import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
+<i>21</i>&nbsp;import edu.gvsu.cis.spacejourney.util.Mappers
+<i>22</i>&nbsp;import edu.gvsu.cis.spacejourney.util.ZIndex
+<i>23</i>&nbsp;import ktx.ashley.add
+<i>24</i>&nbsp;import ktx.ashley.entity
+<i>25</i>&nbsp;import ktx.log.debug
+<i>26</i>&nbsp;import ktx.math.plus
+<i>27</i>&nbsp;import ktx.math.times
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;/**
+<i>30</i>&nbsp; * Player Controller System that handles everything the player can do in the level.
+<i>31</i>&nbsp; */
+<b class="fc"><i>32</i>&nbsp;class PlayerControllerSystem : EntitySystem() {</b>
+<i>33</i>&nbsp;    private var entities: ImmutableArray&lt;Entity&gt;? = null
+<i>34</i>&nbsp;
+<b class="fc"><i>35</i>&nbsp;    private val CONTROLLER_DEADZONE = 0.05</b>
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    private var time = 0.0
+<i>38</i>&nbsp;
+<b class="fc"><i>39</i>&nbsp;    var inputEnabled: Boolean = true</b>
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    /**
+<i>42</i>&nbsp;     * @constructor initializes the system priorities, and enables input on
+<i>43</i>&nbsp;     * instantiation.
+<i>44</i>&nbsp;     */
+<i>45</i>&nbsp;    init {
+<b class="fc"><i>46</i>&nbsp;        priority = SystemPriorities.PlayerControllerSystem</b>
+<b class="fc"><i>47</i>&nbsp;        inputEnabled = true</b>
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    /**
+<i>51</i>&nbsp;     * Overriden function that gets all entites that are added to the current engine.
+<i>52</i>&nbsp;     * @param engine the Ashley engine object that is currently used throughout the game.
+<i>53</i>&nbsp;     */
+<i>54</i>&nbsp;    override fun addedToEngine(engine: Engine) {
+<b class="fc"><i>55</i>&nbsp;        entities = engine.getEntitiesFor(Family.all(Player::class.java, StaticSprite::class.java, Transform::class.java).get())</b>
+<i>56</i>&nbsp;
+<b class="fc"><i>57</i>&nbsp;        for (controller in Controllers.getControllers()) {</b>
+<b class="nc"><i>58</i>&nbsp;            debug { &quot;Found controller: &quot; + controller.name }</b>
+<i>59</i>&nbsp;        }
+<b class="fc"><i>60</i>&nbsp;    }</b>
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    /**
+<i>63</i>&nbsp;     * Function that is used to update the CollisionSystem periodically from a screen&#39;s
+<i>64</i>&nbsp;     * update method.
+<i>65</i>&nbsp;     * @param deltaTime the time between the last and current update cycle.
+<i>66</i>&nbsp;     */
+<i>67</i>&nbsp;    override fun update(deltaTime: Float) {
+<b class="fc"><i>68</i>&nbsp;        for (i in 0 until entities!!.size()) {</b>
+<b class="fc"><i>69</i>&nbsp;            val entity = entities!!.get(i)</b>
+<i>70</i>&nbsp;
+<b class="fc"><i>71</i>&nbsp;            val transform = Mappers.transform.get(entity)</b>
+<b class="fc"><i>72</i>&nbsp;            val player = Mappers.player.get(entity)</b>
+<b class="fc"><i>73</i>&nbsp;            val staticSprite = Mappers.staticSprite.get(entity)</b>
+<i>74</i>&nbsp;
+<b class="fc"><i>75</i>&nbsp;            val movement = Vector2()</b>
+<b class="fc"><i>76</i>&nbsp;            var attack = false</b>
+<i>77</i>&nbsp;
+<b class="fc"><i>78</i>&nbsp;            Controllers.getControllers().asSequence().withIndex().forEach {</b>
+<i>79</i>&nbsp;
+<b class="nc"><i>80</i>&nbsp;                val controllerID = it.index</b>
+<b class="nc"><i>81</i>&nbsp;                val controller = it.value</b>
+<i>82</i>&nbsp;
+<b class="nc"><i>83</i>&nbsp;                if (controllerID == 0 &amp;&amp; inputEnabled) {</b>
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;                    // The official controller mappings by LibGDX for Xbox360 controllers
+<i>86</i>&nbsp;                    // don&#39;t work on Windows of all platforms... so we have to hardcode them
+<b class="nc"><i>87</i>&nbsp;                    val L_STICK_HORIZONTAL_AXIS = 1</b>
+<b class="nc"><i>88</i>&nbsp;                    val L_STICK_VERTICAL_AXIS = 0</b>
+<b class="nc"><i>89</i>&nbsp;                    val A_BUTTON = 0</b>
+<i>90</i>&nbsp;
+<b class="nc"><i>91</i>&nbsp;                    if (controller.getAxis(L_STICK_VERTICAL_AXIS) &gt; CONTROLLER_DEADZONE) {</b>
+<b class="nc"><i>92</i>&nbsp;                        movement.y = player.movespeed * -controller.getAxis(L_STICK_VERTICAL_AXIS)</b>
+<i>93</i>&nbsp;                    }
+<b class="nc"><i>94</i>&nbsp;                    if (controller.getAxis(L_STICK_VERTICAL_AXIS) &lt; -CONTROLLER_DEADZONE) {</b>
+<b class="nc"><i>95</i>&nbsp;                        movement.y = player.movespeed * -controller.getAxis(L_STICK_VERTICAL_AXIS)</b>
+<i>96</i>&nbsp;                    }
+<b class="nc"><i>97</i>&nbsp;                    if (controller.getAxis(L_STICK_HORIZONTAL_AXIS) &gt; CONTROLLER_DEADZONE) {</b>
+<b class="nc"><i>98</i>&nbsp;                        movement.x = player.movespeed * controller.getAxis(L_STICK_HORIZONTAL_AXIS)</b>
+<i>99</i>&nbsp;                    }
+<b class="nc"><i>100</i>&nbsp;                    if (controller.getAxis(L_STICK_HORIZONTAL_AXIS) &lt; -CONTROLLER_DEADZONE) {</b>
+<b class="nc"><i>101</i>&nbsp;                        movement.x = player.movespeed * controller.getAxis(L_STICK_HORIZONTAL_AXIS)</b>
+<i>102</i>&nbsp;                    }
+<b class="nc"><i>103</i>&nbsp;                    if (controller.getButton(A_BUTTON)) {</b>
+<b class="nc"><i>104</i>&nbsp;                        attack = true</b>
+<i>105</i>&nbsp;                    }
+<i>106</i>&nbsp;                }
+<b class="nc"><i>107</i>&nbsp;            }</b>
+<i>108</i>&nbsp;
+<b class="fc"><i>109</i>&nbsp;            if (inputEnabled) {</b>
+<b class="fc"><i>110</i>&nbsp;                if (Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {</b>
+<b class="fc"><i>111</i>&nbsp;                    movement.x = player.movespeed</b>
+<i>112</i>&nbsp;                }
+<b class="fc"><i>113</i>&nbsp;                if (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {</b>
+<b class="fc"><i>114</i>&nbsp;                    movement.x = -player.movespeed</b>
+<i>115</i>&nbsp;                }
+<b class="fc"><i>116</i>&nbsp;                if (Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP)) {</b>
+<b class="fc"><i>117</i>&nbsp;                    movement.y = player.movespeed</b>
+<i>118</i>&nbsp;                }
+<b class="fc"><i>119</i>&nbsp;                if (Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN)) {</b>
+<b class="fc"><i>120</i>&nbsp;                    movement.y = -player.movespeed</b>
+<i>121</i>&nbsp;                }
+<b class="fc"><i>122</i>&nbsp;                if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {</b>
+<b class="fc"><i>123</i>&nbsp;                    attack = true</b>
+<i>124</i>&nbsp;                }
+<i>125</i>&nbsp;            }
+<i>126</i>&nbsp;
+<b class="fc"><i>127</i>&nbsp;            val deltaMovement = movement * deltaTime</b>
+<i>128</i>&nbsp;
+<b class="fc"><i>129</i>&nbsp;            transform.position += deltaMovement</b>
+<i>130</i>&nbsp;
+<i>131</i>&nbsp;            // Bounds checking for the player
+<i>132</i>&nbsp;
+<b class="fc"><i>133</i>&nbsp;            val boundsPadding = 30.0f</b>
+<b class="fc"><i>134</i>&nbsp;            val bounds = Rectangle(</b>
+<b class="fc"><i>135</i>&nbsp;                    boundsPadding,</b>
+<b class="fc"><i>136</i>&nbsp;                    boundsPadding,</b>
+<b class="fc"><i>137</i>&nbsp;                    Gdx.graphics.width.toFloat() - boundsPadding * 2f,</b>
+<b class="fc"><i>138</i>&nbsp;                    Gdx.graphics.height.toFloat() - boundsPadding * 2f</b>
+<i>139</i>&nbsp;            )
+<i>140</i>&nbsp;
+<b class="fc"><i>141</i>&nbsp;            if (transform.position.x &lt; bounds.x) {</b>
+<b class="fc"><i>142</i>&nbsp;                transform.position.x = bounds.x</b>
+<i>143</i>&nbsp;            }
+<b class="fc"><i>144</i>&nbsp;            if (transform.position.y &lt; bounds.y) {</b>
+<b class="fc"><i>145</i>&nbsp;                transform.position.y = bounds.y</b>
+<i>146</i>&nbsp;            }
+<b class="fc"><i>147</i>&nbsp;            if (transform.position.x &gt; bounds.x + bounds.width) {</b>
+<b class="nc"><i>148</i>&nbsp;                transform.position.x = bounds.x + bounds.width</b>
+<i>149</i>&nbsp;            }
+<b class="fc"><i>150</i>&nbsp;            if (transform.position.y &gt; bounds.y + bounds.height) {</b>
+<b class="fc"><i>151</i>&nbsp;                transform.position.y = bounds.y + bounds.height</b>
+<i>152</i>&nbsp;            }
+<i>153</i>&nbsp;
+<i>154</i>&nbsp;            // Attacking Logic
+<i>155</i>&nbsp;
+<b class="fc"><i>156</i>&nbsp;            val bulletInheritedVelocityFactor = 0.2f</b>
+<i>157</i>&nbsp;
+<b class="fc"><i>158</i>&nbsp;            time += deltaTime</b>
+<b class="fc"><i>159</i>&nbsp;            if (attack &amp;&amp; time &gt;= player.firerate) {</b>
+<i>160</i>&nbsp;
+<b class="fc"><i>161</i>&nbsp;                val playerCenter = Vector2(transform.position)</b>
+<i>162</i>&nbsp;
+<b class="fc"><i>163</i>&nbsp;                val laserTexture = SpaceJourney.assetManager.get(&quot;laser.png&quot;, Texture::class.java)</b>
+<i>164</i>&nbsp;
+<b class="fc"><i>165</i>&nbsp;                val projectileVelocity = 10.0f</b>
+<i>166</i>&nbsp;
+<b class="fc"><i>167</i>&nbsp;                engine.add {</b>
+<b class="fc"><i>168</i>&nbsp;                    entity {</b>
+<b class="fc"><i>169</i>&nbsp;                        with&lt;Projectile&gt; {</b>
+<b class="fc"><i>170</i>&nbsp;                            damage = 1</b>
+<b class="fc"><i>171</i>&nbsp;                        }</b>
+<b class="fc"><i>172</i>&nbsp;                        with&lt;BoxCollider&gt; {</b>
+<b class="fc"><i>173</i>&nbsp;                            width = laserTexture.height</b>
+<b class="fc"><i>174</i>&nbsp;                            height = laserTexture.width</b>
+<b class="fc"><i>175</i>&nbsp;                        }</b>
+<b class="fc"><i>176</i>&nbsp;                        with&lt;Velocity&gt; {</b>
+<b class="fc"><i>177</i>&nbsp;                            value = Vector2(deltaMovement.x * bulletInheritedVelocityFactor, projectileVelocity)</b>
+<b class="fc"><i>178</i>&nbsp;                        }</b>
+<b class="fc"><i>179</i>&nbsp;                        with&lt;Transform&gt; {</b>
+<b class="fc"><i>180</i>&nbsp;                            position = Vector2(playerCenter.x + 16, playerCenter.y)</b>
+<b class="fc"><i>181</i>&nbsp;                        }</b>
+<b class="fc"><i>182</i>&nbsp;                        with&lt;StaticSprite&gt; {</b>
+<b class="fc"><i>183</i>&nbsp;                            zindex = ZIndex.PROJECTILES</b>
+<b class="fc"><i>184</i>&nbsp;                            texture = laserTexture</b>
+<b class="fc"><i>185</i>&nbsp;                        }</b>
+<b class="fc"><i>186</i>&nbsp;                    }</b>
+<b class="fc"><i>187</i>&nbsp;                }</b>
+<i>188</i>&nbsp;
+<b class="fc"><i>189</i>&nbsp;                engine.add {</b>
+<b class="fc"><i>190</i>&nbsp;                    entity {</b>
+<b class="fc"><i>191</i>&nbsp;                        with&lt;Projectile&gt; {}</b>
+<b class="fc"><i>192</i>&nbsp;                        with&lt;BoxCollider&gt; {</b>
+<b class="fc"><i>193</i>&nbsp;                            width = laserTexture.height</b>
+<b class="fc"><i>194</i>&nbsp;                            height = laserTexture.width</b>
+<b class="fc"><i>195</i>&nbsp;                        }</b>
+<b class="fc"><i>196</i>&nbsp;                        with&lt;Velocity&gt; {</b>
+<b class="fc"><i>197</i>&nbsp;                            value = Vector2(deltaMovement.x * bulletInheritedVelocityFactor, projectileVelocity)</b>
+<b class="fc"><i>198</i>&nbsp;                        }</b>
+<b class="fc"><i>199</i>&nbsp;                        with&lt;Transform&gt; {</b>
+<b class="fc"><i>200</i>&nbsp;                            position = Vector2(playerCenter.x - 32, playerCenter.y)</b>
+<b class="fc"><i>201</i>&nbsp;                        }</b>
+<b class="fc"><i>202</i>&nbsp;                        with&lt;StaticSprite&gt; {</b>
+<b class="fc"><i>203</i>&nbsp;                            zindex = ZIndex.PROJECTILES</b>
+<b class="fc"><i>204</i>&nbsp;                            texture = laserTexture</b>
+<b class="fc"><i>205</i>&nbsp;                        }</b>
+<b class="fc"><i>206</i>&nbsp;                    }</b>
+<b class="fc"><i>207</i>&nbsp;                }</b>
+<i>208</i>&nbsp;
+<b class="fc"><i>209</i>&nbsp;                this.time = 0.0</b>
+<i>210</i>&nbsp;            }
+<i>211</i>&nbsp;        }
+<b class="fc"><i>212</i>&nbsp;    }</b>
+<i>213</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-04-17 22:01</div>
+</div>
+</body>
+</html>

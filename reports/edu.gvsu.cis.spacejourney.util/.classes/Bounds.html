@@ -1,0 +1,162 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Bounds</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">edu.gvsu.cis.spacejourney.util</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Bounds (edu.gvsu.cis.spacejourney.util)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Bounds</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Bounds$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (15/ 15)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (2/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93.8%
+  </span>
+  <span class="absValue">
+    (15/ 16)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package edu.gvsu.cis.spacejourney.util
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.badlogic.gdx.math.Rectangle
+<i>4</i>&nbsp;import com.badlogic.gdx.math.Vector2
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;/**
+<i>7</i>&nbsp; * Utility class that checks the (x, y) coordinates of two given rectangles, and
+<i>8</i>&nbsp; * performs operations on them. This class is beneficial for basic physics and
+<i>9</i>&nbsp; * collision detection.
+<i>10</i>&nbsp; */
+<b class="nc"><i>11</i>&nbsp;class Bounds {</b>
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    /**
+<i>14</i>&nbsp;     * Class companion object that allows the isOutOfBounds function to be statically
+<i>15</i>&nbsp;     * referenced.
+<i>16</i>&nbsp;     */
+<b class="fc"><i>17</i>&nbsp;    companion object {</b>
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;        /**
+<i>20</i>&nbsp;         * Static function that returns whether or not a given (x, y) coordinate is out
+<i>21</i>&nbsp;         * of bounds on the screen.
+<i>22</i>&nbsp;         * @param position The current position of the entity.
+<i>23</i>&nbsp;         * @param size The size of the entity.
+<i>24</i>&nbsp;         * @param padding How much padding there should be in the entity. A larger padding will
+<i>25</i>&nbsp;         * allow the entity to appear more off-screen.
+<i>26</i>&nbsp;         * @return true if the entity is out of bounds, and false if the entity is not.
+<i>27</i>&nbsp;         */
+<i>28</i>&nbsp;        fun isOutOfBounds(position: Vector2, size: Vector2, padding: Float): Boolean {
+<i>29</i>&nbsp;
+<b class="fc"><i>30</i>&nbsp;            val bounds = Rectangle(</b>
+<b class="fc"><i>31</i>&nbsp;                    padding,</b>
+<b class="fc"><i>32</i>&nbsp;                    padding,</b>
+<b class="fc"><i>33</i>&nbsp;                    size.x - padding * 2f,</b>
+<b class="fc"><i>34</i>&nbsp;                    size.y - padding * 2f</b>
+<i>35</i>&nbsp;            )
+<i>36</i>&nbsp;
+<b class="fc"><i>37</i>&nbsp;            if (position.x &lt; bounds.x) {</b>
+<b class="fc"><i>38</i>&nbsp;                return true</b>
+<i>39</i>&nbsp;            }
+<b class="fc"><i>40</i>&nbsp;            if (position.y &lt; bounds.y) {</b>
+<b class="fc"><i>41</i>&nbsp;                return true</b>
+<i>42</i>&nbsp;            }
+<b class="fc"><i>43</i>&nbsp;            if (position.x &gt; bounds.x + bounds.width) {</b>
+<b class="fc"><i>44</i>&nbsp;                return true</b>
+<i>45</i>&nbsp;            }
+<b class="fc"><i>46</i>&nbsp;            if (position.y &gt; bounds.y + bounds.height) {</b>
+<b class="fc"><i>47</i>&nbsp;                return true</b>
+<i>48</i>&nbsp;            }
+<i>49</i>&nbsp;
+<b class="fc"><i>50</i>&nbsp;            return false</b>
+<i>51</i>&nbsp;        }
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-04-17 22:01</div>
+</div>
+</body>
+</html>

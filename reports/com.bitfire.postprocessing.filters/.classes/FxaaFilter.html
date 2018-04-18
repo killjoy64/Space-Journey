@@ -1,0 +1,228 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: FxaaFilter</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.bitfire.postprocessing.filters</a> ]
+</div>
+
+<h1>Coverage Summary for Class: FxaaFilter (com.bitfire.postprocessing.filters)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FxaaFilter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 26)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">FxaaFilter$Param</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 34)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;/*******************************************************************************
+<i>2</i>&nbsp; * 
+<i>3</i>&nbsp; * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+<i>4</i>&nbsp; * you may not use this file except in compliance with the License.
+<i>5</i>&nbsp; * You may obtain a copy of the License at
+<i>6</i>&nbsp; * 
+<i>7</i>&nbsp; *   http://www.apache.org/licenses/LICENSE-2.0
+<i>8</i>&nbsp; * 
+<i>9</i>&nbsp; * Unless required by applicable law or agreed to in writing, software
+<i>10</i>&nbsp; * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+<i>11</i>&nbsp; * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+<i>12</i>&nbsp; * See the License for the specific language governing permissions and
+<i>13</i>&nbsp; * limitations under the License.
+<i>14</i>&nbsp; ******************************************************************************/
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;package com.bitfire.postprocessing.filters;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;import com.badlogic.gdx.math.Vector2;
+<i>19</i>&nbsp;import com.bitfire.utils.ShaderLoader;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;/** Fast approximate anti-aliasing filter.
+<i>22</i>&nbsp; * @author Toni Sagrista */
+<i>23</i>&nbsp;public final class FxaaFilter extends Filter&lt;FxaaFilter&gt; {
+<i>24</i>&nbsp;	private Vector2 viewportInverse;
+<i>25</i>&nbsp;	private float FXAA_REDUCE_MIN;
+<i>26</i>&nbsp;	private float FXAA_REDUCE_MUL;
+<i>27</i>&nbsp;	private float FXAA_SPAN_MAX;
+<i>28</i>&nbsp;
+<b class="nc"><i>29</i>&nbsp;	public enum Param implements Parameter {</b>
+<i>30</i>&nbsp;		// @formatter:off
+<b class="nc"><i>31</i>&nbsp;		Texture(&quot;u_texture0&quot;, 0), ViewportInverse(&quot;u_viewportInverse&quot;, 2), FxaaReduceMin(&quot;FXAA_REDUCE_MIN&quot;, 0), FxaaReduceMul(</b>
+<b class="nc"><i>32</i>&nbsp;			&quot;FXAA_REDUCE_MUL&quot;, 0), FxaaSpanMax(&quot;FXAA_SPAN_MAX&quot;, 0), ;</b>
+<i>33</i>&nbsp;		// @formatter:on
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;		private String mnemonic;
+<i>36</i>&nbsp;		private int elementSize;
+<i>37</i>&nbsp;
+<b class="nc"><i>38</i>&nbsp;		private Param (String mnemonic, int arrayElementSize) {</b>
+<b class="nc"><i>39</i>&nbsp;			this.mnemonic = mnemonic;</b>
+<b class="nc"><i>40</i>&nbsp;			this.elementSize = arrayElementSize;</b>
+<i>41</i>&nbsp;		}
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;		@Override
+<i>44</i>&nbsp;		public String mnemonic () {
+<b class="nc"><i>45</i>&nbsp;			return this.mnemonic;</b>
+<i>46</i>&nbsp;		}
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;		@Override
+<i>49</i>&nbsp;		public int arrayElementSize () {
+<b class="nc"><i>50</i>&nbsp;			return this.elementSize;</b>
+<i>51</i>&nbsp;		}
+<i>52</i>&nbsp;	}
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;	public FxaaFilter (int viewportWidth, int viewportHeight) {
+<b class="nc"><i>55</i>&nbsp;		this(new Vector2(viewportWidth, viewportHeight), 1f / 128f, 1f / 8f, 8f);</b>
+<i>56</i>&nbsp;	}
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;	public FxaaFilter (int viewportWidth, int viewportHeight, float fxaa_reduce_min, float fxaa_reduce_mul, float fxaa_span_max) {
+<b class="nc"><i>59</i>&nbsp;		this(new Vector2(viewportWidth, viewportHeight), fxaa_reduce_min, fxaa_reduce_mul, fxaa_span_max);</b>
+<i>60</i>&nbsp;	}
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;	public FxaaFilter (Vector2 viewportSize, float fxaa_reduce_min, float fxaa_reduce_mul, float fxaa_span_max) {
+<b class="nc"><i>63</i>&nbsp;		super(ShaderLoader.fromFile(&quot;screenspace&quot;, &quot;fxaa&quot;));</b>
+<b class="nc"><i>64</i>&nbsp;		this.viewportInverse = viewportSize;</b>
+<b class="nc"><i>65</i>&nbsp;		this.viewportInverse.x = 1f / this.viewportInverse.x;</b>
+<b class="nc"><i>66</i>&nbsp;		this.viewportInverse.y = 1f / this.viewportInverse.y;</b>
+<i>67</i>&nbsp;
+<b class="nc"><i>68</i>&nbsp;		this.FXAA_REDUCE_MIN = fxaa_reduce_min;</b>
+<b class="nc"><i>69</i>&nbsp;		this.FXAA_REDUCE_MUL = fxaa_reduce_mul;</b>
+<b class="nc"><i>70</i>&nbsp;		this.FXAA_SPAN_MAX = fxaa_span_max;</b>
+<b class="nc"><i>71</i>&nbsp;		rebind();</b>
+<i>72</i>&nbsp;	}
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;	public void setViewportSize (float width, float height) {
+<b class="nc"><i>75</i>&nbsp;		this.viewportInverse.set(1f / width, 1f / height);</b>
+<b class="nc"><i>76</i>&nbsp;		setParam(Param.ViewportInverse, this.viewportInverse);</b>
+<i>77</i>&nbsp;	}
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;	/** Sets the parameter. The default value is 1/128.
+<i>80</i>&nbsp;	 * @param value */
+<i>81</i>&nbsp;	public void setFxaaReduceMin (float value) {
+<b class="nc"><i>82</i>&nbsp;		this.FXAA_REDUCE_MIN = value;</b>
+<b class="nc"><i>83</i>&nbsp;		setParam(Param.FxaaReduceMin, this.FXAA_REDUCE_MIN);</b>
+<i>84</i>&nbsp;	}
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;	/** Sets the parameter. The default value is 1/8.
+<i>87</i>&nbsp;	 * @param value */
+<i>88</i>&nbsp;	public void setFxaaReduceMul (float value) {
+<b class="nc"><i>89</i>&nbsp;		this.FXAA_REDUCE_MUL = value;</b>
+<b class="nc"><i>90</i>&nbsp;		setParam(Param.FxaaReduceMul, this.FXAA_REDUCE_MUL);</b>
+<i>91</i>&nbsp;	}
+<i>92</i>&nbsp;
+<i>93</i>&nbsp;	/** Sets the parameter. The default value is 8;
+<i>94</i>&nbsp;	 * @param value */
+<i>95</i>&nbsp;	public void setFxaaSpanMax (float value) {
+<b class="nc"><i>96</i>&nbsp;		this.FXAA_SPAN_MAX = value;</b>
+<b class="nc"><i>97</i>&nbsp;		setParam(Param.FxaaSpanMax, this.FXAA_SPAN_MAX);</b>
+<i>98</i>&nbsp;	}
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;	public Vector2 getViewportSize () {
+<b class="nc"><i>101</i>&nbsp;		return viewportInverse;</b>
+<i>102</i>&nbsp;	}
+<i>103</i>&nbsp;
+<i>104</i>&nbsp;	@Override
+<i>105</i>&nbsp;	public void rebind () {
+<i>106</i>&nbsp;		// reimplement super to batch every parameter
+<b class="nc"><i>107</i>&nbsp;		setParams(Param.Texture, u_texture0);</b>
+<b class="nc"><i>108</i>&nbsp;		setParams(Param.ViewportInverse, viewportInverse);</b>
+<b class="nc"><i>109</i>&nbsp;		setParams(Param.FxaaReduceMin, FXAA_REDUCE_MIN);</b>
+<b class="nc"><i>110</i>&nbsp;		setParams(Param.FxaaReduceMul, FXAA_REDUCE_MUL);</b>
+<b class="nc"><i>111</i>&nbsp;		setParams(Param.FxaaSpanMax, FXAA_SPAN_MAX);</b>
+<b class="nc"><i>112</i>&nbsp;		endParams();</b>
+<i>113</i>&nbsp;	}
+<i>114</i>&nbsp;
+<i>115</i>&nbsp;	@Override
+<i>116</i>&nbsp;	protected void onBeforeRender () {
+<b class="nc"><i>117</i>&nbsp;		inputTexture.bind(u_texture0);</b>
+<i>118</i>&nbsp;	}
+<i>119</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-04-17 22:02</div>
+</div>
+</body>
+</html>

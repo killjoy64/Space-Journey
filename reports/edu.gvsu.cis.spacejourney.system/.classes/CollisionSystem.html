@@ -1,0 +1,435 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: CollisionSystem</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">edu.gvsu.cis.spacejourney.system</a> ]
+</div>
+
+<h1>Coverage Summary for Class: CollisionSystem (edu.gvsu.cis.spacejourney.system)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CollisionSystem</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97.7%
+  </span>
+  <span class="absValue">
+    (85/ 87)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">CollisionSystem$collisionCheck$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">CollisionSystem$collisionCheck$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">CollisionSystem$collisionCheck$5</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">CollisionSystem$update$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    88.9%
+  </span>
+  <span class="absValue">
+    (8/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    92.9%
+  </span>
+  <span class="absValue">
+    (92/ 99)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package edu.gvsu.cis.spacejourney.system
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import aurelienribon.tweenengine.BaseTween
+<i>4</i>&nbsp;import aurelienribon.tweenengine.Tween
+<i>5</i>&nbsp;import aurelienribon.tweenengine.equations.Elastic
+<i>6</i>&nbsp;import aurelienribon.tweenengine.equations.Linear
+<i>7</i>&nbsp;import aurelienribon.tweenengine.equations.Sine
+<i>8</i>&nbsp;import com.badlogic.ashley.core.Engine
+<i>9</i>&nbsp;import com.badlogic.ashley.core.Entity
+<i>10</i>&nbsp;import com.badlogic.ashley.core.EntitySystem
+<i>11</i>&nbsp;import com.badlogic.ashley.core.Family
+<i>12</i>&nbsp;import com.badlogic.ashley.utils.ImmutableArray
+<i>13</i>&nbsp;import com.badlogic.gdx.graphics.Color
+<i>14</i>&nbsp;import com.badlogic.gdx.graphics.Texture
+<i>15</i>&nbsp;import edu.gvsu.cis.spacejourney.SpaceJourney
+<i>16</i>&nbsp;import edu.gvsu.cis.spacejourney.component.Health
+<i>17</i>&nbsp;import edu.gvsu.cis.spacejourney.component.Transform
+<i>18</i>&nbsp;import edu.gvsu.cis.spacejourney.component.colliders.BoxCollider
+<i>19</i>&nbsp;import edu.gvsu.cis.spacejourney.component.colliders.CircleCollider
+<i>20</i>&nbsp;import edu.gvsu.cis.spacejourney.managers.GameDataManager
+<i>21</i>&nbsp;import edu.gvsu.cis.spacejourney.util.Mappers
+<i>22</i>&nbsp;import edu.gvsu.cis.spacejourney.util.StaticSpriteAccessor
+<i>23</i>&nbsp;import edu.gvsu.cis.spacejourney.util.VelocityAccessor
+<i>24</i>&nbsp;import ktx.ashley.has
+<i>25</i>&nbsp;import ktx.log.debug
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;/**
+<i>28</i>&nbsp; * Private data holder that defines a collidable rectangle.
+<i>29</i>&nbsp; */
+<i>30</i>&nbsp;private data class CollisionRectangle(
+<i>31</i>&nbsp;        val x: Float,
+<i>32</i>&nbsp;        val y: Float,
+<i>33</i>&nbsp;        val width: Float,
+<i>34</i>&nbsp;        val height: Float) {
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    /**
+<i>37</i>&nbsp;     * Companion object that is used to store conversions between components.
+<i>38</i>&nbsp;     */
+<i>39</i>&nbsp;    companion object {
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;        /**
+<i>42</i>&nbsp;         * Conversion function that takes a collider component and a transform component to
+<i>43</i>&nbsp;         * return a CollisionRectangle class.
+<i>44</i>&nbsp;         * @param transform [edu.gvsu.cis.spacejourney.component.Transform] component of the entity.
+<i>45</i>&nbsp;         * @param collider [edu.gvsu.cis.spacejourney.component.colliders.BoxCollider] collision component of the entity.
+<i>46</i>&nbsp;         */
+<i>47</i>&nbsp;        fun fromComponents(transform: Transform, collider: BoxCollider): CollisionRectangle {
+<i>48</i>&nbsp;            return CollisionRectangle(
+<i>49</i>&nbsp;                    transform.position.x + collider.offset.x,
+<i>50</i>&nbsp;                    transform.position.y + collider.offset.y,
+<i>51</i>&nbsp;                    collider.width.toFloat(),
+<i>52</i>&nbsp;                    collider.height.toFloat()
+<i>53</i>&nbsp;            )
+<i>54</i>&nbsp;        }
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;}
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;/**
+<i>59</i>&nbsp; * System class that handles everything that has to do with collision between two
+<i>60</i>&nbsp; * entities.
+<i>61</i>&nbsp; */
+<b class="fc"><i>62</i>&nbsp;class CollisionSystem : EntitySystem() {</b>
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    /**
+<i>65</i>&nbsp;     * All related entities used by this system.
+<i>66</i>&nbsp;     */
+<i>67</i>&nbsp;    private var entities: ImmutableArray&lt;Entity&gt;? = null
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;    /**
+<i>70</i>&nbsp;     * @constructor initializes the priorities.
+<i>71</i>&nbsp;     */
+<i>72</i>&nbsp;    init {
+<b class="fc"><i>73</i>&nbsp;        priority = SystemPriorities.CollisionSystem</b>
+<i>74</i>&nbsp;    }
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;    /**
+<i>77</i>&nbsp;     * Method that populates the entities object with proper data.
+<i>78</i>&nbsp;     * @param engine the current Ashley engine object used in the game.
+<i>79</i>&nbsp;     */
+<i>80</i>&nbsp;    override fun addedToEngine(engine: Engine) {
+<b class="fc"><i>81</i>&nbsp;        entities = engine.getEntitiesFor(</b>
+<b class="fc"><i>82</i>&nbsp;                Family.all(Transform::class.java) // Object must have a transform</b>
+<b class="fc"><i>83</i>&nbsp;                .one(BoxCollider::class.java, CircleCollider::class.java) // Object has to at least have a Box Collider or a Circle Collider</b>
+<b class="fc"><i>84</i>&nbsp;                .get())</b>
+<b class="fc"><i>85</i>&nbsp;    }</b>
+<i>86</i>&nbsp;
+<i>87</i>&nbsp;    /**
+<i>88</i>&nbsp;     * Private helper function that returns whether or not two CollisionRectangles had collided.
+<i>89</i>&nbsp;     * @param rect1 the first rectangle.
+<i>90</i>&nbsp;     * @param rect2 the second rectangle.
+<i>91</i>&nbsp;     * @return true if the two CollisionRectangles have collided, and false otherwise.
+<i>92</i>&nbsp;     */
+<i>93</i>&nbsp;    private fun rectangleCollision(rect1: CollisionRectangle, rect2: CollisionRectangle): Boolean {
+<b class="fc"><i>94</i>&nbsp;        return (rect1.x &lt; rect2.x + rect2.width &amp;&amp;</b>
+<b class="fc"><i>95</i>&nbsp;                rect1.x + rect1.width &gt; rect2.x &amp;&amp;</b>
+<b class="fc"><i>96</i>&nbsp;                rect1.y &lt; rect2.y + rect2.height &amp;&amp;</b>
+<b class="fc"><i>97</i>&nbsp;                rect1.height + rect1.y &gt; rect2.y)</b>
+<i>98</i>&nbsp;    }
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;    /**
+<i>101</i>&nbsp;     * Private helper function that checks the collision between two entities.
+<i>102</i>&nbsp;     * @param entityA the first entity that initiated the collision.
+<i>103</i>&nbsp;     * @param entityB the second entity that did not initiate the collision.
+<i>104</i>&nbsp;     * @return true if the collision did happen, and false if the event should be canceled.
+<i>105</i>&nbsp;     */
+<i>106</i>&nbsp;    private fun collisionCheck(entityA: Entity, entityB: Entity): Boolean {
+<i>107</i>&nbsp;
+<b class="fc"><i>108</i>&nbsp;        val boxA = Mappers.boxCollider.get(entityA)</b>
+<b class="fc"><i>109</i>&nbsp;        val boxB = Mappers.boxCollider.get(entityB)</b>
+<i>110</i>&nbsp;
+<i>111</i>&nbsp;        //val circleA = Mappers.circleCollider.get(entityA)
+<i>112</i>&nbsp;        //val circleB = Mappers.circleCollider.get(entityB)
+<i>113</i>&nbsp;
+<b class="fc"><i>114</i>&nbsp;        if (boxA != null &amp;&amp; boxB != null) {</b>
+<i>115</i>&nbsp;
+<i>116</i>&nbsp;            // #TODO Handle rotation
+<i>117</i>&nbsp;
+<b class="fc"><i>118</i>&nbsp;            val boxATransform = Mappers.transform.get(entityA)</b>
+<b class="fc"><i>119</i>&nbsp;            val boxBTransform = Mappers.transform.get(entityB)</b>
+<i>120</i>&nbsp;
+<b class="fc"><i>121</i>&nbsp;            if (rectangleCollision(</b>
+<b class="fc"><i>122</i>&nbsp;                CollisionRectangle.fromComponents(boxATransform, boxA),</b>
+<b class="fc"><i>123</i>&nbsp;                CollisionRectangle.fromComponents(boxBTransform, boxB)</b>
+<i>124</i>&nbsp;            )) {
+<b class="fc"><i>125</i>&nbsp;                if (entityA.has(Mappers.enemy) &amp;&amp; entityB.has(Mappers.projectile)) {</b>
+<i>126</i>&nbsp;
+<b class="fc"><i>127</i>&nbsp;                    val enemyEntity = entityA</b>
+<b class="fc"><i>128</i>&nbsp;                    val projectileEntity = entityB</b>
+<i>129</i>&nbsp;
+<b class="fc"><i>130</i>&nbsp;                    val health = Mappers.health.get(enemyEntity)</b>
+<b class="fc"><i>131</i>&nbsp;                    val projectile = Mappers.projectile.get(projectileEntity)</b>
+<i>132</i>&nbsp;
+<b class="fc"><i>133</i>&nbsp;                    health.value -= projectile.damage</b>
+<i>134</i>&nbsp;
+<b class="fc"><i>135</i>&nbsp;                    if (health.value &lt;= 0) {</b>
+<i>136</i>&nbsp;
+<b class="fc"><i>137</i>&nbsp;                        GameDataManager.getInstance().score += 100</b>
+<i>138</i>&nbsp;
+<b class="fc"><i>139</i>&nbsp;                        enemyEntity.remove(BoxCollider::class.java)</b>
+<b class="fc"><i>140</i>&nbsp;                        enemyEntity.remove(Health::class.java)</b>
+<i>141</i>&nbsp;
+<b class="fc"><i>142</i>&nbsp;                        val enemyPosition = Mappers.transform.get(enemyEntity)</b>
+<b class="fc"><i>143</i>&nbsp;                        val enemyTexture = SpaceJourney.assetManager.get(&quot;enemy_spaceship.png&quot;, Texture::class.java)</b>
+<b class="fc"><i>144</i>&nbsp;                        val enemySprite = Mappers.staticSprite.get(enemyEntity)</b>
+<b class="fc"><i>145</i>&nbsp;                        val enemyVelocity = Mappers.velocity.get(enemyEntity)</b>
+<b class="fc"><i>146</i>&nbsp;                        Tween.to(enemySprite, StaticSpriteAccessor</b>
+<b class="fc"><i>147</i>&nbsp;                            .TYPE_SCALE, 1.0f).target(0.0f).ease(Sine.OUT).start(SpaceJourney.tweenManager)</b>
+<b class="fc"><i>148</i>&nbsp;                            .setCallback({ _: Int, _: BaseTween&lt;*&gt; -&gt;</b>
+<b class="fc"><i>149</i>&nbsp;                                engine.removeEntity(enemyEntity)</b>
+<b class="fc"><i>150</i>&nbsp;                            })</b>
+<b class="fc"><i>151</i>&nbsp;                        Tween.to(enemyVelocity, VelocityAccessor</b>
+<b class="fc"><i>152</i>&nbsp;                            .TYPE_ANGULAR, 0.5f).target(-10f).ease(Linear.INOUT).start(SpaceJourney.tweenManager)</b>
+<i>153</i>&nbsp;                    }
+<i>154</i>&nbsp;
+<b class="fc"><i>155</i>&nbsp;                    engine.removeEntity(projectileEntity)</b>
+<i>156</i>&nbsp;
+<b class="fc"><i>157</i>&nbsp;                    return true</b>
+<i>158</i>&nbsp;                }
+<b class="fc"><i>159</i>&nbsp;                if (entityA.has(Mappers.player) &amp;&amp; entityB.has(Mappers.enemy)) {</b>
+<i>160</i>&nbsp;
+<b class="fc"><i>161</i>&nbsp;                    val playerEntity = entityA</b>
+<b class="fc"><i>162</i>&nbsp;                    val enemyEntity = entityB</b>
+<i>163</i>&nbsp;
+<b class="fc"><i>164</i>&nbsp;                    val health = Mappers.health.get(playerEntity)</b>
+<i>165</i>&nbsp;
+<b class="fc"><i>166</i>&nbsp;                    health.value -= 1</b>
+<i>167</i>&nbsp;
+<b class="fc"><i>168</i>&nbsp;                    GameDataManager.getInstance().lives = health.value</b>
+<i>169</i>&nbsp;
+<b class="fc"><i>170</i>&nbsp;                    if (health.value &lt;= 0) {</b>
+<b class="nc"><i>171</i>&nbsp;                        debug { &quot;Player has died&quot; }</b>
+<b class="nc"><i>172</i>&nbsp;                        engine.removeEntity(playerEntity)</b>
+<i>173</i>&nbsp;                    } else {
+<b class="fc"><i>174</i>&nbsp;                        debug { &quot;Player now has ${health.value} lives remaining&quot; }</b>
+<b class="fc"><i>175</i>&nbsp;                    }</b>
+<i>176</i>&nbsp;
+<b class="fc"><i>177</i>&nbsp;                    GameDataManager.getInstance().score += 100</b>
+<i>178</i>&nbsp;
+<i>179</i>&nbsp;                    // Logic to try and change the player&#39;s pixmap
+<i>180</i>&nbsp;
+<b class="fc"><i>181</i>&nbsp;                    enemyEntity.remove(BoxCollider::class.java)</b>
+<b class="fc"><i>182</i>&nbsp;                    enemyEntity.remove(Health::class.java)</b>
+<i>183</i>&nbsp;
+<b class="fc"><i>184</i>&nbsp;                    val enemyPosition = Mappers.transform.get(enemyEntity)</b>
+<b class="fc"><i>185</i>&nbsp;                    val enemyTexture = SpaceJourney.assetManager.get(&quot;enemy_spaceship.png&quot;, Texture::class.java)</b>
+<b class="fc"><i>186</i>&nbsp;                    val enemySprite = Mappers.staticSprite.get(enemyEntity)</b>
+<b class="fc"><i>187</i>&nbsp;                    val enemyVelocity = Mappers.velocity.get(enemyEntity)</b>
+<b class="fc"><i>188</i>&nbsp;                    val playerSprite = Mappers.staticSprite.get(playerEntity)</b>
+<b class="fc"><i>189</i>&nbsp;                    Tween.to(enemySprite, StaticSpriteAccessor</b>
+<b class="fc"><i>190</i>&nbsp;                        .TYPE_SCALE, 2.0f).target(0.0f).ease(Elastic.INOUT).start(SpaceJourney.tweenManager)</b>
+<b class="fc"><i>191</i>&nbsp;                        .setCallback({ _: Int, _: BaseTween&lt;*&gt; -&gt;</b>
+<b class="fc"><i>192</i>&nbsp;                            if (engine != null) {</b>
+<b class="fc"><i>193</i>&nbsp;                                engine.removeEntity(enemyEntity)</b>
+<i>194</i>&nbsp;                            }
+<b class="fc"><i>195</i>&nbsp;                    })</b>
+<b class="fc"><i>196</i>&nbsp;                    Tween.to(enemyVelocity, VelocityAccessor</b>
+<b class="fc"><i>197</i>&nbsp;                        .TYPE_ANGULAR, 0.5f).target(-6f).ease(Linear.INOUT).start(SpaceJourney.tweenManager)</b>
+<i>198</i>&nbsp;
+<i>199</i>&nbsp;                    // TODO - Implement temporary invincibility period, and checking if player has box collision.
+<i>200</i>&nbsp;//                    val collider = engine.createComponent(BoxCollider::class.java)
+<i>201</i>&nbsp;//                    collider.width = playerSprite.texture!!.width
+<i>202</i>&nbsp;//                    collider.height = playerSprite.texture!!.height
+<i>203</i>&nbsp;//                    collider.offset = Vector2(-24f, -24f)
+<i>204</i>&nbsp;
+<b class="fc"><i>205</i>&nbsp;                    val originalColor = playerSprite.color</b>
+<b class="fc"><i>206</i>&nbsp;                    playerSprite.color = Color(1.0f, 0.0f, 0.0f, 1.0f)</b>
+<i>207</i>&nbsp;//                    playerEntity.remove(BoxCollider::class.java)
+<b class="fc"><i>208</i>&nbsp;                    Tween.to(playerSprite, StaticSpriteAccessor</b>
+<b class="fc"><i>209</i>&nbsp;                            .TYPE_COLOR, 0.175f).target(</b>
+<b class="fc"><i>210</i>&nbsp;                                originalColor?.r!!,</b>
+<b class="fc"><i>211</i>&nbsp;                                originalColor.g,</b>
+<b class="fc"><i>212</i>&nbsp;                                originalColor.b,</b>
+<b class="fc"><i>213</i>&nbsp;                                originalColor.a</b>
+<i>214</i>&nbsp;                            )
+<b class="fc"><i>215</i>&nbsp;                            .ease(Linear.INOUT)</b>
+<b class="fc"><i>216</i>&nbsp;                            .repeat(3, 0.0f)</b>
+<b class="fc"><i>217</i>&nbsp;                            .start(SpaceJourney.tweenManager)</b>
+<b class="fc"><i>218</i>&nbsp;                            .setCallback({ _: Int, _: BaseTween&lt;*&gt; -&gt;</b>
+<b class="fc"><i>219</i>&nbsp;                                playerSprite?.color = originalColor</b>
+<i>220</i>&nbsp;//                                playerEntity?.add(collider)
+<b class="fc"><i>221</i>&nbsp;                            })</b>
+<i>222</i>&nbsp;//                    playerSprite.transparency = 0.0f
+<i>223</i>&nbsp;//                    Tween.to(playerSprite, StaticSpriteAccessor
+<i>224</i>&nbsp;//                            .TYPE_ALPHA, 0.175f).target(1.0f).ease(Elastic.INOUT)
+<i>225</i>&nbsp;//                            .repeat(3, 0.0f)
+<i>226</i>&nbsp;//                            .start(SpaceJourney.tweenManager)
+<b class="fc"><i>227</i>&nbsp;                    return true</b>
+<i>228</i>&nbsp;                }
+<i>229</i>&nbsp;            }
+<i>230</i>&nbsp;        }
+<i>231</i>&nbsp;
+<b class="fc"><i>232</i>&nbsp;        return false</b>
+<i>233</i>&nbsp;    }
+<i>234</i>&nbsp;
+<i>235</i>&nbsp;    /**
+<i>236</i>&nbsp;     * Function that is used to update the CollisionSystem periodically from a screen&#39;s
+<i>237</i>&nbsp;     * update method.
+<i>238</i>&nbsp;     * @param deltaTime the time between the last and current update cycle.
+<i>239</i>&nbsp;     */
+<i>240</i>&nbsp;    override fun update(deltaTime: Float) {
+<i>241</i>&nbsp;
+<i>242</i>&nbsp;        // This very high level code simply iterates every entity
+<i>243</i>&nbsp;        // against every other entity while removing EVERY duplication
+<i>244</i>&nbsp;        // that could occur.
+<i>245</i>&nbsp;        //
+<i>246</i>&nbsp;        // More simply this generates the permutation of `entities` against `entities`
+<b class="fc"><i>247</i>&nbsp;        entities?.asSequence()!!.map { entityA -&gt;</b>
+<b class="nc"><i>248</i>&nbsp;            entities?.map { entityB -&gt;</b>
+<b class="nc"><i>249</i>&nbsp;                collisionCheck(entityA, entityB)</b>
+<b class="nc"><i>250</i>&nbsp;                collisionCheck(entityB, entityA)</b>
+<b class="nc"><i>251</i>&nbsp;                debug { entityA.toString() + &quot; : &quot; + entityB.toString() }</b>
+<b class="nc"><i>252</i>&nbsp;            }</b>
+<i>253</i>&nbsp;        }
+<i>254</i>&nbsp;
+<b class="fc"><i>255</i>&nbsp;        for (a in 0 until entities!!.size()) {</b>
+<b class="fc"><i>256</i>&nbsp;            val entityA = entities!!.get(a)</b>
+<i>257</i>&nbsp;
+<b class="fc"><i>258</i>&nbsp;            for (b in 0 until entities!!.size()) {</b>
+<b class="fc"><i>259</i>&nbsp;                val entityB = entities!!.get(b)</b>
+<i>260</i>&nbsp;
+<b class="fc"><i>261</i>&nbsp;                if (entityA != null &amp;&amp; entityB != null) {</b>
+<b class="fc"><i>262</i>&nbsp;                    if (collisionCheck(entityA, entityB)) {</b>
+<b class="fc"><i>263</i>&nbsp;                        collisionCheck(entityB, entityA)</b>
+<i>264</i>&nbsp;                    }
+<i>265</i>&nbsp;                }
+<i>266</i>&nbsp;            }
+<i>267</i>&nbsp;        }
+<b class="fc"><i>268</i>&nbsp;    }</b>
+<i>269</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-04-17 22:01</div>
+</div>
+</body>
+</html>

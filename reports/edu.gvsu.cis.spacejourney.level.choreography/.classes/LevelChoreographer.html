@@ -47,10 +47,10 @@
 </td>
 <td class="coverageStat">
   <span class="percent">
-    68.2%
+    72.7%
   </span>
   <span class="absValue">
-    (15/ 22)
+    (16/ 22)
   </span>
 </td>
 </tr>
@@ -85,10 +85,10 @@
 </td>
 <td class="coverageStat">
   <span class="percent">
-    69.6%
+    73.9%
   </span>
   <span class="absValue">
-    (16/ 23)
+    (17/ 23)
   </span>
 </td>
 </tr>
@@ -98,49 +98,135 @@
 <br/>
 
 
-<div class="sourceCode"><i>1</i>&nbsp;// IntelliJ API Decompiler stub source generated from a class file
-<i>2</i>&nbsp;// Implementation of methods is not available
-<i>3</i>&nbsp;
-<i>4</i>&nbsp;package edu.gvsu.cis.spacejourney.level.choreography
-<i>5</i>&nbsp;
-<i>6</i>&nbsp;public final class LevelChoreographer public constructor(stage: com.badlogic.gdx.scenes.scene2d.Stage, world: com.badlogic.gdx.physics.box2d.World) {
-<i>7</i>&nbsp;    private final var events: ktx.collections.GdxArray&lt;edu.gvsu.cis.spacejourney.level.choreography.ScheduledEvent&gt; /* = com.badlogic.gdx.utils.Array&lt;edu.gvsu.cis.spacejourney.level.choreography.ScheduledEvent&gt; */ /* compiled code */
-<i>8</i>&nbsp;
-<i>9</i>&nbsp;    private final var lastEvent: edu.gvsu.cis.spacejourney.level.choreography.ScheduledEvent? /* compiled code */
-<i>10</i>&nbsp;
-<i>11</i>&nbsp;    private final var paused: kotlin.Boolean /* compiled code */
+<div class="sourceCode"><i>1</i>&nbsp;package edu.gvsu.cis.spacejourney.level.choreography
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.badlogic.ashley.core.Engine
+<i>4</i>&nbsp;import ktx.collections.GdxArray
+<i>5</i>&nbsp;import ktx.collections.isNotEmpty
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;/**
+<i>8</i>&nbsp; * Small abstract helper class that defines a
+<i>9</i>&nbsp; * way to call events.
+<i>10</i>&nbsp; */
+<i>11</i>&nbsp;abstract class ChoreographEvent {
 <i>12</i>&nbsp;
-<i>13</i>&nbsp;    public final val stage: com.badlogic.gdx.scenes.scene2d.Stage /* compiled code */
-<i>14</i>&nbsp;
-<i>15</i>&nbsp;    private final var time: kotlin.Float /* compiled code */
-<i>16</i>&nbsp;
-<i>17</i>&nbsp;    public final val world: com.badlogic.gdx.physics.box2d.World /* compiled code */
-<i>18</i>&nbsp;
-<i>19</i>&nbsp;    public final fun getLastEvent(): edu.gvsu.cis.spacejourney.level.choreography.ScheduledEvent? { /* compiled code */ }
-<i>20</i>&nbsp;
-<i>21</i>&nbsp;    private final fun getNextEvent(): edu.gvsu.cis.spacejourney.level.choreography.ScheduledEvent? { /* compiled code */ }
-<i>22</i>&nbsp;
-<i>23</i>&nbsp;    public final fun isEmpty(): kotlin.Boolean { /* compiled code */ }
-<i>24</i>&nbsp;
-<i>25</i>&nbsp;    public final fun loadEventsFromFile(): kotlin.Unit { /* compiled code */ }
-<i>26</i>&nbsp;
-<i>27</i>&nbsp;    public final fun pause(): kotlin.Unit { /* compiled code */ }
+<i>13</i>&nbsp;    /**
+<i>14</i>&nbsp;    * Abstract method that is called whenever the Choreographer
+<i>15</i>&nbsp;    * schedules an event, and calls it.
+<i>16</i>&nbsp;    */
+<i>17</i>&nbsp;    abstract fun onEvent(engine: Engine)
+<i>18</i>&nbsp;}
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;/**
+<i>21</i>&nbsp; * Data class that holds a ChoreographEvent and
+<i>22</i>&nbsp; * it&#39;s scheduled time.
+<i>23</i>&nbsp; */
+<i>24</i>&nbsp;data class ScheduledEvent(
+<i>25</i>&nbsp;        val scheduled_time: Float,
+<i>26</i>&nbsp;        val event: ChoreographEvent
+<i>27</i>&nbsp;)
 <i>28</i>&nbsp;
-<i>29</i>&nbsp;    private final fun popNextEvent(): edu.gvsu.cis.spacejourney.level.choreography.ScheduledEvent? { /* compiled code */ }
-<i>30</i>&nbsp;
-<i>31</i>&nbsp;    public final fun resume(): kotlin.Unit { /* compiled code */ }
-<i>32</i>&nbsp;
-<i>33</i>&nbsp;    public final fun schedule(scheduled_time: kotlin.Float, event: edu.gvsu.cis.spacejourney.level.choreography.ChoreographEvent): kotlin.Unit { /* compiled code */ }
-<i>34</i>&nbsp;
-<b class="fc"><i>35</i>&nbsp;    public final fun update(delta: kotlin.Float): kotlin.Unit { /* compiled code */ }</b>
-<i>36</i>&nbsp;}
+<i>29</i>&nbsp;/**
+<i>30</i>&nbsp; * Class that manages all of the level choreography for a
+<i>31</i>&nbsp; * specific level. Events can be scheduled and called upon
+<i>32</i>&nbsp; * through the use of a queue/stack ADT.
+<i>33</i>&nbsp; */
+<b class="fc"><i>34</i>&nbsp;class LevelChoreographer(val engine: Engine) {</b>
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    private var paused = false
 <i>37</i>&nbsp;
+<i>38</i>&nbsp;    // Sorted array, the first element should always be the next.
+<b class="fc"><i>39</i>&nbsp;    private var events = GdxArray&lt;ScheduledEvent&gt;()</b>
+<i>40</i>&nbsp;    private var time: Float = 0f
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    private var lastEvent: ScheduledEvent? = null
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    /**
+<i>45</i>&nbsp;     * Pauses the level choreographer.
+<i>46</i>&nbsp;     */
+<i>47</i>&nbsp;    fun pause() {
+<b class="nc"><i>48</i>&nbsp;        this.paused = true</b>
+<b class="nc"><i>49</i>&nbsp;    }</b>
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    /**
+<i>52</i>&nbsp;     * Resumes the level choreographer.
+<i>53</i>&nbsp;     */
+<i>54</i>&nbsp;    fun resume() {
+<b class="nc"><i>55</i>&nbsp;        this.paused = false</b>
+<b class="nc"><i>56</i>&nbsp;    }</b>
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    /**
+<i>59</i>&nbsp;     * TODO - Load events from file.
+<i>60</i>&nbsp;     */
+<i>61</i>&nbsp;    fun loadEventsFromFile() {
+<b class="nc"><i>62</i>&nbsp;    }</b>
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    /**
+<i>65</i>&nbsp;     * Private method that pops the next event to queue it up for
+<i>66</i>&nbsp;     * execution.
+<i>67</i>&nbsp;     */
+<i>68</i>&nbsp;    private fun popNextEvent(): ScheduledEvent? {
+<b class="fc"><i>69</i>&nbsp;        return this.events.removeIndex(0)</b>
+<i>70</i>&nbsp;    }
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    /**
+<i>73</i>&nbsp;     * Private method that retrieves the next event in the queue.
+<i>74</i>&nbsp;     */
+<i>75</i>&nbsp;    private fun getNextEvent(): ScheduledEvent? {
+<b class="fc"><i>76</i>&nbsp;        if (this.events.isNotEmpty()) {</b>
+<b class="fc"><i>77</i>&nbsp;            return this.events[0]</b>
+<i>78</i>&nbsp;        }
+<b class="fc"><i>79</i>&nbsp;        return null</b>
+<i>80</i>&nbsp;    }
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;    /**
+<i>83</i>&nbsp;     * Returns the last ScheduledEvent that was
+<i>84</i>&nbsp;     * executed from the choreographer.
+<i>85</i>&nbsp;     * @return a ScheduleEvent object.
+<i>86</i>&nbsp;     */
+<i>87</i>&nbsp;    fun getLastEvent(): ScheduledEvent? {
+<b class="nc"><i>88</i>&nbsp;        return this.lastEvent</b>
+<i>89</i>&nbsp;    }
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;    /**
+<i>92</i>&nbsp;     * Schedules an event at a designated time.
+<i>93</i>&nbsp;     * @param scheduled_time time to schedule the event.
+<i>94</i>&nbsp;     * @param event ChoreographEvent to call.
+<i>95</i>&nbsp;     */
+<i>96</i>&nbsp;    fun schedule(scheduled_time: Float, event: ChoreographEvent) {
+<b class="fc"><i>97</i>&nbsp;        this.events.add(ScheduledEvent(scheduled_time, event))</b>
+<b class="fc"><i>98</i>&nbsp;        this.events.sortedBy { it.scheduled_time }</b>
+<b class="fc"><i>99</i>&nbsp;    }</b>
+<i>100</i>&nbsp;
+<i>101</i>&nbsp;    /**
+<b class="fc"><i>102</i>&nbsp;     * Update cycle for the choreographer.</b>
+<i>103</i>&nbsp;     * @param delta a float variable that is called every render() cycle.
+<i>104</i>&nbsp;     */
+<i>105</i>&nbsp;    fun update(delta: Float) {
+<b class="fc"><i>106</i>&nbsp;        time += delta</b>
+<i>107</i>&nbsp;
+<b class="fc"><i>108</i>&nbsp;        if (getNextEvent() != null) {</b>
+<b class="fc"><i>109</i>&nbsp;            if (getNextEvent()!!.scheduled_time &lt; time) {</b>
+<b class="fc"><i>110</i>&nbsp;                lastEvent = popNextEvent()</b>
+<b class="fc"><i>111</i>&nbsp;                lastEvent?.event?.onEvent(engine)</b>
+<i>112</i>&nbsp;            }
+<i>113</i>&nbsp;        }
+<b class="fc"><i>114</i>&nbsp;    }</b>
+<i>115</i>&nbsp;
+<i>116</i>&nbsp;    /**
+<i>117</i>&nbsp;     * Method that determines if the event queue is empty.
+<i>118</i>&nbsp;     * @return a boolean that tells if the event queue is empty.
+<i>119</i>&nbsp;     */
+<i>120</i>&nbsp;    fun isEmpty(): Boolean {
+<b class="fc"><i>121</i>&nbsp;        return this.events.size == 0</b>
+<i>122</i>&nbsp;    }
+<i>123</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2018-02-26 20:21</div>
+    <div style="float:right;">generated on 2018-04-17 22:01</div>
 </div>
 </body>
 </html>

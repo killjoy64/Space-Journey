@@ -1,0 +1,134 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SystemPriorities</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">edu.gvsu.cis.spacejourney.system</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SystemPriorities (edu.gvsu.cis.spacejourney.system)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SystemPriorities</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SystemPriorities$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/ 5)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/ 9)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package edu.gvsu.cis.spacejourney.system
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;/**
+<i>4</i>&nbsp; * All of our systems have an assigned priority by the engine.
+<i>5</i>&nbsp; * Systems with a lower number have a higher priority to the system and are prioritized first
+<i>6</i>&nbsp; * This helper class lets us assign and view all the priorities in one place
+<i>7</i>&nbsp; */
+<b class="fc"><i>8</i>&nbsp;class SystemPriorities {</b>
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;    /**
+<i>11</i>&nbsp;     * Companion object that creates static references out of identifier variables
+<i>12</i>&nbsp;     * used in each engine system.
+<i>13</i>&nbsp;     */
+<b class="fc"><i>14</i>&nbsp;    companion object {</b>
+<i>15</i>&nbsp;        // User input is the most important
+<b class="fc"><i>16</i>&nbsp;        val PlayerControllerSystem = 0</b>
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;        // Not dropping frames is the second most important
+<b class="fc"><i>19</i>&nbsp;        val RenderingSystem = 1</b>
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;        // General updates are less important
+<b class="fc"><i>22</i>&nbsp;        val CollisionSystem = 2</b>
+<b class="fc"><i>23</i>&nbsp;        val VelocitySystem = 2</b>
+<i>24</i>&nbsp;    }
+<i>25</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-04-17 22:01</div>
+</div>
+</body>
+</html>

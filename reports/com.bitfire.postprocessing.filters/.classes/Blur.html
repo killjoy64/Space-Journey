@@ -1,0 +1,417 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Blur</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.bitfire.postprocessing.filters</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Blur (com.bitfire.postprocessing.filters)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Blur</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 109)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Blur$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Blur$BlurType</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Blur$Tap</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 119)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;/*******************************************************************************
+<i>2</i>&nbsp; * Copyright 2012 bmanuel
+<i>3</i>&nbsp; * 
+<i>4</i>&nbsp; * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+<i>5</i>&nbsp; * you may not use this file except in compliance with the License.
+<i>6</i>&nbsp; * You may obtain a copy of the License at
+<i>7</i>&nbsp; * 
+<i>8</i>&nbsp; *   http://www.apache.org/licenses/LICENSE-2.0
+<i>9</i>&nbsp; * 
+<i>10</i>&nbsp; * Unless required by applicable law or agreed to in writing, software
+<i>11</i>&nbsp; * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+<i>12</i>&nbsp; * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+<i>13</i>&nbsp; * See the License for the specific language governing permissions and
+<i>14</i>&nbsp; * limitations under the License.
+<i>15</i>&nbsp; ******************************************************************************/
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;package com.bitfire.postprocessing.filters;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;import com.badlogic.gdx.utils.IntMap;
+<i>20</i>&nbsp;import com.bitfire.postprocessing.utils.PingPongBuffer;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;public final class Blur extends MultipassFilter {
+<i>23</i>&nbsp;	// @formatter:off
+<b class="nc"><i>24</i>&nbsp;	private enum Tap {</b>
+<b class="nc"><i>25</i>&nbsp;		Tap3x3(1), Tap5x5(2),</b>
+<i>26</i>&nbsp;		// Tap7x7( 3 )
+<i>27</i>&nbsp;		;
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;		public final int radius;
+<i>30</i>&nbsp;
+<b class="nc"><i>31</i>&nbsp;		private Tap (int radius) {</b>
+<b class="nc"><i>32</i>&nbsp;			this.radius = radius;</b>
+<i>33</i>&nbsp;		}
+<i>34</i>&nbsp;	}
+<i>35</i>&nbsp;
+<b class="nc"><i>36</i>&nbsp;	public enum BlurType {</b>
+<b class="nc"><i>37</i>&nbsp;		Gaussian3x3(Tap.Tap3x3), Gaussian3x3b(Tap.Tap3x3), // R=5 (11x11, policy &quot;higher-then-discard&quot;)</b>
+<b class="nc"><i>38</i>&nbsp;		Gaussian5x5(Tap.Tap5x5), Gaussian5x5b(Tap.Tap5x5), // R=9 (19x19, policy &quot;higher-then-discard&quot;)</b>
+<i>39</i>&nbsp;		;
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;		public final Tap tap;
+<i>42</i>&nbsp;
+<b class="nc"><i>43</i>&nbsp;		private BlurType (Tap tap) {</b>
+<b class="nc"><i>44</i>&nbsp;			this.tap = tap;</b>
+<i>45</i>&nbsp;		}
+<i>46</i>&nbsp;	}
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;	// @formatter:on
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;	// blur
+<i>51</i>&nbsp;	private BlurType type;
+<i>52</i>&nbsp;	private float amount;
+<i>53</i>&nbsp;	private int passes;
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;	// fbo, textures
+<i>56</i>&nbsp;	private float invWidth, invHeight;
+<b class="nc"><i>57</i>&nbsp;	private final IntMap&lt;Convolve2D&gt; convolve = new IntMap&lt;Convolve2D&gt;(Tap.values().length);</b>
+<i>58</i>&nbsp;
+<b class="nc"><i>59</i>&nbsp;	public Blur (int width, int height) {</b>
+<i>60</i>&nbsp;		// precompute constants
+<b class="nc"><i>61</i>&nbsp;		this.invWidth = 1f / (float)width;</b>
+<b class="nc"><i>62</i>&nbsp;		this.invHeight = 1f / (float)height;</b>
+<i>63</i>&nbsp;
+<b class="nc"><i>64</i>&nbsp;		this.passes = 1;</b>
+<b class="nc"><i>65</i>&nbsp;		this.amount = 1f;</b>
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;		// create filters
+<b class="nc"><i>68</i>&nbsp;		for (Tap tap : Tap.values()) {</b>
+<b class="nc"><i>69</i>&nbsp;			convolve.put(tap.radius, new Convolve2D(tap.radius));</b>
+<i>70</i>&nbsp;		}
+<i>71</i>&nbsp;
+<b class="nc"><i>72</i>&nbsp;		setType(BlurType.Gaussian5x5);</b>
+<i>73</i>&nbsp;	}
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;	public void dispose () {
+<b class="nc"><i>76</i>&nbsp;		for (Convolve2D c : convolve.values()) {</b>
+<b class="nc"><i>77</i>&nbsp;			c.dispose();</b>
+<b class="nc"><i>78</i>&nbsp;		}</b>
+<i>79</i>&nbsp;	}
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;	public void setPasses (int passes) {
+<b class="nc"><i>82</i>&nbsp;		this.passes = passes;</b>
+<i>83</i>&nbsp;	}
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;	public void setType (BlurType type) {
+<b class="nc"><i>86</i>&nbsp;		if (this.type != type) {</b>
+<b class="nc"><i>87</i>&nbsp;			this.type = type;</b>
+<b class="nc"><i>88</i>&nbsp;			computeBlurWeightings();</b>
+<i>89</i>&nbsp;		}
+<i>90</i>&nbsp;	}
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;	// not all blur types support custom amounts at this time
+<i>93</i>&nbsp;	public void setAmount (float amount) {
+<b class="nc"><i>94</i>&nbsp;		this.amount = amount;</b>
+<b class="nc"><i>95</i>&nbsp;		computeBlurWeightings();</b>
+<i>96</i>&nbsp;	}
+<i>97</i>&nbsp;
+<i>98</i>&nbsp;	public int getPasses () {
+<b class="nc"><i>99</i>&nbsp;		return passes;</b>
+<i>100</i>&nbsp;	}
+<i>101</i>&nbsp;
+<i>102</i>&nbsp;	public BlurType getType () {
+<b class="nc"><i>103</i>&nbsp;		return type;</b>
+<i>104</i>&nbsp;	}
+<i>105</i>&nbsp;
+<i>106</i>&nbsp;	// not all blur types support custom amounts at this time
+<i>107</i>&nbsp;	public float getAmount () {
+<b class="nc"><i>108</i>&nbsp;		return amount;</b>
+<i>109</i>&nbsp;	}
+<i>110</i>&nbsp;
+<i>111</i>&nbsp;	@Override
+<i>112</i>&nbsp;	public void render (PingPongBuffer buffer) {
+<b class="nc"><i>113</i>&nbsp;		Convolve2D c = convolve.get(this.type.tap.radius);</b>
+<i>114</i>&nbsp;
+<b class="nc"><i>115</i>&nbsp;		for (int i = 0; i &lt; this.passes; i++) {</b>
+<b class="nc"><i>116</i>&nbsp;			c.render(buffer);</b>
+<i>117</i>&nbsp;		}
+<i>118</i>&nbsp;	}
+<i>119</i>&nbsp;
+<i>120</i>&nbsp;	private void computeBlurWeightings () {
+<b class="nc"><i>121</i>&nbsp;		boolean hasdata = true;</b>
+<b class="nc"><i>122</i>&nbsp;		Convolve2D c = convolve.get(this.type.tap.radius);</b>
+<i>123</i>&nbsp;
+<b class="nc"><i>124</i>&nbsp;		float[] outWeights = c.weights;</b>
+<b class="nc"><i>125</i>&nbsp;		float[] outOffsetsH = c.offsetsHor;</b>
+<b class="nc"><i>126</i>&nbsp;		float[] outOffsetsV = c.offsetsVert;</b>
+<i>127</i>&nbsp;
+<b class="nc"><i>128</i>&nbsp;		float dx = this.invWidth;</b>
+<b class="nc"><i>129</i>&nbsp;		float dy = this.invHeight;</b>
+<i>130</i>&nbsp;
+<b class="nc"><i>131</i>&nbsp;		switch (this.type) {</b>
+<i>132</i>&nbsp;		case Gaussian3x3:
+<i>133</i>&nbsp;		case Gaussian5x5:
+<b class="nc"><i>134</i>&nbsp;			computeKernel(this.type.tap.radius, this.amount, outWeights);</b>
+<b class="nc"><i>135</i>&nbsp;			computeOffsets(this.type.tap.radius, this.invWidth, this.invHeight, outOffsetsH, outOffsetsV);</b>
+<b class="nc"><i>136</i>&nbsp;			break;</b>
+<i>137</i>&nbsp;
+<i>138</i>&nbsp;		case Gaussian3x3b:
+<i>139</i>&nbsp;			// weights and offsets are computed from a binomial distribution
+<i>140</i>&nbsp;			// and reduced to be used *only* with bilinearly-filtered texture lookups
+<i>141</i>&nbsp;			//
+<i>142</i>&nbsp;			// with radius = 1f
+<i>143</i>&nbsp;
+<i>144</i>&nbsp;			// weights
+<b class="nc"><i>145</i>&nbsp;			outWeights[0] = 0.352941f;</b>
+<b class="nc"><i>146</i>&nbsp;			outWeights[1] = 0.294118f;</b>
+<b class="nc"><i>147</i>&nbsp;			outWeights[2] = 0.352941f;</b>
+<i>148</i>&nbsp;
+<i>149</i>&nbsp;			// horizontal offsets
+<b class="nc"><i>150</i>&nbsp;			outOffsetsH[0] = -1.33333f;</b>
+<b class="nc"><i>151</i>&nbsp;			outOffsetsH[1] = 0f;</b>
+<b class="nc"><i>152</i>&nbsp;			outOffsetsH[2] = 0f;</b>
+<b class="nc"><i>153</i>&nbsp;			outOffsetsH[3] = 0f;</b>
+<b class="nc"><i>154</i>&nbsp;			outOffsetsH[4] = 1.33333f;</b>
+<b class="nc"><i>155</i>&nbsp;			outOffsetsH[5] = 0f;</b>
+<i>156</i>&nbsp;
+<i>157</i>&nbsp;			// vertical offsets
+<b class="nc"><i>158</i>&nbsp;			outOffsetsV[0] = 0f;</b>
+<b class="nc"><i>159</i>&nbsp;			outOffsetsV[1] = -1.33333f;</b>
+<b class="nc"><i>160</i>&nbsp;			outOffsetsV[2] = 0f;</b>
+<b class="nc"><i>161</i>&nbsp;			outOffsetsV[3] = 0f;</b>
+<b class="nc"><i>162</i>&nbsp;			outOffsetsV[4] = 0f;</b>
+<b class="nc"><i>163</i>&nbsp;			outOffsetsV[5] = 1.33333f;</b>
+<i>164</i>&nbsp;
+<i>165</i>&nbsp;			// scale offsets from binomial space to screen space
+<b class="nc"><i>166</i>&nbsp;			for (int i = 0; i &lt; c.length * 2; i++) {</b>
+<b class="nc"><i>167</i>&nbsp;				outOffsetsH[i] *= dx;</b>
+<b class="nc"><i>168</i>&nbsp;				outOffsetsV[i] *= dy;</b>
+<i>169</i>&nbsp;			}
+<i>170</i>&nbsp;
+<b class="nc"><i>171</i>&nbsp;			break;</b>
+<i>172</i>&nbsp;
+<i>173</i>&nbsp;		case Gaussian5x5b:
+<i>174</i>&nbsp;
+<i>175</i>&nbsp;			// weights and offsets are computed from a binomial distribution
+<i>176</i>&nbsp;			// and reduced to be used *only* with bilinearly-filtered texture lookups
+<i>177</i>&nbsp;			//
+<i>178</i>&nbsp;			// with radius = 2f
+<i>179</i>&nbsp;
+<i>180</i>&nbsp;			// weights
+<b class="nc"><i>181</i>&nbsp;			outWeights[0] = 0.0702703f;</b>
+<b class="nc"><i>182</i>&nbsp;			outWeights[1] = 0.316216f;</b>
+<b class="nc"><i>183</i>&nbsp;			outWeights[2] = 0.227027f;</b>
+<b class="nc"><i>184</i>&nbsp;			outWeights[3] = 0.316216f;</b>
+<b class="nc"><i>185</i>&nbsp;			outWeights[4] = 0.0702703f;</b>
+<i>186</i>&nbsp;
+<i>187</i>&nbsp;			// horizontal offsets
+<b class="nc"><i>188</i>&nbsp;			outOffsetsH[0] = -3.23077f;</b>
+<b class="nc"><i>189</i>&nbsp;			outOffsetsH[1] = 0f;</b>
+<b class="nc"><i>190</i>&nbsp;			outOffsetsH[2] = -1.38462f;</b>
+<b class="nc"><i>191</i>&nbsp;			outOffsetsH[3] = 0f;</b>
+<b class="nc"><i>192</i>&nbsp;			outOffsetsH[4] = 0f;</b>
+<b class="nc"><i>193</i>&nbsp;			outOffsetsH[5] = 0f;</b>
+<b class="nc"><i>194</i>&nbsp;			outOffsetsH[6] = 1.38462f;</b>
+<b class="nc"><i>195</i>&nbsp;			outOffsetsH[7] = 0f;</b>
+<b class="nc"><i>196</i>&nbsp;			outOffsetsH[8] = 3.23077f;</b>
+<b class="nc"><i>197</i>&nbsp;			outOffsetsH[9] = 0f;</b>
+<i>198</i>&nbsp;
+<i>199</i>&nbsp;			// vertical offsets
+<b class="nc"><i>200</i>&nbsp;			outOffsetsV[0] = 0f;</b>
+<b class="nc"><i>201</i>&nbsp;			outOffsetsV[1] = -3.23077f;</b>
+<b class="nc"><i>202</i>&nbsp;			outOffsetsV[2] = 0f;</b>
+<b class="nc"><i>203</i>&nbsp;			outOffsetsV[3] = -1.38462f;</b>
+<b class="nc"><i>204</i>&nbsp;			outOffsetsV[4] = 0f;</b>
+<b class="nc"><i>205</i>&nbsp;			outOffsetsV[5] = 0f;</b>
+<b class="nc"><i>206</i>&nbsp;			outOffsetsV[6] = 0f;</b>
+<b class="nc"><i>207</i>&nbsp;			outOffsetsV[7] = 1.38462f;</b>
+<b class="nc"><i>208</i>&nbsp;			outOffsetsV[8] = 0f;</b>
+<b class="nc"><i>209</i>&nbsp;			outOffsetsV[9] = 3.23077f;</b>
+<i>210</i>&nbsp;
+<i>211</i>&nbsp;			// scale offsets from binomial space to screen space
+<b class="nc"><i>212</i>&nbsp;			for (int i = 0; i &lt; c.length * 2; i++) {</b>
+<b class="nc"><i>213</i>&nbsp;				outOffsetsH[i] *= dx;</b>
+<b class="nc"><i>214</i>&nbsp;				outOffsetsV[i] *= dy;</b>
+<i>215</i>&nbsp;			}
+<i>216</i>&nbsp;
+<b class="nc"><i>217</i>&nbsp;			break;</b>
+<i>218</i>&nbsp;		default:
+<b class="nc"><i>219</i>&nbsp;			hasdata = false;</b>
+<i>220</i>&nbsp;			break;
+<i>221</i>&nbsp;		}
+<i>222</i>&nbsp;
+<b class="nc"><i>223</i>&nbsp;		if (hasdata) {</b>
+<b class="nc"><i>224</i>&nbsp;			c.upload();</b>
+<i>225</i>&nbsp;		}
+<i>226</i>&nbsp;	}
+<i>227</i>&nbsp;
+<i>228</i>&nbsp;	private void computeKernel (int blurRadius, float blurAmount, float[] outKernel) {
+<b class="nc"><i>229</i>&nbsp;		int radius = blurRadius;</b>
+<i>230</i>&nbsp;
+<i>231</i>&nbsp;		// float sigma = (float)radius / amount;
+<b class="nc"><i>232</i>&nbsp;		float sigma = blurAmount;</b>
+<i>233</i>&nbsp;
+<b class="nc"><i>234</i>&nbsp;		float twoSigmaSquare = 2.0f * sigma * sigma;</b>
+<b class="nc"><i>235</i>&nbsp;		float sigmaRoot = (float)Math.sqrt(twoSigmaSquare * Math.PI);</b>
+<b class="nc"><i>236</i>&nbsp;		float total = 0.0f;</b>
+<b class="nc"><i>237</i>&nbsp;		float distance = 0.0f;</b>
+<b class="nc"><i>238</i>&nbsp;		int index = 0;</b>
+<i>239</i>&nbsp;
+<b class="nc"><i>240</i>&nbsp;		for (int i = -radius; i &lt;= radius; ++i) {</b>
+<b class="nc"><i>241</i>&nbsp;			distance = i * i;</b>
+<b class="nc"><i>242</i>&nbsp;			index = i + radius;</b>
+<b class="nc"><i>243</i>&nbsp;			outKernel[index] = (float)Math.exp(-distance / twoSigmaSquare) / sigmaRoot;</b>
+<b class="nc"><i>244</i>&nbsp;			total += outKernel[index];</b>
+<i>245</i>&nbsp;		}
+<i>246</i>&nbsp;
+<b class="nc"><i>247</i>&nbsp;		int size = (radius * 2) + 1;</b>
+<b class="nc"><i>248</i>&nbsp;		for (int i = 0; i &lt; size; ++i) {</b>
+<b class="nc"><i>249</i>&nbsp;			outKernel[i] /= total;</b>
+<i>250</i>&nbsp;		}
+<i>251</i>&nbsp;	}
+<i>252</i>&nbsp;
+<i>253</i>&nbsp;	private void computeOffsets (int blurRadius, float dx, float dy, float[] outOffsetH, float[] outOffsetV) {
+<b class="nc"><i>254</i>&nbsp;		int radius = blurRadius;</b>
+<i>255</i>&nbsp;
+<b class="nc"><i>256</i>&nbsp;		final int X = 0, Y = 1;</b>
+<b class="nc"><i>257</i>&nbsp;		for (int i = -radius, j = 0; i &lt;= radius; ++i, j += 2) {</b>
+<b class="nc"><i>258</i>&nbsp;			outOffsetH[j + X] = i * dx;</b>
+<b class="nc"><i>259</i>&nbsp;			outOffsetH[j + Y] = 0;</b>
+<i>260</i>&nbsp;
+<b class="nc"><i>261</i>&nbsp;			outOffsetV[j + X] = 0;</b>
+<b class="nc"><i>262</i>&nbsp;			outOffsetV[j + Y] = i * dy;</b>
+<i>263</i>&nbsp;		}
+<i>264</i>&nbsp;	}
+<i>265</i>&nbsp;
+<i>266</i>&nbsp;	@Override
+<i>267</i>&nbsp;	public void rebind () {
+<b class="nc"><i>268</i>&nbsp;		computeBlurWeightings();</b>
+<i>269</i>&nbsp;	}
+<i>270</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-04-17 22:02</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,154 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: VelocitySystem</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">edu.gvsu.cis.spacejourney.system</a> ]
+</div>
+
+<h1>Coverage Summary for Class: VelocitySystem (edu.gvsu.cis.spacejourney.system)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">VelocitySystem</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (20/ 20)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package edu.gvsu.cis.spacejourney.system
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.badlogic.ashley.core.Engine
+<i>4</i>&nbsp;import com.badlogic.ashley.core.Entity
+<i>5</i>&nbsp;import com.badlogic.ashley.core.EntitySystem
+<i>6</i>&nbsp;import com.badlogic.ashley.core.Family
+<i>7</i>&nbsp;import com.badlogic.ashley.utils.ImmutableArray
+<i>8</i>&nbsp;import com.badlogic.gdx.Gdx
+<i>9</i>&nbsp;import com.badlogic.gdx.math.Vector2
+<i>10</i>&nbsp;import edu.gvsu.cis.spacejourney.component.Transform
+<i>11</i>&nbsp;import edu.gvsu.cis.spacejourney.component.Velocity
+<i>12</i>&nbsp;import edu.gvsu.cis.spacejourney.util.Bounds
+<i>13</i>&nbsp;import edu.gvsu.cis.spacejourney.util.Mappers
+<i>14</i>&nbsp;import ktx.math.plus
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;/**
+<i>17</i>&nbsp; * Velocity System, moves entities transform component positions in accordance with their velocity.
+<i>18</i>&nbsp; */
+<b class="fc"><i>19</i>&nbsp;class VelocitySystem : EntitySystem() {</b>
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    // All related entities used by this system
+<i>22</i>&nbsp;    private var entities: ImmutableArray&lt;Entity&gt;? = null
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    /**
+<i>25</i>&nbsp;     * @constructor that initializes system priorities.
+<i>26</i>&nbsp;     */
+<i>27</i>&nbsp;    init {
+<b class="fc"><i>28</i>&nbsp;        priority = SystemPriorities.VelocitySystem</b>
+<i>29</i>&nbsp;    }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    /**
+<i>32</i>&nbsp;     * Overriden function that adds entities to a given entity array.
+<i>33</i>&nbsp;     * @param engine the current Ashley engine that is used throughout the game.
+<i>34</i>&nbsp;     */
+<i>35</i>&nbsp;    override fun addedToEngine(engine: Engine) {
+<b class="fc"><i>36</i>&nbsp;        entities = engine.getEntitiesFor(Family.all(Transform::class.java, Velocity::class.java).get())</b>
+<b class="fc"><i>37</i>&nbsp;    }</b>
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    /**
+<i>40</i>&nbsp;     * Function that is used to update the CollisionSystem periodically from a screen&#39;s
+<i>41</i>&nbsp;     * update method.
+<i>42</i>&nbsp;     * @param deltaTime the time between the last and current update cycle.
+<i>43</i>&nbsp;     */
+<i>44</i>&nbsp;    override fun update(deltaTime: Float) {
+<i>45</i>&nbsp;
+<b class="fc"><i>46</i>&nbsp;        for (i in 0 until entities!!.size()) {</b>
+<b class="fc"><i>47</i>&nbsp;            val entity = entities!!.get(i)</b>
+<i>48</i>&nbsp;
+<b class="fc"><i>49</i>&nbsp;            val transform = Mappers.transform.get(entity)</b>
+<b class="fc"><i>50</i>&nbsp;            val velocity = Mappers.velocity.get(entity)</b>
+<i>51</i>&nbsp;
+<b class="fc"><i>52</i>&nbsp;            if (entity != null) {</b>
+<b class="fc"><i>53</i>&nbsp;                transform.position += velocity.value</b>
+<b class="fc"><i>54</i>&nbsp;                transform.rotation += velocity.angular</b>
+<i>55</i>&nbsp;            }
+<i>56</i>&nbsp;
+<b class="fc"><i>57</i>&nbsp;            if (Bounds.isOutOfBounds(</b>
+<b class="fc"><i>58</i>&nbsp;                position = transform.position,</b>
+<b class="fc"><i>59</i>&nbsp;                size = Vector2(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat()),</b>
+<b class="fc"><i>60</i>&nbsp;                padding = -10.0f</b>
+<i>61</i>&nbsp;            )) {
+<b class="fc"><i>62</i>&nbsp;                if (Mappers.projectile.get(entity) != null) {</b>
+<b class="fc"><i>63</i>&nbsp;                    engine.removeEntity(entity)</b>
+<i>64</i>&nbsp;                }
+<b class="fc"><i>65</i>&nbsp;                if (Mappers.enemy.get(entity) != null) {</b>
+<b class="fc"><i>66</i>&nbsp;                    engine.removeEntity(entity)</b>
+<i>67</i>&nbsp;                }
+<i>68</i>&nbsp;            }
+<i>69</i>&nbsp;        }
+<b class="fc"><i>70</i>&nbsp;    }</b>
+<i>71</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-04-17 22:01</div>
+</div>
+</body>
+</html>
